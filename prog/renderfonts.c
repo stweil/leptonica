@@ -42,7 +42,7 @@ int main(int    argc,
          char **argv)
 {
 char    *textstr;
-l_int32  width, wtext, overflow;
+int32_t  width, wtext, overflow;
 L_BMF   *bmf;
 PIX     *pixs, *pix;
 

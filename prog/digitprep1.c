@@ -37,13 +37,13 @@
 
 #include "allheaders.h"
 
-static const l_int32  HEIGHT = 32;  /* pixels */
+static const int32_t  HEIGHT = 32;  /* pixels */
 
 int main(int    argc,
          char **argv)
 {
 char       buf[16];
-l_int32    i, n, h;
+int32_t    i, n, h;
 l_float32  scalefact;
 BOXA      *boxa;
 PIX       *pixs, *pix1, *pix2;

@@ -116,19 +116,19 @@ struct L_Bilateral
 {
     struct Pix     *pixs;           /*!< clone of source pix                 */
     struct Pix     *pixsc;          /*!< downscaled pix with mirrored border */
-    l_int32         reduction;      /*!< 1, 2 or 4x for intermediates        */
+    int32_t         reduction;      /*!< 1, 2 or 4x for intermediates        */
     l_float32       spatial_stdev;  /*!< stdev of spatial gaussian           */
     l_float32       range_stdev;    /*!< stdev of range gaussian             */
     l_float32      *spatial;        /*!< 1D gaussian spatial kernel          */
     l_float32      *range;          /*!< one-sided gaussian range kernel     */
-    l_int32         minval;         /*!< min value in 8 bpp pix              */
-    l_int32         maxval;         /*!< max value in 8 bpp pix              */
-    l_int32         ncomps;         /*!< number of intermediate results      */
-    l_int32        *nc;             /*!< set of k values (size ncomps)       */
-    l_int32        *kindex;         /*!< mapping from intensity to lower k   */
+    int32_t         minval;         /*!< min value in 8 bpp pix              */
+    int32_t         maxval;         /*!< max value in 8 bpp pix              */
+    int32_t         ncomps;         /*!< number of intermediate results      */
+    int32_t        *nc;             /*!< set of k values (size ncomps)       */
+    int32_t        *kindex;         /*!< mapping from intensity to lower k   */
     l_float32      *kfract;         /*!< mapping from intensity to fract k   */
     struct Pixa    *pixac;          /*!< intermediate result images (PBC)    */
-    l_uint32     ***lineset;        /*!< lineptrs for pixac                  */
+    uint32_t     ***lineset;        /*!< lineptrs for pixac                  */
 };
 typedef struct L_Bilateral  L_BILATERAL;
 

@@ -75,7 +75,7 @@
  *  can also be found in pix.h.
  *
  *       (1) The image data is stored in a single contiguous
- *           array of l_uint32, into which the pixels are packed.
+ *           array of uint32_t, into which the pixels are packed.
  *           By "packed" we mean that there are no unused bits
  *           between pixels, except for end-of-line padding to
  *           satisfy item (2) below.
@@ -179,30 +179,30 @@
 /*! Basic Pix */
 struct Pix
 {
-    l_uint32             w;         /*!< width in pixels                   */
-    l_uint32             h;         /*!< height in pixels                  */
-    l_uint32             d;         /*!< depth in bits (bpp)               */
-    l_uint32             spp;       /*!< number of samples per pixel       */
-    l_uint32             wpl;       /*!< 32-bit words/line                 */
+    uint32_t             w;         /*!< width in pixels                   */
+    uint32_t             h;         /*!< height in pixels                  */
+    uint32_t             d;         /*!< depth in bits (bpp)               */
+    uint32_t             spp;       /*!< number of samples per pixel       */
+    uint32_t             wpl;       /*!< 32-bit words/line                 */
     l_atomic             refcount;  /*!< reference count (1 if no clones)  */
-    l_int32              xres;      /*!< image res (ppi) in x direction    */
+    int32_t              xres;      /*!< image res (ppi) in x direction    */
                                     /*!< (use 0 if unknown)                */
-    l_int32              yres;      /*!< image res (ppi) in y direction    */
+    int32_t              yres;      /*!< image res (ppi) in y direction    */
                                     /*!< (use 0 if unknown)                */
-    l_int32              informat;  /*!< input file format, IFF_*          */
-    l_int32              special;   /*!< special instructions for I/O, etc */
+    int32_t              informat;  /*!< input file format, IFF_*          */
+    int32_t              special;   /*!< special instructions for I/O, etc */
     char                *text;      /*!< text string associated with pix   */
     struct PixColormap  *colormap;  /*!< colormap (may be null)            */
-    l_uint32            *data;      /*!< the image data                    */
+    uint32_t            *data;      /*!< the image data                    */
 };
 
 /*! Colormap of a Pix */
 struct PixColormap
 {
     void            *array;   /*!< colormap table (array of RGBA_QUAD)     */
-    l_int32          depth;   /*!< of pix (1, 2, 4 or 8 bpp)               */
-    l_int32          nalloc;  /*!< number of color entries allocated       */
-    l_int32          n;       /*!< number of color entries used            */
+    int32_t          depth;   /*!< of pix (1, 2, 4 or 8 bpp)               */
+    int32_t          nalloc;  /*!< number of color entries allocated       */
+    int32_t          n;       /*!< number of color entries used            */
 };
 
 
@@ -212,10 +212,10 @@ struct PixColormap
      * in the order (b,g,r,a). */
 struct RGBA_Quad
 {
-    l_uint8     blue;         /*!< blue value */
-    l_uint8     green;        /*!< green value */
-    l_uint8     red;          /*!< red value */
-    l_uint8     alpha;        /*!< alpha value */
+    uint8_t     blue;         /*!< blue value */
+    uint8_t     green;        /*!< green value */
+    uint8_t     red;          /*!< red value */
+    uint8_t     alpha;        /*!< alpha value */
 };
 
 
@@ -231,8 +231,8 @@ struct RGBA_Quad
 /*! Array of pix */
 struct Pixa
 {
-    l_int32             n;          /*!< number of Pix in ptr array        */
-    l_int32             nalloc;     /*!< number of Pix ptrs allocated      */
+    int32_t             n;          /*!< number of Pix in ptr array        */
+    int32_t             nalloc;     /*!< number of Pix ptrs allocated      */
     l_atomic            refcount;   /*!< reference count (1 if no clones)  */
     struct Pix        **pix;        /*!< the array of ptrs to pix          */
     struct Boxa        *boxa;       /*!< array of boxes                    */
@@ -241,8 +241,8 @@ struct Pixa
 /*! Array of arrays of pix */
 struct Pixaa
 {
-    l_int32             n;          /*!< number of Pixa in ptr array       */
-    l_int32             nalloc;     /*!< number of Pixa ptrs allocated     */
+    int32_t             n;          /*!< number of Pixa in ptr array       */
+    int32_t             nalloc;     /*!< number of Pixa ptrs allocated     */
     struct Pixa       **pixa;       /*!< array of ptrs to pixa             */
     struct Boxa        *boxa;       /*!< array of boxes                    */
 };
@@ -254,18 +254,18 @@ struct Pixaa
 /*! Basic rectangle */
 struct Box
 {
-    l_int32            x;           /*!< left coordinate                   */
-    l_int32            y;           /*!< top coordinate                    */
-    l_int32            w;           /*!< box width                         */
-    l_int32            h;           /*!< box height                        */
+    int32_t            x;           /*!< left coordinate                   */
+    int32_t            y;           /*!< top coordinate                    */
+    int32_t            w;           /*!< box width                         */
+    int32_t            h;           /*!< box height                        */
     l_atomic           refcount;    /*!< reference count (1 if no clones)  */
 };
 
 /*! Array of Box */
 struct Boxa
 {
-    l_int32            n;           /*!< number of box in ptr array        */
-    l_int32            nalloc;      /*!< number of box ptrs allocated      */
+    int32_t            n;           /*!< number of box in ptr array        */
+    int32_t            nalloc;      /*!< number of box ptrs allocated      */
     l_atomic           refcount;    /*!< reference count (1 if no clones)  */
     struct Box       **box;         /*!< box ptr array                     */
 };
@@ -273,8 +273,8 @@ struct Boxa
 /*! Array of Boxa */
 struct Boxaa
 {
-    l_int32            n;           /*!< number of boxa in ptr array       */
-    l_int32            nalloc;      /*!< number of boxa ptrs allocated     */
+    int32_t            n;           /*!< number of boxa in ptr array       */
+    int32_t            nalloc;      /*!< number of boxa ptrs allocated     */
     struct Boxa      **boxa;        /*!< boxa ptr array                    */
 };
 
@@ -287,8 +287,8 @@ struct Boxaa
 /*! Array of points */
 struct Pta
 {
-    l_int32            n;           /*!< actual number of pts              */
-    l_int32            nalloc;      /*!< size of allocated arrays          */
+    int32_t            n;           /*!< actual number of pts              */
+    int32_t            nalloc;      /*!< size of allocated arrays          */
     l_atomic           refcount;    /*!< reference count (1 if no clones)  */
     l_float32         *x, *y;       /*!< arrays of floats                  */
 };
@@ -300,8 +300,8 @@ struct Pta
 /*! Array of Pta */
 struct Ptaa
 {
-    l_int32              n;         /*!< number of pta in ptr array        */
-    l_int32              nalloc;    /*!< number of pta ptrs allocated      */
+    int32_t              n;         /*!< number of pta in ptr array        */
+    int32_t              nalloc;    /*!< number of pta ptrs allocated      */
     struct Pta         **pta;       /*!< pta ptr array                     */
 };
 
@@ -312,9 +312,9 @@ struct Ptaa
 /*! Pix accumulator container */
 struct Pixacc
 {
-    l_int32             w;          /*!< array width                       */
-    l_int32             h;          /*!< array height                      */
-    l_int32             offset;     /*!< used to allow negative            */
+    int32_t             w;          /*!< array width                       */
+    int32_t             h;          /*!< array height                      */
+    int32_t             offset;     /*!< used to allow negative            */
                                     /*!< intermediate results              */
     struct Pix         *pix;        /*!< the 32 bit accumulator pix        */
 };
@@ -327,13 +327,13 @@ struct Pixacc
 struct PixTiling
 {
     struct Pix          *pix;       /*!< input pix (a clone)               */
-    l_int32              nx;        /*!< number of tiles horizontally      */
-    l_int32              ny;        /*!< number of tiles vertically        */
-    l_int32              w;         /*!< tile width                        */
-    l_int32              h;         /*!< tile height                       */
-    l_int32              xoverlap;  /*!< overlap on left and right         */
-    l_int32              yoverlap;  /*!< overlap on top and bottom         */
-    l_int32              strip;     /*!< strip for paint; default is TRUE  */
+    int32_t              nx;        /*!< number of tiles horizontally      */
+    int32_t              ny;        /*!< number of tiles vertically        */
+    int32_t              w;         /*!< tile width                        */
+    int32_t              h;         /*!< tile height                       */
+    int32_t              xoverlap;  /*!< overlap on left and right         */
+    int32_t              yoverlap;  /*!< overlap on top and bottom         */
+    int32_t              strip;     /*!< strip for paint; default is TRUE  */
 };
 
 
@@ -345,13 +345,13 @@ struct PixTiling
 /*! Pix with float array */
 struct FPix
 {
-    l_int32              w;         /*!< width in pixels                   */
-    l_int32              h;         /*!< height in pixels                  */
-    l_int32              wpl;       /*!< 32-bit words/line                 */
+    int32_t              w;         /*!< width in pixels                   */
+    int32_t              h;         /*!< height in pixels                  */
+    int32_t              wpl;       /*!< 32-bit words/line                 */
     l_atomic             refcount;  /*!< reference count (1 if no clones)  */
-    l_int32              xres;      /*!< image res (ppi) in x direction    */
+    int32_t              xres;      /*!< image res (ppi) in x direction    */
                                     /*!< (use 0 if unknown)                */
-    l_int32              yres;      /*!< image res (ppi) in y direction    */
+    int32_t              yres;      /*!< image res (ppi) in y direction    */
                                     /*!< (use 0 if unknown)                */
     l_float32           *data;      /*!< the float image data              */
 };
@@ -359,8 +359,8 @@ struct FPix
 /*! Array of FPix */
 struct FPixa
 {
-    l_int32             n;          /*!< number of fpix in ptr array       */
-    l_int32             nalloc;     /*!< number of fpix ptrs allocated     */
+    int32_t             n;          /*!< number of fpix in ptr array       */
+    int32_t             nalloc;     /*!< number of fpix ptrs allocated     */
     l_atomic            refcount;   /*!< reference count (1 if no clones)  */
     struct FPix       **fpix;       /*!< the array of ptrs to fpix         */
 };
@@ -374,13 +374,13 @@ struct FPixa
 /*! Pix with double array */
 struct DPix
 {
-    l_int32              w;         /*!< width in pixels                   */
-    l_int32              h;         /*!< height in pixels                  */
-    l_int32              wpl;       /*!< 32-bit words/line                 */
+    int32_t              w;         /*!< width in pixels                   */
+    int32_t              h;         /*!< height in pixels                  */
+    int32_t              wpl;       /*!< 32-bit words/line                 */
     l_atomic             refcount;  /*!< reference count (1 if no clones)  */
-    l_int32              xres;      /*!< image res (ppi) in x direction    */
+    int32_t              xres;      /*!< image res (ppi) in x direction    */
                                     /*!< (use 0 if unknown)                */
-    l_int32              yres;      /*!< image res (ppi) in y direction    */
+    int32_t              yres;      /*!< image res (ppi) in y direction    */
                                     /*!< (use 0 if unknown)                */
     l_float64           *data;      /*!< the double image data             */
 };
@@ -392,18 +392,18 @@ struct DPix
 /*! Compressed Pix */
 struct PixComp
 {
-    l_int32              w;         /*!< width in pixels                   */
-    l_int32              h;         /*!< height in pixels                  */
-    l_int32              d;         /*!< depth in bits                     */
-    l_int32              xres;      /*!< image res (ppi) in x direction    */
+    int32_t              w;         /*!< width in pixels                   */
+    int32_t              h;         /*!< height in pixels                  */
+    int32_t              d;         /*!< depth in bits                     */
+    int32_t              xres;      /*!< image res (ppi) in x direction    */
                                     /*!<   (use 0 if unknown)              */
-    l_int32              yres;      /*!< image res (ppi) in y direction    */
+    int32_t              yres;      /*!< image res (ppi) in y direction    */
                                     /*!<   (use 0 if unknown)              */
-    l_int32              comptype;  /*!< compressed format (IFF_TIFF_G4,   */
+    int32_t              comptype;  /*!< compressed format (IFF_TIFF_G4,   */
                                     /*!<   IFF_PNG, IFF_JFIF_JPEG)         */
     char                *text;      /*!< text string associated with pix   */
-    l_int32              cmapflag;  /*!< flag (1 for cmap, 0 otherwise)    */
-    l_uint8             *data;      /*!< the compressed image data         */
+    int32_t              cmapflag;  /*!< flag (1 for cmap, 0 otherwise)    */
+    uint8_t             *data;      /*!< the compressed image data         */
     size_t               size;      /*!< size of the data array            */
 };
 
@@ -416,9 +416,9 @@ struct PixComp
 /*! Array of compressed pix */
 struct PixaComp
 {
-    l_int32              n;         /*!< number of PixComp in ptr array    */
-    l_int32              nalloc;    /*!< number of PixComp ptrs allocated  */
-    l_int32              offset;    /*!< indexing offset into ptr array    */
+    int32_t              n;         /*!< number of PixComp in ptr array    */
+    int32_t              nalloc;    /*!< number of PixComp ptrs allocated  */
+    int32_t              offset;    /*!< indexing offset into ptr array    */
     struct PixComp     **pixc;      /*!< the array of ptrs to PixComp      */
     struct Boxa         *boxa;      /*!< array of boxes                    */
 };

@@ -38,7 +38,7 @@
 #include "allheaders.h"
 
     /* Use this set */
-static l_int32  nfiles = 10;
+static int32_t  nfiles = 10;
 static const char  *filename[] = {
                          "feyn.tif",         /* 1 bpp */
                          "dreyfus2.png",     /* 2 bpp cmapped */
@@ -57,10 +57,10 @@ int main(int    argc,
 {
 char          buf[256];
 size_t        size;
-l_int32       i, w, h;
-l_int32       format, bps, spp, iscmap, format2, w2, h2, bps2, spp2, iscmap2;
-l_uint8      *data;
-l_uint32     *data32, *data32r;
+int32_t       i, w, h;
+int32_t       format, bps, spp, iscmap, format2, w2, h2, bps2, spp2, iscmap2;
+uint8_t      *data;
+uint32_t     *data32, *data32r;
 BOX          *box;
 PIX          *pixs, *pixt, *pixt2, *pixd;
 L_REGPARAMS  *rp;
@@ -76,7 +76,7 @@ L_REGPARAMS  *rp;
         pixSerializeToMemory(pixs, &data32, &size);
             /* Just for fun, write and read back from file */
         l_binaryWrite("/tmp/lept/regout/array", "w", data32, size);
-        data32r = (l_uint32 *)l_binaryRead("/tmp/lept/regout/array", &size);
+        data32r = (uint32_t *)l_binaryRead("/tmp/lept/regout/array", &size);
             /* Deserialize */
         pixd = pixDeserializeFromMemory(data32r, size);
         regTestComparePix(rp, pixs, pixd);  /* i */

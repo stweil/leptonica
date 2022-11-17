@@ -56,7 +56,7 @@ static const char *WeaselNames[] = {"weasel2.4c.png",
 int main(int    argc,
          char **argv)
 {
-l_int32       i, w, h;
+int32_t       i, w, h;
 l_float32     factor, scale;
 BOX          *box;
 FILE         *fp1;
@@ -104,8 +104,8 @@ L_REGPARAMS  *rp;
     pixs = pixRead("weasel4.11c.png");
     pixGetDimensions(pixs, &w, &h, NULL);
     scale = L_MIN(factor * 2550 / w, factor * 3300 / h);
-    box = boxCreate(1500, 1500, (l_int32)(1000 * scale * w / 300),
-                    (l_int32)(1000 * scale * h / 300));
+    box = boxCreate(1500, 1500, (int32_t)(1000 * scale * w / 300),
+                    (int32_t)(1000 * scale * h / 300));
     fp1 = lept_fopen("/tmp/lept/regout/psio1.ps", "wb+");
     pixWriteStreamPS(fp1, pixs, box, 300, 1.0);
     lept_fclose(fp1);

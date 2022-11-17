@@ -51,7 +51,7 @@ int main(int    argc,
          char **argv)
 {
 char    *filename;
-l_int32  index;
+int32_t  index;
 SELA    *sela;
 
     if (argc != 2 && argc != 3)

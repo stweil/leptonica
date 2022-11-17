@@ -68,8 +68,8 @@ int main(int     argc,
 size_t     filesize;
 l_float32  loc, size;
 l_float32  coeff1[15], coeff2[25];
-l_int32    i, j, w, xres, yres, format, ret, nwarn, hint, deletion, show;
-l_uint8   *comment, *filedata;
+int32_t    i, j, w, xres, yres, format, ret, nwarn, hint, deletion, show;
+uint8_t   *comment, *filedata;
 char      *filein;
 size_t     nbytes;
 FILE      *fp;

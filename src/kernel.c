@@ -37,12 +37,12 @@
  *            L_KERNEL   *kernelCopy()
  *
  *         Accessors:
- *            l_int32     kernelGetElement()
- *            l_int32     kernelSetElement()
- *            l_int32     kernelGetParameters()
- *            l_int32     kernelSetOrigin()
- *            l_int32     kernelGetSum()
- *            l_int32     kernelGetMinMax()
+ *            int32_t     kernelGetElement()
+ *            int32_t     kernelSetElement()
+ *            int32_t     kernelGetParameters()
+ *            int32_t     kernelSetOrigin()
+ *            int32_t     kernelGetSum()
+ *            int32_t     kernelGetMinMax()
  *
  *         Normalize/invert
  *            L_KERNEL   *kernelNormalize()
@@ -54,8 +54,8 @@
  *         Serialized I/O
  *            L_KERNEL   *kernelRead()
  *            L_KERNEL   *kernelReadStream()
- *            l_int32     kernelWrite()
- *            l_int32     kernelWriteStream()
+ *            int32_t     kernelWrite()
+ *            int32_t     kernelWriteStream()
  *
  *         Making a kernel from a compiled string
  *            L_KERNEL   *kernelCreateFromString()
@@ -89,7 +89,7 @@
 #include "allheaders.h"
 
     /* Array size must be > 0 and not larger than this */
-static const l_uint32  MaxArraySize = 100000;
+static const uint32_t  MaxArraySize = 100000;
 
 /*------------------------------------------------------------------------*
  *                           Create / Destroy                             *
@@ -109,10 +109,10 @@ static const l_uint32  MaxArraySize = 100000;
  * </pre>
  */
 L_KERNEL *
-kernelCreate(l_int32  height,
-             l_int32  width)
+kernelCreate(int32_t  height,
+             int32_t  width)
 {
-l_uint64   size64;
+uint64_t   size64;
 L_KERNEL  *kel;
 
     if (width <= 0)
@@ -121,7 +121,7 @@ L_KERNEL  *kel;
         return (L_KERNEL *)ERROR_PTR("height must be > 0", __func__, NULL);
 
         /* Avoid overflow in malloc arg */
-    size64 = (l_uint64)width * (l_uint64)height;
+    size64 = (uint64_t)width * (uint64_t)height;
     if (size64 >= (1LL << 29)) {
         L_ERROR("requested width = %d, height = %d\n", __func__, width, height);
         return (L_KERNEL *)ERROR_PTR("size >= 2^29", __func__, NULL);
@@ -147,7 +147,7 @@ L_KERNEL  *kel;
 void
 kernelDestroy(L_KERNEL  **pkel)
 {
-l_int32    i;
+int32_t    i;
 L_KERNEL  *kel;
 
     if (pkel == NULL)  {
@@ -174,7 +174,7 @@ L_KERNEL  *kel;
 L_KERNEL *
 kernelCopy(L_KERNEL  *kels)
 {
-l_int32    i, j, sx, sy, cx, cy;
+int32_t    i, j, sx, sy, cx, cy;
 L_KERNEL  *keld;
 
     if (!kels)
@@ -207,8 +207,8 @@ L_KERNEL  *keld;
  */
 l_ok
 kernelGetElement(L_KERNEL   *kel,
-                 l_int32     row,
-                 l_int32     col,
+                 int32_t     row,
+                 int32_t     col,
                  l_float32  *pval)
 {
     if (!pval)
@@ -237,8 +237,8 @@ kernelGetElement(L_KERNEL   *kel,
  */
 l_ok
 kernelSetElement(L_KERNEL  *kel,
-                 l_int32    row,
-                 l_int32    col,
+                 int32_t    row,
+                 int32_t    col,
                  l_float32  val)
 {
     if (!kel)
@@ -262,10 +262,10 @@ kernelSetElement(L_KERNEL  *kel,
  */
 l_ok
 kernelGetParameters(L_KERNEL  *kel,
-                    l_int32   *psy,
-                    l_int32   *psx,
-                    l_int32   *pcy,
-                    l_int32   *pcx)
+                    int32_t   *psy,
+                    int32_t   *psx,
+                    int32_t   *pcy,
+                    int32_t   *pcx)
 {
     if (psy) *psy = 0;
     if (psx) *psx = 0;
@@ -290,8 +290,8 @@ kernelGetParameters(L_KERNEL  *kel,
  */
 l_ok
 kernelSetOrigin(L_KERNEL  *kel,
-                l_int32    cy,
-                l_int32    cx)
+                int32_t    cy,
+                int32_t    cx)
 {
     if (!kel)
         return ERROR_INT("kel not defined", __func__, 1);
@@ -312,7 +312,7 @@ l_ok
 kernelGetSum(L_KERNEL   *kel,
              l_float32  *psum)
 {
-l_int32    sx, sy, i, j;
+int32_t    sx, sy, i, j;
 
     if (!psum)
         return ERROR_INT("&sum not defined", __func__, 1);
@@ -343,7 +343,7 @@ kernelGetMinMax(L_KERNEL   *kel,
                 l_float32  *pmin,
                 l_float32  *pmax)
 {
-l_int32    sx, sy, i, j;
+int32_t    sx, sy, i, j;
 l_float32  val, minval, maxval;
 
     if (!pmin && !pmax)
@@ -396,7 +396,7 @@ L_KERNEL *
 kernelNormalize(L_KERNEL  *kels,
                 l_float32  normsum)
 {
-l_int32    i, j, sx, sy, cx, cy;
+int32_t    i, j, sx, sy, cx, cy;
 l_float32  sum, factor;
 L_KERNEL  *keld;
 
@@ -439,7 +439,7 @@ L_KERNEL  *keld;
 L_KERNEL *
 kernelInvert(L_KERNEL  *kels)
 {
-l_int32    i, j, sx, sy, cx, cy;
+int32_t    i, j, sx, sy, cx, cy;
 L_KERNEL  *keld;
 
     if (!kels)
@@ -478,10 +478,10 @@ L_KERNEL  *keld;
  * </pre>
  */
 l_float32 **
-create2dFloatArray(l_int32  sy,
-                   l_int32  sx)
+create2dFloatArray(int32_t  sy,
+                   int32_t  sx)
 {
-l_int32      i;
+int32_t      i;
 l_float32  **array;
 
     if (sx <= 0 || sx > MaxArraySize)
@@ -535,7 +535,7 @@ L_KERNEL  *kel;
 L_KERNEL *
 kernelReadStream(FILE  *fp)
 {
-l_int32    sy, sx, cy, cx, i, j, ret, version, ignore;
+int32_t    sy, sx, cy, cx, i, j, ret, version, ignore;
 L_KERNEL  *kel;
 
     if (!fp)
@@ -607,7 +607,7 @@ l_ok
 kernelWriteStream(FILE      *fp,
                   L_KERNEL  *kel)
 {
-l_int32  sx, sy, cx, cy, i, j;
+int32_t  sx, sy, cx, cy, i, j;
 
     if (!fp)
         return ERROR_INT("stream not defined", __func__, 1);
@@ -654,13 +654,13 @@ l_int32  sx, sy, cx, cy, i, j;
  * </pre>
  */
 L_KERNEL *
-kernelCreateFromString(l_int32      h,
-                       l_int32      w,
-                       l_int32      cy,
-                       l_int32      cx,
+kernelCreateFromString(int32_t      h,
+                       int32_t      w,
+                       int32_t      cy,
+                       int32_t      cx,
                        const char  *kdata)
 {
-l_int32    n, i, j, index;
+int32_t    n, i, j, index;
 l_float32  val;
 L_KERNEL  *kel;
 NUMA      *na;
@@ -741,7 +741,7 @@ L_KERNEL *
 kernelCreateFromFile(const char  *filename)
 {
 char      *filestr, *line;
-l_int32    nlines, i, j, first, index, w, h, cx, cy, n;
+int32_t    nlines, i, j, first, index, w, h, cx, cy, n;
 l_float32  val;
 size_t     size;
 NUMA      *na, *nat;
@@ -842,11 +842,11 @@ L_KERNEL  *kel;
  */
 L_KERNEL *
 kernelCreateFromPix(PIX         *pix,
-                    l_int32      cy,
-                    l_int32      cx)
+                    int32_t      cy,
+                    int32_t      cx)
 {
-l_int32    i, j, w, h, d;
-l_uint32   val;
+int32_t    i, j, w, h, d;
+uint32_t   val;
 L_KERNEL  *kel;
 
     if (!pix)
@@ -901,11 +901,11 @@ L_KERNEL  *kel;
  */
 PIX *
 kernelDisplayInPix(L_KERNEL     *kel,
-                   l_int32       size,
-                   l_int32       gthick)
+                   int32_t       size,
+                   int32_t       gthick)
 {
-l_int32    i, j, w, h, sx, sy, cx, cy, width, x0, y0;
-l_int32    normval;
+int32_t    i, j, w, h, sx, sy, cx, cy, width, x0, y0;
+int32_t    normval;
 l_float32  minval, maxval, max, val, norm;
 PIX       *pixd, *pixt0, *pixt1;
 
@@ -926,7 +926,7 @@ PIX       *pixd, *pixt0, *pixt1;
         for (i = 0; i < sy; i++) {
             for (j = 0; j < sx; j++) {
                 kernelGetElement(kel, i, j, &val);
-                normval = (l_int32)(norm * L_ABS(val));
+                normval = (int32_t)(norm * L_ABS(val));
                 pixSetPixel(pixd, j, i, normval);
             }
         }
@@ -966,11 +966,11 @@ PIX       *pixd, *pixt0, *pixt1;
         /* Generate crossed lines for origin pattern */
     pixt1 = pixCreate(size, size, 1);
     width = size / 8;
-    pixRenderLine(pixt1, size / 2, (l_int32)(0.12 * size),
-                           size / 2, (l_int32)(0.88 * size),
+    pixRenderLine(pixt1, size / 2, (int32_t)(0.12 * size),
+                           size / 2, (int32_t)(0.88 * size),
                            width, L_SET_PIXELS);
-    pixRenderLine(pixt1, (l_int32)(0.15 * size), size / 2,
-                           (l_int32)(0.85 * size), size / 2,
+    pixRenderLine(pixt1, (int32_t)(0.15 * size), size / 2,
+                           (int32_t)(0.85 * size), size / 2,
                            width, L_FLIP_PIXELS);
     pixRasterop(pixt1, size / 2 - width, size / 2 - width,
                 2 * width, 2 * width, PIX_NOT(PIX_DST), NULL, 0, 0);
@@ -981,7 +981,7 @@ PIX       *pixd, *pixt0, *pixt1;
         x0 = gthick;
         for (j = 0; j < sx; j++) {
             kernelGetElement(kel, i, j, &val);
-            normval = (l_int32)(norm * L_ABS(val));
+            normval = (int32_t)(norm * L_ABS(val));
             pixSetMaskedGeneral(pixd, pixt0, normval, x0, y0);
             if (i == cy && j == cx)
                 pixPaintThroughMask(pixd, pixt1, x0, y0, 255 - normval);
@@ -1062,12 +1062,12 @@ NUMA      *na;
  * </pre>
  */
 L_KERNEL *
-makeFlatKernel(l_int32  height,
-               l_int32  width,
-               l_int32  cy,
-               l_int32  cx)
+makeFlatKernel(int32_t  height,
+               int32_t  width,
+               int32_t  cy,
+               int32_t  cx)
 {
-l_int32    i, j;
+int32_t    i, j;
 l_float32  normval;
 L_KERNEL  *kel;
 
@@ -1106,12 +1106,12 @@ L_KERNEL  *kel;
  * </pre>
  */
 L_KERNEL *
-makeGaussianKernel(l_int32    halfh,
-                   l_int32    halfw,
+makeGaussianKernel(int32_t    halfh,
+                   int32_t    halfw,
                    l_float32  stdev,
                    l_float32  max)
 {
-l_int32    sx, sy, i, j;
+int32_t    sx, sy, i, j;
 l_float32  val;
 L_KERNEL  *kel;
 
@@ -1159,8 +1159,8 @@ L_KERNEL  *kel;
  * </pre>
  */
 l_ok
-makeGaussianKernelSep(l_int32    halfh,
-                      l_int32    halfw,
+makeGaussianKernelSep(int32_t    halfh,
+                      int32_t    halfw,
                       l_float32  stdev,
                       l_float32  max,
                       L_KERNEL **pkelx,
@@ -1203,12 +1203,12 @@ makeGaussianKernelSep(l_int32    halfh,
  * </pre>
  */
 L_KERNEL *
-makeDoGKernel(l_int32    halfh,
-              l_int32    halfw,
+makeDoGKernel(int32_t    halfh,
+              int32_t    halfw,
               l_float32  stdev,
               l_float32  ratio)
 {
-l_int32    sx, sy, i, j;
+int32_t    sx, sy, i, j;
 l_float32  pi, squaredist, highnorm, lownorm, val;
 L_KERNEL  *kel;
 

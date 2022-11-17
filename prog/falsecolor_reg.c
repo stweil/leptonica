@@ -41,7 +41,7 @@ static const l_float32  gamma[] = {1.0, 2.0, 3.0};
 int main(int    argc,
          char **argv)
 {
-l_int32       i, j, val8, val16;
+int32_t       i, j, val8, val16;
 NUMA         *na;
 PIX          *pix1, *pix8, *pix16, *pix8f, *pix16f;
 PIXA         *pixa;

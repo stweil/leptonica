@@ -36,7 +36,7 @@
  *           PIX      *pixReduceRankBinary2()
  *
  *      Permutation table for 2x rank binary reduction
- *           l_uint8  *makeSubsampleTab2x(void)
+ *           uint8_t  *makeSubsampleTab2x(void)
  * </pre>
  */
 
@@ -72,14 +72,14 @@
  */
 PIX *
 pixReduceBinary2(PIX      *pixs,
-                 l_uint8  *intab)
+                 uint8_t  *intab)
 {
-l_uint8    byte0, byte1;
-l_uint8   *tab;
-l_uint16   shortd;
-l_int32    i, id, j, ws, hs, wpls, wpld, wplsi;
-l_uint32   word;
-l_uint32  *datas, *datad, *lines, *lined;
+uint8_t    byte0, byte1;
+uint8_t   *tab;
+uint16_t   shortd;
+int32_t    i, id, j, ws, hs, wpls, wpld, wplsi;
+uint32_t   word;
+uint32_t  *datas, *datad, *lines, *lined;
 PIX       *pixd;
 
     if (!pixs || pixGetDepth(pixs) != 1)
@@ -148,13 +148,13 @@ PIX       *pixd;
  */
 PIX *
 pixReduceRankBinaryCascade(PIX     *pixs,
-                           l_int32  level1,
-                           l_int32  level2,
-                           l_int32  level3,
-                           l_int32  level4)
+                           int32_t  level1,
+                           int32_t  level2,
+                           int32_t  level3,
+                           int32_t  level4)
 {
 PIX      *pix1, *pix2, *pix3, *pix4;
-l_uint8  *tab;
+uint8_t  *tab;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -221,15 +221,15 @@ l_uint8  *tab;
  */
 PIX *
 pixReduceRankBinary2(PIX      *pixs,
-                     l_int32   level,
-                     l_uint8  *intab)
+                     int32_t   level,
+                     uint8_t  *intab)
 {
-l_uint8    byte0, byte1;
-l_uint8   *tab;
-l_uint16   shortd;
-l_int32    i, id, j, ws, hs, wpls, wpld, wplsi;
-l_uint32   word1, word2, word3, word4;
-l_uint32  *datas, *datad, *lines, *lined;
+uint8_t    byte0, byte1;
+uint8_t   *tab;
+uint16_t   shortd;
+int32_t    i, id, j, ws, hs, wpls, wpld, wplsi;
+uint32_t   word1, word2, word3, word4;
+uint32_t  *datas, *datad, *lines, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -381,13 +381,13 @@ PIX       *pixd;
  *          0 1 2 3 4 5 6 7
  * </pre>
  */
-l_uint8 *
+uint8_t *
 makeSubsampleTab2x(void)
 {
-l_uint8  *tab;
-l_int32   i;
+uint8_t  *tab;
+int32_t   i;
 
-    tab = (l_uint8 *) LEPT_CALLOC(256, sizeof(l_uint8));
+    tab = (uint8_t *) LEPT_CALLOC(256, sizeof(uint8_t));
     for (i = 0; i < 256; i++) {
         tab[i] = ((i & 0x01)     ) |    /* 7 */
                  ((i & 0x04) >> 1) |    /* 6 */

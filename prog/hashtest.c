@@ -52,13 +52,13 @@
 #include "array_internal.h"
 #include "pix_internal.h"
 
-static SARRAY *BuildShortStrings(l_int32 nchars);
-static PTA *BuildPointSet(l_int32  w, l_int32 h);
+static SARRAY *BuildShortStrings(int32_t nchars);
+static PTA *BuildPointSet(int32_t  w, int32_t h);
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32     dnasize, ptasize, strsize, i, n, c1, c2, c3, s1;
+int32_t     dnasize, ptasize, strsize, i, n, c1, c2, c3, s1;
 L_ASET     *set;
 L_DNA      *da0, *da1, *da2, *da3;
 L_HASHMAP  *hmap;
@@ -254,11 +254,11 @@ skipped_3:
 
 
 static SARRAY *
-BuildShortStrings(l_int32  nchars)  /* 3, 4 or 5 */
+BuildShortStrings(int32_t  nchars)  /* 3, 4 or 5 */
 {
 char      buf[64];
-l_int32   i, j, k, l, m;
-l_uint64  hash;
+int32_t   i, j, k, l, m;
+uint64_t  hash;
 SARRAY   *sa;
 
     sa = sarrayCreate(1000);
@@ -301,9 +301,9 @@ SARRAY   *sa;
 }
 
 static PTA *
-BuildPointSet(l_int32  w, l_int32 h)
+BuildPointSet(int32_t  w, int32_t h)
 {
-l_int32  i, j;
+int32_t  i, j;
 PTA     *pta;
 
     pta = ptaCreate(w * h);

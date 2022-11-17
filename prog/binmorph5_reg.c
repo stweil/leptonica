@@ -39,16 +39,16 @@
 
 #include "allheaders.h"
 
-void  TestAll(L_REGPARAMS *rp, PIX *pixs, l_int32 symmetric);
+void  TestAll(L_REGPARAMS *rp, PIX *pixs, int32_t symmetric);
 
-l_int32 DoComparisonDwa1(L_REGPARAMS *rp,
+int32_t DoComparisonDwa1(L_REGPARAMS *rp,
                          PIX *pixs, PIX *pix1, PIX *pix2, PIX *pix3,
-                         PIX *pix4, PIX *pix5, PIX *pix6, l_int32 isize);
-l_int32 DoComparisonDwa2(L_REGPARAMS *rp,
+                         PIX *pix4, PIX *pix5, PIX *pix6, int32_t isize);
+int32_t DoComparisonDwa2(L_REGPARAMS *rp,
                          PIX *pixs, PIX *pix1, PIX *pix2, PIX *pix3,
-                         PIX *pix4, PIX *pix5, PIX *pix6, l_int32 size);
+                         PIX *pix4, PIX *pix5, PIX *pix6, int32_t size);
 void PixCompareDwa(L_REGPARAMS *rp,
-                   l_int32 size, const char *type, PIX *pix1, PIX *pix2,
+                   int32_t size, const char *type, PIX *pix1, PIX *pix2,
                    PIX *pix3, PIX *pix4, PIX *pix5, PIX *pix6);
 
 #define  TIMING         0
@@ -89,12 +89,12 @@ L_REGPARAMS  *rp;
 void
 TestAll(L_REGPARAMS  *rp,
         PIX          *pixs,
-        l_int32       symmetric)
+        int32_t       symmetric)
 {
-l_int32  i, n, rsize, fact1, fact2, extra;
-l_int32  size, lastsize;
-l_int32  dwasize[256];
-l_int32  ropsize[256];
+int32_t  i, n, rsize, fact1, fact2, extra;
+int32_t  size, lastsize;
+int32_t  dwasize[256];
+int32_t  ropsize[256];
 PIX     *pix1, *pix2, *pix3, *pix4, *pix5, *pix6;
 
     if (symmetric) {
@@ -133,7 +133,7 @@ PIX     *pix1, *pix2, *pix3, *pix4, *pix5, *pix6;
 
         /* Use only values where the resulting sizes are equal */
     for (i = 65; i < 240; i++) {
-        n = 1 + (l_int32)((i - 63) / 62);
+        n = 1 + (int32_t)((i - 63) / 62);
         extra = i - 63 - (n - 1) * 62 + 1;
         if (extra == 2) continue;  /* don't use this one (e.g., i == 126) */
         if (ropsize[i] == dwasize[i])
@@ -165,7 +165,7 @@ PIX     *pix1, *pix2, *pix3, *pix4, *pix5, *pix6;
 }
 
 
-l_int32
+int32_t
 DoComparisonDwa1(L_REGPARAMS  *rp,
                  PIX          *pixs,
                  PIX          *pix1,
@@ -174,9 +174,9 @@ DoComparisonDwa1(L_REGPARAMS  *rp,
                  PIX          *pix4,
                  PIX          *pix5,
                  PIX          *pix6,
-                 l_int32       isize)
+                 int32_t       isize)
 {
-l_int32   fact1, fact2, size;
+int32_t   fact1, fact2, size;
 
     selectComposableSizes(isize, &fact1, &fact2);
     size = fact1 * fact2;
@@ -235,7 +235,7 @@ l_int32   fact1, fact2, size;
 }
 
 
-l_int32
+int32_t
 DoComparisonDwa2(L_REGPARAMS  *rp,
                  PIX          *pixs,
                  PIX          *pix1,
@@ -244,7 +244,7 @@ DoComparisonDwa2(L_REGPARAMS  *rp,
                  PIX          *pix4,
                  PIX          *pix5,
                  PIX          *pix6,
-                 l_int32       size)  /* exactly decomposable */
+                 int32_t       size)  /* exactly decomposable */
 {
     lept_stderr("..%d..", size);
 
@@ -302,7 +302,7 @@ DoComparisonDwa2(L_REGPARAMS  *rp,
 
 void
 PixCompareDwa(L_REGPARAMS  *rp,
-              l_int32       size,
+              int32_t       size,
               const char   *type,
               PIX          *pix1,
               PIX          *pix2,
@@ -311,7 +311,7 @@ PixCompareDwa(L_REGPARAMS  *rp,
               PIX          *pix5,
               PIX          *pix6)
 {
-l_int32  same;
+int32_t  same;
 
     pixEqual(pix1, pix2, &same);
     regTestCompareValues(rp, TRUE, same, 0);

@@ -32,21 +32,21 @@
  *    Font layout
  *       PIX             *pixAddSingleTextblock()
  *       PIX             *pixAddTextlines()
- *       l_int32          pixSetTextblock()
- *       l_int32          pixSetTextline()
+ *       int32_t          pixSetTextblock()
+ *       int32_t          pixSetTextline()
  *       PIXA            *pixaAddTextNumber()
  *       PIXA            *pixaAddTextlines()
- *       l_int32          pixaAddPixWithText()
+ *       int32_t          pixaAddPixWithText()
  *
  *    Text size estimation and partitioning
  *       SARRAY          *bmfGetLineStrings()
  *       NUMA            *bmfGetWordWidths()
- *       l_int32          bmfGetStringWidth()
+ *       int32_t          bmfGetStringWidth()
  *
  *    Text splitting
  *       SARRAY          *splitStringToParagraphs()
- *       static l_int32   stringAllWhitespace()
- *       static l_int32   stringLeadingWhitespace()
+ *       static int32_t   stringAllWhitespace()
+ *       static int32_t   stringLeadingWhitespace()
  *
  *    This is a simple utility to put text on images.  One font and style
  *    is provided, with a variety of pt sizes.  For example, to put a
@@ -79,8 +79,8 @@
 #include <string.h>
 #include "allheaders.h"
 
-static l_int32 stringAllWhitespace(char *textstr, l_int32 *pval);
-static l_int32 stringLeadingWhitespace(char *textstr, l_int32 *pval);
+static int32_t stringAllWhitespace(char *textstr, int32_t *pval);
+static int32_t stringLeadingWhitespace(char *textstr, int32_t *pval);
 
 
 /*---------------------------------------------------------------------*
@@ -120,14 +120,14 @@ PIX *
 pixAddSingleTextblock(PIX         *pixs,
                       L_BMF       *bmf,
                       const char  *textstr,
-                      l_uint32     val,
-                      l_int32      location,
-                      l_int32     *poverflow)
+                      uint32_t     val,
+                      int32_t      location,
+                      int32_t     *poverflow)
 {
 char     *linestr;
-l_int32   w, h, d, i, y, xstart, ystart, extra, spacer, rval, gval, bval;
-l_int32   nlines, htext, ovf, overflow, offset, index;
-l_uint32  textcolor;
+int32_t   w, h, d, i, y, xstart, ystart, extra, spacer, rval, gval, bval;
+int32_t   nlines, htext, ovf, overflow, offset, index;
+uint32_t  textcolor;
 PIX      *pixd;
 PIXCMAP  *cmap, *cmapd;
 SARRAY   *salines;
@@ -167,7 +167,7 @@ SARRAY   *salines;
     else if (d == 32 && val < 256)
         val = 0x80808000;
 
-    xstart = (l_int32)(0.1 * w);
+    xstart = (int32_t)(0.1 * w);
     salines = bmfGetLineStrings(bmf, textstr, w - 2 * xstart, 0, &htext);
     if (!salines)
         return (PIX *)ERROR_PTR("line string sa not made", __func__, NULL);
@@ -274,13 +274,13 @@ PIX *
 pixAddTextlines(PIX         *pixs,
                 L_BMF       *bmf,
                 const char  *textstr,
-                l_uint32     val,
-                l_int32      location)
+                uint32_t     val,
+                int32_t      location)
 {
 char     *str;
-l_int32   i, w, h, d, rval, gval, bval, index;
-l_int32   wline, wtext, htext, wadd, hadd, spacer, hbaseline, nlines;
-l_uint32  textcolor;
+int32_t   i, w, h, d, rval, gval, bval, index;
+int32_t   wline, wtext, htext, wadd, hadd, spacer, hbaseline, nlines;
+uint32_t  textcolor;
 PIX      *pixd;
 PIXCMAP  *cmap, *cmapd;
 SARRAY   *sa;
@@ -435,15 +435,15 @@ l_ok
 pixSetTextblock(PIX         *pixs,
                 L_BMF       *bmf,
                 const char  *textstr,
-                l_uint32     val,
-                l_int32      x0,
-                l_int32      y0,
-                l_int32      wtext,
-                l_int32      firstindent,
-                l_int32     *poverflow)
+                uint32_t     val,
+                int32_t      x0,
+                int32_t      y0,
+                int32_t      wtext,
+                int32_t      firstindent,
+                int32_t     *poverflow)
 {
 char     *linestr;
-l_int32   d, h, i, w, x, y, nlines, htext, xwidth, wline, ovf, overflow;
+int32_t   d, h, i, w, x, y, nlines, htext, xwidth, wline, ovf, overflow;
 SARRAY   *salines;
 PIXCMAP  *cmap;
 
@@ -546,15 +546,15 @@ l_ok
 pixSetTextline(PIX         *pixs,
                L_BMF       *bmf,
                const char  *textstr,
-               l_uint32     val,
-               l_int32      x0,
-               l_int32      y0,
-               l_int32     *pwidth,
-               l_int32     *poverflow)
+               uint32_t     val,
+               int32_t      x0,
+               int32_t      y0,
+               int32_t     *pwidth,
+               int32_t     *poverflow)
 {
 char      chr;
-l_int32   d, i, x, w, nchar, baseline, index, rval, gval, bval;
-l_uint32  textcolor;
+int32_t   d, i, x, w, nchar, baseline, index, rval, gval, bval;
+uint32_t  textcolor;
 PIX      *pix;
 PIXCMAP  *cmap;
 
@@ -594,7 +594,7 @@ PIXCMAP  *cmap;
     x = x0;
     for (i = 0; i < nchar; i++) {
         chr = textstr[i];
-        if ((l_int32)chr == 10) continue;  /* NL */
+        if ((int32_t)chr == 10) continue;  /* NL */
         pix = bmfGetPix(bmf, chr);
         bmfGetBaseline(bmf, chr, &baseline);
         pixPaintThroughMask(pixs, pix, x, y0 - baseline, textcolor);
@@ -641,11 +641,11 @@ PIXA *
 pixaAddTextNumber(PIXA     *pixas,
                   L_BMF    *bmf,
                   NUMA     *na,
-                  l_uint32  val,
-                  l_int32   location)
+                  uint32_t  val,
+                  int32_t   location)
 {
 char     textstr[128];
-l_int32  i, n, index;
+int32_t  i, n, index;
 PIX     *pix1, *pix2;
 PIXA    *pixad;
 
@@ -709,11 +709,11 @@ PIXA *
 pixaAddTextlines(PIXA     *pixas,
                  L_BMF    *bmf,
                  SARRAY   *sa,
-                 l_uint32  val,
-                 l_int32   location)
+                 uint32_t  val,
+                 int32_t   location)
 {
 char    *textstr;
-l_int32  i, n, nstr;
+int32_t  i, n, nstr;
 PIX     *pix1, *pix2;
 PIXA    *pixad;
 
@@ -776,13 +776,13 @@ PIXA    *pixad;
 l_ok
 pixaAddPixWithText(PIXA        *pixa,
                    PIX         *pixs,
-                   l_int32      reduction,
+                   int32_t      reduction,
                    L_BMF       *bmf,
                    const char  *textstr,
-                   l_uint32     val,
-                   l_int32      location)
+                   uint32_t     val,
+                   int32_t      location)
 {
-l_int32   d;
+int32_t   d;
 L_BMF    *bmf8;
 PIX      *pix1, *pix2, *pix3;
 PIXCMAP  *cmap;
@@ -856,12 +856,12 @@ PIXCMAP  *cmap;
 SARRAY *
 bmfGetLineStrings(L_BMF       *bmf,
                   const char  *textstr,
-                  l_int32      maxw,
-                  l_int32      firstindent,
-                  l_int32     *ph)
+                  int32_t      maxw,
+                  int32_t      firstindent,
+                  int32_t     *ph)
 {
 char    *linestr;
-l_int32  i, ifirst, sumw, newsum, w, nwords, nlines, len, xwidth;
+int32_t  i, ifirst, sumw, newsum, w, nwords, nlines, len, xwidth;
 NUMA    *na;
 SARRAY  *sa, *sawords;
 
@@ -933,7 +933,7 @@ bmfGetWordWidths(L_BMF       *bmf,
                  SARRAY      *sa)
 {
 char    *wordstr;
-l_int32  i, nwords, width;
+int32_t  i, nwords, width;
 NUMA    *na;
 
     if (!bmf)
@@ -969,10 +969,10 @@ NUMA    *na;
 l_ok
 bmfGetStringWidth(L_BMF       *bmf,
                   const char  *textstr,
-                  l_int32     *pw)
+                  int32_t     *pw)
 {
 char     chr;
-l_int32  i, w, width, nchar;
+int32_t  i, w, width, nchar;
 
     if (!bmf)
         return ERROR_INT("bmf not defined", __func__, 1);
@@ -1010,10 +1010,10 @@ l_int32  i, w, width, nchar;
  */
 SARRAY *
 splitStringToParagraphs(char    *textstr,
-                        l_int32  splitflag)
+                        int32_t  splitflag)
 {
 char    *linestr, *parastring;
-l_int32  nlines, i, allwhite, leadwhite;
+int32_t  nlines, i, allwhite, leadwhite;
 SARRAY  *salines, *satemp, *saout;
 
     if (!textstr)
@@ -1056,11 +1056,11 @@ SARRAY  *salines, *satemp, *saout;
  * \param[out]   pval      1 if all whitespace; 0 otherwise
  * \return  0 if OK, 1 on error
  */
-static l_int32
+static int32_t
 stringAllWhitespace(char     *textstr,
-                    l_int32  *pval)
+                    int32_t  *pval)
 {
-l_int32  len, i;
+int32_t  len, i;
 
     if (!textstr)
         return ERROR_INT("textstr not defined", __func__, 1);
@@ -1086,9 +1086,9 @@ l_int32  len, i;
  * \param[out]   pval      1 if leading char is [space] or [tab]; 0 otherwise
  * \return  0 if OK, 1 on error
  */
-static l_int32
+static int32_t
 stringLeadingWhitespace(char     *textstr,
-                        l_int32  *pval)
+                        int32_t  *pval)
 {
     if (!textstr)
         return ERROR_INT("textstr not defined", __func__, 1);

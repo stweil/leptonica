@@ -38,14 +38,14 @@
 #include <string.h>
 #include "allheaders.h"
 
-PIX *pixMorphDwa_2(PIX *pixd, PIX *pixs, l_int32 operation, char *selname);
-PIX *pixFMorphopGen_2(PIX *pixd, PIX *pixs, l_int32 operation, char *selname);
-l_int32 fmorphopgen_low_2(l_uint32 *datad, l_int32 w,
-                          l_int32 h, l_int32 wpld,
-                          l_uint32 *datas, l_int32 wpls,
-                          l_int32 index);
+PIX *pixMorphDwa_2(PIX *pixd, PIX *pixs, int32_t operation, char *selname);
+PIX *pixFMorphopGen_2(PIX *pixd, PIX *pixs, int32_t operation, char *selname);
+int32_t fmorphopgen_low_2(uint32_t *datad, int32_t w,
+                          int32_t h, int32_t wpld,
+                          uint32_t *datas, int32_t wpls,
+                          int32_t index);
 
-static l_int32   NUM_SELS_GENERATED = 76;
+static int32_t   NUM_SELS_GENERATED = 76;
 static char  SEL_NAMES[][80] = {
                              "sel_comb_4h",
                              "sel_comb_4v",
@@ -146,10 +146,10 @@ static char  SEL_NAMES[][80] = {
 PIX *
 pixMorphDwa_2(PIX     *pixd,
               PIX     *pixs,
-              l_int32  operation,
+              int32_t  operation,
               char    *selname)
 {
-l_int32  bordercolor, bordersize;
+int32_t  bordercolor, bordersize;
 PIX     *pixt1, *pixt2, *pixt3;
 
     if (!pixs)
@@ -204,11 +204,11 @@ PIX     *pixt1, *pixt2, *pixt3;
 PIX *
 pixFMorphopGen_2(PIX     *pixd,
                  PIX     *pixs,
-                 l_int32  operation,
+                 int32_t  operation,
                  char    *selname)
 {
-l_int32    i, index, found, w, h, wpls, wpld, bordercolor, erodeop, borderop;
-l_uint32  *datad, *datas, *datat;
+int32_t    i, index, found, w, h, wpls, wpld, bordercolor, erodeop, borderop;
+uint32_t  *datad, *datas, *datat;
 PIX       *pixt;
 
     if (!pixs)

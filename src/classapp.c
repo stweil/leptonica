@@ -29,22 +29,22 @@
  * <pre>
  *
  *      Top-level jb2 correlation and rank-hausdorff
- *         l_int32         jbCorrelation()
- *         l_int32         jbRankHaus()
+ *         int32_t         jbCorrelation()
+ *         int32_t         jbRankHaus()
  *
  *      Extract and classify words in textline order
  *         JBCLASSER      *jbWordsInTextlines()
- *         l_int32         pixGetWordsInTextlines()
- *         l_int32         pixGetWordBoxesInTextlines()
+ *         int32_t         pixGetWordsInTextlines()
+ *         int32_t         pixGetWordBoxesInTextlines()
  *
  *      Extract word and character bounding boxes
- *         l_int32         pixFindWordAndCharacterBoxes()
+ *         int32_t         pixFindWordAndCharacterBoxes()
  *
  *      Use word bounding boxes to compare page images
  *         NUMAA          *boxaExtractSortedPattern()
- *         l_int32         numaaCompareImagesByBoxes()
- *         static l_int32  testLineAlignmentX()
- *         static l_int32  countAlignedMatches()
+ *         int32_t         numaaCompareImagesByBoxes()
+ *         static int32_t  testLineAlignmentX()
+ *         static int32_t  countAlignedMatches()
  *         static void     printRowIndices()
  * </pre>
  */
@@ -57,19 +57,19 @@
 #include "allheaders.h"
 
 #define L_BUF_SIZE 512                        /*!< size of filename buffer    */
-static const l_int32 JB_WORDS_MIN_WIDTH = 5;  /*!< min. word width in pixels  */
-static const l_int32 JB_WORDS_MIN_HEIGHT = 3; /*!< min. word height in pixels */
+static const int32_t JB_WORDS_MIN_WIDTH = 5;  /*!< min. word width in pixels  */
+static const int32_t JB_WORDS_MIN_HEIGHT = 3; /*!< min. word height in pixels */
 
     /* Static comparison functions */
-static l_int32 testLineAlignmentX(NUMA *na1, NUMA *na2, l_int32 shiftx,
-                                  l_int32 delx, l_int32 nperline);
-static l_int32 countAlignedMatches(NUMA *nai1, NUMA *nai2, NUMA *nasx,
-                                   NUMA *nasy, l_int32 n1, l_int32 n2,
-                                   l_int32 delx, l_int32 dely,
-                                   l_int32 nreq, l_int32 *psame,
-                                   l_int32 debugflag);
-static void printRowIndices(l_int32 *index1, l_int32 n1,
-                            l_int32 *index2, l_int32 n2);
+static int32_t testLineAlignmentX(NUMA *na1, NUMA *na2, int32_t shiftx,
+                                  int32_t delx, int32_t nperline);
+static int32_t countAlignedMatches(NUMA *nai1, NUMA *nai2, NUMA *nasx,
+                                   NUMA *nasy, int32_t n1, int32_t n2,
+                                   int32_t delx, int32_t dely,
+                                   int32_t nreq, int32_t *psame,
+                                   int32_t debugflag);
+static void printRowIndices(int32_t *index1, int32_t n1,
+                            int32_t *index2, int32_t n2);
 
 /*------------------------------------------------------------------*
  *          Top-level jb2 correlation and rank-hausdorff            *
@@ -99,14 +99,14 @@ l_ok
 jbCorrelation(const char  *dirin,
               l_float32    thresh,
               l_float32    weight,
-              l_int32      components,
+              int32_t      components,
               const char  *rootname,
-              l_int32      firstpage,
-              l_int32      npages,
-              l_int32      renderflag)
+              int32_t      firstpage,
+              int32_t      npages,
+              int32_t      renderflag)
 {
 char        filename[L_BUF_SIZE];
-l_int32     nfiles, i, numpages;
+int32_t     nfiles, i, numpages;
 JBDATA     *data;
 JBCLASSER  *classer;
 PIX        *pix;
@@ -177,16 +177,16 @@ SARRAY     *safiles;
  */
 l_ok
 jbRankHaus(const char  *dirin,
-           l_int32      size,
+           int32_t      size,
            l_float32    rank,
-           l_int32      components,
+           int32_t      components,
            const char  *rootname,
-           l_int32      firstpage,
-           l_int32      npages,
-           l_int32      renderflag)
+           int32_t      firstpage,
+           int32_t      npages,
+           int32_t      renderflag)
 {
 char        filename[L_BUF_SIZE];
-l_int32     nfiles, i, numpages;
+int32_t     nfiles, i, numpages;
 JBDATA     *data;
 JBCLASSER  *classer;
 PIX        *pix;
@@ -263,17 +263,17 @@ SARRAY     *safiles;
  */
 JBCLASSER *
 jbWordsInTextlines(const char  *dirin,
-                   l_int32      reduction,
-                   l_int32      maxwidth,
-                   l_int32      maxheight,
+                   int32_t      reduction,
+                   int32_t      maxwidth,
+                   int32_t      maxheight,
                    l_float32    thresh,
                    l_float32    weight,
                    NUMA       **pnatl,
-                   l_int32      firstpage,
-                   l_int32      npages)
+                   int32_t      firstpage,
+                   int32_t      npages)
 {
 char       *fname;
-l_int32     nfiles, i, w, h;
+int32_t     nfiles, i, w, h;
 BOXA       *boxa;
 JBCLASSER  *classer;
 NUMA       *nai, *natl;
@@ -375,10 +375,10 @@ SARRAY     *safiles;
  */
 l_ok
 pixGetWordsInTextlines(PIX     *pixs,
-                       l_int32  minwidth,
-                       l_int32  minheight,
-                       l_int32  maxwidth,
-                       l_int32  maxheight,
+                       int32_t  minwidth,
+                       int32_t  minheight,
+                       int32_t  maxwidth,
+                       int32_t  maxheight,
                        BOXA   **pboxad,
                        PIXA   **ppixad,
                        NUMA   **pnai)
@@ -450,10 +450,10 @@ PIXAA   *paa;
  */
 l_ok
 pixGetWordBoxesInTextlines(PIX     *pixs,
-                           l_int32  minwidth,
-                           l_int32  minheight,
-                           l_int32  maxwidth,
-                           l_int32  maxheight,
+                           int32_t  minwidth,
+                           int32_t  minheight,
+                           int32_t  maxwidth,
+                           int32_t  maxheight,
                            BOXA   **pboxad,
                            NUMA   **pnai)
 {
@@ -515,13 +515,13 @@ NUMA    *nai;
 l_ok
 pixFindWordAndCharacterBoxes(PIX         *pixs,
                              BOX         *boxs,
-                             l_int32      thresh,
+                             int32_t      thresh,
                              BOXA       **pboxaw,
                              BOXAA      **pboxaac,
                              const char  *debugdir)
 {
 char      *debugfile, *subdir;
-l_int32    i, xs, ys, xb, yb, nb, loc;
+int32_t    i, xs, ys, xb, yb, nb, loc;
 l_float32  scalefact;
 BOX       *box1, *box2;
 BOXA      *boxa1, *boxa1a, *boxa2, *boxa3, *boxa4, *boxa5, *boxaw;
@@ -658,7 +658,7 @@ NUMAA *
 boxaExtractSortedPattern(BOXA  *boxa,
                          NUMA  *na)
 {
-l_int32  index, nbox, row, prevrow, x, y, w, h;
+int32_t  index, nbox, row, prevrow, x, y, w, h;
 BOX     *box;
 NUMA    *nad;
 NUMAA   *naa;
@@ -743,20 +743,20 @@ NUMAA   *naa;
 l_ok
 numaaCompareImagesByBoxes(NUMAA    *naa1,
                           NUMAA    *naa2,
-                          l_int32   nperline,
-                          l_int32   nreq,
-                          l_int32   maxshiftx,
-                          l_int32   maxshifty,
-                          l_int32   delx,
-                          l_int32   dely,
-                          l_int32  *psame,
-                          l_int32   debugflag)
+                          int32_t   nperline,
+                          int32_t   nreq,
+                          int32_t   maxshiftx,
+                          int32_t   maxshifty,
+                          int32_t   delx,
+                          int32_t   dely,
+                          int32_t  *psame,
+                          int32_t   debugflag)
 {
-l_int32   n1, n2, i, j, nbox, y1, y2, xl1, xl2;
-l_int32   shiftx, shifty, match;
-l_int32  *line1, *line2;  /* indicator for sufficient boxes in a line */
-l_int32  *yloc1, *yloc2;  /* arrays of y value for first box in a line */
-l_int32  *xleft1, *xleft2;  /* arrays of x value for left side of first box */
+int32_t   n1, n2, i, j, nbox, y1, y2, xl1, xl2;
+int32_t   shiftx, shifty, match;
+int32_t  *line1, *line2;  /* indicator for sufficient boxes in a line */
+int32_t  *yloc1, *yloc2;  /* arrays of y value for first box in a line */
+int32_t  *xleft1, *xleft2;  /* arrays of x value for left side of first box */
 NUMA     *na1, *na2, *nai1, *nai2, *nasx, *nasy;
 
     if (!psame)
@@ -779,12 +779,12 @@ NUMA     *na1, *na2, *nai1, *nai2, *nasx, *nasy;
         /* Find the lines in naa1 and naa2 with sufficient boxes.
          * Also, find the y-values for each of the lines, and the
          * LH x-values of the first box in each line. */
-    line1 = (l_int32 *)LEPT_CALLOC(n1, sizeof(l_int32));
-    line2 = (l_int32 *)LEPT_CALLOC(n2, sizeof(l_int32));
-    yloc1 = (l_int32 *)LEPT_CALLOC(n1, sizeof(l_int32));
-    yloc2 = (l_int32 *)LEPT_CALLOC(n2, sizeof(l_int32));
-    xleft1 = (l_int32 *)LEPT_CALLOC(n1, sizeof(l_int32));
-    xleft2 = (l_int32 *)LEPT_CALLOC(n2, sizeof(l_int32));
+    line1 = (int32_t *)LEPT_CALLOC(n1, sizeof(int32_t));
+    line2 = (int32_t *)LEPT_CALLOC(n2, sizeof(int32_t));
+    yloc1 = (int32_t *)LEPT_CALLOC(n1, sizeof(int32_t));
+    yloc2 = (int32_t *)LEPT_CALLOC(n2, sizeof(int32_t));
+    xleft1 = (int32_t *)LEPT_CALLOC(n1, sizeof(int32_t));
+    xleft2 = (int32_t *)LEPT_CALLOC(n2, sizeof(int32_t));
     if (!line1 || !line2 || !yloc1 || !yloc2 || !xleft1 || !xleft2)
         return ERROR_INT("callof failure for an array", __func__, 1);
     for (i = 0; i < n1; i++) {
@@ -866,14 +866,14 @@ NUMA     *na1, *na2, *nai1, *nai2, *nasx, *nasy;
 }
 
 
-static l_int32
+static int32_t
 testLineAlignmentX(NUMA    *na1,
                    NUMA    *na2,
-                   l_int32  shiftx,
-                   l_int32  delx,
-                   l_int32  nperline)
+                   int32_t  shiftx,
+                   int32_t  delx,
+                   int32_t  nperline)
 {
-l_int32  i, xl1, xr1, xl2, xr2, diffl, diffr;
+int32_t  i, xl1, xr1, xl2, xr2, diffl, diffr;
 
     if (!na1)
         return ERROR_INT("na1 not defined", __func__, 1);
@@ -921,16 +921,16 @@ countAlignedMatches(NUMA     *nai1,
                     NUMA     *nai2,
                     NUMA     *nasx,
                     NUMA     *nasy,
-                    l_int32   n1,
-                    l_int32   n2,
-                    l_int32   delx,
-                    l_int32   dely,
-                    l_int32   nreq,
-                    l_int32  *psame,
-                    l_int32   debugflag)
+                    int32_t   n1,
+                    int32_t   n2,
+                    int32_t   delx,
+                    int32_t   dely,
+                    int32_t   nreq,
+                    int32_t  *psame,
+                    int32_t   debugflag)
 {
-l_int32   i, j, nm, shiftx, shifty, nmatch, diffx, diffy;
-l_int32  *ia1, *ia2, *iasx, *iasy, *index1, *index2;
+int32_t   i, j, nm, shiftx, shifty, nmatch, diffx, diffy;
+int32_t  *ia1, *ia2, *iasx, *iasy, *index1, *index2;
 
     if (!nai1 || !nai2 || !nasx || !nasy)
         return ERROR_INT("4 input numas not defined", __func__, 1);
@@ -952,8 +952,8 @@ l_int32  *ia1, *ia2, *iasx, *iasy, *index1, *index2;
     ia2 = numaGetIArray(nai2);
     iasx = numaGetIArray(nasx);
     iasy = numaGetIArray(nasy);
-    index1 = (l_int32 *)LEPT_CALLOC(n1, sizeof(l_int32));  /* watch rows */
-    index2 = (l_int32 *)LEPT_CALLOC(n2, sizeof(l_int32));
+    index1 = (int32_t *)LEPT_CALLOC(n1, sizeof(int32_t));  /* watch rows */
+    index2 = (int32_t *)LEPT_CALLOC(n2, sizeof(int32_t));
     if (!index1 || !index2)
         return ERROR_INT("calloc fail for array", __func__, 1);
     for (i = 0; i < nm; i++) {
@@ -1004,12 +1004,12 @@ l_int32  *ia1, *ia2, *iasx, *iasy, *index1, *index2;
 
 
 static void
-printRowIndices(l_int32  *index1,
-                l_int32   n1,
-                l_int32  *index2,
-                l_int32   n2)
+printRowIndices(int32_t  *index1,
+                int32_t   n1,
+                int32_t  *index2,
+                int32_t   n2)
 {
-l_int32  i;
+int32_t  i;
 
     lept_stderr("Index1: ");
     for (i = 0; i < n1; i++) {

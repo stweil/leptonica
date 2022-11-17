@@ -794,10 +794,10 @@ static const char *l_bootnum4 =
  * </pre>
  */
 PIXA *
-l_bootnum_gen4(l_int32  nsamp)
+l_bootnum_gen4(int32_t  nsamp)
 {
-l_uint8  *data1, *data2;
-l_int32   size1;
+uint8_t  *data1, *data2;
+int32_t   size1;
 size_t    size2;
 PIXA     *pixa1, *pixa2;
 

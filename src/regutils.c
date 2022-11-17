@@ -30,16 +30,16 @@
  * <pre>
  *
  *       Regression test utilities
- *           l_int32    regTestSetup()
- *           l_int32    regTestCleanup()
- *           l_int32    regTestCompareValues()
- *           l_int32    regTestCompareStrings()
- *           l_int32    regTestComparePix()
- *           l_int32    regTestCompareSimilarPix()
- *           l_int32    regTestCheckFile()
- *           l_int32    regTestCompareFiles()
- *           l_int32    regTestWritePixAndCheck()
- *           l_int32    regTestWriteDataAndCheck()
+ *           int32_t    regTestSetup()
+ *           int32_t    regTestCleanup()
+ *           int32_t    regTestCompareValues()
+ *           int32_t    regTestCompareStrings()
+ *           int32_t    regTestComparePix()
+ *           int32_t    regTestCompareSimilarPix()
+ *           int32_t    regTestCheckFile()
+ *           int32_t    regTestCompareFiles()
+ *           int32_t    regTestWritePixAndCheck()
+ *           int32_t    regTestWriteDataAndCheck()
  *           char      *regTestGenLocalFilename()
  *
  *       Static function
@@ -72,7 +72,7 @@
 #include <string.h>
 #include "allheaders.h"
 
-extern l_int32 NumImageFileFormatExtensions;
+extern int32_t NumImageFileFormatExtensions;
 extern const char *ImageFileFormatExtensions[];
 
 static char *getRootNameFromArgv0(const char *argv0);
@@ -120,7 +120,7 @@ static char *getRootNameFromArgv0(const char *argv0);
  * </pre>
  */
 l_ok
-regTestSetup(l_int32        argc,
+regTestSetup(int32_t        argc,
              char         **argv,
              L_REGPARAMS  **prp)
 {
@@ -209,7 +209,7 @@ regTestCleanup(L_REGPARAMS  *rp)
 char     result[512];
 char    *results_file;  /* success/failure output in 'compare' mode */
 char    *text, *message;
-l_int32  retval;
+int32_t  retval;
 size_t   nbytes;
 
     if (!rp)
@@ -309,12 +309,12 @@ l_float32  diff;
  */
 l_ok
 regTestCompareStrings(L_REGPARAMS  *rp,
-                      l_uint8      *string1,
+                      uint8_t      *string1,
                       size_t        bytes1,
-                      l_uint8      *string2,
+                      uint8_t      *string2,
                       size_t        bytes2)
 {
-l_int32  same;
+int32_t  same;
 char     buf[256];
 
     if (!rp)
@@ -367,7 +367,7 @@ regTestComparePix(L_REGPARAMS  *rp,
                   PIX          *pix1,
                   PIX          *pix2)
 {
-l_int32  same;
+int32_t  same;
 
     if (!rp)
         return ERROR_INT("rp not defined", __func__, 1);
@@ -424,11 +424,11 @@ l_ok
 regTestCompareSimilarPix(L_REGPARAMS  *rp,
                          PIX          *pix1,
                          PIX          *pix2,
-                         l_int32       mindiff,
+                         int32_t       mindiff,
                          l_float32     maxfract,
-                         l_int32       printstats)
+                         int32_t       printstats)
 {
-l_int32  w, h, factor, similar;
+int32_t  w, h, factor, similar;
 
     if (!rp)
         return ERROR_INT("rp not defined", __func__, 1);
@@ -491,7 +491,7 @@ regTestCheckFile(L_REGPARAMS  *rp,
 {
 char    *ext;
 char     namebuf[256];
-l_int32  ret, same, format;
+int32_t  ret, same, format;
 PIX     *pix1, *pix2;
 
     if (!rp)
@@ -593,12 +593,12 @@ PIX     *pix1, *pix2;
  */
 l_ok
 regTestCompareFiles(L_REGPARAMS  *rp,
-                    l_int32       index1,
-                    l_int32       index2)
+                    int32_t       index1,
+                    int32_t       index2)
 {
 char    *name1, *name2;
 char     namebuf[256];
-l_int32  same;
+int32_t  same;
 SARRAY  *sa;
 
     if (!rp)
@@ -685,7 +685,7 @@ SARRAY  *sa;
 l_ok
 regTestWritePixAndCheck(L_REGPARAMS  *rp,
                         PIX          *pix,
-                        l_int32       format)
+                        int32_t       format)
 {
 char  namebuf[256];
 
@@ -802,11 +802,11 @@ char  namebuf[256];
  */
 char *
 regTestGenLocalFilename(L_REGPARAMS  *rp,
-                        l_int32       index,
-                        l_int32       format)
+                        int32_t       index,
+                        int32_t       format)
 {
 char     buf[64];
-l_int32  ind;
+int32_t  ind;
 
     if (!rp)
         return (char *)ERROR_PTR("rp not defined", __func__, NULL);
@@ -837,7 +837,7 @@ l_int32  ind;
 static char *
 getRootNameFromArgv0(const char  *argv0)
 {
-l_int32  len;
+int32_t  len;
 char    *root;
 
     splitPathAtDirectory(argv0, NULL, &root);
@@ -849,7 +849,7 @@ char    *root;
 #ifndef _WIN32
     {
         char    *newroot;
-        l_int32  loc;
+        int32_t  loc;
         if (stringFindSubstr(root, "-", &loc)) {
             newroot = stringNew(root + loc + 1);  /* strip out "lt-" */
             LEPT_FREE(root);

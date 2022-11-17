@@ -55,34 +55,34 @@
 #include "allheaders.h"
 
     /* Static helpers */
-static void rasteropUniWordAlignedLow(l_uint32 *datad, l_int32 dwpl, l_int32 dx,
-                                      l_int32 dy, l_int32  dw, l_int32 dh,
-                                      l_int32 op);
-static void rasteropUniGeneralLow(l_uint32 *datad, l_int32 dwpl, l_int32 dx,
-                                  l_int32 dy, l_int32 dw, l_int32  dh,
-                                  l_int32 op);
-static void rasteropWordAlignedLow(l_uint32 *datad, l_int32 dwpl, l_int32 dx,
-                                   l_int32 dy, l_int32 dw, l_int32 dh,
-                                   l_int32 op, l_uint32 *datas, l_int32 swpl,
-                                   l_int32 sx, l_int32 sy);
-static void rasteropVAlignedLow(l_uint32 *datad, l_int32 dwpl, l_int32 dx,
-                                l_int32 dy, l_int32 dw, l_int32 dh,
-                                l_int32 op, l_uint32 *datas, l_int32 swpl,
-                                l_int32 sx, l_int32 sy);
-static void rasteropGeneralLow(l_uint32 *datad, l_int32 dwpl, l_int32 dx,
-                               l_int32 dy, l_int32 dw, l_int32 dh,
-                               l_int32 op, l_uint32 *datas, l_int32 swpl,
-                               l_int32 sx, l_int32 sy);
-static void shiftDataHorizontalLow(l_uint32 *datad, l_int32 wpld,
-                                   l_uint32 *datas, l_int32 wpls,
-                                   l_int32 shift);
+static void rasteropUniWordAlignedLow(uint32_t *datad, int32_t dwpl, int32_t dx,
+                                      int32_t dy, int32_t  dw, int32_t dh,
+                                      int32_t op);
+static void rasteropUniGeneralLow(uint32_t *datad, int32_t dwpl, int32_t dx,
+                                  int32_t dy, int32_t dw, int32_t  dh,
+                                  int32_t op);
+static void rasteropWordAlignedLow(uint32_t *datad, int32_t dwpl, int32_t dx,
+                                   int32_t dy, int32_t dw, int32_t dh,
+                                   int32_t op, uint32_t *datas, int32_t swpl,
+                                   int32_t sx, int32_t sy);
+static void rasteropVAlignedLow(uint32_t *datad, int32_t dwpl, int32_t dx,
+                                int32_t dy, int32_t dw, int32_t dh,
+                                int32_t op, uint32_t *datas, int32_t swpl,
+                                int32_t sx, int32_t sy);
+static void rasteropGeneralLow(uint32_t *datad, int32_t dwpl, int32_t dx,
+                               int32_t dy, int32_t dw, int32_t dh,
+                               int32_t op, uint32_t *datas, int32_t swpl,
+                               int32_t sx, int32_t sy);
+static void shiftDataHorizontalLow(uint32_t *datad, int32_t wpld,
+                                   uint32_t *datas, int32_t wpls,
+                                   int32_t shift);
 
 #define COMBINE_PARTIAL(d, s, m)     ( ((d) & ~(m)) | ((s) & (m)) )
 
-static const l_int32  SHIFT_LEFT  = 0;
-static const l_int32  SHIFT_RIGHT = 1;
+static const int32_t  SHIFT_LEFT  = 0;
+static const int32_t  SHIFT_RIGHT = 1;
 
-static const l_uint32 lmask32[] = {0x0,
+static const uint32_t lmask32[] = {0x0,
     0x80000000, 0xc0000000, 0xe0000000, 0xf0000000,
     0xf8000000, 0xfc000000, 0xfe000000, 0xff000000,
     0xff800000, 0xffc00000, 0xffe00000, 0xfff00000,
@@ -92,7 +92,7 @@ static const l_uint32 lmask32[] = {0x0,
     0xffffff80, 0xffffffc0, 0xffffffe0, 0xfffffff0,
     0xfffffff8, 0xfffffffc, 0xfffffffe, 0xffffffff};
 
-static const l_uint32 rmask32[] = {0x0,
+static const uint32_t rmask32[] = {0x0,
     0x00000001, 0x00000003, 0x00000007, 0x0000000f,
     0x0000001f, 0x0000003f, 0x0000007f, 0x000000ff,
     0x000001ff, 0x000003ff, 0x000007ff, 0x00000fff,
@@ -125,18 +125,18 @@ static const l_uint32 rmask32[] = {0x0,
  *          dispatches for the rasterop.
  */
 void
-rasteropUniLow(l_uint32  *datad,
-               l_int32    dpixw,
-               l_int32    dpixh,
-               l_int32    depth,
-               l_int32    dwpl,
-               l_int32    dx,
-               l_int32    dy,
-               l_int32    dw,
-               l_int32    dh,
-               l_int32    op)
+rasteropUniLow(uint32_t  *datad,
+               int32_t    dpixw,
+               int32_t    dpixh,
+               int32_t    depth,
+               int32_t    dwpl,
+               int32_t    dx,
+               int32_t    dy,
+               int32_t    dw,
+               int32_t    dh,
+               int32_t    op)
 {
-l_int32  dhangw, dhangh;
+int32_t  dhangw, dhangh;
 
    /* -------------------------------------------------------*
     *            scale horizontal dimensions by depth
@@ -205,20 +205,20 @@ l_int32  dhangw, dhangh;
  *  it is a common case: e.g., operating on a full dest image.
  */
 static void
-rasteropUniWordAlignedLow(l_uint32  *datad,
-                          l_int32    dwpl,
-                          l_int32    dx,
-                          l_int32    dy,
-                          l_int32    dw,
-                          l_int32    dh,
-                          l_int32    op)
+rasteropUniWordAlignedLow(uint32_t  *datad,
+                          int32_t    dwpl,
+                          int32_t    dx,
+                          int32_t    dy,
+                          int32_t    dw,
+                          int32_t    dh,
+                          int32_t    op)
 {
-l_int32    nfullw;     /* number of full words */
-l_uint32  *pfword;     /* ptr to first word */
-l_int32    lwbits;     /* number of ovrhang bits in last partial word */
-l_uint32   lwmask;     /* mask for last partial word */
-l_uint32  *lined;
-l_int32    i, j;
+int32_t    nfullw;     /* number of full words */
+uint32_t  *pfword;     /* ptr to first word */
+int32_t    lwbits;     /* number of ovrhang bits in last partial word */
+uint32_t   lwmask;     /* mask for last partial word */
+uint32_t  *lined;
+int32_t    i, j;
 
     /*--------------------------------------------------------*
      *                Preliminary calculations                *
@@ -286,27 +286,27 @@ l_int32    i, j;
  * \return  void
  */
 static void
-rasteropUniGeneralLow(l_uint32  *datad,
-                      l_int32    dwpl,
-                      l_int32    dx,
-                      l_int32    dy,
-                      l_int32    dw,
-                      l_int32    dh,
-                      l_int32    op)
+rasteropUniGeneralLow(uint32_t  *datad,
+                      int32_t    dwpl,
+                      int32_t    dx,
+                      int32_t    dy,
+                      int32_t    dw,
+                      int32_t    dh,
+                      int32_t    op)
 {
-l_int32    dfwpartb;   /* boolean (1, 0) if first dest word is partial */
-l_int32    dfwpart2b;  /* boolean (1, 0) if first dest word is doubly partial */
-l_uint32   dfwmask;    /* mask for first partial dest word */
-l_int32    dfwbits;    /* first word dest bits in ovrhang */
-l_uint32  *pdfwpart;   /* ptr to first partial dest word */
-l_int32    dfwfullb;   /* boolean (1, 0) if there exists a full dest word */
-l_int32    dnfullw;    /* number of full words in dest */
-l_uint32  *pdfwfull;   /* ptr to first full dest word */
-l_int32    dlwpartb;   /* boolean (1, 0) if last dest word is partial */
-l_uint32   dlwmask;    /* mask for last partial dest word */
-l_int32    dlwbits;    /* last word dest bits in ovrhang */
-l_uint32  *pdlwpart;   /* ptr to last partial dest word */
-l_int32    i, j;
+int32_t    dfwpartb;   /* boolean (1, 0) if first dest word is partial */
+int32_t    dfwpart2b;  /* boolean (1, 0) if first dest word is doubly partial */
+uint32_t   dfwmask;    /* mask for first partial dest word */
+int32_t    dfwbits;    /* first word dest bits in ovrhang */
+uint32_t  *pdfwpart;   /* ptr to first partial dest word */
+int32_t    dfwfullb;   /* boolean (1, 0) if there exists a full dest word */
+int32_t    dnfullw;    /* number of full words in dest */
+uint32_t  *pdfwfull;   /* ptr to first full dest word */
+int32_t    dlwpartb;   /* boolean (1, 0) if last dest word is partial */
+uint32_t   dlwmask;    /* mask for last partial dest word */
+int32_t    dlwbits;    /* last word dest bits in ovrhang */
+uint32_t  *pdlwpart;   /* ptr to last partial dest word */
+int32_t    i, j;
 
 
     /*--------------------------------------------------------*
@@ -482,24 +482,24 @@ l_int32    i, j;
  *  Warning: the two images must have equal depth.  This is not checked.
  */
 void
-rasteropLow(l_uint32  *datad,
-            l_int32    dpixw,
-            l_int32    dpixh,
-            l_int32    depth,
-            l_int32    dwpl,
-            l_int32    dx,
-            l_int32    dy,
-            l_int32    dw,
-            l_int32    dh,
-            l_int32    op,
-            l_uint32  *datas,
-            l_int32    spixw,
-            l_int32    spixh,
-            l_int32    swpl,
-            l_int32    sx,
-            l_int32    sy)
+rasteropLow(uint32_t  *datad,
+            int32_t    dpixw,
+            int32_t    dpixh,
+            int32_t    depth,
+            int32_t    dwpl,
+            int32_t    dx,
+            int32_t    dy,
+            int32_t    dw,
+            int32_t    dh,
+            int32_t    op,
+            uint32_t  *datas,
+            int32_t    spixw,
+            int32_t    spixh,
+            int32_t    swpl,
+            int32_t    sx,
+            int32_t    sy)
 {
-l_int32  dhangw, shangw, dhangh, shangh;
+int32_t  dhangw, shangw, dhangh, shangh;
 
    /* -------------------------------------------------------*
     *            Scale horizontal dimensions by depth        *
@@ -603,25 +603,25 @@ l_int32  dhangw, shangw, dhangh, shangh;
  *  starting from their UL corners 0,0.
  */
 static void
-rasteropWordAlignedLow(l_uint32  *datad,
-                       l_int32    dwpl,
-                       l_int32    dx,
-                       l_int32    dy,
-                       l_int32    dw,
-                       l_int32    dh,
-                       l_int32    op,
-                       l_uint32  *datas,
-                       l_int32    swpl,
-                       l_int32    sx,
-                       l_int32    sy)
+rasteropWordAlignedLow(uint32_t  *datad,
+                       int32_t    dwpl,
+                       int32_t    dx,
+                       int32_t    dy,
+                       int32_t    dw,
+                       int32_t    dh,
+                       int32_t    op,
+                       uint32_t  *datas,
+                       int32_t    swpl,
+                       int32_t    sx,
+                       int32_t    sy)
 {
-l_int32    nfullw;     /* number of full words */
-l_uint32  *psfword;    /* ptr to first src word */
-l_uint32  *pdfword;    /* ptr to first dest word */
-l_int32    lwbits;     /* number of ovrhang bits in last partial word */
-l_uint32   lwmask;     /* mask for last partial word */
-l_uint32  *lines, *lined;
-l_int32    i, j;
+int32_t    nfullw;     /* number of full words */
+uint32_t  *psfword;    /* ptr to first src word */
+uint32_t  *pdfword;    /* ptr to first dest word */
+int32_t    lwbits;     /* number of ovrhang bits in last partial word */
+uint32_t   lwmask;     /* mask for last partial word */
+uint32_t  *lines, *lined;
+int32_t    i, j;
 
 
     /*--------------------------------------------------------*
@@ -827,34 +827,34 @@ l_int32    i, j;
  *  boundaries; i.e., dx & 31) == (sx & 31
  */
 static void
-rasteropVAlignedLow(l_uint32  *datad,
-                    l_int32    dwpl,
-                    l_int32    dx,
-                    l_int32    dy,
-                    l_int32    dw,
-                    l_int32    dh,
-                    l_int32    op,
-                    l_uint32  *datas,
-                    l_int32    swpl,
-                    l_int32    sx,
-                    l_int32    sy)
+rasteropVAlignedLow(uint32_t  *datad,
+                    int32_t    dwpl,
+                    int32_t    dx,
+                    int32_t    dy,
+                    int32_t    dw,
+                    int32_t    dh,
+                    int32_t    op,
+                    uint32_t  *datas,
+                    int32_t    swpl,
+                    int32_t    sx,
+                    int32_t    sy)
 {
-l_int32    dfwpartb;   /* boolean (1, 0) if first dest word is partial */
-l_int32    dfwpart2b;  /* boolean (1, 0) if first dest word is doubly partial */
-l_uint32   dfwmask;    /* mask for first partial dest word */
-l_int32    dfwbits;    /* first word dest bits in ovrhang */
-l_uint32  *pdfwpart;   /* ptr to first partial dest word */
-l_uint32  *psfwpart;   /* ptr to first partial src word */
-l_int32    dfwfullb;   /* boolean (1, 0) if there exists a full dest word */
-l_int32    dnfullw;    /* number of full words in dest */
-l_uint32  *pdfwfull;   /* ptr to first full dest word */
-l_uint32  *psfwfull;   /* ptr to first full src word */
-l_int32    dlwpartb;   /* boolean (1, 0) if last dest word is partial */
-l_uint32   dlwmask;    /* mask for last partial dest word */
-l_int32    dlwbits;    /* last word dest bits in ovrhang */
-l_uint32  *pdlwpart;   /* ptr to last partial dest word */
-l_uint32  *pslwpart;   /* ptr to last partial src word */
-l_int32    i, j;
+int32_t    dfwpartb;   /* boolean (1, 0) if first dest word is partial */
+int32_t    dfwpart2b;  /* boolean (1, 0) if first dest word is doubly partial */
+uint32_t   dfwmask;    /* mask for first partial dest word */
+int32_t    dfwbits;    /* first word dest bits in ovrhang */
+uint32_t  *pdfwpart;   /* ptr to first partial dest word */
+uint32_t  *psfwpart;   /* ptr to first partial src word */
+int32_t    dfwfullb;   /* boolean (1, 0) if there exists a full dest word */
+int32_t    dnfullw;    /* number of full words in dest */
+uint32_t  *pdfwfull;   /* ptr to first full dest word */
+uint32_t  *psfwfull;   /* ptr to first full src word */
+int32_t    dlwpartb;   /* boolean (1, 0) if last dest word is partial */
+uint32_t   dlwmask;    /* mask for last partial dest word */
+int32_t    dlwbits;    /* last word dest bits in ovrhang */
+uint32_t  *pdlwpart;   /* ptr to last partial dest word */
+uint32_t  *pslwpart;   /* ptr to last partial src word */
+int32_t    i, j;
 
 
     /*--------------------------------------------------------*
@@ -1356,52 +1356,52 @@ l_int32    i, j;
  *  (This must be true because there is only one src word.)
  */
 static void
-rasteropGeneralLow(l_uint32  *datad,
-                   l_int32    dwpl,
-                   l_int32    dx,
-                   l_int32    dy,
-                   l_int32    dw,
-                   l_int32    dh,
-                   l_int32    op,
-                   l_uint32  *datas,
-                   l_int32    swpl,
-                   l_int32    sx,
-                   l_int32    sy)
+rasteropGeneralLow(uint32_t  *datad,
+                   int32_t    dwpl,
+                   int32_t    dx,
+                   int32_t    dy,
+                   int32_t    dw,
+                   int32_t    dh,
+                   int32_t    op,
+                   uint32_t  *datas,
+                   int32_t    swpl,
+                   int32_t    sx,
+                   int32_t    sy)
 {
-l_int32    dfwpartb;    /* boolean (1, 0) if first dest word is partial      */
-l_int32    dfwpart2b;   /* boolean (1, 0) if 1st dest word is doubly partial */
-l_uint32   dfwmask;     /* mask for first partial dest word                  */
-l_int32    dfwbits;     /* first word dest bits in overhang; 0-31            */
-l_int32    dhang;       /* dest overhang in first partial word,              */
+int32_t    dfwpartb;    /* boolean (1, 0) if first dest word is partial      */
+int32_t    dfwpart2b;   /* boolean (1, 0) if 1st dest word is doubly partial */
+uint32_t   dfwmask;     /* mask for first partial dest word                  */
+int32_t    dfwbits;     /* first word dest bits in overhang; 0-31            */
+int32_t    dhang;       /* dest overhang in first partial word,              */
                         /* or 0 if dest is word aligned (same as dfwbits)    */
-l_uint32  *pdfwpart;    /* ptr to first partial dest word                    */
-l_uint32  *psfwpart;    /* ptr to first partial src word                     */
-l_int32    dfwfullb;    /* boolean (1, 0) if there exists a full dest word   */
-l_int32    dnfullw;     /* number of full words in dest                      */
-l_uint32  *pdfwfull;    /* ptr to first full dest word                       */
-l_uint32  *psfwfull;    /* ptr to first full src word                        */
-l_int32    dlwpartb;    /* boolean (1, 0) if last dest word is partial       */
-l_uint32   dlwmask;     /* mask for last partial dest word                   */
-l_int32    dlwbits;     /* last word dest bits in ovrhang                    */
-l_uint32  *pdlwpart;    /* ptr to last partial dest word                     */
-l_uint32  *pslwpart;    /* ptr to last partial src word                      */
-l_uint32   sword;       /* compose src word aligned with the dest words      */
-l_int32    sfwbits;     /* first word src bits in overhang (1-32),           */
+uint32_t  *pdfwpart;    /* ptr to first partial dest word                    */
+uint32_t  *psfwpart;    /* ptr to first partial src word                     */
+int32_t    dfwfullb;    /* boolean (1, 0) if there exists a full dest word   */
+int32_t    dnfullw;     /* number of full words in dest                      */
+uint32_t  *pdfwfull;    /* ptr to first full dest word                       */
+uint32_t  *psfwfull;    /* ptr to first full src word                        */
+int32_t    dlwpartb;    /* boolean (1, 0) if last dest word is partial       */
+uint32_t   dlwmask;     /* mask for last partial dest word                   */
+int32_t    dlwbits;     /* last word dest bits in ovrhang                    */
+uint32_t  *pdlwpart;    /* ptr to last partial dest word                     */
+uint32_t  *pslwpart;    /* ptr to last partial src word                      */
+uint32_t   sword;       /* compose src word aligned with the dest words      */
+int32_t    sfwbits;     /* first word src bits in overhang (1-32),           */
                         /* or 32 if src is word aligned                      */
-l_int32    shang;       /* source overhang in the first partial word,        */
+int32_t    shang;       /* source overhang in the first partial word,        */
                         /* or 0 if src is word aligned (not same as sfwbits) */
-l_int32    sleftshift;  /* bits to shift left for source word to align       */
+int32_t    sleftshift;  /* bits to shift left for source word to align       */
                         /* with the dest.  Also the number of bits that      */
                         /* get shifted to the right to align with the dest.  */
-l_int32    srightshift; /* bits to shift right for source word to align      */
+int32_t    srightshift; /* bits to shift right for source word to align      */
                         /* with dest.  Also, the number of bits that get     */
                         /* shifted left to align with the dest.              */
-l_int32    srightmask;  /* mask for selecting sleftshift bits that have      */
+int32_t    srightmask;  /* mask for selecting sleftshift bits that have      */
                         /* been shifted right by srightshift bits            */
-l_int32    sfwshiftdir; /* either SHIFT_LEFT or SHIFT_RIGHT                  */
-l_int32    sfwaddb;     /* boolean: do we need an additional sfw right shift? */
-l_int32    slwaddb;     /* boolean: do we need an additional slw right shift? */
-l_int32    i, j;
+int32_t    sfwshiftdir; /* either SHIFT_LEFT or SHIFT_RIGHT                  */
+int32_t    sfwaddb;     /* boolean: do we need an additional sfw right shift? */
+int32_t    slwaddb;     /* boolean: do we need an additional slw right shift? */
+int32_t    i, j;
 
 
     /*--------------------------------------------------------*
@@ -2170,34 +2170,34 @@ l_int32    i, j;
  * </pre>
  */
 void
-rasteropVipLow(l_uint32  *data,
-               l_int32    pixw,
-               l_int32    pixh,
-               l_int32    depth,
-               l_int32    wpl,
-               l_int32    x,
-               l_int32    w,
-               l_int32    shift)
+rasteropVipLow(uint32_t  *data,
+               int32_t    pixw,
+               int32_t    pixh,
+               int32_t    depth,
+               int32_t    wpl,
+               int32_t    x,
+               int32_t    w,
+               int32_t    shift)
 {
-l_int32    fwpartb;    /* boolean (1, 0) if first word is partial */
-l_int32    fwpart2b;   /* boolean (1, 0) if first word is doubly partial */
-l_uint32   fwmask;     /* mask for first partial word */
-l_int32    fwbits;     /* first word bits in ovrhang */
-l_uint32  *pdfwpart;   /* ptr to first partial dest word */
-l_uint32  *psfwpart;   /* ptr to first partial src word */
-l_int32    fwfullb;    /* boolean (1, 0) if there exists a full word */
-l_int32    nfullw;     /* number of full words */
-l_uint32  *pdfwfull;   /* ptr to first full dest word */
-l_uint32  *psfwfull;   /* ptr to first full src word */
-l_int32    lwpartb;    /* boolean (1, 0) if last word is partial */
-l_uint32   lwmask;     /* mask for last partial word */
-l_int32    lwbits;     /* last word bits in ovrhang */
-l_uint32  *pdlwpart;   /* ptr to last partial dest word */
-l_uint32  *pslwpart;   /* ptr to last partial src word */
-l_int32    dirwpl;     /* directed wpl (-wpl * sign(shift)) */
-l_int32    absshift;   /* absolute value of shift; for use in iterator */
-l_int32    vlimit;     /* vertical limit value for iterations */
-l_int32    i, j;
+int32_t    fwpartb;    /* boolean (1, 0) if first word is partial */
+int32_t    fwpart2b;   /* boolean (1, 0) if first word is doubly partial */
+uint32_t   fwmask;     /* mask for first partial word */
+int32_t    fwbits;     /* first word bits in ovrhang */
+uint32_t  *pdfwpart;   /* ptr to first partial dest word */
+uint32_t  *psfwpart;   /* ptr to first partial src word */
+int32_t    fwfullb;    /* boolean (1, 0) if there exists a full word */
+int32_t    nfullw;     /* number of full words */
+uint32_t  *pdfwfull;   /* ptr to first full dest word */
+uint32_t  *psfwfull;   /* ptr to first full src word */
+int32_t    lwpartb;    /* boolean (1, 0) if last word is partial */
+uint32_t   lwmask;     /* mask for last partial word */
+int32_t    lwbits;     /* last word bits in ovrhang */
+uint32_t  *pdlwpart;   /* ptr to last partial dest word */
+uint32_t  *pslwpart;   /* ptr to last partial src word */
+int32_t    dirwpl;     /* directed wpl (-wpl * sign(shift)) */
+int32_t    absshift;   /* absolute value of shift; for use in iterator */
+int32_t    vlimit;     /* vertical limit value for iterations */
+int32_t    i, j;
 
 
    /*--------------------------------------------------------*
@@ -2383,16 +2383,16 @@ l_int32    i, j;
  * </pre>
  */
 void
-rasteropHipLow(l_uint32  *data,
-               l_int32    pixh,
-               l_int32    depth,
-               l_int32    wpl,
-               l_int32    y,
-               l_int32    h,
-               l_int32    shift)
+rasteropHipLow(uint32_t  *data,
+               int32_t    pixh,
+               int32_t    depth,
+               int32_t    wpl,
+               int32_t    y,
+               int32_t    h,
+               int32_t    shift)
 {
-l_int32    i;
-l_uint32  *line;
+int32_t    i;
+uint32_t  *line;
 
         /* clip band if necessary */
     if (y < 0) {
@@ -2432,14 +2432,14 @@ l_uint32  *line;
  * </pre>
  */
 static void
-shiftDataHorizontalLow(l_uint32  *datad,
-                       l_int32    wpld,
-                       l_uint32  *datas,
-                       l_int32    wpls,
-                       l_int32    shift)
+shiftDataHorizontalLow(uint32_t  *datad,
+                       int32_t    wpld,
+                       uint32_t  *datas,
+                       int32_t    wpls,
+                       int32_t    shift)
 {
-l_int32    j, firstdw, wpl, rshift, lshift;
-l_uint32  *lined, *lines;
+int32_t    j, firstdw, wpl, rshift, lshift;
+uint32_t  *lined, *lines;
 
     lined = datad;
     lines = datas;

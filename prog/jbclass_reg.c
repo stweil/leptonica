@@ -49,7 +49,7 @@ static PIXA *PixaOutlineTemplates(PIXA *pixas, NUMA *na);
 int main(int    argc,
          char **argv)
 {
-l_int32      i, w, h;
+int32_t      i, w, h;
 BOX         *box;
 JBDATA      *data;
 JBCLASSER   *classer;
@@ -171,7 +171,7 @@ static PIXA *
 PixaOutlineTemplates(PIXA  *pixas,
                      NUMA  *na)
 {
-l_int32  i, n, val, prev, curr;
+int32_t  i, n, val, prev, curr;
 NUMA    *nai;
 PIX     *pix1, *pix2, *pix3;
 PIXA    *pixad;

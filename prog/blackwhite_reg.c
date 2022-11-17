@@ -41,14 +41,14 @@ const char *fnames[11] = {"test1.png", "speckle2.png", "weasel2.4g.png",
                           "dreyfus8.png", "weasel8.240c.png",
                           "test16.tif", "marge.jpg",
                           "test-cmap-alpha.png", "test-gray-alpha.png"};
-const l_int32  setsize = 11;
+const int32_t  setsize = 11;
 
 
 int main(int    argc,
          char **argv)
 {
-l_int32       i, spp;
-l_uint32      bval, wval;
+int32_t       i, spp;
+uint32_t      bval, wval;
 PIX          *pixs, *pix1, *pix2, *pix3, *pixd;
 PIXA         *pixa;
 L_REGPARAMS  *rp;

@@ -71,7 +71,7 @@ int main(int    argc,
 {
 char        filename[BUF_SIZE];
 char       *dirin, *fname;
-l_int32     i, size, firstpage, npages, nfiles;
+int32_t     i, size, firstpage, npages, nfiles;
 l_float32   rank;
 JBDATA     *data;
 JBCLASSER  *classer;
@@ -160,7 +160,7 @@ PIXA       *pixa, *pixadb;
     JBDATA  *newdata;
     PIX     *newpix;
     PIXA    *newpixa;
-    l_int32  same, iofail;
+    int32_t  same, iofail;
 
         /* Read the data back in and render the pages */
     newdata = jbDataRead(rootname);

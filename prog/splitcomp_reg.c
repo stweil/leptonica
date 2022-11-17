@@ -46,11 +46,11 @@
 int main(int    argc,
          char **argv)
 {
-l_int32       i, j, w, h;
-l_int32       minsum[5] =    { 2, 40, 50, 50, 70};
-l_int32       skipdist[5] =  { 5,  5, 10, 10, 30};
-l_int32       delta[5] =     { 2, 10, 10, 25, 40};
-l_int32       maxbg[5] =     {10, 15, 10, 20, 40};
+int32_t       i, j, w, h;
+int32_t       minsum[5] =    { 2, 40, 50, 50, 70};
+int32_t       skipdist[5] =  { 5,  5, 10, 10, 30};
+int32_t       delta[5] =     { 2, 10, 10, 25, 40};
+int32_t       maxbg[5] =     {10, 15, 10, 20, 40};
 BOX          *box1, *box2, *box3, *box4;
 BOXA         *boxa;
 PIX          *pixs, *pixc, *pixt, *pixd, *pix32;

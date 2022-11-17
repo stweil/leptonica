@@ -35,9 +35,9 @@
  *         PIX     *pixExpandBinaryPower2()
  *
  *      Expansion tables for power of 2 expansion
- *         static l_uint16    *makeExpandTab2x()
- *         static l_uint32    *makeExpandTab4x()
- *         static l_uint32    *makeExpandTab8x()
+ *         static uint16_t    *makeExpandTab2x()
+ *         static uint32_t    *makeExpandTab4x()
+ *         static uint32_t    *makeExpandTab8x()
  * </pre>
  */
 
@@ -49,10 +49,10 @@
 #include "allheaders.h"
 
     /* Static table functions and tables */
-static l_uint16 * makeExpandTab2x(void);
-static l_uint32 * makeExpandTab4x(void);
-static l_uint32 * makeExpandTab8x(void);
-static  l_uint32 expandtab16[] = {
+static uint16_t * makeExpandTab2x(void);
+static uint32_t * makeExpandTab4x(void);
+static uint32_t * makeExpandTab8x(void);
+static  uint32_t expandtab16[] = {
               0x00000000, 0x0000ffff, 0xffff0000, 0xffffffff};
 
 /*------------------------------------------------------------------*
@@ -68,11 +68,11 @@ static  l_uint32 expandtab16[] = {
  */
 PIX *
 pixExpandBinaryReplicate(PIX     *pixs,
-                         l_int32  xfact,
-                         l_int32  yfact)
+                         int32_t  xfact,
+                         int32_t  yfact)
 {
-l_int32    w, h, d, wd, hd, wpls, wpld, i, j, k, start;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    w, h, d, wd, hd, wpls, wpld, i, j, k, start;
+uint32_t  *datas, *datad, *lines, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -131,12 +131,12 @@ PIX       *pixd;
  */
 PIX *
 pixExpandBinaryPower2(PIX     *pixs,
-                      l_int32  factor)
+                      int32_t  factor)
 {
-l_uint8    sval;
-l_uint16  *tab2;
-l_int32    i, j, k, w, h, d, wd, hd, wpls, wpld, sdibits, sqbits, sbytes;
-l_uint32  *datas, *datad, *lines, *lined, *tab4, *tab8;
+uint8_t    sval;
+uint16_t  *tab2;
+int32_t    i, j, k, w, h, d, wd, hd, wpls, wpld, sdibits, sqbits, sbytes;
+uint32_t  *datas, *datad, *lines, *lined, *tab4, *tab8;
 PIX       *pixd;
 
     if (!pixs)
@@ -221,13 +221,13 @@ PIX       *pixd;
 /*-------------------------------------------------------------------*
  *             Expansion tables for 2x, 4x and 8x expansion          *
  *-------------------------------------------------------------------*/
-static l_uint16 *
+static uint16_t *
 makeExpandTab2x(void)
 {
-l_uint16  *tab;
-l_int32    i;
+uint16_t  *tab;
+int32_t    i;
 
-    tab = (l_uint16 *) LEPT_CALLOC(256, sizeof(l_uint16));
+    tab = (uint16_t *) LEPT_CALLOC(256, sizeof(uint16_t));
     for (i = 0; i < 256; i++) {
         if (i & 0x01)
             tab[i] = 0x3;
@@ -250,13 +250,13 @@ l_int32    i;
 }
 
 
-static l_uint32 *
+static uint32_t *
 makeExpandTab4x(void)
 {
-l_uint32  *tab;
-l_int32    i;
+uint32_t  *tab;
+int32_t    i;
 
-    tab = (l_uint32 *) LEPT_CALLOC(256, sizeof(l_uint32));
+    tab = (uint32_t *) LEPT_CALLOC(256, sizeof(uint32_t));
     for (i = 0; i < 256; i++) {
         if (i & 0x01)
             tab[i] = 0xf;
@@ -279,13 +279,13 @@ l_int32    i;
 }
 
 
-static l_uint32 *
+static uint32_t *
 makeExpandTab8x(void)
 {
-l_uint32  *tab;
-l_int32    i;
+uint32_t  *tab;
+int32_t    i;
 
-    tab = (l_uint32 *) LEPT_CALLOC(16, sizeof(l_uint32));
+    tab = (uint32_t *) LEPT_CALLOC(16, sizeof(uint32_t));
     for (i = 0; i < 16; i++) {
         if (i & 0x01)
             tab[i] = 0xff;

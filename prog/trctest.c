@@ -40,7 +40,7 @@ int main(int    argc,
          char **argv)
 {
 PIX       *pixs, *pixd;
-l_int32    minval, maxval;
+int32_t    minval, maxval;
 l_float32  gamma;
 char      *filein, *fileout;
 

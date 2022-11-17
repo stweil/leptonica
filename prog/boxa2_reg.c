@@ -41,13 +41,13 @@
 
 #include "allheaders.h"
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32       i, n, val, ne, no, nbins, minw, maxw, minh, maxh;
-l_int32       mine, mino, maxe, maxo;
-l_int32       w_diff, h_diff, median_w_diff, median_h_diff;
-l_int32       noutw, nouth;
+int32_t       i, n, val, ne, no, nbins, minw, maxw, minh, maxh;
+int32_t       mine, mino, maxe, maxo;
+int32_t       w_diff, h_diff, median_w_diff, median_h_diff;
+int32_t       noutw, nouth;
 l_float32     medwe, medhe, medwo, medho;
 BOXA         *boxa1, *boxa2, *boxae, *boxao;
 NUMA         *na1, *nawe, *nahe, *nawo, *naho;

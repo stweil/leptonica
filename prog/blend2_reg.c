@@ -45,7 +45,7 @@ static const char fname_bmp[64] = "/tmp/lept/regout/blend2.14.bmp";
 int main(int    argc,
          char **argv)
 {
-l_int32       i, j, w1, h1, w2, h2, w, h;
+int32_t       i, j, w1, h1, w2, h2, w, h;
 BOX          *box1, *box2;
 PIX          *pixg, *pixs1, *pixs2, *pix1, *pix2, *pix3, *pix4, *pix5;
 PIXA         *pixa;
@@ -58,7 +58,7 @@ L_REGPARAMS  *rp;
     pixg = pixCreate(660, 500, 8);
     for (i = 0; i < 500; i++)
         for (j = 0; j < 660; j++)
-            pixSetPixel(pixg, j, i, (l_int32)(0.775 * j) % 256);
+            pixSetPixel(pixg, j, i, (int32_t)(0.775 * j) % 256);
 
         /* --- Set up the initial color images to be blended together --- */
     pixs1 = pixRead("wyom.jpg");

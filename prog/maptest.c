@@ -47,22 +47,22 @@
 
 #include "allheaders.h"
 
-static L_AMAP *BuildMapHistogram(PIX *pix, l_int32 factor, l_int32 print);
+static L_AMAP *BuildMapHistogram(PIX *pix, int32_t factor, int32_t print);
 static void DisplayMapHistogram(L_AMAP *m, PIXCMAP *cmap,
                                 const char *rootname);
 static void DisplayMapRGBHistogram(L_AMAP *m, const char *rootname);
-static void TestMapIterator1(L_AMAP *m, l_int32  print);
-static void TestMapIterator2(L_AMAP *m, l_int32  print);
-static void TestMapIterator3(L_AMAP *m, l_int32  print);
-static void TestMapIterator4(L_AMAP *m, l_int32  print);
-static void TestMapIterator5(L_AMAP *m, l_int32  print);
+static void TestMapIterator1(L_AMAP *m, int32_t  print);
+static void TestMapIterator2(L_AMAP *m, int32_t  print);
+static void TestMapIterator3(L_AMAP *m, int32_t  print);
+static void TestMapIterator4(L_AMAP *m, int32_t  print);
+static void TestMapIterator5(L_AMAP *m, int32_t  print);
 
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32    i, n, w, h, ncolors;
-l_uint32   val32;
+int32_t    i, n, w, h, ncolors;
+uint32_t   val32;
 L_AMAP    *m;
 NUMA      *na;
 PIX       *pix;
@@ -153,12 +153,12 @@ RB_TYPE   *pval;
 
 static L_AMAP *
 BuildMapHistogram(PIX     *pix,
-                  l_int32  factor,
-                  l_int32  print)
+                  int32_t  factor,
+                  int32_t  print)
 {
-l_int32    i, j, w, h, wpl, val;
-l_uint32   val32;
-l_uint32  *data, *line;
+int32_t    i, j, w, h, wpl, val;
+uint32_t   val32;
+uint32_t  *data, *line;
 L_AMAP    *m;
 PIXCMAP   *cmap;
 RB_TYPE    key, value;
@@ -201,8 +201,8 @@ DisplayMapHistogram(L_AMAP      *m,
                     const char  *rootname)
 {
 char      buf[128];
-l_int32   i, n, ival;
-l_uint32  val32;
+int32_t   i, n, ival;
+uint32_t  val32;
 NUMA     *na;
 RB_TYPE   key;
 RB_TYPE  *pval;
@@ -230,8 +230,8 @@ DisplayMapRGBHistogram(L_AMAP      *m,
                        const char  *rootname)
 {
 char          buf[128];
-l_int32       ncolors, npix, ival, maxn, maxn2;
-l_uint32      maxcolor;
+int32_t       ncolors, npix, ival, maxn, maxn2;
+uint32_t      maxcolor;
 L_AMAP_NODE  *n;
 NUMA         *na;
 
@@ -266,10 +266,10 @@ NUMA         *na;
 
 static void
 TestMapIterator1(L_AMAP  *m,
-                 l_int32  print)  /* forward iterator; fixed tree */
+                 int32_t  print)  /* forward iterator; fixed tree */
 {
-l_int32       count, npix, ival;
-l_uint32      ukey;
+int32_t       count, npix, ival;
+uint32_t      ukey;
 L_AMAP_NODE  *n;
 
     n = l_amapGetFirst(m);
@@ -293,10 +293,10 @@ L_AMAP_NODE  *n;
 
 static void
 TestMapIterator2(L_AMAP  *m,
-                 l_int32  print)  /* reverse iterator; fixed tree */
+                 int32_t  print)  /* reverse iterator; fixed tree */
 {
-l_int32       count, npix, ival;
-l_uint32      ukey;
+int32_t       count, npix, ival;
+uint32_t      ukey;
 L_AMAP_NODE  *n;
 
     n = l_amapGetLast(m);
@@ -320,10 +320,10 @@ L_AMAP_NODE  *n;
 
 static void
 TestMapIterator3(L_AMAP  *m,
-                 l_int32  print)  /* forward iterator; delete the tree */
+                 int32_t  print)  /* forward iterator; delete the tree */
 {
-l_int32       count, npix, ival;
-l_uint32      ukey;
+int32_t       count, npix, ival;
+uint32_t      ukey;
 L_AMAP_NODE  *n, *nn;
 
     n = l_amapGetFirst(m);
@@ -349,10 +349,10 @@ L_AMAP_NODE  *n, *nn;
 
 static void
 TestMapIterator4(L_AMAP  *m,
-                 l_int32  print)  /* reverse iterator; delete the tree */
+                 int32_t  print)  /* reverse iterator; delete the tree */
 {
-l_int32       count, npix, ival;
-l_uint32      ukey;
+int32_t       count, npix, ival;
+uint32_t      ukey;
 L_AMAP_NODE  *n, *np;
 
     n = l_amapGetLast(m);
@@ -378,10 +378,10 @@ L_AMAP_NODE  *n, *np;
 
 static void
 TestMapIterator5(L_AMAP  *m,
-                 l_int32  print)  /* reverse iterator; rebuild the tree */
+                 int32_t  print)  /* reverse iterator; rebuild the tree */
 {
-l_int32       count, npix, ival;
-l_uint32      ukey;
+int32_t       count, npix, ival;
+uint32_t      ukey;
 L_AMAP       *m2;
 L_AMAP_NODE  *n, *np;
 

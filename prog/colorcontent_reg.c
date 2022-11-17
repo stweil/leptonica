@@ -38,13 +38,13 @@
 #include "string.h"
 #include "allheaders.h"
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
 //char         *fname[64];
 char          fname[] = "/tmp/lept/colorcontent/maskgen.pdf";
-l_uint32     *colors;
-l_int32       ncolors, w, h;
+uint32_t     *colors;
+int32_t       ncolors, w, h;
 l_float32     fcolor;
 PIX          *pix1, *pix2, *pix3, *pix4, *pix5, *pix6, *pix7, *pix8;
 PIXA         *pixa1;

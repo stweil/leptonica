@@ -44,7 +44,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32  w, h, d, n;
+int32_t  w, h, d, n;
 char    *filein1, *filein2, *fileout;
 PIX     *pixs1, *pixs2;
 

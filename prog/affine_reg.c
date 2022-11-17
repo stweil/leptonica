@@ -36,8 +36,8 @@
 
 #include "allheaders.h"
 
-static void MakePtas(l_int32 i, PTA **pptas, PTA **pptad);
-static l_int32 RenderHashedBoxa(PIX *pixt, BOXA *boxa, l_int32 i);
+static void MakePtas(int32_t i, PTA **pptas, PTA **pptad);
+static int32_t RenderHashedBoxa(PIX *pixt, BOXA *boxa, int32_t i);
 
 
     /* Sample values.
@@ -45,22 +45,22 @@ static l_int32 RenderHashedBoxa(PIX *pixt, BOXA *boxa, l_int32 i);
      *    4: comparison between sampling and sequential
      *    5: test with large distortion
      */
-static const l_int32  x1[] =  { 300,  300,  300,  95,    32};
-static const l_int32  y1[] =  {1200, 1200, 1250, 2821,  934};
-static const l_int32  x2[] =  {1200, 1200, 1125, 1432,  487};
-static const l_int32  y2[] =  {1100, 1100, 1100, 2682,  934};
-static const l_int32  x3[] =  { 200,  200,  200,  232,   32};
-static const l_int32  y3[] =  { 200,  200,  200,  657,   67};
+static const int32_t  x1[] =  { 300,  300,  300,  95,    32};
+static const int32_t  y1[] =  {1200, 1200, 1250, 2821,  934};
+static const int32_t  x2[] =  {1200, 1200, 1125, 1432,  487};
+static const int32_t  y2[] =  {1100, 1100, 1100, 2682,  934};
+static const int32_t  x3[] =  { 200,  200,  200,  232,   32};
+static const int32_t  y3[] =  { 200,  200,  200,  657,   67};
 
-static const l_int32  xp1[] = { 500,  300,  350,  117,   32};
-static const l_int32  yp1[] = {1700, 1400, 1400, 2629,  934};
-static const l_int32  xp2[] = {850, 1400, 1400, 1464,  487};
-static const l_int32  yp2[] = {850, 1500, 1500, 2432,  804};
-static const l_int32  xp3[] = { 450,  200,  400,  183,   61};
-static const l_int32  yp3[] = { 300,  300,  400,  490,   83};
+static const int32_t  xp1[] = { 500,  300,  350,  117,   32};
+static const int32_t  yp1[] = {1700, 1400, 1400, 2629,  934};
+static const int32_t  xp2[] = {850, 1400, 1400, 1464,  487};
+static const int32_t  yp2[] = {850, 1500, 1500, 2432,  804};
+static const int32_t  xp3[] = { 450,  200,  400,  183,   61};
+static const int32_t  yp3[] = { 300,  300,  400,  490,   83};
 
-static const l_int32  SHIFTX = 44;
-static const l_int32  SHIFTY = 39;
+static const int32_t  SHIFTX = 44;
+static const int32_t  SHIFTY = 39;
 static const l_float32  SCALEX = 0.83;
 static const l_float32  SCALEY = 0.78;
 static const l_float32  ROTATION = 0.11;   /* radian */
@@ -72,7 +72,7 @@ static const l_float32  ROTATION = 0.11;   /* radian */
 int main(int    argc,
          char **argv)
 {
-l_int32       i, w, h;
+int32_t       i, w, h;
 l_float32    *mat1, *mat2, *mat3, *mat1i, *mat2i, *mat3i, *matdinv;
 l_float32     matd[9], matdi[9];
 BOXA         *boxa, *boxa2;
@@ -385,7 +385,7 @@ L_REGPARAMS  *rp;
 }
 
 static void
-MakePtas(l_int32  i,
+MakePtas(int32_t  i,
          PTA    **pptas,
          PTA    **pptad)
 {
@@ -402,12 +402,12 @@ MakePtas(l_int32  i,
 }
 
 
-static l_int32
+static int32_t
 RenderHashedBoxa(PIX    *pixt,
                  BOXA   *boxa,
-                 l_int32 i)
+                 int32_t i)
 {
-l_int32  j, n, rval, gval, bval;
+int32_t  j, n, rval, gval, bval;
 BOX     *box;
 
     n = boxaGetCount(boxa);

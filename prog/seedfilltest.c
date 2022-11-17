@@ -46,8 +46,8 @@ int main(int    argc,
          char **argv)
 {
 char      *filein, *fileout;
-l_int32    i;
-l_uint32   val;
+int32_t    i;
+uint32_t   val;
 l_float32  size;
 PIX       *pixs, *pixd, *pixm, *pixmi, *pixt1, *pixt2, *pixt3;
 

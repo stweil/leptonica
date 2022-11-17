@@ -43,10 +43,10 @@ static const char *fnames[10] = {"feyn-fract.tif", "speckle2.png",
                                  "marge.jpg", "test-gray-alpha.png"};
 
     /* Affine uses the first 3 pt pairs; projective & bilinear use all 4 */
-static const l_int32  xs[] = {300, 1200, 225, 750};
-static const l_int32  xd[] = {330, 1225, 250, 870};
-static const l_int32  ys[] = {1250, 1120, 250, 200};
-static const l_int32  yd[] = {1150, 1200, 250, 290};
+static const int32_t  xs[] = {300, 1200, 225, 750};
+static const int32_t  xd[] = {330, 1225, 250, 870};
+static const int32_t  ys[] = {1250, 1120, 250, 200};
+static const int32_t  yd[] = {1150, 1200, 250, 290};
 
 enum {
   PROJECTIVE = 1,
@@ -54,14 +54,14 @@ enum {
 };
 
 static l_float32 *Generate3PtTransformVector();
-static l_float32 *Generate4PtTransformVector(l_int32 type);
+static l_float32 *Generate4PtTransformVector(int32_t type);
 
 #define  DO_ALL   1
 
 int main(int    argc,
          char **argv)
 {
-l_int32       w, h, x, y, i, n;
+int32_t       w, h, x, y, i, n;
 l_float32    *vc;
 PIX          *pix1, *pix2, *pix3, *pix4, *pix5;
 PIXA         *pixas, *pixa;
@@ -442,7 +442,7 @@ L_REGPARAMS  *rp;
 static l_float32 *
 Generate3PtTransformVector()
 {
-l_int32     i;
+int32_t     i;
 l_float32  *vc;
 PTA        *ptas, *ptad;
 
@@ -460,9 +460,9 @@ PTA        *ptas, *ptad;
 }
 
 static l_float32 *
-Generate4PtTransformVector(l_int32 type)
+Generate4PtTransformVector(int32_t type)
 {
-l_int32     i;
+int32_t     i;
 l_float32  *vc;
 PTA        *ptas, *ptad;
 

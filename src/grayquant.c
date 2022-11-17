@@ -59,7 +59,7 @@
  *              PIX         *pixDitherTo2bppSpec()
  *              static void  ditherTo2bppLow()
  *              static void  ditherTo2bppLineLow()
- *              static l_int32  make8To2DitherTables()
+ *              static int32_t  make8To2DitherTables()
  *
  *          Simple (pixelwise) thresholding to 2 bpp with optional cmap
  *              PIX         *pixThresholdTo2bpp()
@@ -76,12 +76,12 @@
  *              PIX         *pixThresholdGrayArb()
  *
  *      Quantization tables for linear thresholds of grayscale images
- *              l_int32     *makeGrayQuantIndexTable()
- *              static l_int32  *makeGrayQuantTargetTable()
+ *              int32_t     *makeGrayQuantIndexTable()
+ *              static int32_t  *makeGrayQuantTargetTable()
  *
  *      Quantization table for arbitrary thresholding of grayscale images
- *              l_int32      makeGrayQuantTableArb()
- *              static l_int32   makeGrayQuantColormapArb()
+ *              int32_t      makeGrayQuantTableArb()
+ *              static int32_t   makeGrayQuantColormapArb()
  *
  *      Thresholding from 32 bpp rgb to 1 bpp
  *      (really color quantization, but it's better placed in this file)
@@ -90,7 +90,7 @@
  *
  *      Histogram-based grayscale quantization
  *              PIX         *pixGrayQuantFromHisto()
- *              static l_int32  numaFillCmapFromHisto()
+ *              static int32_t  numaFillCmapFromHisto()
  *
  *      Color quantize grayscale image using existing colormap
  *              PIX         *pixGrayQuantFromCmap()
@@ -105,34 +105,34 @@
 #include <math.h>
 #include "allheaders.h"
 
-static void ditherToBinaryLow(l_uint32 *datad, l_int32 w, l_int32 h,
-                              l_int32 wpld, l_uint32 *datas, l_int32 wpls,
-                              l_uint32 *bufs1, l_uint32 *bufs2,
-                              l_int32 lowerclip, l_int32 upperclip);
-static void thresholdToBinaryLow(l_uint32 *datad, l_int32 w, l_int32 h,
-                                 l_int32 wpld, l_uint32 *datas, l_int32 d,
-                                 l_int32 wpls, l_int32 thresh);
-static void ditherTo2bppLow(l_uint32 *datad, l_int32 w, l_int32 h, l_int32 wpld,
-                            l_uint32 *datas, l_int32 wpls, l_uint32 *bufs1,
-                            l_uint32 *bufs2, l_int32 *tabval, l_int32 *tab38,
-                            l_int32   *tab14);
-static void ditherTo2bppLineLow(l_uint32 *lined, l_int32 w, l_uint32 *bufs1,
-                                l_uint32 *bufs2, l_int32 *tabval,
-                                l_int32 *tab38, l_int32 *tab14,
-                                l_int32 lastlineflag);
-static l_int32 make8To2DitherTables(l_int32 **ptabval, l_int32 **ptab38,
-                                    l_int32 **ptab14, l_int32 cliptoblack,
-                                    l_int32 cliptowhite);
-static void thresholdTo2bppLow(l_uint32 *datad, l_int32 h, l_int32 wpld,
-                               l_uint32 *datas, l_int32 wpls, l_int32 *tab);
-static void thresholdTo4bppLow(l_uint32 *datad, l_int32 h, l_int32 wpld,
-                               l_uint32 *datas, l_int32 wpls, l_int32 *tab);
-static l_int32 *makeGrayQuantTargetTable(l_int32 nlevels, l_int32 depth);
-static l_int32 makeGrayQuantColormapArb(PIX *pixs, l_int32 *tab,
-                                        l_int32 outdepth, PIXCMAP **pcmap);
-static l_int32 numaFillCmapFromHisto(NUMA *na, PIXCMAP *cmap,
-                                     l_float32 minfract, l_int32 maxsize,
-                                     l_int32 **plut);
+static void ditherToBinaryLow(uint32_t *datad, int32_t w, int32_t h,
+                              int32_t wpld, uint32_t *datas, int32_t wpls,
+                              uint32_t *bufs1, uint32_t *bufs2,
+                              int32_t lowerclip, int32_t upperclip);
+static void thresholdToBinaryLow(uint32_t *datad, int32_t w, int32_t h,
+                                 int32_t wpld, uint32_t *datas, int32_t d,
+                                 int32_t wpls, int32_t thresh);
+static void ditherTo2bppLow(uint32_t *datad, int32_t w, int32_t h, int32_t wpld,
+                            uint32_t *datas, int32_t wpls, uint32_t *bufs1,
+                            uint32_t *bufs2, int32_t *tabval, int32_t *tab38,
+                            int32_t   *tab14);
+static void ditherTo2bppLineLow(uint32_t *lined, int32_t w, uint32_t *bufs1,
+                                uint32_t *bufs2, int32_t *tabval,
+                                int32_t *tab38, int32_t *tab14,
+                                int32_t lastlineflag);
+static int32_t make8To2DitherTables(int32_t **ptabval, int32_t **ptab38,
+                                    int32_t **ptab14, int32_t cliptoblack,
+                                    int32_t cliptowhite);
+static void thresholdTo2bppLow(uint32_t *datad, int32_t h, int32_t wpld,
+                               uint32_t *datas, int32_t wpls, int32_t *tab);
+static void thresholdTo4bppLow(uint32_t *datad, int32_t h, int32_t wpld,
+                               uint32_t *datas, int32_t wpls, int32_t *tab);
+static int32_t *makeGrayQuantTargetTable(int32_t nlevels, int32_t depth);
+static int32_t makeGrayQuantColormapArb(PIX *pixs, int32_t *tab,
+                                        int32_t outdepth, PIXCMAP **pcmap);
+static int32_t numaFillCmapFromHisto(NUMA *na, PIXCMAP *cmap,
+                                     l_float32 minfract, int32_t maxsize,
+                                     int32_t **plut);
 
 #ifndef  NO_CONSOLE_IO
 #define DEBUG_UNROLLING 0
@@ -203,12 +203,12 @@ pixDitherToBinary(PIX  *pixs)
  */
 PIX *
 pixDitherToBinarySpec(PIX     *pixs,
-                      l_int32  lowerclip,
-                      l_int32  upperclip)
+                      int32_t  lowerclip,
+                      int32_t  upperclip)
 {
-l_int32    w, h, d, wplt, wpld;
-l_uint32  *datat, *datad;
-l_uint32  *bufs1, *bufs2;
+int32_t    w, h, d, wplt, wpld;
+uint32_t  *datat, *datad;
+uint32_t  *bufs1, *bufs2;
 PIX       *pixt, *pixd;
 
     if (!pixs)
@@ -237,8 +237,8 @@ PIX       *pixt, *pixd;
     wplt = pixGetWpl(pixt);
 
         /* Two line buffers, 1 for current line and 2 for next line */
-    bufs1 = (l_uint32 *)LEPT_CALLOC(wplt, sizeof(l_uint32));
-    bufs2 = (l_uint32 *)LEPT_CALLOC(wplt, sizeof(l_uint32));
+    bufs1 = (uint32_t *)LEPT_CALLOC(wplt, sizeof(uint32_t));
+    bufs2 = (uint32_t *)LEPT_CALLOC(wplt, sizeof(uint32_t));
     if (!bufs1 || !bufs2) {
         LEPT_FREE(bufs1);
         LEPT_FREE(bufs2);
@@ -263,19 +263,19 @@ PIX       *pixt, *pixd;
  *  See comments in pixDitherToBinary() in binarize.c
  */
 static void
-ditherToBinaryLow(l_uint32  *datad,
-                  l_int32    w,
-                  l_int32    h,
-                  l_int32    wpld,
-                  l_uint32  *datas,
-                  l_int32    wpls,
-                  l_uint32  *bufs1,
-                  l_uint32  *bufs2,
-                  l_int32    lowerclip,
-                  l_int32    upperclip)
+ditherToBinaryLow(uint32_t  *datad,
+                  int32_t    w,
+                  int32_t    h,
+                  int32_t    wpld,
+                  uint32_t  *datas,
+                  int32_t    wpls,
+                  uint32_t  *bufs1,
+                  uint32_t  *bufs2,
+                  int32_t    lowerclip,
+                  int32_t    upperclip)
 {
-l_int32    i;
-l_uint32  *lined;
+int32_t    i;
+uint32_t  *lined;
 
         /* do all lines except last line */
     memcpy(bufs2, datas, 4 * wpls);  /* prime the buffer */
@@ -319,17 +319,17 @@ l_uint32  *lined;
  *  generate a 2x grayscale image as an intermediary.
  */
 void
-ditherToBinaryLineLow(l_uint32  *lined,
-                      l_int32    w,
-                      l_uint32  *bufs1,
-                      l_uint32  *bufs2,
-                      l_int32    lowerclip,
-                      l_int32    upperclip,
-                      l_int32    lastlineflag)
+ditherToBinaryLineLow(uint32_t  *lined,
+                      int32_t    w,
+                      uint32_t  *bufs1,
+                      uint32_t  *bufs2,
+                      int32_t    lowerclip,
+                      int32_t    upperclip,
+                      int32_t    lastlineflag)
 {
-l_int32   j;
-l_int32   oval, eval;
-l_uint8   fval1, fval2, rval, bval, dval;
+int32_t   j;
+int32_t   oval, eval;
+uint8_t   fval1, fval2, rval, bval, dval;
 
     if (lastlineflag == 0) {
         for (j = 0; j < w - 1; j++) {
@@ -441,10 +441,10 @@ l_uint8   fval1, fval2, rval, bval, dval;
  */
 PIX *
 pixThresholdToBinary(PIX     *pixs,
-                     l_int32  thresh)
+                     int32_t  thresh)
 {
-l_int32    d, w, h, wplt, wpld;
-l_uint32  *datat, *datad;
+int32_t    d, w, h, wplt, wpld;
+uint32_t  *datat, *datad;
 PIX       *pixt, *pixd;
 
     if (!pixs)
@@ -489,17 +489,17 @@ PIX       *pixt, *pixd;
  *  the dest will be 1; otherwise, it will be 0
  */
 static void
-thresholdToBinaryLow(l_uint32  *datad,
-                     l_int32    w,
-                     l_int32    h,
-                     l_int32    wpld,
-                     l_uint32  *datas,
-                     l_int32    d,
-                     l_int32    wpls,
-                     l_int32    thresh)
+thresholdToBinaryLow(uint32_t  *datad,
+                     int32_t    w,
+                     int32_t    h,
+                     int32_t    wpld,
+                     uint32_t  *datas,
+                     int32_t    d,
+                     int32_t    wpls,
+                     int32_t    thresh)
 {
-l_int32    i;
-l_uint32  *lines, *lined;
+int32_t    i;
+uint32_t  *lines, *lined;
 
     for (i = 0; i < h; i++) {
         lines = datas + i * wpls;
@@ -514,14 +514,14 @@ l_uint32  *lines, *lined;
  *
  */
 void
-thresholdToBinaryLineLow(l_uint32  *lined,
-                         l_int32    w,
-                         l_uint32  *lines,
-                         l_int32    d,
-                         l_int32    thresh)
+thresholdToBinaryLineLow(uint32_t  *lined,
+                         int32_t    w,
+                         uint32_t  *lines,
+                         int32_t    d,
+                         int32_t    thresh)
 {
-l_int32  j, k, gval, scount, dcount;
-l_uint32 sword, dword;
+int32_t  j, k, gval, scount, dcount;
+uint32_t sword, dword;
 
     switch (d)
     {
@@ -607,7 +607,7 @@ l_uint32 sword, dword;
                 }
                 gval = (sword >> 24) & 0xff;
                 sword <<= 8;
-                dword |= (l_uint64)(((gval - thresh) >> 31) & 1)
+                dword |= (uint64_t)(((gval - thresh) >> 31) & 1)
                              << (31 - (j & 31));
             }
             lined[dcount] = dword;
@@ -647,8 +647,8 @@ PIX *
 pixVarThresholdToBinary(PIX  *pixs,
                         PIX  *pixg)
 {
-l_int32    i, j, vals, valg, w, h, d, wpls, wplg, wpld;
-l_uint32  *datas, *datag, *datad, *lines, *lineg, *lined;
+int32_t    i, j, vals, valg, w, h, d, wpls, wplg, wpld;
+uint32_t  *datas, *datag, *datad, *lines, *lineg, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -758,9 +758,9 @@ PIX *
 pixAdaptThresholdToBinaryGen(PIX       *pixs,
                              PIX       *pixm,
                              l_float32  gamma,
-                             l_int32    blackval,
-                             l_int32    whiteval,
-                             l_int32    thresh)
+                             int32_t    blackval,
+                             int32_t    whiteval,
+                             int32_t    thresh)
 {
 PIX  *pix1, *pixd;
 
@@ -800,11 +800,11 @@ PIX  *pix1, *pixd;
  */
 PIX *
 pixGenerateMaskByValue(PIX     *pixs,
-                       l_int32  val,
-                       l_int32  usecmap)
+                       int32_t  val,
+                       int32_t  usecmap)
 {
-l_int32    i, j, w, h, d, wplg, wpld;
-l_uint32  *datag, *datad, *lineg, *lined;
+int32_t    i, j, w, h, d, wplg, wpld;
+uint32_t  *datag, *datad, *lineg, *lined;
 PIX       *pixg, *pixd;
 
     if (!pixs)
@@ -889,13 +889,13 @@ PIX       *pixg, *pixd;
  */
 PIX *
 pixGenerateMaskByBand(PIX     *pixs,
-                      l_int32  lower,
-                      l_int32  upper,
-                      l_int32  inband,
-                      l_int32  usecmap)
+                      int32_t  lower,
+                      int32_t  upper,
+                      int32_t  inband,
+                      int32_t  usecmap)
 {
-l_int32    i, j, w, h, d, wplg, wpld, val;
-l_uint32  *datag, *datad, *lineg, *lined;
+int32_t    i, j, w, h, d, wplg, wpld, val;
+uint32_t  *datag, *datad, *lineg, *lined;
 PIX       *pixg, *pixd;
 
     if (!pixs)
@@ -1000,7 +1000,7 @@ PIX       *pixg, *pixd;
  */
 PIX *
 pixDitherTo2bpp(PIX     *pixs,
-                l_int32  cmapflag)
+                int32_t  cmapflag)
 {
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -1032,14 +1032,14 @@ pixDitherTo2bpp(PIX     *pixs,
  */
 PIX *
 pixDitherTo2bppSpec(PIX     *pixs,
-                    l_int32  lowerclip,
-                    l_int32  upperclip,
-                    l_int32  cmapflag)
+                    int32_t  lowerclip,
+                    int32_t  upperclip,
+                    int32_t  cmapflag)
 {
-l_int32    w, h, d, wplt, wpld;
-l_int32   *tabval, *tab38, *tab14;
-l_uint32  *datat, *datad;
-l_uint32  *bufs1, *bufs2;
+int32_t    w, h, d, wplt, wpld;
+int32_t   *tabval, *tab38, *tab14;
+uint32_t  *datat, *datad;
+uint32_t  *bufs1, *bufs2;
 PIX       *pixt, *pixd;
 PIXCMAP   *cmap;
 
@@ -1066,8 +1066,8 @@ PIXCMAP   *cmap;
     wplt = pixGetWpl(pixt);
 
         /* Two line buffers, 1 for current line and 2 for next line */
-    bufs1 = (l_uint32 *)LEPT_CALLOC(wplt, sizeof(l_uint32));
-    bufs2 = (l_uint32 *)LEPT_CALLOC(wplt, sizeof(l_uint32));
+    bufs1 = (uint32_t *)LEPT_CALLOC(wplt, sizeof(uint32_t));
+    bufs2 = (uint32_t *)LEPT_CALLOC(wplt, sizeof(uint32_t));
     if (!bufs1 || !bufs2) {
         LEPT_FREE(bufs1);
         LEPT_FREE(bufs2);
@@ -1112,20 +1112,20 @@ PIXCMAP   *cmap;
  *  below and in grayquant.c.
  */
 static void
-ditherTo2bppLow(l_uint32  *datad,
-                l_int32    w,
-                l_int32    h,
-                l_int32    wpld,
-                l_uint32  *datas,
-                l_int32    wpls,
-                l_uint32  *bufs1,
-                l_uint32  *bufs2,
-                l_int32   *tabval,
-                l_int32   *tab38,
-                l_int32   *tab14)
+ditherTo2bppLow(uint32_t  *datad,
+                int32_t    w,
+                int32_t    h,
+                int32_t    wpld,
+                uint32_t  *datas,
+                int32_t    wpls,
+                uint32_t  *bufs1,
+                uint32_t  *bufs2,
+                int32_t   *tabval,
+                int32_t   *tab38,
+                int32_t   *tab14)
 {
-l_int32      i;
-l_uint32    *lined;
+int32_t      i;
+uint32_t    *lined;
 
         /* do all lines except last line */
     memcpy(bufs2, datas, 4 * wpls);  /* prime the buffer */
@@ -1170,18 +1170,18 @@ l_uint32    *lined;
  *  generate a 2x grayscale image as an intermediary.
  */
 static void
-ditherTo2bppLineLow(l_uint32  *lined,
-                    l_int32    w,
-                    l_uint32  *bufs1,
-                    l_uint32  *bufs2,
-                    l_int32   *tabval,
-                    l_int32   *tab38,
-                    l_int32   *tab14,
-                    l_int32    lastlineflag)
+ditherTo2bppLineLow(uint32_t  *lined,
+                    int32_t    w,
+                    uint32_t  *bufs1,
+                    uint32_t  *bufs2,
+                    int32_t   *tabval,
+                    int32_t   *tab38,
+                    int32_t   *tab14,
+                    int32_t    lastlineflag)
 {
-l_int32  j;
-l_int32  oval, tab38val, tab14val;
-l_uint8  rval, bval, dval;
+int32_t  j;
+int32_t  oval, tab38val, tab14val;
+uint8_t  rval, bval, dval;
 
     if (lastlineflag == 0) {
         for (j = 0; j < w - 1; j++) {
@@ -1247,20 +1247,20 @@ l_uint8  rval, bval, dval;
  *
  * \return  0 if OK, 1 on error
  */
-static l_int32
-make8To2DitherTables(l_int32 **ptabval,
-                     l_int32 **ptab38,
-                     l_int32 **ptab14,
-                     l_int32   cliptoblack,
-                     l_int32   cliptowhite)
+static int32_t
+make8To2DitherTables(int32_t **ptabval,
+                     int32_t **ptab38,
+                     int32_t **ptab14,
+                     int32_t   cliptoblack,
+                     int32_t   cliptowhite)
 {
-l_int32   i;
-l_int32  *tabval, *tab38, *tab14;
+int32_t   i;
+int32_t  *tabval, *tab38, *tab14;
 
         /* 3 lookup tables: 2-bit value, (3/8)excess, and (1/4)excess */
-    tabval = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
-    tab38 = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
-    tab14 = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
+    tabval = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
+    tab38 = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
+    tab14 = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
     *ptabval = tabval;
     *ptab38 = tab38;
     *ptab14 = tab14;
@@ -1354,12 +1354,12 @@ l_int32  *tabval, *tab38, *tab14;
  */
 PIX *
 pixThresholdTo2bpp(PIX     *pixs,
-                   l_int32  nlevels,
-                   l_int32  cmapflag)
+                   int32_t  nlevels,
+                   int32_t  cmapflag)
 {
-l_int32   *qtab;
-l_int32    w, h, d, wplt, wpld;
-l_uint32  *datat, *datad;
+int32_t   *qtab;
+int32_t    w, h, d, wplt, wpld;
+uint32_t  *datat, *datad;
 PIX       *pixt, *pixd;
 PIXCMAP   *cmap;
 
@@ -1415,16 +1415,16 @@ PIXCMAP   *cmap;
  *  of output consisiting of four 2-bit pixels.
  */
 static void
-thresholdTo2bppLow(l_uint32  *datad,
-                   l_int32    h,
-                   l_int32    wpld,
-                   l_uint32  *datas,
-                   l_int32    wpls,
-                   l_int32   *tab)
+thresholdTo2bppLow(uint32_t  *datad,
+                   int32_t    h,
+                   int32_t    wpld,
+                   uint32_t  *datas,
+                   int32_t    wpls,
+                   int32_t   *tab)
 {
-l_uint8    sval1, sval2, sval3, sval4, dval;
-l_int32    i, j, k;
-l_uint32  *lines, *lined;
+uint8_t    sval1, sval2, sval3, sval4, dval;
+int32_t    i, j, k;
+uint32_t  *lines, *lined;
 
     for (i = 0; i < h; i++) {
         lines = datas + i * wpls;
@@ -1494,12 +1494,12 @@ l_uint32  *lines, *lined;
  */
 PIX *
 pixThresholdTo4bpp(PIX     *pixs,
-                   l_int32  nlevels,
-                   l_int32  cmapflag)
+                   int32_t  nlevels,
+                   int32_t  cmapflag)
 {
-l_int32   *qtab;
-l_int32    w, h, d, wplt, wpld;
-l_uint32  *datat, *datad;
+int32_t   *qtab;
+int32_t    w, h, d, wplt, wpld;
+uint32_t  *datat, *datad;
 PIX       *pixt, *pixd;
 PIXCMAP   *cmap;
 
@@ -1555,17 +1555,17 @@ PIXCMAP   *cmap;
  *  of output consisiting of four 4-bit pixels.
  */
 static void
-thresholdTo4bppLow(l_uint32  *datad,
-                   l_int32    h,
-                   l_int32    wpld,
-                   l_uint32  *datas,
-                   l_int32    wpls,
-                   l_int32   *tab)
+thresholdTo4bppLow(uint32_t  *datad,
+                   int32_t    h,
+                   int32_t    wpld,
+                   uint32_t  *datas,
+                   int32_t    wpls,
+                   int32_t   *tab)
 {
-l_uint8    sval1, sval2, sval3, sval4;
-l_uint16   dval;
-l_int32    i, j, k;
-l_uint32  *lines, *lined;
+uint8_t    sval1, sval2, sval3, sval4;
+uint16_t   dval;
+int32_t    i, j, k;
+uint32_t  *lines, *lined;
 
     for (i = 0; i < h; i++) {
         lines = datas + i * wpls;
@@ -1609,12 +1609,12 @@ l_uint32  *lines, *lined;
  */
 PIX *
 pixThresholdOn8bpp(PIX     *pixs,
-                   l_int32  nlevels,
-                   l_int32  cmapflag)
+                   int32_t  nlevels,
+                   int32_t  cmapflag)
 {
-l_int32   *qtab;  /* quantization table */
-l_int32    i, j, w, h, wpld, val, newval;
-l_uint32  *datad, *lined;
+int32_t   *qtab;  /* quantization table */
+int32_t    i, j, w, h, wpld, val, newval;
+uint32_t  *datad, *lined;
 PIX       *pixd;
 PIXCMAP   *cmap;
 
@@ -1709,14 +1709,14 @@ PIXCMAP   *cmap;
 PIX *
 pixThresholdGrayArb(PIX         *pixs,
                     const char  *edgevals,
-                    l_int32      outdepth,
-                    l_int32      use_average,
-                    l_int32      setblack,
-                    l_int32      setwhite)
+                    int32_t      outdepth,
+                    int32_t      use_average,
+                    int32_t      setblack,
+                    int32_t      setwhite)
 {
-l_int32   *qtab;
-l_int32    w, h, d, i, j, n, wplt, wpld, val, newval;
-l_uint32  *datat, *datad, *linet, *lined;
+int32_t   *qtab;
+int32_t    w, h, d, i, j, n, wplt, wpld, val, newval;
+uint32_t  *datat, *datad, *linet, *lined;
 NUMA      *na;
 PIX       *pixt, *pixd;
 PIXCMAP   *cmap;
@@ -1814,13 +1814,13 @@ PIXCMAP   *cmap;
  *          grayscale src pix, and generating a colormapped dest pix.
  * </pre>
  */
-l_int32 *
-makeGrayQuantIndexTable(l_int32  nlevels)
+int32_t *
+makeGrayQuantIndexTable(int32_t  nlevels)
 {
-l_int32  *tab;
-l_int32   i, j, thresh;
+int32_t  *tab;
+int32_t   i, j, thresh;
 
-    tab = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
+    tab = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
     for (i = 0; i < 256; i++) {
         for (j = 0; j < nlevels; j++) {
             thresh = 255 * (2 * j + 1) / (2 * nlevels - 2);
@@ -1863,14 +1863,14 @@ l_int32   i, j, thresh;
  *          use a colormap.
  * </pre>
  */
-static l_int32 *
-makeGrayQuantTargetTable(l_int32  nlevels,
-                         l_int32  depth)
+static int32_t *
+makeGrayQuantTargetTable(int32_t  nlevels,
+                         int32_t  depth)
 {
-l_int32  *tab;
-l_int32   i, j, thresh, maxval, quantval;
+int32_t  *tab;
+int32_t   i, j, thresh, maxval, quantval;
 
-    tab = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
+    tab = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
     maxval = (1 << depth) - 1;
     if (depth < 8)
         nlevels = 1 << depth;
@@ -1918,12 +1918,12 @@ l_int32   i, j, thresh, maxval, quantval;
  */
 l_ok
 makeGrayQuantTableArb(NUMA      *na,
-                      l_int32    outdepth,
-                      l_int32  **ptab,
+                      int32_t    outdepth,
+                      int32_t  **ptab,
                       PIXCMAP  **pcmap)
 {
-l_int32   i, j, n, jstart, ave, val;
-l_int32  *tab;
+int32_t   i, j, n, jstart, ave, val;
+int32_t  *tab;
 PIXCMAP  *cmap;
 
     if (!ptab)
@@ -1940,7 +1940,7 @@ PIXCMAP  *cmap;
 
     if ((cmap = pixcmapCreate(outdepth)) == NULL)
         return ERROR_INT("cmap not made", __func__, 1);
-    tab = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
+    tab = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
     *ptab = tab;
     *pcmap = cmap;
 
@@ -1986,15 +1986,15 @@ PIXCMAP  *cmap;
  *          of bins must not exceed 2^outdepth.
  * </pre>
  */
-static l_int32
+static int32_t
 makeGrayQuantColormapArb(PIX       *pixs,
-                         l_int32   *tab,
-                         l_int32    outdepth,
+                         int32_t   *tab,
+                         int32_t    outdepth,
                          PIXCMAP  **pcmap)
 {
-l_int32    i, j, index, w, h, d, nbins, wpl, factor, val;
-l_int32   *bincount, *binave, *binstart;
-l_uint32  *line, *data;
+int32_t    i, j, index, w, h, d, nbins, wpl, factor, val;
+int32_t   *bincount, *binave, *binstart;
+uint32_t  *line, *data;
 
     if (!pcmap)
         return ERROR_INT("&cmap not defined", __func__, 1);
@@ -2011,13 +2011,13 @@ l_uint32  *line, *data;
         return ERROR_INT("more bins than cmap levels", __func__, 1);
 
         /* Find the count and weighted count for each bin */
-    if ((bincount = (l_int32 *)LEPT_CALLOC(nbins, sizeof(l_int32))) == NULL)
+    if ((bincount = (int32_t *)LEPT_CALLOC(nbins, sizeof(int32_t))) == NULL)
         return ERROR_INT("calloc fail for bincount", __func__, 1);
-    if ((binave = (l_int32 *)LEPT_CALLOC(nbins, sizeof(l_int32))) == NULL) {
+    if ((binave = (int32_t *)LEPT_CALLOC(nbins, sizeof(int32_t))) == NULL) {
         LEPT_FREE(bincount);
         return ERROR_INT("calloc fail for binave", __func__, 1);
     }
-    factor = (l_int32)(sqrt((l_float64)(w * h) / 30000.) + 0.5);
+    factor = (int32_t)(sqrt((l_float64)(w * h) / 30000.) + 0.5);
     factor = L_MAX(1, factor);
     data = pixGetData(pixs);
     wpl = pixGetWpl(pixs);
@@ -2031,7 +2031,7 @@ l_uint32  *line, *data;
     }
 
         /* Find the smallest gray values in each bin */
-    binstart = (l_int32 *)LEPT_CALLOC(nbins, sizeof(l_int32));
+    binstart = (int32_t *)LEPT_CALLOC(nbins, sizeof(int32_t));
     for (i = 1, index = 1; i < 256; i++) {
         if (tab[i] < index) continue;
         if (tab[i] == index)
@@ -2091,17 +2091,17 @@ l_uint32  *line, *data;
  */
 PIX *
 pixGenerateMaskByBand32(PIX       *pixs,
-                        l_uint32   refval,
-                        l_int32    delm,
-                        l_int32    delp,
+                        uint32_t   refval,
+                        int32_t    delm,
+                        int32_t    delp,
                         l_float32  fractm,
                         l_float32  fractp)
 {
-l_int32    i, j, w, h, d, wpls, wpld;
-l_int32    rref, gref, bref, rval, gval, bval;
-l_int32    rmin, gmin, bmin, rmax, gmax, bmax;
-l_uint32   pixel;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    i, j, w, h, d, wpls, wpld;
+int32_t    rref, gref, bref, rval, gval, bval;
+int32_t    rmin, gmin, bmin, rmax, gmax, bmax;
+uint32_t   pixel;
+uint32_t  *datas, *datad, *lines, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -2123,12 +2123,12 @@ PIX       *pixd;
         gmax = gref + delm;
         bmax = bref + delm;
     } else if (delm == 0 && delp == 0) {
-        rmin = (l_int32)((1.0 - fractm) * rref);
-        gmin = (l_int32)((1.0 - fractm) * gref);
-        bmin = (l_int32)((1.0 - fractm) * bref);
-        rmax = rref + (l_int32)(fractp * (255 - rref));
-        gmax = gref + (l_int32)(fractp * (255 - gref));
-        bmax = bref + (l_int32)(fractp * (255 - bref));
+        rmin = (int32_t)((1.0 - fractm) * rref);
+        gmin = (int32_t)((1.0 - fractm) * gref);
+        bmin = (int32_t)((1.0 - fractm) * bref);
+        rmax = rref + (int32_t)(fractp * (255 - rref));
+        gmax = gref + (int32_t)(fractp * (255 - gref));
+        bmax = bref + (int32_t)(fractp * (255 - bref));
     } else {
         L_ERROR("bad input: either (delm, delp) or (fractm, fractp) "
                 "must be 0\n", __func__);
@@ -2187,14 +2187,14 @@ PIX       *pixd;
  */
 PIX *
 pixGenerateMaskByDiscr32(PIX      *pixs,
-                         l_uint32  refval1,
-                         l_uint32  refval2,
-                         l_int32   distflag)
+                         uint32_t  refval1,
+                         uint32_t  refval2,
+                         int32_t   distflag)
 {
-l_int32    i, j, w, h, d, wpls, wpld;
-l_int32    rref1, gref1, bref1, rref2, gref2, bref2, rval, gval, bval;
-l_uint32   pixel, dist1, dist2;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    i, j, w, h, d, wpls, wpld;
+int32_t    rref1, gref1, bref1, rref2, gref2, bref2, rval, gval, bval;
+uint32_t   pixel, dist1, dist2;
+uint32_t  *datas, *datad, *lines, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -2302,12 +2302,12 @@ pixGrayQuantFromHisto(PIX       *pixd,
                       PIX       *pixs,
                       PIX       *pixm,
                       l_float32  minfract,
-                      l_int32    maxsize)
+                      int32_t    maxsize)
 {
-l_int32    w, h, wd, hd, wm, hm, wpls, wplm, wpld;
-l_int32    nc, nestim, i, j, vals, vald;
-l_int32   *lut;
-l_uint32  *datas, *datam, *datad, *lines, *linem, *lined;
+int32_t    w, h, wd, hd, wm, hm, wpls, wplm, wpld;
+int32_t    nc, nestim, i, j, vals, vald;
+int32_t   *lut;
+uint32_t  *datas, *datam, *datad, *lines, *linem, *lined;
 NUMA      *na;
 PIX       *pixmr;  /* resized mask */
 PIXCMAP   *cmap;
@@ -2335,7 +2335,7 @@ PIXCMAP   *cmap;
         if (w != wd || h != hd)
             return (PIX *)ERROR_PTR("pixs, pixd sizes differ", __func__, NULL);
         nc = pixcmapGetCount(cmap);
-        nestim = nc + (l_int32)(1.5 * 255 / maxsize);
+        nestim = nc + (int32_t)(1.5 * 255 / maxsize);
         lept_stderr( "nestim = %d\n", nestim);
         if (nestim > 255) {
             L_ERROR("Estimate %d colors!\n", __func__, nestim);
@@ -2427,15 +2427,15 @@ PIXCMAP   *cmap;
  *      (1) This static function must be called from pixGrayQuantFromHisto()
  * </pre>
  */
-static l_int32
+static int32_t
 numaFillCmapFromHisto(NUMA      *na,
                       PIXCMAP   *cmap,
                       l_float32  minfract,
-                      l_int32    maxsize,
-                      l_int32  **plut)
+                      int32_t    maxsize,
+                      int32_t  **plut)
 {
-l_int32    mincount, index, sum, wtsum, span, istart, i, val, ret;
-l_int32   *iahisto, *lut;
+int32_t    mincount, index, sum, wtsum, span, istart, i, val, ret;
+int32_t   *iahisto, *lut;
 l_float32  total;
 
     if (!plut)
@@ -2447,9 +2447,9 @@ l_float32  total;
         return ERROR_INT("cmap not defined", __func__, 1);
 
     numaGetSum(na, &total);
-    mincount = (l_int32)(minfract * total);
+    mincount = (int32_t)(minfract * total);
     iahisto = numaGetIArray(na);
-    lut = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
+    lut = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
     *plut = lut;
     index = pixcmapGetCount(cmap);  /* start with number of colors
                                      * already reserved */
@@ -2480,7 +2480,7 @@ l_float32  total;
         }
 
             /* Found new color; sum > 0 */
-        val = (l_int32)((l_float32)wtsum / (l_float32)sum + 0.5);
+        val = (int32_t)((l_float32)wtsum / (l_float32)sum + 0.5);
         ret = pixcmapAddColor(cmap, val, val, val);
         istart = i + 1;
         sum = 0;
@@ -2489,7 +2489,7 @@ l_float32  total;
     }
     if (istart < 256 && sum > 0) {  /* last one */
         span = 256 - istart;
-        val = (l_int32)((l_float32)wtsum / (l_float32)sum + 0.5);
+        val = (int32_t)((l_float32)wtsum / (l_float32)sum + 0.5);
         ret = pixcmapAddColor(cmap, val, val, val);
     }
 
@@ -2519,12 +2519,12 @@ l_float32  total;
 PIX *
 pixGrayQuantFromCmap(PIX      *pixs,
                      PIXCMAP  *cmap,
-                     l_int32   mindepth)
+                     int32_t   mindepth)
 {
-l_int32    i, j, index, w, h, d, depth, wpls, wpld;
-l_int32    hascolor, vals, vald;
-l_int32   *tab;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    i, j, index, w, h, d, depth, wpls, wpld;
+int32_t    hascolor, vals, vald;
+int32_t   *tab;
+uint32_t  *datas, *datad, *lines, *lined;
 PIXCMAP   *cmapd;
 PIX       *pixd;
 
@@ -2552,7 +2552,7 @@ PIX       *pixd;
     }
 
         /* Make LUT into colormap */
-    tab = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
+    tab = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
     for (i = 0; i < 256; i++) {
         pixcmapGetNearestGrayIndex(cmapd, i, &index);
         tab[i] = index;
@@ -2609,13 +2609,13 @@ PIX       *pixd;
  */
 PIX *
 pixDitherToBinaryLUT(PIX     *pixs,
-                     l_int32  lowerclip,
-                     l_int32  upperclip)
+                     int32_t  lowerclip,
+                     int32_t  upperclip)
 {
-l_int32    w, h, d, wplt, wpld;
-l_int32   *tabval, *tab38, *tab14;
-l_uint32  *datat, *datad;
-l_uint32  *bufs1, *bufs2;
+int32_t    w, h, d, wplt, wpld;
+int32_t   *tabval, *tab38, *tab14;
+uint32_t  *datat, *datad;
+uint32_t  *bufs1, *bufs2;
 PIX       *pixt, *pixd;
 
     if (!pixs)
@@ -2641,8 +2641,8 @@ PIX       *pixt, *pixd;
     wplt = pixGetWpl(pixt);
 
         /* Two line buffers, 1 for current line and 2 for next line */
-    bufs1 = (l_uint32 *)LEPT_CALLOC(wplt, sizeof(l_uint32));
-    bufs2 = (l_uint32 *)LEPT_CALLOC(wplt, sizeof(l_uint32));
+    bufs1 = (uint32_t *)LEPT_CALLOC(wplt, sizeof(uint32_t));
+    bufs2 = (uint32_t *)LEPT_CALLOC(wplt, sizeof(uint32_t));
     if (!bufs1 || !bufs2) {
         LEPT_FREE(bufs1);
         LEPT_FREE(bufs2);
@@ -2680,20 +2680,20 @@ PIX       *pixt, *pixd;
  *  only constraint is that the sum is 1.  See other comments below.
  */
 void
-ditherToBinaryLUTLow(l_uint32  *datad,
-                     l_int32    w,
-                     l_int32    h,
-                     l_int32    wpld,
-                     l_uint32  *datas,
-                     l_int32    wpls,
-                     l_uint32  *bufs1,
-                     l_uint32  *bufs2,
-                     l_int32   *tabval,
-                     l_int32   *tab38,
-                     l_int32   *tab14)
+ditherToBinaryLUTLow(uint32_t  *datad,
+                     int32_t    w,
+                     int32_t    h,
+                     int32_t    wpld,
+                     uint32_t  *datas,
+                     int32_t    wpls,
+                     uint32_t  *bufs1,
+                     uint32_t  *bufs2,
+                     int32_t   *tabval,
+                     int32_t   *tab38,
+                     int32_t   *tab14)
 {
-l_int32      i;
-l_uint32    *lined;
+int32_t      i;
+uint32_t    *lined;
 
         /* do all lines except last line */
     memcpy(bufs2, datas, 4 * wpls);  /* prime the buffer */
@@ -2726,18 +2726,18 @@ l_uint32    *lined;
  * \return  void
  */
 void
-ditherToBinaryLineLUTLow(l_uint32  *lined,
-                         l_int32    w,
-                         l_uint32  *bufs1,
-                         l_uint32  *bufs2,
-                         l_int32   *tabval,
-                         l_int32   *tab38,
-                         l_int32   *tab14,
-                         l_int32    lastlineflag)
+ditherToBinaryLineLUTLow(uint32_t  *lined,
+                         int32_t    w,
+                         uint32_t  *bufs1,
+                         uint32_t  *bufs2,
+                         int32_t   *tabval,
+                         int32_t   *tab38,
+                         int32_t   *tab14,
+                         int32_t    lastlineflag)
 {
-l_int32  j;
-l_int32  oval, tab38val, tab14val;
-l_uint8  rval, bval, dval;
+int32_t  j;
+int32_t  oval, tab38val, tab14val;
+uint8_t  rval, bval, dval;
 
     if (lastlineflag == 0) {
         for (j = 0; j < w - 1; j++) {
@@ -2815,14 +2815,14 @@ l_uint8  rval, bval, dval;
  * \return  0 if OK, 1 on error
  */
 l_ok
-make8To1DitherTables(l_int32 **ptabval,
-                     l_int32 **ptab38,
-                     l_int32 **ptab14,
-                     l_int32   lowerclip,
-                     l_int32   upperclip)
+make8To1DitherTables(int32_t **ptabval,
+                     int32_t **ptab38,
+                     int32_t **ptab14,
+                     int32_t   lowerclip,
+                     int32_t   upperclip)
 {
-l_int32   i;
-l_int32  *tabval, *tab38, *tab14;
+int32_t   i;
+int32_t  *tabval, *tab38, *tab14;
 
     if (ptabval) *ptabval = NULL;
     if (ptab38) *ptab38 = NULL;
@@ -2831,9 +2831,9 @@ l_int32  *tabval, *tab38, *tab14;
         return ERROR_INT("table ptrs not all defined", __func__, 1);
 
         /* 3 lookup tables: 1-bit value, (3/8)excess, and (1/4)excess */
-    tabval = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
-    tab38 = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
-    tab14 = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
+    tabval = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
+    tab38 = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
+    tab14 = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
     if (!tabval || !tab38 || !tab14)
         return ERROR_INT("calloc failure to make small table", __func__, 1);
     *ptabval = tabval;

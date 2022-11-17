@@ -42,11 +42,11 @@
 
 #include "allheaders.h"
 
-static L_ASET *BuildSet(PIX *pix, l_int32 factor, l_int32 print);
-static void TestSetIterator(L_ASET *s, l_int32  print);
+static L_ASET *BuildSet(PIX *pix, int32_t factor, int32_t print);
+static void TestSetIterator(L_ASET *s, int32_t  print);
 
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
 L_ASET  *s;
@@ -78,12 +78,12 @@ PIX     *pix;
 
 static L_ASET *
 BuildSet(PIX     *pix,
-         l_int32  factor,
-         l_int32  print)
+         int32_t  factor,
+         int32_t  print)
 {
-l_int32    i, j, w, h, wpl, val;
-l_uint32   val32;
-l_uint32  *data, *line;
+int32_t    i, j, w, h, wpl, val;
+uint32_t   val32;
+uint32_t  *data, *line;
 L_ASET    *s;
 PIXCMAP   *cmap;
 RB_TYPE    key;
@@ -121,9 +121,9 @@ RB_TYPE   *pval;
 
 static void
 TestSetIterator(L_ASET  *s,
-                l_int32  print)
+                int32_t  print)
 {
-l_int32       count;
+int32_t       count;
 L_ASET_NODE  *n;
 
     n = l_asetGetFirst(s);

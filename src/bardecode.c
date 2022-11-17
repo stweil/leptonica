@@ -32,9 +32,9 @@
  *          char            *barcodeDispatchDecoder()
  *
  *      Format Determination
- *          static l_int32   barcodeFindFormat()
- *          l_int32          barcodeFormatIsSupported()
- *          static l_int32   barcodeVerifyFormat()
+ *          static int32_t   barcodeFindFormat()
+ *          int32_t          barcodeFormatIsSupported()
+ *          static int32_t   barcodeVerifyFormat()
  *
  *      Decode 2 of 5
  *          static char     *barcodeDecode2of5()
@@ -67,16 +67,16 @@
 #include "allheaders.h"
 #include "readbarcode.h"
 
-static l_int32 barcodeFindFormat(char *barstr);
-static l_int32 barcodeVerifyFormat(char *barstr, l_int32 format,
-                                   l_int32 *pvalid, l_int32 *preverse);
-static char *barcodeDecode2of5(char *barstr, l_int32 debugflag);
-static char *barcodeDecodeI2of5(char *barstr, l_int32 debugflag);
-static char *barcodeDecode93(char *barstr, l_int32 debugflag);
-static char *barcodeDecode39(char *barstr, l_int32 debugflag);
-static char *barcodeDecodeCodabar(char *barstr, l_int32 debugflag);
-static char *barcodeDecodeUpca(char *barstr, l_int32 debugflag);
-static char *barcodeDecodeEan13(char *barstr, l_int32 first, l_int32 debugflag);
+static int32_t barcodeFindFormat(char *barstr);
+static int32_t barcodeVerifyFormat(char *barstr, int32_t format,
+                                   int32_t *pvalid, int32_t *preverse);
+static char *barcodeDecode2of5(char *barstr, int32_t debugflag);
+static char *barcodeDecodeI2of5(char *barstr, int32_t debugflag);
+static char *barcodeDecode93(char *barstr, int32_t debugflag);
+static char *barcodeDecode39(char *barstr, int32_t debugflag);
+static char *barcodeDecodeCodabar(char *barstr, int32_t debugflag);
+static char *barcodeDecodeUpca(char *barstr, int32_t debugflag);
+static char *barcodeDecodeEan13(char *barstr, int32_t first, int32_t debugflag);
 
 #ifndef  NO_CONSOLE_IO
 #define  DEBUG_CODES       0
@@ -95,8 +95,8 @@ static char *barcodeDecodeEan13(char *barstr, l_int32 first, l_int32 debugflag);
  */
 char *
 barcodeDispatchDecoder(char    *barstr,
-                       l_int32  format,
-                       l_int32  debugflag)
+                       int32_t  format,
+                       int32_t  debugflag)
 {
 char  *data = NULL;
 
@@ -138,10 +138,10 @@ char  *data = NULL;
  * \param[in]    barstr    of barcode widths, in set {1,2,3,4}
  * \return  format for barcode, or L_BF_UNKNOWN if not recognized
  */
-static l_int32
+static int32_t
 barcodeFindFormat(char    *barstr)
 {
-l_int32  i, format, valid;
+int32_t  i, format, valid;
 
    if (!barstr)
        return ERROR_INT("barstr not defined", __func__, L_BF_UNKNOWN);
@@ -166,10 +166,10 @@ l_int32  i, format, valid;
  * \return  1 if format is one of those supported; 0 otherwise
  *
  */
-l_int32
-barcodeFormatIsSupported(l_int32  format)
+int32_t
+barcodeFormatIsSupported(int32_t  format)
 {
-l_int32  i;
+int32_t  i;
 
    for (i = 0; i < NumSupportedBarcodeFormats; i++) {
        if (format == SupportedBarcodeFormat[i])
@@ -200,14 +200,14 @@ l_int32  i;
  *      (4) (TODO) Add to this as more formats are supported.
  * </pre>
  */
-static l_int32
+static int32_t
 barcodeVerifyFormat(char     *barstr,
-                    l_int32   format,
-                    l_int32  *pvalid,
-                    l_int32  *preverse)
+                    int32_t   format,
+                    int32_t  *pvalid,
+                    int32_t  *preverse)
 {
 char    *revbarstr;
-l_int32  i, start, len, stop, mid;
+int32_t  i, start, len, stop, mid;
 
     if (!pvalid)
         return ERROR_INT("barstr not defined", __func__, 1);
@@ -370,11 +370,11 @@ l_int32  i, start, len, stop, mid;
  */
 static char *
 barcodeDecode2of5(char    *barstr,
-                  l_int32  debugflag)
+                  int32_t  debugflag)
 {
 char    *data, *vbarstr;
 char     code[10];
-l_int32  valid, reverse, i, j, len, error, ndigits, start, found;
+int32_t  valid, reverse, i, j, len, error, ndigits, start, found;
 
     if (!barstr)
         return (char *)ERROR_PTR("barstr not defined", __func__, NULL);
@@ -448,11 +448,11 @@ l_int32  valid, reverse, i, j, len, error, ndigits, start, found;
  */
 static char *
 barcodeDecodeI2of5(char    *barstr,
-                   l_int32  debugflag)
+                   int32_t  debugflag)
 {
 char    *data, *vbarstr;
 char     code1[6], code2[6];
-l_int32  valid, reverse, i, j, len, error, npairs, start, found;
+int32_t  valid, reverse, i, j, len, error, npairs, start, found;
 
     if (!barstr)
         return (char *)ERROR_PTR("barstr not defined", __func__, NULL);
@@ -543,13 +543,13 @@ l_int32  valid, reverse, i, j, len, error, npairs, start, found;
  */
 static char *
 barcodeDecode93(char    *barstr,
-                l_int32  debugflag)
+                int32_t  debugflag)
 {
 const char  *checkc, *checkk;
 char        *data, *vbarstr;
 char         code[7];
-l_int32      valid, reverse, i, j, len, error, nsymb, start, found, sum;
-l_int32     *index;
+int32_t      valid, reverse, i, j, len, error, nsymb, start, found, sum;
+int32_t     *index;
 
     if (!barstr)
         return (char *)ERROR_PTR("barstr not defined", __func__, NULL);
@@ -574,7 +574,7 @@ l_int32     *index;
         /* Decode the symbols */
     nsymb = (len - 13) / 6;
     data = (char *)LEPT_CALLOC(nsymb + 1, sizeof(char));
-    index = (l_int32 *)LEPT_CALLOC(nsymb, sizeof(l_int32));
+    index = (int32_t *)LEPT_CALLOC(nsymb, sizeof(int32_t));
     memset(code, 0, 7);
     error = FALSE;
     for (i = 0; i < nsymb; i++) {
@@ -658,11 +658,11 @@ l_int32     *index;
  */
 static char *
 barcodeDecode39(char    *barstr,
-                l_int32  debugflag)
+                int32_t  debugflag)
 {
 char     *data, *vbarstr;
 char      code[10];
-l_int32   valid, reverse, i, j, len, error, nsymb, start, found;
+int32_t   valid, reverse, i, j, len, error, nsymb, start, found;
 
     if (!barstr)
         return (char *)ERROR_PTR("barstr not defined", __func__, NULL);
@@ -739,11 +739,11 @@ l_int32   valid, reverse, i, j, len, error, nsymb, start, found;
  */
 static char *
 barcodeDecodeCodabar(char    *barstr,
-                     l_int32  debugflag)
+                     int32_t  debugflag)
 {
 char     *data, *vbarstr;
 char      code[8];
-l_int32   valid, reverse, i, j, len, error, nsymb, start, found;
+int32_t   valid, reverse, i, j, len, error, nsymb, start, found;
 
     if (!barstr)
         return (char *)ERROR_PTR("barstr not defined", __func__, NULL);
@@ -825,11 +825,11 @@ l_int32   valid, reverse, i, j, len, error, nsymb, start, found;
  */
 static char *
 barcodeDecodeUpca(char    *barstr,
-                  l_int32  debugflag)
+                  int32_t  debugflag)
 {
 char     *data, *vbarstr;
 char      code[5];
-l_int32   valid, i, j, len, error, start, found, sum, checkdigit;
+int32_t   valid, i, j, len, error, start, found, sum, checkdigit;
 
     if (!barstr)
         return (char *)ERROR_PTR("barstr not defined", __func__, NULL);
@@ -940,12 +940,12 @@ l_int32   valid, i, j, len, error, start, found, sum, checkdigit;
  */
 static char *
 barcodeDecodeEan13(char    *barstr,
-                   l_int32  first,
-                   l_int32  debugflag)
+                   int32_t  first,
+                   int32_t  debugflag)
 {
 char     *data, *vbarstr;
 char      code[5];
-l_int32   valid, i, j, len, error, start, found, sum, checkdigit;
+int32_t   valid, i, j, len, error, start, found, sum, checkdigit;
 
     if (!barstr)
         return (char *)ERROR_PTR("barstr not defined", __func__, NULL);

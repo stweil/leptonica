@@ -44,7 +44,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32       i, j, w, h;
+int32_t       i, j, w, h;
 l_float32     t1, t2;
 BOX          *box;
 GPLOT        *gplot;

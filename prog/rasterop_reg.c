@@ -43,8 +43,8 @@
 int main(int    argc,
          char **argv)
 {
-l_int32       i, j, w, h, same, width, height, cx, cy;
-l_uint32      val;
+int32_t       i, j, w, h, same, width, height, cx, cy;
+uint32_t      val;
 BOX          *box;
 PIX          *pix0, *pixs, *pixse, *pixd1, *pixd2;
 SEL          *sel;

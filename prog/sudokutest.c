@@ -49,8 +49,8 @@ static const char *startsol = "3 8 7 2 6 4 1 9 5 "
 int main(int    argc,
          char **argv)
 {
-l_int32    unique;
-l_int32   *array;
+int32_t    unique;
+int32_t   *array;
 L_SUDOKU  *sud;
 
     if (argc != 1 && argc != 2)

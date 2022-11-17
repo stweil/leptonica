@@ -40,17 +40,17 @@
 #include "string.h"
 #include "allheaders.h"
 
-static const l_int32 scaledw = 0;
-static const l_int32 scaledh = 40;
+static const int32_t scaledw = 0;
+static const int32_t scaledh = 40;
 
 static const l_float32  MinScore[] = {0.6f, 0.7f, 0.9f};
-static const l_int32  MinTarget[] = {4, 5, 4};
-static const l_int32  MinSize[] = {3, 2, 3};
+static const int32_t  MinTarget[] = {4, 5, 4};
+static const int32_t  MinSize[] = {3, 2, 3};
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32   i, linew, same;
+int32_t   i, linew, same;
 BOXA     *boxat;
 PIX      *pixd, *pix1, *pix2, *pixdb;
 PIXA     *pixa1, *pixa2, *pixa3;

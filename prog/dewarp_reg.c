@@ -39,10 +39,10 @@
 
 #include "allheaders.h"
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32       i, n;
+int32_t       i, n;
 l_float32     a, b, c;
 L_DEWARP     *dew1, *dew2;
 L_DEWARPA    *dewa1, *dewa2;

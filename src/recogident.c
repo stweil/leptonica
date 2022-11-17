@@ -29,32 +29,32 @@
  * <pre>
  *
  *      Top-level identification
- *         l_int32             recogIdentifyMultiple()
+ *         int32_t             recogIdentifyMultiple()
  *
  *      Segmentation and noise removal
- *         l_int32             recogSplitIntoCharacters()
+ *         int32_t             recogSplitIntoCharacters()
  *
  *      Greedy character splitting
- *         l_int32             recogCorrelationBestRow()
- *         l_int32             recogCorrelationBestChar()
- *         static l_int32      pixCorrelationBestShift()
+ *         int32_t             recogCorrelationBestRow()
+ *         int32_t             recogCorrelationBestChar()
+ *         static int32_t      pixCorrelationBestShift()
  *
  *      Low-level identification of single characters
- *         l_int32             recogIdentifyPixa()
- *         l_int32             recogIdentifyPix()
- *         l_int32             recogSkipIdentify()
+ *         int32_t             recogIdentifyPixa()
+ *         int32_t             recogIdentifyPix()
+ *         int32_t             recogSkipIdentify()
  *
  *      Operations for handling identification results
  *         static L_RCHA      *rchaCreate()
  *         void                rchaDestroy()
  *         static L_RCH       *rchCreate()
  *         void                rchDestroy()
- *         l_int32             rchaExtract()
- *         l_int32             rchExtract()
- *         static l_int32      transferRchToRcha()
+ *         int32_t             rchaExtract()
+ *         int32_t             rchExtract()
+ *         static int32_t      transferRchToRcha()
  *
  *      Preprocessing and filtering
- *         l_int32             recogProcessToIdentify()
+ *         int32_t             recogProcessToIdentify()
  *         static PIX         *recogPreSplittingFilter()
  *         static PIX         *recogSplittingFilter()
  *
@@ -102,32 +102,32 @@
 #define  SPLIT_WITH_DID   1
 
     /* Padding on pix1: added before correlations and removed from result */
-static const l_int32    LeftRightPadding = 32;
+static const int32_t    LeftRightPadding = 32;
 
     /* Parameters for filtering and sorting connected components in splitter */
 static const l_float32  MinFillFactor = 0.10;
-static const l_int32  DefaultMinHeight = 15;  /* min unscaled height */
-static const l_int32  MinOverlap1 = 6;  /* in pass 1 of boxaSort2d() */
-static const l_int32  MinOverlap2 = 6;  /* in pass 2 of boxaSort2d() */
-static const l_int32  MinHeightPass1 = 5;  /* min height to start pass 1 */
+static const int32_t  DefaultMinHeight = 15;  /* min unscaled height */
+static const int32_t  MinOverlap1 = 6;  /* in pass 1 of boxaSort2d() */
+static const int32_t  MinOverlap2 = 6;  /* in pass 2 of boxaSort2d() */
+static const int32_t  MinHeightPass1 = 5;  /* min height to start pass 1 */
 
 
-static l_int32 pixCorrelationBestShift(PIX *pix1, PIX *pix2, NUMA *nasum1,
-                                       NUMA *namoment1, l_int32 area2,
-                                       l_int32 ycent2, l_int32 maxyshift,
-                                       l_int32 *tab8, l_int32 *pdelx,
-                                       l_int32 *pdely, l_float32 *pscore,
-                                       l_int32 debugflag );
-static L_RCH *rchCreate(l_int32 index, l_float32 score, char *text,
-                        l_int32 sample, l_int32 xloc, l_int32 yloc,
-                        l_int32 width);
+static int32_t pixCorrelationBestShift(PIX *pix1, PIX *pix2, NUMA *nasum1,
+                                       NUMA *namoment1, int32_t area2,
+                                       int32_t ycent2, int32_t maxyshift,
+                                       int32_t *tab8, int32_t *pdelx,
+                                       int32_t *pdely, l_float32 *pscore,
+                                       int32_t debugflag );
+static L_RCH *rchCreate(int32_t index, l_float32 score, char *text,
+                        int32_t sample, int32_t xloc, int32_t yloc,
+                        int32_t width);
 static L_RCHA *rchaCreate();
-static l_int32 transferRchToRcha(L_RCH *rch, L_RCHA *rcha);
-static PIX *recogPreSplittingFilter(L_RECOG *recog, PIX *pixs, l_int32 minh,
-                                    l_float32 minaf, l_int32 debug);
-static l_int32 recogSplittingFilter(L_RECOG *recog, PIX *pixs, l_int32 min,
-                                    l_float32 minaf, l_int32 *premove,
-                                    l_int32 debug);
+static int32_t transferRchToRcha(L_RCH *rch, L_RCHA *rcha);
+static PIX *recogPreSplittingFilter(L_RECOG *recog, PIX *pixs, int32_t minh,
+                                    l_float32 minaf, int32_t debug);
+static int32_t recogSplittingFilter(L_RECOG *recog, PIX *pixs, int32_t min,
+                                    l_float32 minaf, int32_t *premove,
+                                    int32_t debug);
 static void l_showIndicatorSplitValues(NUMA *na1, NUMA *na2, NUMA *na3,
                                        NUMA *na4, NUMA *na5, NUMA *na6);
 
@@ -162,14 +162,14 @@ static void l_showIndicatorSplitValues(NUMA *na1, NUMA *na2, NUMA *na3,
 l_ok
 recogIdentifyMultiple(L_RECOG  *recog,
                       PIX      *pixs,
-                      l_int32   minh,
-                      l_int32   skipsplit,
+                      int32_t   minh,
+                      int32_t   skipsplit,
                       BOXA    **pboxa,
                       PIXA    **ppixa,
                       PIX     **ppixdb,
-                      l_int32   debugsplit)
+                      int32_t   debugsplit)
 {
-l_int32  n;
+int32_t  n;
 BOXA    *boxa;
 PIX     *pixb;
 PIXA    *pixa;
@@ -248,15 +248,15 @@ PIXA    *pixa;
 l_ok
 recogSplitIntoCharacters(L_RECOG  *recog,
                          PIX      *pixs,
-                         l_int32   minh,
-                         l_int32   skipsplit,
+                         int32_t   minh,
+                         int32_t   skipsplit,
                          BOXA    **pboxa,
                          PIXA    **ppixa,
-                         l_int32   debug)
+                         int32_t   debug)
 {
-static l_int32  ind = 0;
+static int32_t  ind = 0;
 char     buf[32];
-l_int32  i, xoff, yoff, empty, maxw, bw, ncomp, scaling;
+int32_t  i, xoff, yoff, empty, maxw, bw, ncomp, scaling;
 BOX     *box;
 BOXA    *boxa1, *boxa2, *boxa3, *boxa4, *boxad;
 BOXAA   *baa;
@@ -405,10 +405,10 @@ recogCorrelationBestRow(L_RECOG  *recog,
                         NUMA    **pnascore,
                         NUMA    **pnaindex,
                         SARRAY  **psachar,
-                        l_int32   debug)
+                        int32_t   debug)
 {
 char      *charstr;
-l_int32    index, remove, w, h, bx, bw, bxc, bwc, w1, w2, w3;
+int32_t    index, remove, w, h, bx, bw, bxc, bwc, w1, w2, w3;
 l_float32  score;
 BOX       *box, *boxc, *boxtrans, *boxl, *boxr, *boxlt, *boxrt;
 BOXA      *boxat;
@@ -417,7 +417,7 @@ PIX       *pixb, *pixc, *pixl, *pixr, *pixdb, *pixd;
 PIXA      *pixar, *pixadb;
 SARRAY    *sachart;
 
-l_int32    iter;
+int32_t    iter;
 
     if (pnascore) *pnascore = NULL;
     if (pnaindex) *pnaindex = NULL;
@@ -583,12 +583,12 @@ recogCorrelationBestChar(L_RECOG    *recog,
                          PIX        *pixs,
                          BOX       **pbox,
                          l_float32  *pscore,
-                         l_int32    *pindex,
+                         int32_t    *pindex,
                          char      **pcharstr,
                          PIX       **ppixdb)
 {
-l_int32    i, n, w1, h1, w2, area2, ycent2, delx, dely;
-l_int32    bestdelx, bestdely, bestindex;
+int32_t    i, n, w1, h1, w2, area2, ycent2, delx, dely;
+int32_t    bestdelx, bestdely, bestindex;
 l_float32  score, bestscore;
 BOX       *box;
 BOXA      *boxa;
@@ -718,23 +718,23 @@ PIX       *pix1, *pix2;
  *          This can be made more efficient.
  * </pre>
  */
-static l_int32
+static int32_t
 pixCorrelationBestShift(PIX        *pix1,
                         PIX        *pix2,
                         NUMA       *nasum1,
                         NUMA       *namoment1,
-                        l_int32     area2,
-                        l_int32     ycent2,
-                        l_int32     maxyshift,
-                        l_int32    *tab8,
-                        l_int32    *pdelx,
-                        l_int32    *pdely,
+                        int32_t     area2,
+                        int32_t     ycent2,
+                        int32_t     maxyshift,
+                        int32_t    *tab8,
+                        int32_t    *pdelx,
+                        int32_t    *pdely,
                         l_float32  *pscore,
-                        l_int32     debugflag)
+                        int32_t     debugflag)
 {
-l_int32     w1, w2, h1, h2, i, j, nx, shifty, delx, dely;
-l_int32     sum, moment, count;
-l_int32    *tab, *area1, *arraysum, *arraymoment;
+int32_t     w1, w2, h1, h2, i, j, nx, shifty, delx, dely;
+int32_t     sum, moment, count;
+int32_t    *tab, *area1, *arraysum, *arraymoment;
 l_float32   maxscore, score;
 l_float32  *ycent1;
 FPIX       *fpix;
@@ -775,8 +775,8 @@ PIX        *pixt, *pixt1, *pixt2;
 
         /* Set up the arrays for area1 and ycent1.  We have to do this
          * for each template (pix2) because the window width is w2. */
-    area1 = (l_int32 *)LEPT_CALLOC(nx, sizeof(l_int32));
-    ycent1 = (l_float32 *)LEPT_CALLOC(nx, sizeof(l_int32));
+    area1 = (int32_t *)LEPT_CALLOC(nx, sizeof(int32_t));
+    ycent1 = (l_float32 *)LEPT_CALLOC(nx, sizeof(int32_t));
     arraysum = numaGetIArray(nasum1);
     arraymoment = numaGetIArray(namoment1);
     for (i = 0, sum = 0, moment = 0; i < w2; i++) {
@@ -804,7 +804,7 @@ PIX        *pixt, *pixt1, *pixt2;
     delx = 0;
     dely = 0;  /* amount to shift pix2 relative to pix1 to get alignment */
     for (i = 0; i < nx; i++) {
-        shifty = (l_int32)(ycent1[i] - ycent2 + 0.5);
+        shifty = (int32_t)(ycent1[i] - ycent2 + 0.5);
         for (j = -maxyshift; j <= maxyshift; j++) {
             pixClearAll(pixt);
             pixRasterop(pixt, 0, shifty + j, w2, h2, PIX_SRC, pix2, 0, 0);
@@ -875,7 +875,7 @@ recogIdentifyPixa(L_RECOG  *recog,
                   PIX     **ppixdb)
 {
 char      *text;
-l_int32    i, n, fail, index, depth;
+int32_t    i, n, fail, index, depth;
 l_float32  score;
 PIX       *pix1, *pix2, *pix3;
 PIXA      *pixa1;
@@ -966,8 +966,8 @@ recogIdentifyPix(L_RECOG  *recog,
                  PIX     **ppixdb)
 {
 char      *text;
-l_int32    i, j, n, bestindex, bestsample, area1, area2;
-l_int32    shiftx, shifty, bestdelx, bestdely, bestwidth, maxyshift;
+int32_t    i, j, n, bestindex, bestsample, area1, area2;
+int32_t    shiftx, shifty, bestdelx, bestdely, bestwidth, maxyshift;
 l_float32  x1, y1, x2, y2, delx, dely, score, maxscore;
 NUMA      *numa;
 PIX       *pix0, *pix1, *pix2;
@@ -1197,13 +1197,13 @@ L_RCHA  *rcha;
  * </pre>
  */
 static L_RCH *
-rchCreate(l_int32    index,
+rchCreate(int32_t    index,
           l_float32  score,
           char      *text,
-          l_int32    sample,
-          l_int32    xloc,
-          l_int32    yloc,
-          l_int32    width)
+          int32_t    sample,
+          int32_t    xloc,
+          int32_t    yloc,
+          int32_t    width)
 {
 L_RCH  *rch;
 
@@ -1306,13 +1306,13 @@ rchaExtract(L_RCHA   *rcha,
  */
 l_ok
 rchExtract(L_RCH      *rch,
-           l_int32    *pindex,
+           int32_t    *pindex,
            l_float32  *pscore,
            char      **ptext,
-           l_int32    *psample,
-           l_int32    *pxloc,
-           l_int32    *pyloc,
-           l_int32    *pwidth)
+           int32_t    *psample,
+           int32_t    *pxloc,
+           int32_t    *pyloc,
+           int32_t    *pwidth)
 {
     if (pindex) *pindex = 0;
     if (pscore) *pscore = 0.0;
@@ -1348,7 +1348,7 @@ rchExtract(L_RCH      *rch,
  *          identification to an rcha array for the array of characters.
  * </pre>
  */
-static l_int32
+static int32_t
 transferRchToRcha(L_RCH   *rch,
                   L_RCHA  *rcha)
 {
@@ -1391,9 +1391,9 @@ transferRchToRcha(L_RCH   *rch,
 PIX *
 recogProcessToIdentify(L_RECOG  *recog,
                        PIX      *pixs,
-                       l_int32   pad)
+                       int32_t   pad)
 {
-l_int32  canclip;
+int32_t  canclip;
 PIX     *pix1, *pix2, *pixd;
 
     if (!recog)
@@ -1433,11 +1433,11 @@ PIX     *pix1, *pix2, *pixd;
 static PIX *
 recogPreSplittingFilter(L_RECOG   *recog,
                         PIX       *pixs,
-                        l_int32    minh,
+                        int32_t    minh,
                         l_float32  minaf,
-                        l_int32    debug)
+                        int32_t    debug)
 {
-l_int32  scaling, minsplitw, maxsplith, maxasp;
+int32_t  scaling, minsplitw, maxsplith, maxasp;
 BOXA    *boxas;
 NUMA    *naw, *nah, *na1, *na1c, *na2, *na3, *na4, *na5, *na6, *na7;
 PIX     *pixd;
@@ -1505,15 +1505,15 @@ PIXA    *pixas;
  * \param[in]    debug    1 to output indicator arrays
  * \return  0 if OK, 1 on error
  */
-static l_int32
+static int32_t
 recogSplittingFilter(L_RECOG   *recog,
                      PIX       *pixs,
-                     l_int32    minh,
+                     int32_t    minh,
                      l_float32  minaf,
-                     l_int32   *premove,
-                     l_int32    debug)
+                     int32_t   *premove,
+                     int32_t    debug)
 {
-l_int32    w, h;
+int32_t    w, h;
 l_float32  aspratio, fract;
 
     if (!premove)
@@ -1599,12 +1599,12 @@ SARRAY *
 recogExtractNumbers(L_RECOG   *recog,
                     BOXA      *boxas,
                     l_float32  scorethresh,
-                    l_int32    spacethresh,
+                    int32_t    spacethresh,
                     BOXAA    **pbaa,
                     NUMAA    **pnaa)
 {
 char      *str, *text;
-l_int32    i, n, x1, x2, h_ovl, v_ovl, h_sep, v_sep;
+int32_t    i, n, x1, x2, h_ovl, v_ovl, h_sep, v_sep;
 l_float32  score;
 BOX       *box, *prebox;
 BOXA      *ba;
@@ -1737,7 +1737,7 @@ showExtractNumbers(PIX     *pixs,
 {
 char       buf[128];
 char      *textstr, *scorestr;
-l_int32    i, j, n, nchar, len;
+int32_t    i, j, n, nchar, len;
 l_float32  score;
 L_BMF     *bmf;
 BOX       *box1, *box2;
@@ -1776,7 +1776,7 @@ PIXA      *pixa;
         scorestr = NULL;
         for (j = 0; j < nchar; j++) {
              numaGetFValue(na, j, &score);
-             snprintf(buf, sizeof(buf), "%d", (l_int32)(100 * score));
+             snprintf(buf, sizeof(buf), "%d", (int32_t)(100 * score));
              stringJoinIP(&scorestr, buf);
              if (j < nchar - 1) stringJoinIP(&scorestr, ",");
         }
@@ -1821,28 +1821,28 @@ l_showIndicatorSplitValues(NUMA  *na1,
                            NUMA  *na5,
                            NUMA  *na6)
 {
-l_int32  i, n;
+int32_t  i, n;
 
     n = numaGetCount(na1);
     lept_stderr("================================================\n");
     lept_stderr("lt minw:    ");
     for (i = 0; i < n; i++)
-        lept_stderr("%4d ", (l_int32)na1->array[i]);
+        lept_stderr("%4d ", (int32_t)na1->array[i]);
     lept_stderr("\nlt minh:    ");
     for (i = 0; i < n; i++)
-        lept_stderr("%4d ", (l_int32)na2->array[i]);
+        lept_stderr("%4d ", (int32_t)na2->array[i]);
     lept_stderr("\ngt maxh:    ");
     for (i = 0; i < n; i++)
-        lept_stderr("%4d ", (l_int32)na3->array[i]);
+        lept_stderr("%4d ", (int32_t)na3->array[i]);
     lept_stderr("\ngt maxasp:  ");
     for (i = 0; i < n; i++)
-        lept_stderr("%4d ", (l_int32)na4->array[i]);
+        lept_stderr("%4d ", (int32_t)na4->array[i]);
     lept_stderr("\nlt minaf:   ");
     for (i = 0; i < n; i++)
-        lept_stderr("%4d ", (l_int32)na5->array[i]);
+        lept_stderr("%4d ", (int32_t)na5->array[i]);
     lept_stderr("\n------------------------------------------------");
     lept_stderr("\nresult:     ");
     for (i = 0; i < n; i++)
-        lept_stderr("%4d ", (l_int32)na6->array[i]);
+        lept_stderr("%4d ", (int32_t)na6->array[i]);
     lept_stderr("\n================================================\n");
 }

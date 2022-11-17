@@ -46,7 +46,7 @@ int main(int    argc,
          char **argv)
 {
 char    *filein, *fileout;
-l_int32  nx, ny;
+int32_t  nx, ny;
 PIX     *pixs;
 PIXA    *pixa;
 

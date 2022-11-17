@@ -39,12 +39,12 @@
 
 struct L_StrCode
 {
-    l_int32       fileno;    /*!< index for function and output file names   */
-    l_int32       ifunc;     /*!< index into struct currently being stored   */
+    int32_t       fileno;    /*!< index for function and output file names   */
+    int32_t       ifunc;     /*!< index into struct currently being stored   */
     SARRAY       *function;  /*!< store case code for extraction             */
     SARRAY       *data;      /*!< store base64 encoded data as strings       */
     SARRAY       *descr;     /*!< store line in description table            */
-    l_int32       n;         /*!< number of data strings                     */
+    int32_t       n;         /*!< number of data strings                     */
 };
 typedef struct L_StrCode  L_STRCODE;
 

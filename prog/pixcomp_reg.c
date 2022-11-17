@@ -46,13 +46,13 @@ static const char *fnames[] = {"weasel32.png", "weasel2.4c.png",
                                "weasel8.149g.png", "weasel8.16g.png"};
 
 LEPT_DLL extern const char *ImageFileFormatExtensions[];
-static void get_format_data(l_int32 i, l_uint8 *data, size_t size);
+static void get_format_data(int32_t i, uint8_t *data, size_t size);
 
 int main(int    argc,
          char **argv)
 {
-l_uint8      *data1, *data2;
-l_int32       i;
+uint8_t      *data1, *data2;
+int32_t       i;
 size_t        size1, size2;
 BOX          *box;
 PIX          *pix, *pix1, *pix2, *pix3;
@@ -215,17 +215,17 @@ SARRAY       *sa;
 
 
 static void
-get_format_data(l_int32   i,
-                l_uint8  *data,
+get_format_data(int32_t   i,
+                uint8_t  *data,
                 size_t    size)
 {
-l_int32  ret, format, w, h, d, bps, spp, iscmap;
+int32_t  ret, format, w, h, d, bps, spp, iscmap;
 
     ret = pixReadHeaderMem(data, size, &format, &w, &h, &bps, &spp, &iscmap);
     d = bps * spp;
     if (d == 24) d = 32;
     if (ret)
-        lept_stderr("Error: couldn't read data: size = %d\n", (l_int32)size);
+        lept_stderr("Error: couldn't read data: size = %d\n", (int32_t)size);
     else
         lept_stderr("Format data for image %d:\n"
                     "  format: %s, size (w, h, d) = (%d, %d, %d)\n"

@@ -36,26 +36,26 @@
  *         void                recogDestroy()
  *
  *      Recog accessors
- *         l_int32             recogGetCount()
- *         l_int32             recogSetParams()
- *         static l_int32      recogGetCharsetSize()
+ *         int32_t             recogGetCount()
+ *         int32_t             recogSetParams()
+ *         static int32_t      recogGetCharsetSize()
  *
  *      Character/index lookup
- *         l_int32             recogGetClassIndex()
- *         l_int32             recogStringToIndex()
- *         l_int32             recogGetClassString()
- *         l_int32             l_convertCharstrToInt()
+ *         int32_t             recogGetClassIndex()
+ *         int32_t             recogStringToIndex()
+ *         int32_t             recogGetClassString()
+ *         int32_t             l_convertCharstrToInt()
  *
  *      Serialization
  *         L_RECOG            *recogRead()
  *         L_RECOG            *recogReadStream()
  *         L_RECOG            *recogReadMem()
- *         l_int32             recogWrite()
- *         l_int32             recogWriteStream()
- *         l_int32             recogWriteMem()
+ *         int32_t             recogWrite()
+ *         int32_t             recogWriteStream()
+ *         int32_t             recogWriteMem()
  *         PIXA               *recogExtractPixa()
- *         static l_int32      recogAddCharstrLabels()
- *         static l_int32      recogAddAllSamples()
+ *         static int32_t      recogAddCharstrLabels()
+ *         static int32_t      recogAddAllSamples()
  *
  *  The recognizer functionality is split into four files:
  *    recogbasic.c: create, destroy, access, serialize
@@ -193,22 +193,22 @@
 #include <string.h>
 #include "allheaders.h"
 
-static const l_int32    MaxExamplesInClass = 256;
+static const int32_t    MaxExamplesInClass = 256;
 
     /* Default recog parameters that can be changed */
-static const l_int32    DefaultCharsetType = L_ARABIC_NUMERALS;
-static const l_int32    DefaultMinNopad = 1;
+static const int32_t    DefaultCharsetType = L_ARABIC_NUMERALS;
+static const int32_t    DefaultMinNopad = 1;
 static const l_float32  DefaultMaxWHRatio = 3.0;  /* max allowed w/h
                                     ratio for a component to be split  */
 static const l_float32  DefaultMaxHTRatio = 2.6;  /* max allowed ratio of
                                max/min unscaled averaged template heights  */
-static const l_int32    DefaultThreshold = 150;  /* for binarization */
-static const l_int32    DefaultMaxYShift = 1;  /* for identification */
+static const int32_t    DefaultThreshold = 150;  /* for binarization */
+static const int32_t    DefaultMaxYShift = 1;  /* for identification */
 
     /* Static functions */
-static l_int32 recogGetCharsetSize(l_int32 type);
-static l_int32 recogAddCharstrLabels(L_RECOG *recog);
-static l_int32 recogAddAllSamples(L_RECOG **precog, PIXAA *paa, l_int32 debug);
+static int32_t recogGetCharsetSize(int32_t type);
+static int32_t recogAddCharstrLabels(L_RECOG *recog);
+static int32_t recogAddAllSamples(L_RECOG **precog, PIXAA *paa, int32_t debug);
 
 
 /*------------------------------------------------------------------------*
@@ -235,11 +235,11 @@ static l_int32 recogAddAllSamples(L_RECOG **precog, PIXAA *paa, l_int32 debug);
  */
 L_RECOG *
 recogCreateFromRecog(L_RECOG  *recs,
-                     l_int32   scalew,
-                     l_int32   scaleh,
-                     l_int32   linew,
-                     l_int32   threshold,
-                     l_int32   maxyshift)
+                     int32_t   scalew,
+                     int32_t   scaleh,
+                     int32_t   linew,
+                     int32_t   threshold,
+                     int32_t   maxyshift)
 {
 L_RECOG  *recd;
 PIXA     *pixa;
@@ -280,11 +280,11 @@ PIXA     *pixa;
  */
 L_RECOG *
 recogCreateFromPixa(PIXA    *pixa,
-                    l_int32  scalew,
-                    l_int32  scaleh,
-                    l_int32  linew,
-                    l_int32  threshold,
-                    l_int32  maxyshift)
+                    int32_t  scalew,
+                    int32_t  scaleh,
+                    int32_t  linew,
+                    int32_t  threshold,
+                    int32_t  maxyshift)
 {
 L_RECOG  *recog;
 
@@ -324,14 +324,14 @@ L_RECOG  *recog;
  */
 L_RECOG *
 recogCreateFromPixaNoFinish(PIXA    *pixa,
-                            l_int32  scalew,
-                            l_int32  scaleh,
-                            l_int32  linew,
-                            l_int32  threshold,
-                            l_int32  maxyshift)
+                            int32_t  scalew,
+                            int32_t  scaleh,
+                            int32_t  linew,
+                            int32_t  threshold,
+                            int32_t  maxyshift)
 {
 char     *text;
-l_int32   full, n, i, ntext, same, maxd;
+int32_t   full, n, i, ntext, same, maxd;
 PIX      *pix;
 L_RECOG  *recog;
 
@@ -402,11 +402,11 @@ L_RECOG  *recog;
  * </pre>
  */
 L_RECOG *
-recogCreate(l_int32  scalew,
-            l_int32  scaleh,
-            l_int32  linew,
-            l_int32  threshold,
-            l_int32  maxyshift)
+recogCreate(int32_t  scalew,
+            int32_t  scaleh,
+            int32_t  linew,
+            int32_t  threshold,
+            int32_t  maxyshift)
 {
 L_RECOG  *recog;
 
@@ -521,7 +521,7 @@ L_RECOG  *recog;
  * \param[in]    recog
  * \return  count of classes in recog; 0 if no recog or on error
  */
-l_int32
+int32_t
 recogGetCount(L_RECOG  *recog)
 {
     if (!recog)
@@ -559,8 +559,8 @@ recogGetCount(L_RECOG  *recog)
  */
 l_ok
 recogSetParams(L_RECOG   *recog,
-               l_int32    type,
-               l_int32    min_nopad,
+               int32_t    type,
+               int32_t    min_nopad,
                l_float32  max_wh_ratio,
                l_float32  max_ht_ratio)
 {
@@ -584,8 +584,8 @@ recogSetParams(L_RECOG   *recog,
  * \param[in]    type     of charset
  * \return  size of charset, or 0 if unknown or on error
  */
-static l_int32
-recogGetCharsetSize(l_int32  type)
+static int32_t
+recogGetCharsetSize(int32_t  type)
 {
     switch (type) {
     case L_UNKNOWN:
@@ -635,13 +635,13 @@ recogGetCharsetSize(l_int32  type)
  *      (4) Caller must check the function return value.
  * </pre>
  */
-l_int32
+int32_t
 recogGetClassIndex(L_RECOG  *recog,
-                   l_int32   val,
+                   int32_t   val,
                    char     *text,
-                   l_int32  *pindex)
+                   int32_t  *pindex)
 {
-l_int32  i, n, ival;
+int32_t  i, n, ival;
 
     if (!pindex)
         return ERROR_INT("&index not defined", __func__, 2);
@@ -681,10 +681,10 @@ l_int32  i, n, ival;
 l_ok
 recogStringToIndex(L_RECOG  *recog,
                    char     *text,
-                   l_int32  *pindex)
+                   int32_t  *pindex)
 {
 char    *charstr;
-l_int32  i, n, diff;
+int32_t  i, n, diff;
 
     if (!pindex)
         return ERROR_INT("&index not defined", __func__, 1);
@@ -729,9 +729,9 @@ l_int32  i, n, diff;
  *      (2) Caller must check the function return value.
  * </pre>
  */
-l_int32
+int32_t
 recogGetClassString(L_RECOG  *recog,
-                    l_int32   index,
+                    int32_t   index,
                     char    **pcharstr)
 {
     if (!pcharstr)
@@ -759,10 +759,10 @@ recogGetClassString(L_RECOG  *recog,
  */
 l_ok
 l_convertCharstrToInt(const char  *str,
-                      l_int32     *pval)
+                      int32_t     *pval)
 {
-l_int32   size;
-l_uint32  val;
+int32_t   size;
+uint32_t  val;
 
     if (!pval)
         return ERROR_INT("&val not defined", __func__, 1);
@@ -775,14 +775,14 @@ l_uint32  val;
     if (size > 4)
         return ERROR_INT("invalid string: > 4 bytes", __func__, 1);
 
-    val = (l_uint8)str[0];
+    val = (uint8_t)str[0];
     if (size > 1)
-        val = (val << 8) + (l_uint8)str[1];
+        val = (val << 8) + (uint8_t)str[1];
     if (size > 2)
-        val = (val << 8) + (l_uint8)str[2];
+        val = (val << 8) + (uint8_t)str[2];
     if (size > 3)
-        val = (val << 8) + (l_uint8)str[3];
-    *pval = (l_int32)(val & 0x7fffffff);
+        val = (val << 8) + (uint8_t)str[3];
+    *pval = (int32_t)(val & 0x7fffffff);
     return 0;
 }
 
@@ -845,8 +845,8 @@ L_RECOG  *recog;
 L_RECOG *
 recogReadStream(FILE  *fp)
 {
-l_int32   version, setsize, threshold, scalew, scaleh, linew;
-l_int32   maxyshift, nc;
+int32_t   version, setsize, threshold, scalew, scaleh, linew;
+int32_t   maxyshift, nc;
 L_DNA    *dna_tochar;
 PIXAA    *paa;
 L_RECOG  *recog;
@@ -926,7 +926,7 @@ SARRAY   *sa_text;
  * \return  recog, or NULL on error
  */
 L_RECOG *
-recogReadMem(const l_uint8  *data,
+recogReadMem(const uint8_t  *data,
              size_t          size)
 {
 FILE     *fp;
@@ -964,7 +964,7 @@ l_ok
 recogWrite(const char  *filename,
            L_RECOG     *recog)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (!filename)
@@ -1029,11 +1029,11 @@ recogWriteStream(FILE     *fp,
  * </pre>
  */
 l_ok
-recogWriteMem(l_uint8  **pdata,
+recogWriteMem(uint8_t  **pdata,
               size_t    *psize,
               L_RECOG   *recog)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (pdata) *pdata = NULL;
@@ -1100,11 +1100,11 @@ recogExtractPixa(L_RECOG  *recog)
  * \param[in]    recog
  * \return  0 if OK, 1 on error
  */
-static l_int32
+static int32_t
 recogAddCharstrLabels(L_RECOG  *recog)
 {
 char    *text;
-l_int32  i, j, n1, n2;
+int32_t  i, j, n1, n2;
 PIX     *pix;
 PIXA    *pixa;
 PIXAA   *paa;
@@ -1150,13 +1150,13 @@ PIXAA   *paa;
  *          The character labels for each set are in the sa_text field.
  * </pre>
  */
-static l_int32
+static int32_t
 recogAddAllSamples(L_RECOG  **precog,
                    PIXAA     *paa,
-                   l_int32    debug)
+                   int32_t    debug)
 {
 char     *text;
-l_int32   i, j, nc, ns;
+int32_t   i, j, nc, ns;
 PIX      *pix;
 PIXA     *pixa, *pixa1;
 L_RECOG  *recog;

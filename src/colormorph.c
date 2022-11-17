@@ -67,9 +67,9 @@
  */
 PIX *
 pixColorMorph(PIX     *pixs,
-              l_int32  type,
-              l_int32  hsize,
-              l_int32  vsize)
+              int32_t  type,
+              int32_t  hsize,
+              int32_t  vsize)
 {
 PIX  *pixr, *pixg, *pixb, *pixrm, *pixgm, *pixbm, *pixd;
 

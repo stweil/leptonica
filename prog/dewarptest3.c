@@ -42,10 +42,10 @@
 
 #include "allheaders.h"
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32     i, n;
+int32_t     i, n;
 l_float32   a, b, c, d, e;
 NUMA       *nax, *nafit;
 PIX        *pixs, *pixn, *pixg, *pixb, *pixt1, *pixt2;

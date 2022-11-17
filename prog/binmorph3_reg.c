@@ -51,7 +51,7 @@
 
 #include "allheaders.h"
 
-l_int32 TestAll(L_REGPARAMS *rp, PIX *pixs, l_int32 symmetric);
+int32_t TestAll(L_REGPARAMS *rp, PIX *pixs, int32_t symmetric);
 
 int main(int    argc,
          char **argv)
@@ -70,15 +70,15 @@ L_REGPARAMS  *rp;
     return regTestCleanup(rp);
 }
 
-l_int32
+int32_t
 TestAll(L_REGPARAMS  *rp,
         PIX          *pixs,
-        l_int32       symmetric)
+        int32_t       symmetric)
 {
 char        *selnameh, *selnamev;
-l_int32      ok, same, w, h, i, bordercolor, extraborder;
-l_int32      width[3] = {21, 1, 21};
-l_int32      height[3] = {1, 7, 7};
+int32_t      ok, same, w, h, i, bordercolor, extraborder;
+int32_t      width[3] = {21, 1, 21};
+int32_t      height[3] = {1, 7, 7};
 PIX         *pixref, *pix0, *pix1, *pix2, *pix3, *pix4;
 SEL         *sel;
 SELA        *sela;

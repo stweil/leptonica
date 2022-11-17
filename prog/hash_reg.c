@@ -44,24 +44,24 @@
 #include "allheaders.h"
 #include "array_internal.h"
 
-static SARRAY *BuildShortStrings(l_int32 nchars);
-static PTA *BuildPointSet(l_int32 w, l_int32 h);
+static SARRAY *BuildShortStrings(int32_t nchars);
+static PTA *BuildPointSet(int32_t w, int32_t h);
 
-const l_int32  string_set = 10967;
-const l_int32  string_union = 18278;
-const l_int32  string_intersection = 3656;
-const l_int32  pta_set = 150000;
-const l_int32  pta_union = 250000;
-const l_int32  pta_intersection = 50001;
-const l_int32  da_set = 48000;
-const l_int32  da_union = 80000;
-const l_int32  da_intersection = 16001;
+const int32_t  string_set = 10967;
+const int32_t  string_union = 18278;
+const int32_t  string_intersection = 3656;
+const int32_t  pta_set = 150000;
+const int32_t  pta_union = 250000;
+const int32_t  pta_intersection = 50001;
+const int32_t  da_set = 48000;
+const int32_t  da_union = 80000;
+const int32_t  da_intersection = 16001;
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_uint8      *data1;
-l_int32       i, n, c1, c2, c3, c4, c5, s1;
+uint8_t      *data1;
+int32_t       i, n, c1, c2, c3, c4, c5, s1;
 size_t        size1;
 L_ASET       *set;
 L_DNA        *da0, *da1, *da2, *da3, *da4, *da5;
@@ -308,11 +308,11 @@ L_REGPARAMS  *rp;
 
 /* ------------------------------------------------------- */
 static SARRAY *
-BuildShortStrings(l_int32  nchars)  /* 3, 4 or 5 */
+BuildShortStrings(int32_t  nchars)  /* 3, 4 or 5 */
 {
 char      buf[64];
-l_int32   i, j, k, l, m;
-l_uint64  hash;
+int32_t   i, j, k, l, m;
+uint64_t  hash;
 SARRAY   *sa;
 
     sa = sarrayCreate(1000);
@@ -354,9 +354,9 @@ SARRAY   *sa;
 
 /* ------------------------------------------------------- */
 static PTA *
-BuildPointSet(l_int32  w, l_int32 h)
+BuildPointSet(int32_t  w, int32_t h)
 {
-l_int32  i, j;
+int32_t  i, j;
 PTA     *pta;
 
     pta = ptaCreate(w * h);

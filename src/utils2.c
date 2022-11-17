@@ -39,52 +39,52 @@
  *
  *       Safe string procs
  *           char      *stringNew()
- *           l_int32    stringCopy()
- *           l_int32    stringCopySegment()
- *           l_int32    stringReplace()
- *           l_int32    stringLength()
- *           l_int32    stringCat()
+ *           int32_t    stringCopy()
+ *           int32_t    stringCopySegment()
+ *           int32_t    stringReplace()
+ *           int32_t    stringLength()
+ *           int32_t    stringCat()
  *           char      *stringConcatNew()
  *           char      *stringJoin()
- *           l_int32    stringJoinIP()
+ *           int32_t    stringJoinIP()
  *           char      *stringReverse()
  *           char      *strtokSafe()
- *           l_int32    stringSplitOnToken()
+ *           int32_t    stringSplitOnToken()
  *
  *       Find and replace string and array procs
- *           l_int32    stringCheckForChars()
+ *           int32_t    stringCheckForChars()
  *           char      *stringRemoveChars()
  *           char      *stringReplaceEachSubstr()
  *           char      *stringReplaceSubstr()
  *           L_DNA     *stringFindEachSubstr()
- *           l_int32    stringFindSubstr()
- *           l_uint8   *arrayReplaceEachSequence()
+ *           int32_t    stringFindSubstr()
+ *           uint8_t   *arrayReplaceEachSequence()
  *           L_DNA     *arrayFindEachSequence()
- *           l_int32    arrayFindSequence()
+ *           int32_t    arrayFindSequence()
  *
  *       Safe realloc
  *           void      *reallocNew()
  *
  *       Read and write between file and memory
- *           l_uint8   *l_binaryRead()
- *           l_uint8   *l_binaryReadStream()
- *           l_uint8   *l_binaryReadSelect()
- *           l_uint8   *l_binaryReadSelectStream()
- *           l_int32    l_binaryWrite()
- *           l_int32    nbytesInFile()
- *           l_int32    fnbytesInFile()
+ *           uint8_t   *l_binaryRead()
+ *           uint8_t   *l_binaryReadStream()
+ *           uint8_t   *l_binaryReadSelect()
+ *           uint8_t   *l_binaryReadSelectStream()
+ *           int32_t    l_binaryWrite()
+ *           int32_t    nbytesInFile()
+ *           int32_t    fnbytesInFile()
  *
  *       Copy and compare in memory
- *           l_uint8   *l_binaryCopy()
- *           l_uint8   *l_binaryCompare()
+ *           uint8_t   *l_binaryCopy()
+ *           uint8_t   *l_binaryCompare()
  *
  *       File copy operations
- *           l_int32    fileCopy()
- *           l_int32    fileConcatenate()
- *           l_int32    fileAppendString()
+ *           int32_t    fileCopy()
+ *           int32_t    fileConcatenate()
+ *           int32_t    fileAppendString()
  *
  *       File split operations
- *           l_int32    fileSplitLinesUniform()
+ *           int32_t    fileSplitLinesUniform()
  *
  *       Multi-platform functions for opening file streams
  *           FILE      *fopenReadStream()
@@ -97,36 +97,36 @@
  *       Multi-platform functions that avoid C-runtime boundary crossing
  *       with Windows DLLs
  *           FILE      *lept_fopen()
- *           l_int32    lept_fclose()
+ *           int32_t    lept_fclose()
  *           void      *lept_calloc()
  *           void       lept_free()
  *
  *       Multi-platform file system operations in temp directories
- *           l_int32    lept_mkdir()
- *           l_int32    lept_rmdir()
- *           l_int32    lept_direxists()
- *           l_int32    lept_mv()
- *           l_int32    lept_rm_match()
- *           l_int32    lept_rm()
- *           l_int32    lept_rmfile()
- *           l_int32    lept_cp()
+ *           int32_t    lept_mkdir()
+ *           int32_t    lept_rmdir()
+ *           int32_t    lept_direxists()
+ *           int32_t    lept_mv()
+ *           int32_t    lept_rm_match()
+ *           int32_t    lept_rm()
+ *           int32_t    lept_rmfile()
+ *           int32_t    lept_cp()
  *
  *       Special debug/test function for calling 'system'
  *           void       callSystemDebug()
  *
  *       General file name operations
- *           l_int32    splitPathAtDirectory()
- *           l_int32    splitPathAtExtension()
+ *           int32_t    splitPathAtDirectory()
+ *           int32_t    splitPathAtExtension()
  *           char      *pathJoin()
  *           char      *appendSubdirs()
  *
  *       Special file name operations
- *           l_int32    convertSepCharsInPath()
+ *           int32_t    convertSepCharsInPath()
  *           char      *genPathname()
- *           l_int32    makeTempDirname()
- *           l_int32    modifyTrailingSlash()
+ *           int32_t    makeTempDirname()
+ *           int32_t    modifyTrailingSlash()
  *           char      *l_makeTempFilename()
- *           l_int32    extractNumberFromFilename()
+ *           int32_t    extractNumberFromFilename()
  *
  *
  *  Notes on multi-platform development
@@ -222,7 +222,7 @@
 char *
 stringNew(const char  *src)
 {
-l_int32  len;
+int32_t  len;
 char    *dest;
 
     if (!src) {
@@ -260,9 +260,9 @@ char    *dest;
 l_ok
 stringCopy(char        *dest,
            const char  *src,
-           l_int32      n)
+           int32_t      n)
 {
-l_int32  i;
+int32_t  i;
 
     if (!dest)
         return ERROR_INT("dest not defined", __func__, 1);
@@ -299,11 +299,11 @@ l_int32  i;
  */
 char *
 stringCopySegment(const char  *src,
-                  l_int32      start,
-                  l_int32      nbytes)
+                  int32_t      start,
+                  int32_t      nbytes)
 {
 char    *dest;
-l_int32  len;
+int32_t  len;
 
     if (!src)
         return (char *)ERROR_PTR("src not defined", __func__, NULL);
@@ -369,11 +369,11 @@ stringReplace(char       **pdest,
  *          an error is indicated by returning size.
  * </pre>
  */
-l_int32
+int32_t
 stringLength(const char  *src,
              size_t       size)
 {
-l_int32  i;
+int32_t  i;
 
     if (!src)
         return ERROR_INT("src not defined", __func__, 0);
@@ -409,13 +409,13 @@ l_int32  i;
  *          strncat, as in the Windows function strcat_s().
  * </pre>
  */
-l_int32
+int32_t
 stringCat(char        *dest,
           size_t       size,
           const char  *src)
 {
-l_int32  i, n;
-l_int32  lendest, lensrc;
+int32_t  i, n;
+int32_t  lendest, lensrc;
 
     if (!dest)
         return ERROR_INT("dest not defined", __func__, -1);
@@ -507,7 +507,7 @@ stringJoin(const char  *src1,
            const char  *src2)
 {
 char    *dest;
-l_int32  srclen1, srclen2, destlen;
+int32_t  srclen1, srclen2, destlen;
 
     srclen1 = (src1) ? strlen(src1) : 0;
     srclen2 = (src2) ? strlen(src2) : 0;
@@ -581,7 +581,7 @@ char *
 stringReverse(const char  *src)
 {
 char    *dest;
-l_int32  i, len;
+int32_t  i, len;
 
     if (!src)
         return (char *)ERROR_PTR("src not defined", __func__, NULL);
@@ -634,7 +634,7 @@ strtokSafe(char        *cstr,
 {
 char     nextc;
 char    *start, *substr;
-l_int32  istart, i, j, nchars;
+int32_t  istart, i, j, nchars;
 
     if (!seps)
         return (char *)ERROR_PTR("seps not defined", __func__, NULL);
@@ -764,10 +764,10 @@ char  *saveptr;
 l_ok
 stringCheckForChars(const char  *src,
                     const char  *chars,
-                    l_int32     *pfound)
+                    int32_t     *pfound)
 {
 char     ch;
-l_int32  i, n;
+int32_t  i, n;
 
     if (!pfound)
         return ERROR_INT("&found not defined", __func__, 1);
@@ -800,7 +800,7 @@ stringRemoveChars(const char  *src,
 {
 char     ch;
 char    *dest;
-l_int32  nsrc, i, k;
+int32_t  nsrc, i, k;
 
     if (!src)
         return (char *)ERROR_PTR("src not defined", __func__, NULL);
@@ -852,7 +852,7 @@ char *
 stringReplaceEachSubstr(const char  *src,
                         const char  *sub1,
                         const char  *sub2,
-                        l_int32     *pcount)
+                        int32_t     *pcount)
 {
 size_t  datalen;
 
@@ -863,14 +863,14 @@ size_t  datalen;
 
     if (strlen(sub2) > 0) {
         return (char *)arrayReplaceEachSequence(
-                               (const l_uint8 *)src, strlen(src),
-                               (const l_uint8 *)sub1, strlen(sub1),
-                               (const l_uint8 *)sub2, strlen(sub2),
+                               (const uint8_t *)src, strlen(src),
+                               (const uint8_t *)sub1, strlen(sub1),
+                               (const uint8_t *)sub2, strlen(sub2),
                                &datalen, pcount);
     } else {  /* empty replacement string; removal only */
         return (char *)arrayReplaceEachSequence(
-                               (const l_uint8 *)src, strlen(src),
-                               (const l_uint8 *)sub1, strlen(sub1),
+                               (const uint8_t *)src, strlen(src),
+                               (const uint8_t *)sub1, strlen(sub1),
                                NULL, 0, &datalen, pcount);
     }
 }
@@ -907,12 +907,12 @@ char *
 stringReplaceSubstr(const char  *src,
                     const char  *sub1,
                     const char  *sub2,
-                    l_int32     *ploc,
-                    l_int32     *pfound)
+                    int32_t     *ploc,
+                    int32_t     *pfound)
 {
 const char  *ptr;
 char        *dest;
-l_int32      nsrc, nsub1, nsub2, len, npre, loc;
+int32_t      nsrc, nsub1, nsub2, len, npre, loc;
 
     if (pfound) *pfound = 0;
     if (!src || !sub1 || !sub2)
@@ -969,8 +969,8 @@ stringFindEachSubstr(const char  *src,
     if (!src || !sub)
         return (L_DNA *)ERROR_PTR("src, sub not both defined", __func__, NULL);
 
-    return arrayFindEachSequence((const l_uint8 *)src, strlen(src),
-                                 (const l_uint8 *)sub, strlen(sub));
+    return arrayFindEachSequence((const uint8_t *)src, strlen(src),
+                                 (const uint8_t *)sub, strlen(sub));
 }
 
 
@@ -991,10 +991,10 @@ stringFindEachSubstr(const char  *src,
  *          length of at least 1.
  * </pre>
  */
-l_int32
+int32_t
 stringFindSubstr(const char  *src,
                  const char  *sub,
-                 l_int32     *ploc)
+                 int32_t     *ploc)
 {
 const char *ptr;
 
@@ -1044,27 +1044,27 @@ const char *ptr;
  *      (5) Can use stringReplaceEachSubstr() if using C strings.
  * </pre>
  */
-l_uint8 *
-arrayReplaceEachSequence(const l_uint8  *datas,
+uint8_t *
+arrayReplaceEachSequence(const uint8_t  *datas,
                          size_t          dataslen,
-                         const l_uint8  *seq,
+                         const uint8_t  *seq,
                          size_t          seqlen,
-                         const l_uint8  *newseq,
+                         const uint8_t  *newseq,
                          size_t          newseqlen,
                          size_t         *pdatadlen,
-                         l_int32        *pcount)
+                         int32_t        *pcount)
 {
-l_uint8  *datad;
+uint8_t  *datad;
 size_t    newsize;
-l_int32   n, i, j, di, si, index, incr;
+int32_t   n, i, j, di, si, index, incr;
 L_DNA    *da;
 
     if (pcount) *pcount = 0;
     if (!datas || !seq)
-        return (l_uint8 *)ERROR_PTR("datas & seq not both defined",
+        return (uint8_t *)ERROR_PTR("datas & seq not both defined",
                                     __func__, NULL);
     if (!pdatadlen)
-        return (l_uint8 *)ERROR_PTR("&datadlen not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("&datadlen not defined", __func__, NULL);
     *pdatadlen = 0;
 
         /* Identify the locations of the sequence.  If there are none,
@@ -1079,9 +1079,9 @@ L_DNA    *da;
     if (pcount) *pcount = n;
     if (!newseq) newseqlen = 0;
     newsize = dataslen + n * (newseqlen - seqlen) + 4;
-    if ((datad = (l_uint8 *)LEPT_CALLOC(newsize, sizeof(l_uint8))) == NULL) {
+    if ((datad = (uint8_t *)LEPT_CALLOC(newsize, sizeof(uint8_t))) == NULL) {
         l_dnaDestroy(&da);
-        return (l_uint8 *)ERROR_PTR("datad not made", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("datad not made", __func__, NULL);
     }
 
         /* Replace each sequence instance with a new sequence */
@@ -1134,12 +1134,12 @@ L_DNA    *da;
  * </pre>
  */
 L_DNA *
-arrayFindEachSequence(const l_uint8  *data,
+arrayFindEachSequence(const uint8_t  *data,
                       size_t          datalen,
-                      const l_uint8  *sequence,
+                      const uint8_t  *sequence,
                       size_t          seqlen)
 {
-l_int32  start, offset, realoffset, found;
+int32_t  start, offset, realoffset, found;
 L_DNA   *da;
 
     if (!data || !sequence)
@@ -1192,14 +1192,14 @@ L_DNA   *da;
  * </pre>
  */
 l_ok
-arrayFindSequence(const l_uint8  *data,
+arrayFindSequence(const uint8_t  *data,
                   size_t          datalen,
-                  const l_uint8  *sequence,
+                  const uint8_t  *sequence,
                   size_t          seqlen,
-                  l_int32        *poffset,
-                  l_int32        *pfound)
+                  int32_t        *poffset,
+                  int32_t        *pfound)
 {
-l_int32  i, j, found, lastpos;
+int32_t  i, j, found, lastpos;
 
     if (poffset) *poffset = 0;
     if (pfound) *pfound = FALSE;
@@ -1306,21 +1306,21 @@ void    *newdata;
  * \param[out]   pnbytes    number of bytes read
  * \return  data, or NULL on error
  */
-l_uint8 *
+uint8_t *
 l_binaryRead(const char  *filename,
              size_t      *pnbytes)
 {
-l_uint8  *data;
+uint8_t  *data;
 FILE     *fp;
 
     if (!pnbytes)
-        return (l_uint8 *)ERROR_PTR("pnbytes not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("pnbytes not defined", __func__, NULL);
     *pnbytes = 0;
     if (!filename)
-        return (l_uint8 *)ERROR_PTR("filename not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("filename not defined", __func__, NULL);
 
     if ((fp = fopenReadStream(filename)) == NULL)
-        return (l_uint8 *)ERROR_PTR("file stream not opened", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("file stream not opened", __func__, NULL);
     data = l_binaryReadStream(fp, pnbytes);
     fclose(fp);
     return data;
@@ -1349,24 +1349,24 @@ FILE     *fp;
  * \endcode
  *          where readprog is:
  * \code
- *             l_uint8 *data = l_binaryReadStream(stdin, &nbytes);
+ *             uint8_t *data = l_binaryReadStream(stdin, &nbytes);
  *             Pix *pix = pixReadMem(data, nbytes);
  * \endcode
  * </pre>
  */
-l_uint8 *
+uint8_t *
 l_binaryReadStream(FILE    *fp,
                    size_t  *pnbytes)
 {
-l_uint8    *data;
-l_int32     seekable, navail, nadd, nread;
+uint8_t    *data;
+int32_t     seekable, navail, nadd, nread;
 L_BBUFFER  *bb;
 
     if (!pnbytes)
-        return (l_uint8 *)ERROR_PTR("&nbytes not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("&nbytes not defined", __func__, NULL);
     *pnbytes = 0;
     if (!fp)
-        return (l_uint8 *)ERROR_PTR("fp not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("fp not defined", __func__, NULL);
 
         /* Test if the stream is seekable, by attempting to seek to
          * the start of data.  This is a no-op.  If it is seekable, use
@@ -1392,7 +1392,7 @@ L_BBUFFER  *bb;
 
         /* Copy the data to a new array sized for the data, because
          * the bbuffer array can be nearly twice the size we need. */
-    if ((data = (l_uint8 *)LEPT_CALLOC(bb->n + 1, sizeof(l_uint8))) != NULL) {
+    if ((data = (uint8_t *)LEPT_CALLOC(bb->n + 1, sizeof(uint8_t))) != NULL) {
         memcpy(data, bb->array, bb->n);
         *pnbytes = bb->n;
     } else {
@@ -1419,23 +1419,23 @@ L_BBUFFER  *bb;
  *          be used to read ascii data from a file into a proper C string.
  * </pre>
  */
-l_uint8 *
+uint8_t *
 l_binaryReadSelect(const char  *filename,
                    size_t       start,
                    size_t       nbytes,
                    size_t      *pnread)
 {
-l_uint8  *data;
+uint8_t  *data;
 FILE     *fp;
 
     if (!pnread)
-        return (l_uint8 *)ERROR_PTR("pnread not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("pnread not defined", __func__, NULL);
     *pnread = 0;
     if (!filename)
-        return (l_uint8 *)ERROR_PTR("filename not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("filename not defined", __func__, NULL);
 
     if ((fp = fopenReadStream(filename)) == NULL)
-        return (l_uint8 *)ERROR_PTR("file stream not opened", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("file stream not opened", __func__, NULL);
     data = l_binaryReadSelectStream(fp, start, nbytes, pnread);
     fclose(fp);
     return data;
@@ -1462,20 +1462,20 @@ FILE     *fp;
  *          beginning of the file.
  * </pre>
  */
-l_uint8 *
+uint8_t *
 l_binaryReadSelectStream(FILE    *fp,
                          size_t   start,
                          size_t   nbytes,
                          size_t  *pnread)
 {
-l_uint8  *data;
+uint8_t  *data;
 size_t    bytesleft, bytestoread, nread, filebytes;
 
     if (!pnread)
-        return (l_uint8 *)ERROR_PTR("&nread not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("&nread not defined", __func__, NULL);
     *pnread = 0;
     if (!fp)
-        return (l_uint8 *)ERROR_PTR("stream not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("stream not defined", __func__, NULL);
 
         /* Verify and adjust the parameters if necessary */
     fseek(fp, 0, SEEK_END);  /* EOF */
@@ -1487,14 +1487,14 @@ size_t    bytesleft, bytestoread, nread, filebytes;
         return NULL;
     }
     if (filebytes == 0)  /* start == 0; nothing to read; return null byte */
-        return (l_uint8 *)LEPT_CALLOC(1, 1);
+        return (uint8_t *)LEPT_CALLOC(1, 1);
     bytesleft = filebytes - start;  /* greater than 0 */
     if (nbytes == 0) nbytes = bytesleft;
     bytestoread = (bytesleft >= nbytes) ? nbytes : bytesleft;
 
         /* Read the data */
-    if ((data = (l_uint8 *)LEPT_CALLOC(1, bytestoread + 1)) == NULL)
-        return (l_uint8 *)ERROR_PTR("calloc fail for data", __func__, NULL);
+    if ((data = (uint8_t *)LEPT_CALLOC(1, bytestoread + 1)) == NULL)
+        return (uint8_t *)ERROR_PTR("calloc fail for data", __func__, NULL);
     fseek(fp, start, SEEK_SET);
     nread = fread(data, 1, bytestoread, fp);
     if (nbytes != nread)
@@ -1580,7 +1580,7 @@ FILE   *fp;
 size_t
 fnbytesInFile(FILE  *fp)
 {
-l_int64  pos, nbytes;
+int64_t  pos, nbytes;
 
     if (!fp)
         return ERROR_INT("stream not open", __func__, 0);
@@ -1615,17 +1615,17 @@ l_int64  pos, nbytes;
  *          the result is automatically null terminated.
  * </pre>
  */
-l_uint8 *
-l_binaryCopy(const l_uint8  *datas,
+uint8_t *
+l_binaryCopy(const uint8_t  *datas,
              size_t          size)
 {
-l_uint8  *datad;
+uint8_t  *datad;
 
     if (!datas)
-        return (l_uint8 *)ERROR_PTR("datas not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("datas not defined", __func__, NULL);
 
-    if ((datad = (l_uint8 *)LEPT_CALLOC(size + 4, sizeof(l_uint8))) == NULL)
-        return (l_uint8 *)ERROR_PTR("datad not made", __func__, NULL);
+    if ((datad = (uint8_t *)LEPT_CALLOC(size + 4, sizeof(uint8_t))) == NULL)
+        return (uint8_t *)ERROR_PTR("datad not made", __func__, NULL);
     memcpy(datad, datas, size);
     return datad;
 }
@@ -1645,18 +1645,18 @@ l_uint8  *datad;
  * Notes:
  *      (1) This can also be used to compare C strings str1 and str2.
  *          If the string lengths are not known, use strlen():
- *            l_binaryCompare((l_uint8 *)str1, strlen(str1),
-                              (l_uint8 *)str2, strlen(str2));
+ *            l_binaryCompare((uint8_t *)str1, strlen(str1),
+                              (uint8_t *)str2, strlen(str2));
  * </pre>
  */
 l_ok
-l_binaryCompare(const l_uint8  *data1,
+l_binaryCompare(const uint8_t  *data1,
                 size_t          size1,
-                const l_uint8  *data2,
+                const uint8_t  *data2,
                 size_t          size2,
-                l_int32        *psame)
+                int32_t        *psame)
 {
-l_int32  i;
+int32_t  i;
 
     if (!psame)
         return ERROR_INT("&same not defined", __func__, 1);
@@ -1687,9 +1687,9 @@ l_ok
 fileCopy(const char  *srcfile,
          const char  *newfile)
 {
-l_int32   ret;
+int32_t   ret;
 size_t    nbytes;
-l_uint8  *data;
+uint8_t  *data;
 
     if (!srcfile)
         return ERROR_INT("srcfile not defined", __func__, 1);
@@ -1716,7 +1716,7 @@ fileConcatenate(const char  *srcfile,
                 const char  *destfile)
 {
 size_t    nbytes;
-l_uint8  *data;
+uint8_t  *data;
 
     if (!srcfile)
         return ERROR_INT("srcfile not defined", __func__, 1);
@@ -1787,14 +1787,14 @@ FILE  *fp;
  */
 l_ok
 fileSplitLinesUniform(const char  *filename,
-                      l_int32      n,
-                      l_int32      save_empty,
+                      int32_t      n,
+                      int32_t      save_empty,
                       const char  *rootpath,
                       const char  *ext)
 {
-l_int32   i, totlines, nlines, index;
+int32_t   i, totlines, nlines, index;
 size_t    nbytes;
-l_uint8  *data;
+uint8_t  *data;
 char     *str;
 char      outname[512];
 NUMA     *na;
@@ -1934,7 +1934,7 @@ FILE  *fp;
  * </pre>
  */
 FILE *
-fopenReadFromMemory(const l_uint8  *data,
+fopenReadFromMemory(const uint8_t  *data,
                     size_t          size)
 {
 FILE  *fp;
@@ -1981,7 +1981,7 @@ FILE *
 fopenWriteWinTempfile(void)
 {
 #ifdef _WIN32
-l_int32  handle;
+int32_t  handle;
 FILE    *fp;
 char    *filename;
 
@@ -2134,15 +2134,15 @@ lept_free(void *ptr)
  *            [Temp]  (windows)
  * </pre>
  */
-l_int32
+int32_t
 lept_mkdir(const char  *subdir)
 {
 char     *dir, *tmpdir;
-l_int32   i, n;
-l_int32   ret = 0;
+int32_t   i, n;
+int32_t   ret = 0;
 SARRAY   *sa;
 #ifdef  _WIN32
-l_uint32  attributes;
+uint32_t  attributes;
 #endif  /* _WIN32 */
 
     if (!LeptDebugOK) {
@@ -2209,11 +2209,11 @@ l_uint32  attributes;
  *          is guaranteed to give you an empty subdirectory.
  * </pre>
  */
-l_int32
+int32_t
 lept_rmdir(const char  *subdir)
 {
 char    *dir, *realdir, *fname, *fullname;
-l_int32  exists, ret, i, nfiles;
+int32_t  exists, ret, i, nfiles;
 SARRAY  *sa;
 #ifdef _WIN32
 char    *newpath;
@@ -2283,7 +2283,7 @@ char    *newpath;
  */
 void
 lept_direxists(const char  *dir,
-               l_int32     *pexists)
+               int32_t     *pexists)
 {
 char  *realdir;
 
@@ -2296,13 +2296,13 @@ char  *realdir;
 #ifndef _WIN32
     {
     struct stat s;
-    l_int32 err = stat(realdir, &s);
+    int32_t err = stat(realdir, &s);
     if (err != -1 && S_ISDIR(s.st_mode))
         *pexists = 1;
     }
 #else  /* _WIN32 */
     {
-    l_uint32  attributes;
+    uint32_t  attributes;
     attributes = GetFileAttributes(realdir);
     if (attributes != INVALID_FILE_ATTRIBUTES &&
         (attributes & FILE_ATTRIBUTE_DIRECTORY))
@@ -2339,13 +2339,13 @@ char  *realdir;
  *            * returns the number of files (> 0) that it was unable to remove.
  * </pre>
  */
-l_int32
+int32_t
 lept_rm_match(const char  *subdir,
               const char  *substr)
 {
 char    *path, *fname;
 char     tempdir[256];
-l_int32  i, n, ret;
+int32_t  i, n, ret;
 SARRAY  *sa;
 
     makeTempDirname(tempdir, sizeof(tempdir), subdir);
@@ -2387,13 +2387,13 @@ SARRAY  *sa;
  *             "/tmp/..."  ==>  [Temp]/... (windows)
  * </pre>
  */
-l_int32
+int32_t
 lept_rm(const char  *subdir,
         const char  *tail)
 {
 char    *path;
 char     newtemp[256];
-l_int32  ret;
+int32_t  ret;
 
     if (!tail || strlen(tail) == 0)
         return ERROR_INT("tail undefined or empty", __func__, 1);
@@ -2425,10 +2425,10 @@ l_int32  ret;
  *          subdirectory of it.
  * </pre>
  */
-l_int32
+int32_t
 lept_rmfile(const char  *filepath)
 {
-l_int32  ret;
+int32_t  ret;
 
     if (!filepath || strlen(filepath) == 0)
         return ERROR_INT("filepath undefined or empty", __func__, 1);
@@ -2478,7 +2478,7 @@ l_int32  ret;
  *          * newdir = def/ghi, newtail = abc     ==> /tmp/def/ghi/abc
  * </pre>
  */
-l_int32
+int32_t
 lept_mv(const char  *srcfile,
         const char  *newdir,
         const char  *newtail,
@@ -2486,7 +2486,7 @@ lept_mv(const char  *srcfile,
 {
 char    *srcpath, *newpath, *dir, *srctail;
 char     newtemp[256];
-l_int32  ret;
+int32_t  ret;
 
     if (!srcfile)
         return ERROR_INT("srcfile not defined", __func__, 1);
@@ -2575,7 +2575,7 @@ l_int32  ret;
  *
  * </pre>
  */
-l_int32
+int32_t
 lept_cp(const char  *srcfile,
         const char  *newdir,
         const char  *newtail,
@@ -2583,7 +2583,7 @@ lept_cp(const char  *srcfile,
 {
 char    *srcpath, *newpath, *dir, *srctail;
 char     newtemp[256];
-l_int32  ret;
+int32_t  ret;
 
     if (!srcfile)
         return ERROR_INT("srcfile not defined", __func__, 1);
@@ -2657,7 +2657,7 @@ l_int32  ret;
 void
 callSystemDebug(const char *cmd)
 {
-l_int32  ret;
+int32_t  ret;
 
     if (!cmd) {
         L_ERROR("cmd not defined\n", __func__);
@@ -2875,7 +2875,7 @@ pathJoin(const char  *dir,
 {
 const char *slash = "/";
 char       *str, *dest;
-l_int32     i, n1, n2, emptydir;
+int32_t     i, n1, n2, emptydir;
 size_t      size;
 SARRAY     *sa1, *sa2;
 L_BYTEA    *ba;
@@ -3002,9 +3002,9 @@ size_t  len1, len2, len3, len4;
  */
 l_ok
 convertSepCharsInPath(char    *path,
-                      l_int32  type)
+                      int32_t  type)
 {
-l_int32  i;
+int32_t  i;
 size_t   len;
 
     if (!path)
@@ -3068,9 +3068,9 @@ char *
 genPathname(const char  *dir,
             const char  *fname)
 {
-l_int32  is_win32 = FALSE;
+int32_t  is_win32 = FALSE;
 char    *cdir, *pathout;
-l_int32  dirlen, namelen;
+int32_t  dirlen, namelen;
 size_t   size;
 
     if (!dir && !fname)
@@ -3114,7 +3114,7 @@ size_t   size;
         stringCopy(pathout, cdir, dirlen);
     } else {  /* Rewrite for win32 with "/tmp" specified for the directory. */
 #ifdef _WIN32
-        l_int32 tmpdirlen;
+        int32_t tmpdirlen;
         char tmpdir[MAX_PATH];
         GetTempPath(sizeof(tmpdir), tmpdir);  /* get the windows temp dir */
         tmpdirlen = strlen(tmpdir);
@@ -3177,7 +3177,7 @@ makeTempDirname(char        *result,
                 const char  *subdir)
 {
 char    *dir, *path;
-l_int32  ret = 0;
+int32_t  ret = 0;
 size_t   pathlen;
 
     if (!result)
@@ -3237,7 +3237,7 @@ size_t   pathlen;
 l_ok
 modifyTrailingSlash(char    *path,
                     size_t   nbytes,
-                    l_int32  flag)
+                    int32_t  flag)
 {
 char    lastchar;
 size_t  len;
@@ -3293,7 +3293,7 @@ char  dirname[240];
 #ifndef _WIN32
 {
     char    *pattern;
-    l_int32  fd;
+    int32_t  fd;
     pattern = stringConcatNew(dirname, "/lept.XXXXXX", NULL);
     fd = mkstemp(pattern);
     if (fd == -1) {
@@ -3336,13 +3336,13 @@ char  dirname[240];
  *          caller needs to check.
  * </pre>
  */
-l_int32
+int32_t
 extractNumberFromFilename(const char  *fname,
-                          l_int32      numpre,
-                          l_int32      numpost)
+                          int32_t      numpre,
+                          int32_t      numpost)
 {
 char    *tail, *basename;
-l_int32  len, nret, num;
+int32_t  len, nret, num;
 
     if (!fname)
         return ERROR_INT("fname not defined", __func__, -1);

@@ -40,17 +40,17 @@
 #include "allheaders.h"
 
     /* defined in morph.c */
-LEPT_DLL extern l_int32 MORPH_BC;
+LEPT_DLL extern int32_t MORPH_BC;
 
     /* Complete set of linear brick dwa operations */
-PIX *pixMorphDwa_3(PIX *pixd, PIX *pixs, l_int32 operation, char *selname);
-PIX *pixFMorphopGen_3(PIX *pixd, PIX *pixs, l_int32 operation, char *selname);
+PIX *pixMorphDwa_3(PIX *pixd, PIX *pixs, int32_t operation, char *selname);
+PIX *pixFMorphopGen_3(PIX *pixd, PIX *pixs, int32_t operation, char *selname);
 
 
 int main(int    argc,
          char **argv)
 {
-l_int32       i, nsels, same, xorcount;
+int32_t       i, nsels, same, xorcount;
 char         *selname;
 PIX          *pixs, *pixt1, *pixt2, *pixt3;
 SEL          *sel;

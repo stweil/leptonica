@@ -51,13 +51,13 @@
 #define   SEARCH_REDUCTION      2      /* 1, 2, 4 or 8 */
 #define   SEARCH_MIN_DELTA      0.01   /* degrees */
 
-static const l_int32  BORDER = 150;
+static const int32_t  BORDER = 150;
 
 
 int main(int    argc,
          char **argv)
 {
-l_int32       w, h, wd, hd;
+int32_t       w, h, wd, hd;
 l_float32     deg2rad, angle, conf;
 PIX          *pixs, *pixb1, *pixb2, *pixr, *pixf, *pixd, *pixc;
 PIXA         *pixa;

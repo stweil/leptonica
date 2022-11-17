@@ -51,8 +51,8 @@ BOXA *boxaCombineOverlapsAlt(BOXA *boxas);
 int main(int    argc,
          char **argv)
 {
-l_int32       i, j, n, k, x, y, w, h, result, hovl, hsep, vovl, vsep;
-l_uint8      *data;
+int32_t       i, j, n, k, x, y, w, h, result, hovl, hsep, vovl, vsep;
+uint8_t      *data;
 size_t        nbytes;
 BOX          *box1, *box2;
 BOXA         *boxa1, *boxa2, *boxa3, *boxa4;
@@ -72,11 +72,11 @@ L_REGPARAMS  *rp;
         pixa1 = pixaCreate(2);
         boxa1 = boxaCreate(0);
         for (i = 0; i < 500; i++) {
-            x = (l_int32)(600.0 * (l_float64)rand() / (l_float64)RAND_MAX);
-            y = (l_int32)(600.0 * (l_float64)rand() / (l_float64)RAND_MAX);
-            w = (l_int32)
+            x = (int32_t)(600.0 * (l_float64)rand() / (l_float64)RAND_MAX);
+            y = (int32_t)(600.0 * (l_float64)rand() / (l_float64)RAND_MAX);
+            w = (int32_t)
               (1.0 + maxsize[k] * (l_float64)rand() / (l_float64)RAND_MAX);
-            h = (l_int32)
+            h = (int32_t)
               (1.0 + maxsize[k] * (l_float64)rand() / (l_float64)RAND_MAX);
             box1 = boxCreate(x, y, w, h);
             boxaAddBox(boxa1, box1, L_INSERT);
@@ -94,7 +94,7 @@ L_REGPARAMS  *rp;
         pixDisplayWithTitle(pix3, 100, 100 + 100 * k, NULL, rp->display);
         regTestWritePixAndCheck(rp, pix3, IFF_PNG);   /* 0 - 6 */
         lept_stderr("Test %d, maxsize = %d: n_init = %d, n_final = %d\n",
-                    k + 1, (l_int32)maxsize[k] + 1,
+                    k + 1, (int32_t)maxsize[k] + 1,
                     boxaGetCount(boxa1), boxaGetCount(boxa2));
         pixDestroy(&pix3);
         boxaDestroy(&boxa1);
@@ -110,11 +110,11 @@ L_REGPARAMS  *rp;
     pixa1 = pixaCreate(10);
     n = 80;
     for (i = 0; i < n; i++) {
-        x = (l_int32)(600.0 * (l_float64)rand() / (l_float64)RAND_MAX);
-        y = (l_int32)(600.0 * (l_float64)rand() / (l_float64)RAND_MAX);
-        w = (l_int32)
+        x = (int32_t)(600.0 * (l_float64)rand() / (l_float64)RAND_MAX);
+        y = (int32_t)(600.0 * (l_float64)rand() / (l_float64)RAND_MAX);
+        w = (int32_t)
           (10 + 48 * (l_float64)rand() / (l_float64)RAND_MAX);
-        h = (l_int32)
+        h = (int32_t)
           (10 + 53 * (l_float64)rand() / (l_float64)RAND_MAX);
         box1 = boxCreate(x, y, w, h);
         boxaAddBox(boxa1, box1, L_INSERT);
@@ -147,11 +147,11 @@ L_REGPARAMS  *rp;
     boxa2 = boxaCreate(0);
     n = 80;
     for (i = 0; i < n; i++) {
-        x = (l_int32)(600.0 * (l_float64)rand() / (l_float64)RAND_MAX);
-        y = (l_int32)(600.0 * (l_float64)rand() / (l_float64)RAND_MAX);
-        w = (l_int32)
+        x = (int32_t)(600.0 * (l_float64)rand() / (l_float64)RAND_MAX);
+        y = (int32_t)(600.0 * (l_float64)rand() / (l_float64)RAND_MAX);
+        w = (int32_t)
           (10 + 55 * (l_float64)rand() / (l_float64)RAND_MAX);
-        h = (l_int32)
+        h = (int32_t)
           (10 + 55 * (l_float64)rand() / (l_float64)RAND_MAX);
         box1 = boxCreate(x, y, w, h);
         if (i < n / 2)
@@ -203,7 +203,7 @@ L_REGPARAMS  *rp;
 BOXA *
 boxaCombineOverlapsAlt(BOXA  *boxas)
 {
-l_int32  i, j, n1, n2, inter, interfound, niters;
+int32_t  i, j, n1, n2, inter, interfound, niters;
 BOX     *box1, *box2, *box3;
 BOXA    *boxa1, *boxa2;
 

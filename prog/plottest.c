@@ -62,7 +62,7 @@ int main(int    argc,
          char **argv)
 {
 char      *str1, *str2, *pngname;
-l_int32    i;
+int32_t    i;
 size_t     size1, size2;
 l_float32  x, y1, y2, pi;
 GPLOT     *gplot1, *gplot2, *gplot3, *gplot4, *gplot5;

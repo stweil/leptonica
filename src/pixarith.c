@@ -29,8 +29,8 @@
  * <pre>
  *
  *      One-image grayscale arithmetic operations (8, 16, 32 bpp)
- *           l_int32     pixAddConstantGray()
- *           l_int32     pixMultConstantGray()
+ *           int32_t     pixAddConstantGray()
+ *           int32_t     pixMultConstantGray()
  *
  *      Two-image grayscale arithmetic operations (8, 16, 32 bpp)
  *           PIX        *pixAddGray()
@@ -44,8 +44,8 @@
  *           PIX        *pixInitAccumulate()
  *           PIX        *pixFinalAccumulate()
  *           PIX        *pixFinalAccumulateThreshold()
- *           l_int32     pixAccumulate()
- *           l_int32     pixMultConstAccumulate()
+ *           int32_t     pixAccumulate()
+ *           int32_t     pixMultConstAccumulate()
  *
  *      Absolute value of difference
  *           PIX        *pixAbsDifference()
@@ -61,8 +61,8 @@
  *           PIX        *pixMaxDynamicRangeRGB()
  *
  *      RGB pixel value scaling
- *           l_uint32    linearScaleRGBVal()
- *           l_uint32    logScaleRGBVal()
+ *           uint32_t    linearScaleRGBVal()
+ *           uint32_t    logScaleRGBVal()
  *
  *      Log base2 lookup
  *           l_float32  *makeLogBase2Tab()
@@ -117,10 +117,10 @@
  */
 l_ok
 pixAddConstantGray(PIX      *pixs,
-                   l_int32   val)
+                   int32_t   val)
 {
-l_int32    i, j, w, h, d, wpl, pval;
-l_uint32  *data, *line;
+int32_t    i, j, w, h, d, wpl, pval;
+uint32_t  *data, *line;
 
     if (!pixs)
         return ERROR_INT("pixs not defined", __func__, 1);
@@ -188,9 +188,9 @@ l_ok
 pixMultConstantGray(PIX       *pixs,
                     l_float32  val)
 {
-l_int32    i, j, w, h, d, wpl, pval;
-l_uint32   upval;
-l_uint32  *data, *line;
+int32_t    i, j, w, h, d, wpl, pval;
+uint32_t   upval;
+uint32_t  *data, *line;
 
     if (!pixs)
         return ERROR_INT("pixs not defined", __func__, 1);
@@ -207,21 +207,21 @@ l_uint32  *data, *line;
         if (d == 8) {
             for (j = 0; j < w; j++) {
                 pval = GET_DATA_BYTE(line, j);
-                pval = (l_int32)(val * pval);
+                pval = (int32_t)(val * pval);
                 pval = L_MIN(255, pval);
                 SET_DATA_BYTE(line, j, pval);
             }
         } else if (d == 16) {
             for (j = 0; j < w; j++) {
                 pval = GET_DATA_TWO_BYTES(line, j);
-                pval = (l_int32)(val * pval);
+                pval = (int32_t)(val * pval);
                 pval = L_MIN(0xffff, pval);
                 SET_DATA_TWO_BYTES(line, j, pval);
             }
         } else {  /* d == 32; no clipping */
             for (j = 0; j < w; j++) {
                 upval = *(line + j);
-                upval = (l_uint32)(val * upval);
+                upval = (uint32_t)(val * upval);
                 *(line + j) = upval;
             }
         }
@@ -262,8 +262,8 @@ pixAddGray(PIX  *pixd,
            PIX  *pixs1,
            PIX  *pixs2)
 {
-l_int32    i, j, d, ws, hs, w, h, wpls, wpld, val, sum;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    i, j, d, ws, hs, w, h, wpls, wpld, val, sum;
+uint32_t  *datas, *datad, *lines, *lined;
 
     if (!pixs1)
         return (PIX *)ERROR_PTR("pixs1 not defined", __func__, pixd);
@@ -352,8 +352,8 @@ pixSubtractGray(PIX  *pixd,
                 PIX  *pixs1,
                 PIX  *pixs2)
 {
-l_int32    i, j, w, h, ws, hs, d, wpls, wpld, val, diff;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    i, j, w, h, ws, hs, d, wpls, wpld, val, diff;
+uint32_t  *datas, *datad, *lines, *lined;
 
     if (!pixs1)
         return (PIX *)ERROR_PTR("pixs1 not defined", __func__, pixd);
@@ -442,10 +442,10 @@ pixMultiplyGray(PIX        *pixs,
                 PIX        *pixg,
                 l_float32   norm)
 {
-l_int32    i, j, w, h, d, ws, hs, ds, wpls, wplg, wpld;
-l_int32    rval, gval, bval, rval2, gval2, bval2, vals, valg, val, maxgray;
-l_uint32   val32;
-l_uint32  *datas, *datag, *datad, *lines, *lineg, *lined;
+int32_t    i, j, w, h, d, ws, hs, ds, wpls, wplg, wpld;
+int32_t    rval, gval, bval, rval2, gval2, bval2, vals, valg, val, maxgray;
+uint32_t   val32;
+uint32_t  *datas, *datag, *datad, *lines, *lineg, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -482,7 +482,7 @@ PIX       *pixd;
             for (j = 0; j < w; j++) {
                 vals = GET_DATA_BYTE(lines, j);
                 valg = GET_DATA_BYTE(lineg, j);
-                val = (l_int32)(vals * valg * norm + 0.5);
+                val = (int32_t)(vals * valg * norm + 0.5);
                 val = L_MIN(255, val);
                 SET_DATA_BYTE(lined, j, val);
             }
@@ -491,11 +491,11 @@ PIX       *pixd;
                 val32 = *(lines + j);
                 extractRGBValues(val32, &rval, &gval, &bval);
                 valg = GET_DATA_BYTE(lineg, j);
-                rval2 = (l_int32)(rval * valg * norm + 0.5);
+                rval2 = (int32_t)(rval * valg * norm + 0.5);
                 rval2 = L_MIN(255, rval2);
-                gval2 = (l_int32)(gval * valg * norm + 0.5);
+                gval2 = (int32_t)(gval * valg * norm + 0.5);
                 gval2 = L_MIN(255, gval2);
-                bval2 = (l_int32)(bval * valg * norm + 0.5);
+                bval2 = (int32_t)(bval * valg * norm + 0.5);
                 bval2 = L_MIN(255, bval2);
                 composeRGBPixel(rval2, gval2, bval2, lined + j);
             }
@@ -529,11 +529,11 @@ PIX       *pixd;
 PIX *
 pixThresholdToValue(PIX      *pixd,
                     PIX      *pixs,
-                    l_int32   threshval,
-                    l_int32   setval)
+                    int32_t   threshval,
+                    int32_t   setval)
 {
-l_int32    i, j, w, h, d, wpld, setabove;
-l_uint32  *datad, *lined;
+int32_t    i, j, w, h, d, wpld, setabove;
+uint32_t  *datad, *lined;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, pixd);
@@ -622,21 +622,21 @@ l_uint32  *datad, *lined;
  * Notes:
  *      (1) %offset must be >= 0.
  *      (2) %offset is used so that we can do arithmetic
- *          with negative number results on l_uint32 data; it
- *          prevents the l_uint32 data from going negative.
- *      (3) Because we use l_int32 intermediate data results,
- *          these should never exceed the max of l_int32 (0x7fffffff).
+ *          with negative number results on uint32_t data; it
+ *          prevents the uint32_t data from going negative.
+ *      (3) Because we use int32_t intermediate data results,
+ *          these should never exceed the max of int32_t (0x7fffffff).
  *          We do not permit the offset to be above 0x40000000,
- *          which is half way between 0 and the max of l_int32.
+ *          which is half way between 0 and the max of int32_t.
  *      (4) The same offset should be used for initialization,
  *          multiplication by a constant, and final extraction!
  *      (5) If you're only adding positive values, %offset can be 0.
  * </pre>
  */
 PIX *
-pixInitAccumulate(l_int32   w,
-                  l_int32   h,
-                  l_uint32  offset)
+pixInitAccumulate(int32_t   w,
+                  int32_t   h,
+                  uint32_t  offset)
 {
 PIX  *pixd;
 
@@ -667,11 +667,11 @@ PIX  *pixd;
  */
 PIX *
 pixFinalAccumulate(PIX      *pixs,
-                   l_uint32  offset,
-                   l_int32   depth)
+                   uint32_t  offset,
+                   int32_t   depth)
 {
-l_int32    i, j, w, h, wpls, wpld, val;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    i, j, w, h, wpls, wpld, val;
+uint32_t  *datas, *datad, *lines, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -699,7 +699,7 @@ PIX       *pixd;
                 val = lines[j] - offset;
                 val = L_MAX(0, val);
                 val = L_MIN(255, val);
-                SET_DATA_BYTE(lined, j, (l_uint8)val);
+                SET_DATA_BYTE(lined, j, (uint8_t)val);
             }
         }
     } else if (depth == 16) {
@@ -710,7 +710,7 @@ PIX       *pixd;
                 val = lines[j] - offset;
                 val = L_MAX(0, val);
                 val = L_MIN(0xffff, val);
-                SET_DATA_TWO_BYTES(lined, j, (l_uint16)val);
+                SET_DATA_TWO_BYTES(lined, j, (uint16_t)val);
             }
         }
     } else {  /* depth == 32 */
@@ -742,11 +742,11 @@ PIX       *pixd;
  */
 PIX *
 pixFinalAccumulateThreshold(PIX      *pixs,
-                            l_uint32  offset,
-                            l_uint32  threshold)
+                            uint32_t  offset,
+                            uint32_t  threshold)
 {
-l_int32    i, j, w, h, wpls, wpld, val;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    i, j, w, h, wpls, wpld, val;
+uint32_t  *datas, *datad, *lines, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -798,10 +798,10 @@ PIX       *pixd;
 l_ok
 pixAccumulate(PIX     *pixd,
               PIX     *pixs,
-              l_int32  op)
+              int32_t  op)
 {
-l_int32    i, j, w, h, d, wd, hd, wpls, wpld;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    i, j, w, h, d, wd, hd, wpls, wpld;
+uint32_t  *datas, *datad, *lines, *lined;
 
 
     if (!pixd || (pixGetDepth(pixd) != 32))
@@ -895,10 +895,10 @@ l_uint32  *datas, *datad, *lines, *lined;
 l_ok
 pixMultConstAccumulate(PIX       *pixs,
                        l_float32  factor,
-                       l_uint32   offset)
+                       uint32_t   offset)
 {
-l_int32    i, j, w, h, wpl, val;
-l_uint32  *data, *line;
+int32_t    i, j, w, h, wpl, val;
+uint32_t  *data, *line;
 
     if (!pixs)
         return ERROR_INT("pixs not defined", __func__, 1);
@@ -914,9 +914,9 @@ l_uint32  *data, *line;
         line = data + i * wpl;
         for (j = 0; j < w; j++) {
             val = line[j] - offset;
-            val = (l_int32)(val * factor);
+            val = (int32_t)(val * factor);
             val += offset;
-            line[j] = (l_uint32)val;
+            line[j] = (uint32_t)val;
         }
     }
 
@@ -948,9 +948,9 @@ PIX *
 pixAbsDifference(PIX  *pixs1,
                  PIX  *pixs2)
 {
-l_int32    i, j, w, h, w2, h2, d, wpls1, wpls2, wpld, val1, val2, diff;
-l_int32    rval1, gval1, bval1, rval2, gval2, bval2, rdiff, gdiff, bdiff;
-l_uint32  *datas1, *datas2, *datad, *lines1, *lines2, *lined;
+int32_t    i, j, w, h, w2, h2, d, wpls1, wpls2, wpld, val1, val2, diff;
+int32_t    rval1, gval1, bval1, rval2, gval2, bval2, rdiff, gdiff, bdiff;
+uint32_t  *datas1, *datas2, *datad, *lines1, *lines2, *lined;
 PIX       *pixd;
 
     if (!pixs1)
@@ -1043,9 +1043,9 @@ PIX *
 pixAddRGB(PIX  *pixs1,
           PIX  *pixs2)
 {
-l_int32    i, j, w, h, d, w2, h2, d2, wplc1, wplc2, wpld;
-l_int32    rval1, gval1, bval1, rval2, gval2, bval2, rval, gval, bval;
-l_uint32  *datac1, *datac2, *datad, *linec1, *linec2, *lined;
+int32_t    i, j, w, h, d, w2, h2, d2, wplc1, wplc2, wpld;
+int32_t    rval1, gval1, bval1, rval2, gval2, bval2, rval, gval, bval;
+uint32_t  *datac1, *datac2, *datad, *linec1, *linec2, *lined;
 PIX       *pixc1, *pixc2, *pixd;
 
     if (!pixs1)
@@ -1126,11 +1126,11 @@ PIX *
 pixMinOrMax(PIX     *pixd,
             PIX     *pixs1,
             PIX     *pixs2,
-            l_int32  type)
+            int32_t  type)
 {
-l_int32    d, ws, hs, w, h, wpls, wpld, i, j, vals, vald, val;
-l_int32    rval1, gval1, bval1, rval2, gval2, bval2, rval, gval, bval;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    d, ws, hs, w, h, wpls, wpld, i, j, vals, vald, val;
+int32_t    rval1, gval1, bval1, rval2, gval2, bval2, rval, gval, bval;
+uint32_t  *datas, *datad, *lines, *lined;
 
     if (!pixs1)
         return (PIX *)ERROR_PTR("pixs1 not defined", __func__, pixd);
@@ -1223,13 +1223,13 @@ l_uint32  *datas, *datad, *lines, *lined;
  */
 PIX *
 pixMaxDynamicRange(PIX     *pixs,
-                   l_int32  type)
+                   int32_t  type)
 {
-l_uint8     dval;
-l_int32     i, j, w, h, d, wpls, wpld, max;
-l_uint32   *datas, *datad;
-l_uint32    word, sval;
-l_uint32   *lines, *lined;
+uint8_t     dval;
+int32_t     i, j, w, h, d, wpls, wpld, max;
+uint32_t   *datas, *datad;
+uint32_t    word, sval;
+uint32_t   *lines, *lined;
 l_float32   factor;
 l_float32  *tab;
 PIX        *pixd;
@@ -1288,7 +1288,7 @@ PIX        *pixd;
                 lined = datad + i * wpld;
                 for (j = 0; j < w; j++) {
                     sval = GET_DATA_QBIT(lines, j);
-                    dval = (l_uint8)(factor * (l_float32)sval + 0.5);
+                    dval = (uint8_t)(factor * (l_float32)sval + 0.5);
                     SET_DATA_QBIT(lined, j, dval);
                 }
             }
@@ -1300,7 +1300,7 @@ PIX        *pixd;
                 lined = datad + i * wpld;
                 for (j = 0; j < w; j++) {
                     sval = GET_DATA_QBIT(lines, j);
-                    dval = (l_uint8)(factor * getLogBase2(sval, tab) + 0.5);
+                    dval = (uint8_t)(factor * getLogBase2(sval, tab) + 0.5);
                     SET_DATA_BYTE(lined, j, dval);
                 }
             }
@@ -1314,7 +1314,7 @@ PIX        *pixd;
                 lined = datad + i * wpld;
                 for (j = 0; j < w; j++) {
                     sval = GET_DATA_BYTE(lines, j);
-                    dval = (l_uint8)(factor * (l_float32)sval + 0.5);
+                    dval = (uint8_t)(factor * (l_float32)sval + 0.5);
                     SET_DATA_BYTE(lined, j, dval);
                 }
             }
@@ -1326,7 +1326,7 @@ PIX        *pixd;
                 lined = datad + i * wpld;
                 for (j = 0; j < w; j++) {
                     sval = GET_DATA_BYTE(lines, j);
-                    dval = (l_uint8)(factor * getLogBase2(sval, tab) + 0.5);
+                    dval = (uint8_t)(factor * getLogBase2(sval, tab) + 0.5);
                     SET_DATA_BYTE(lined, j, dval);
                 }
             }
@@ -1340,7 +1340,7 @@ PIX        *pixd;
                 lined = datad + i * wpld;
                 for (j = 0; j < w; j++) {
                     sval = GET_DATA_TWO_BYTES(lines, j);
-                    dval = (l_uint8)(factor * (l_float32)sval + 0.5);
+                    dval = (uint8_t)(factor * (l_float32)sval + 0.5);
                     SET_DATA_BYTE(lined, j, dval);
                 }
             }
@@ -1352,7 +1352,7 @@ PIX        *pixd;
                 lined = datad + i * wpld;
                 for (j = 0; j < w; j++) {
                     sval = GET_DATA_TWO_BYTES(lines, j);
-                    dval = (l_uint8)(factor * getLogBase2(sval, tab) + 0.5);
+                    dval = (uint8_t)(factor * getLogBase2(sval, tab) + 0.5);
                     SET_DATA_BYTE(lined, j, dval);
                 }
             }
@@ -1366,7 +1366,7 @@ PIX        *pixd;
                 lined = datad + i * wpld;
                 for (j = 0; j < w; j++) {
                     sval = lines[j];
-                    dval = (l_uint8)(factor * (l_float32)sval + 0.5);
+                    dval = (uint8_t)(factor * (l_float32)sval + 0.5);
                     SET_DATA_BYTE(lined, j, dval);
                 }
             }
@@ -1378,7 +1378,7 @@ PIX        *pixd;
                 lined = datad + i * wpld;
                 for (j = 0; j < w; j++) {
                     sval = lines[j];
-                    dval = (l_uint8)(factor * getLogBase2(sval, tab) + 0.5);
+                    dval = (uint8_t)(factor * getLogBase2(sval, tab) + 0.5);
                     SET_DATA_BYTE(lined, j, dval);
                 }
             }
@@ -1409,12 +1409,12 @@ PIX        *pixd;
  */
 PIX *
 pixMaxDynamicRangeRGB(PIX     *pixs,
-                      l_int32  type)
+                      int32_t  type)
 {
-l_int32     i, j, w, h, wpls, wpld, max;
-l_uint32    sval, dval, word;
-l_uint32   *datas, *datad;
-l_uint32   *lines, *lined;
+int32_t     i, j, w, h, wpls, wpld, max;
+uint32_t    sval, dval, word;
+uint32_t   *datas, *datad;
+uint32_t   *lines, *lined;
 l_float32   factor;
 l_float32  *tab;
 PIX        *pixd;
@@ -1496,15 +1496,15 @@ PIX        *pixd;
  *      (2) No scaling is performed on the transparency ("A") component.
  * </pre>
  */
-l_uint32
-linearScaleRGBVal(l_uint32   sval,
+uint32_t
+linearScaleRGBVal(uint32_t   sval,
                   l_float32  factor)
 {
-l_uint32  dval;
+uint32_t  dval;
 
-    dval = ((l_uint8)(factor * (sval >> 24) + 0.5) << 24) |
-           ((l_uint8)(factor * ((sval >> 16) & 0xff) + 0.5) << 16) |
-           ((l_uint8)(factor * ((sval >> 8) & 0xff) + 0.5) << 8) |
+    dval = ((uint8_t)(factor * (sval >> 24) + 0.5) << 24) |
+           ((uint8_t)(factor * ((sval >> 16) & 0xff) + 0.5) << 16) |
+           ((uint8_t)(factor * ((sval >> 8) & 0xff) + 0.5) << 8) |
            (sval & 0xff);
     return dval;
 }
@@ -1529,17 +1529,17 @@ l_uint32  dval;
  *      (3) No scaling is performed on the transparency ("A") component.
  * </pre>
  */
-l_uint32
-logScaleRGBVal(l_uint32    sval,
+uint32_t
+logScaleRGBVal(uint32_t    sval,
                l_float32  *tab,
                l_float32   factor)
 {
-l_uint32  dval;
+uint32_t  dval;
 
-    dval = ((l_uint8)(factor * getLogBase2(sval >> 24, tab) + 0.5) << 24) |
-           ((l_uint8)(factor * getLogBase2(((sval >> 16) & 0xff), tab) + 0.5)
+    dval = ((uint8_t)(factor * getLogBase2(sval >> 24, tab) + 0.5) << 24) |
+           ((uint8_t)(factor * getLogBase2(((sval >> 16) & 0xff), tab) + 0.5)
                      << 16) |
-           ((l_uint8)(factor * getLogBase2(((sval >> 8) & 0xff), tab) + 0.5)
+           ((uint8_t)(factor * getLogBase2(((sval >> 8) & 0xff), tab) + 0.5)
                      << 8) |
            (sval & 0xff);
     return dval;
@@ -1557,7 +1557,7 @@ l_uint32  dval;
 l_float32 *
 makeLogBase2Tab(void)
 {
-l_int32     i;
+int32_t     i;
 l_float32   log2;
 l_float32  *tab;
 
@@ -1580,7 +1580,7 @@ l_float32  *tab;
  * \return       logval    log[base2] of %val, or 0 on error
  */
 l_float32
-getLogBase2(l_int32     val,
+getLogBase2(int32_t     val,
             l_float32  *logtab)
 {
     if (!logtab)

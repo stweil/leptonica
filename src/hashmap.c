@@ -34,7 +34,7 @@
  *
  *      Hashmap: Accessors and modifiers
  *          L_HASHITEM   *l_hmapLookup()
- *          l_int32       l_hmapRehash()
+ *          int32_t       l_hmapRehash()
  *
  *    (1) See also hashmap.h for a brief description of the design.
  *    (2) In a typical use, a set of objects (in an array or associated
@@ -49,12 +49,12 @@
  *    (4) Use of the hashmap on points, strings and float64 data are
  *        given in ptafunc2.c, sarray2.c and dnafunc1.c.
  *    (5) Useful rule of thumb for hashing collisions:
- *        For a random hashing function (say, from strings to l_uint64),
+ *        For a random hashing function (say, from strings to uint64_t),
  *        the probability of a collision increases as N^2 for N much
  *        less than 2^32.  The quadratic behavior switches over to
  *        approaching 1.0 around 2^32, which is the square root of 2^64.
  *        So, for example, if you have 10^7 strings, the probability
- *        of a single collision using an l_uint64 key is on the order of
+ *        of a single collision using an uint64_t key is on the order of
  *            (10^7/4x10^9)^2 ~ 10^-5.
  *        For a million strings, collisions are very rare (~10^-7 probability).
  * </pre>
@@ -67,10 +67,10 @@
 #include "allheaders.h"
 
     /* Limit on the hashtable size */
-static const l_uint32  MaxTabsize = 50000000;
+static const uint32_t  MaxTabsize = 50000000;
     /* Default values for creating the hashmap. */
-static const l_int32   DefaultInitNItems = 2000;
-static const l_int32   DefaultMaxOcc = 2;
+static const int32_t   DefaultInitNItems = 2000;
+static const int32_t   DefaultMaxOcc = 2;
 
 /*--------------------------------------------------------------------------*
  *                     Hashmap creation and destruction                     *
@@ -99,10 +99,10 @@ static const l_int32   DefaultMaxOcc = 2;
  * </pre>
  */
 L_HASHMAP *
-l_hmapCreate(l_int32  ninit,
-             l_int32  maxocc)
+l_hmapCreate(int32_t  ninit,
+             int32_t  maxocc)
 {
-l_uint32    size, tabsize;
+uint32_t    size, tabsize;
 L_HASHMAP  *hmap;
 
     ninit = L_MAX(ninit, DefaultInitNItems);
@@ -144,7 +144,7 @@ L_HASHMAP  *hmap;
 void
 l_hmapDestroy(L_HASHMAP  **phmap)
 {
-l_int32      i;
+int32_t      i;
 L_HASHITEM  *hitem, *next;
 L_HASHMAP   *hmap;
 
@@ -197,11 +197,11 @@ L_HASHMAP   *hmap;
  */
 L_HASHITEM *
 l_hmapLookup(L_HASHMAP  *hmap,
-             l_uint64    key,
-             l_uint64    val,
-             l_int32     op)
+             uint64_t    key,
+             uint64_t    val,
+             int32_t     op)
 {
-l_uint32     index;
+uint32_t     index;
 L_HASHITEM  *hlist, *hitem;
 
     if (!hmap)
@@ -254,8 +254,8 @@ L_HASHITEM  *hlist, *hitem;
 l_ok
 l_hmapRehash(L_HASHMAP  *hmap)
 {
-l_int32      i, index;
-l_uint32     tabsize;
+int32_t      i, index;
+uint32_t     tabsize;
 L_HASHITEM  *hstore, *hitem, *next;
 
     if (!hmap)

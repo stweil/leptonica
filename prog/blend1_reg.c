@@ -39,11 +39,11 @@
 
 #include "allheaders.h"
 
-void GrayBlend(PIX  *pixs, PIX  *pixb, l_int32 op, l_float32 fract);
+void GrayBlend(PIX  *pixs, PIX  *pixb, int32_t op, l_float32 fract);
 void AdaptiveGrayBlend(PIX  *pixs, PIX  *pixb, l_float32 fract);
 void ColorBlend(PIX  *pixs, PIX  *pixb, l_float32 fract);
-PIX *MakeGrayWash(l_int32 w, l_int32 h);
-PIX *MakeColorWash(l_int32 w, l_int32 h, l_int32 color);
+PIX *MakeGrayWash(int32_t w, int32_t h);
+PIX *MakeColorWash(int32_t w, int32_t h, int32_t color);
 
 
 int main(int    argc,
@@ -191,10 +191,10 @@ L_REGPARAMS  *rp;
 void
 GrayBlend(PIX       *pixs,
           PIX       *pixb,
-          l_int32    op,
+          int32_t    op,
           l_float32  fract)
 {
-l_int32   i, j, wb, hb, ws, hs, delx, dely, x, y;
+int32_t   i, j, wb, hb, ws, hs, delx, dely, x, y;
 
     pixGetDimensions(pixs, &ws, &hs, NULL);
     pixGetDimensions(pixb, &wb, &hb, NULL);
@@ -221,7 +221,7 @@ AdaptiveGrayBlend(PIX       *pixs,
                   PIX       *pixb,
                   l_float32  fract)
 {
-l_int32   i, j, wb, hb, ws, hs, delx, dely, x, y;
+int32_t   i, j, wb, hb, ws, hs, delx, dely, x, y;
 
     pixGetDimensions(pixs, &ws, &hs, NULL);
     pixGetDimensions(pixb, &wb, &hb, NULL);
@@ -248,7 +248,7 @@ ColorBlend(PIX       *pixs,
            PIX       *pixb,
            l_float32  fract)
 {
-l_int32   i, j, wb, hb, ws, hs, delx, dely, x, y;
+int32_t   i, j, wb, hb, ws, hs, delx, dely, x, y;
 
     pixGetDimensions(pixs, &ws, &hs, NULL);
     pixGetDimensions(pixb, &wb, &hb, NULL);
@@ -271,11 +271,11 @@ l_int32   i, j, wb, hb, ws, hs, delx, dely, x, y;
 
 
 PIX *
-MakeGrayWash(l_int32  w,
-             l_int32  h)
+MakeGrayWash(int32_t  w,
+             int32_t  h)
 {
-l_int32    i, j, wpl, val;
-l_uint32  *data, *line;
+int32_t    i, j, wpl, val;
+uint32_t  *data, *line;
 PIX       *pixd;
 
     pixd = pixCreate(w, h, 8);
@@ -293,13 +293,13 @@ PIX       *pixd;
 
 
 PIX *
-MakeColorWash(l_int32  w,
-              l_int32  h,
-              l_int32  color)
+MakeColorWash(int32_t  w,
+              int32_t  h,
+              int32_t  color)
 {
-l_int32    i, j, wpl;
-l_uint32   val;
-l_uint32  *data, *line;
+int32_t    i, j, wpl;
+uint32_t   val;
+uint32_t  *data, *line;
 PIX       *pixd;
 
     pixd = pixCreate(w, h, 32);

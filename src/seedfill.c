@@ -45,15 +45,15 @@
  *               PIX         *pixFillHolesToBoundingRect()
  *
  *      Gray seedfill (source: Luc Vincent:fast-hybrid-grayscale-reconstruction)
- *               l_int32      pixSeedfillGray()
- *               l_int32      pixSeedfillGrayInv()
+ *               int32_t      pixSeedfillGray()
+ *               int32_t      pixSeedfillGrayInv()
  *               static void  seedfillGrayLow()
  *               static void  seedfillGrayInvLow()
 
  *
  *      Gray seedfill (source: Luc Vincent: sequential-reconstruction algorithm)
- *               l_int32      pixSeedfillGraySimple()
- *               l_int32      pixSeedfillGrayInvSimple()
+ *               int32_t      pixSeedfillGraySimple()
+ *               int32_t      pixSeedfillGrayInvSimple()
  *               static void  seedfillGrayLowSimple()
  *               static void  seedfillGrayInvLowSimple()
  *
@@ -69,9 +69,9 @@
  *               static void  seedspreadLow()
  *
  *      Local extrema:
- *               l_int32      pixLocalExtrema()
- *            static l_int32  pixQualifyLocalMinima()
- *               l_int32      pixSelectedLocalExtrema()
+ *               int32_t      pixLocalExtrema()
+ *            static int32_t  pixQualifyLocalMinima()
+ *               int32_t      pixSelectedLocalExtrema()
  *               PIX         *pixFindEqualValues()
  *
  *      Selection of minima in mask of connected components
@@ -173,40 +173,40 @@
 
 struct L_Pixel
 {
-    l_int32    x;
-    l_int32    y;
+    int32_t    x;
+    int32_t    y;
 };
 typedef struct L_Pixel  L_PIXEL;
 
-static void seedfillBinaryLow(l_uint32 *datas, l_int32 hs, l_int32 wpls,
-                              l_uint32 *datam, l_int32 hm, l_int32 wplm,
-                              l_int32 connectivity);
-static void seedfillGrayLow(l_uint32 *datas, l_int32 w, l_int32 h,
-                            l_int32 wpls, l_uint32 *datam, l_int32 wplm,
-                            l_int32 connectivity);
-static void seedfillGrayInvLow(l_uint32 *datas, l_int32 w, l_int32 h,
-                               l_int32 wpls, l_uint32 *datam, l_int32 wplm,
-                               l_int32 connectivity);
-static void seedfillGrayLowSimple(l_uint32 *datas, l_int32 w, l_int32 h,
-                                  l_int32 wpls, l_uint32 *datam, l_int32 wplm,
-                                  l_int32 connectivity);
-static void seedfillGrayInvLowSimple(l_uint32 *datas, l_int32 w, l_int32 h,
-                                     l_int32 wpls, l_uint32 *datam,
-                                     l_int32 wplm, l_int32 connectivity);
-static void distanceFunctionLow(l_uint32 *datad, l_int32 w, l_int32 h,
-                                l_int32 d, l_int32 wpld, l_int32 connectivity);
-static void seedspreadLow(l_uint32 *datad, l_int32 w, l_int32 h, l_int32 wpld,
-                          l_uint32 *datat, l_int32 wplt, l_int32 connectivity);
+static void seedfillBinaryLow(uint32_t *datas, int32_t hs, int32_t wpls,
+                              uint32_t *datam, int32_t hm, int32_t wplm,
+                              int32_t connectivity);
+static void seedfillGrayLow(uint32_t *datas, int32_t w, int32_t h,
+                            int32_t wpls, uint32_t *datam, int32_t wplm,
+                            int32_t connectivity);
+static void seedfillGrayInvLow(uint32_t *datas, int32_t w, int32_t h,
+                               int32_t wpls, uint32_t *datam, int32_t wplm,
+                               int32_t connectivity);
+static void seedfillGrayLowSimple(uint32_t *datas, int32_t w, int32_t h,
+                                  int32_t wpls, uint32_t *datam, int32_t wplm,
+                                  int32_t connectivity);
+static void seedfillGrayInvLowSimple(uint32_t *datas, int32_t w, int32_t h,
+                                     int32_t wpls, uint32_t *datam,
+                                     int32_t wplm, int32_t connectivity);
+static void distanceFunctionLow(uint32_t *datad, int32_t w, int32_t h,
+                                int32_t d, int32_t wpld, int32_t connectivity);
+static void seedspreadLow(uint32_t *datad, int32_t w, int32_t h, int32_t wpld,
+                          uint32_t *datat, int32_t wplt, int32_t connectivity);
 
 
-static l_int32 pixQualifyLocalMinima(PIX *pixs, PIX *pixm, l_int32 maxval);
+static int32_t pixQualifyLocalMinima(PIX *pixs, PIX *pixm, int32_t maxval);
 
 #ifndef  NO_CONSOLE_IO
 #define   DEBUG_PRINT_ITERS    0
 #endif  /* ~NO_CONSOLE_IO */
 
   /* Two-way (UL --> LR, LR --> UL) sweep iterations; typically need only 4 */
-static const l_int32  MaxIters = 40;
+static const int32_t  MaxIters = 40;
 
 
 /*-----------------------------------------------------------------------*
@@ -247,11 +247,11 @@ PIX *
 pixSeedfillBinary(PIX     *pixd,
                   PIX     *pixs,
                   PIX     *pixm,
-                  l_int32  connectivity)
+                  int32_t  connectivity)
 {
-l_int32    i, boolval;
-l_int32    hd, hm, wpld, wplm;
-l_uint32  *datad, *datam;
+int32_t    i, boolval;
+int32_t    hd, hm, wpld, wplm;
+uint32_t  *datad, *datam;
 PIX       *pixt;
 
     if (!pixs || pixGetDepth(pixs) != 1)
@@ -333,11 +333,11 @@ PIX *
 pixSeedfillBinaryRestricted(PIX     *pixd,
                             PIX     *pixs,
                             PIX     *pixm,
-                            l_int32  connectivity,
-                            l_int32  xmax,
-                            l_int32  ymax)
+                            int32_t  connectivity,
+                            int32_t  xmax,
+                            int32_t  ymax)
 {
-l_int32  w, h;
+int32_t  w, h;
 PIX     *pix1, *pix2;
 
     if (!pixs || pixGetDepth(pixs) != 1)
@@ -396,19 +396,19 @@ PIX     *pix1, *pix2;
  *      (4) Clip to the smallest dimensions to avoid invalid reads.
  */
 static void
-seedfillBinaryLow(l_uint32  *datas,
-                  l_int32    hs,
-                  l_int32    wpls,
-                  l_uint32  *datam,
-                  l_int32    hm,
-                  l_int32    wplm,
-                  l_int32    connectivity)
+seedfillBinaryLow(uint32_t  *datas,
+                  int32_t    hs,
+                  int32_t    wpls,
+                  uint32_t  *datam,
+                  int32_t    hm,
+                  int32_t    wplm,
+                  int32_t    connectivity)
 {
-l_int32    i, j, h, wpl;
-l_uint32   word, mask;
-l_uint32   wordabove, wordleft, wordbelow, wordright;
-l_uint32   wordprev;  /* test against this in previous iteration */
-l_uint32  *lines, *linem;
+int32_t    i, j, h, wpl;
+uint32_t   word, mask;
+uint32_t   wordabove, wordleft, wordbelow, wordright;
+uint32_t   wordprev;  /* test against this in previous iteration */
+uint32_t  *lines, *linem;
 
     h = L_MIN(hs, hm);
     wpl = L_MIN(wpls, wplm);
@@ -601,7 +601,7 @@ l_uint32  *lines, *linem;
  */
 PIX *
 pixHolesByFilling(PIX     *pixs,
-                  l_int32  connectivity)
+                  int32_t  connectivity)
 {
 PIX  *pixsi, *pixd;
 
@@ -650,7 +650,7 @@ PIX  *pixsi, *pixd;
  */
 PIX *
 pixFillClosedBorders(PIX     *pixs,
-                     l_int32  connectivity)
+                     int32_t  connectivity)
 {
 PIX  *pixsi, *pixd;
 
@@ -686,7 +686,7 @@ PIX  *pixsi, *pixd;
  */
 PIX *
 pixExtractBorderConnComps(PIX     *pixs,
-                          l_int32  connectivity)
+                          int32_t  connectivity)
 {
 PIX  *pixd;
 
@@ -723,7 +723,7 @@ PIX  *pixd;
  */
 PIX *
 pixRemoveBorderConnComps(PIX     *pixs,
-                         l_int32  connectivity)
+                         int32_t  connectivity)
 {
 PIX  *pixd;
 
@@ -771,7 +771,7 @@ PIX  *pixd;
  */
 PIX *
 pixFillBgFromBorder(PIX     *pixs,
-                    l_int32  connectivity)
+                    int32_t  connectivity)
 {
 PIX  *pixd;
 
@@ -829,12 +829,12 @@ PIX  *pixd;
  */
 PIX *
 pixFillHolesToBoundingRect(PIX       *pixs,
-                           l_int32    minsize,
+                           int32_t    minsize,
                            l_float32  maxhfract,
                            l_float32  minfgfract)
 {
-l_int32    i, x, y, w, h, n, nfg, nh, ntot, area;
-l_int32   *tab;
+int32_t    i, x, y, w, h, n, nfg, nh, ntot, area;
+int32_t   *tab;
 l_float32  hfract;  /* measured hole fraction */
 l_float32  fgfract;  /* measured fg fraction */
 BOXA      *boxa;
@@ -910,10 +910,10 @@ PIXA      *pixa;
 l_ok
 pixSeedfillGray(PIX     *pixs,
                 PIX     *pixm,
-                l_int32  connectivity)
+                int32_t  connectivity)
 {
-l_int32    h, w, wpls, wplm;
-l_uint32  *datas, *datam;
+int32_t    h, w, wpls, wplm;
+uint32_t  *datas, *datam;
 
     if (!pixs || pixGetDepth(pixs) != 8)
         return ERROR_INT("pixs not defined or not 8 bpp", __func__, 1);
@@ -967,10 +967,10 @@ l_uint32  *datas, *datam;
 l_ok
 pixSeedfillGrayInv(PIX     *pixs,
                    PIX     *pixm,
-                   l_int32  connectivity)
+                   int32_t  connectivity)
 {
-l_int32    h, w, wpls, wplm;
-l_uint32  *datas, *datam;
+int32_t    h, w, wpls, wplm;
+uint32_t  *datas, *datam;
 
     if (!pixs || pixGetDepth(pixs) != 8)
         return ERROR_INT("pixs not defined or not 8 bpp", __func__, 1);
@@ -1040,18 +1040,18 @@ l_uint32  *datas, *datam;
  *            on  Image Processing, vol. 2, no. 2, pp. 176-201, 1993.
  */
 static void
-seedfillGrayLow(l_uint32  *datas,
-                l_int32    w,
-                l_int32    h,
-                l_int32    wpls,
-                l_uint32  *datam,
-                l_int32    wplm,
-                l_int32    connectivity)
+seedfillGrayLow(uint32_t  *datas,
+                int32_t    w,
+                int32_t    h,
+                int32_t    wpls,
+                uint32_t  *datam,
+                int32_t    wplm,
+                int32_t    connectivity)
 {
-l_uint8    val1, val2, val3, val4, val5, val6, val7, val8;
-l_uint8    val, maxval, maskval, boolval;
-l_int32    i, j, imax, jmax, queue_size;
-l_uint32  *lines, *linem;
+uint8_t    val1, val2, val3, val4, val5, val6, val7, val8;
+uint8_t    val, maxval, maskval, boolval;
+int32_t    i, j, imax, jmax, queue_size;
+uint32_t  *lines, *linem;
 L_PIXEL *pixel;
 L_QUEUE  *lq_pixel;
 
@@ -1489,18 +1489,18 @@ L_QUEUE  *lq_pixel;
  *            on  Image Processing, vol. 2, no. 2, pp. 176-201, 1993.
  */
 static void
-seedfillGrayInvLow(l_uint32  *datas,
-                   l_int32    w,
-                   l_int32    h,
-                   l_int32    wpls,
-                   l_uint32  *datam,
-                   l_int32    wplm,
-                   l_int32    connectivity)
+seedfillGrayInvLow(uint32_t  *datas,
+                   int32_t    w,
+                   int32_t    h,
+                   int32_t    wpls,
+                   uint32_t  *datam,
+                   int32_t    wplm,
+                   int32_t    connectivity)
 {
-l_uint8    val1, val2, val3, val4, val5, val6, val7, val8;
-l_uint8    val, maxval, maskval, boolval;
-l_int32    i, j, imax, jmax, queue_size;
-l_uint32  *lines, *linem;
+uint8_t    val1, val2, val3, val4, val5, val6, val7, val8;
+uint8_t    val, maxval, maskval, boolval;
+int32_t    i, j, imax, jmax, queue_size;
+uint32_t  *lines, *linem;
 L_PIXEL *pixel;
 L_QUEUE  *lq_pixel;
 
@@ -1944,10 +1944,10 @@ L_QUEUE  *lq_pixel;
 l_ok
 pixSeedfillGraySimple(PIX     *pixs,
                       PIX     *pixm,
-                      l_int32  connectivity)
+                      int32_t  connectivity)
 {
-l_int32    i, h, w, wpls, wplm, boolval;
-l_uint32  *datas, *datam;
+int32_t    i, h, w, wpls, wplm, boolval;
+uint32_t  *datas, *datam;
 PIX       *pixt;
 
     if (!pixs || pixGetDepth(pixs) != 8)
@@ -2013,10 +2013,10 @@ PIX       *pixt;
 l_ok
 pixSeedfillGrayInvSimple(PIX     *pixs,
                          PIX     *pixm,
-                         l_int32  connectivity)
+                         int32_t  connectivity)
 {
-l_int32    i, h, w, wpls, wplm, boolval;
-l_uint32  *datas, *datam;
+int32_t    i, h, w, wpls, wplm, boolval;
+uint32_t  *datas, *datam;
 PIX       *pixt;
 
     if (!pixs || pixGetDepth(pixs) != 8)
@@ -2090,18 +2090,18 @@ PIX       *pixt;
  *          point on the rim, which is a saddle point on the rim.
  */
 static void
-seedfillGrayLowSimple(l_uint32  *datas,
-                      l_int32    w,
-                      l_int32    h,
-                      l_int32    wpls,
-                      l_uint32  *datam,
-                      l_int32    wplm,
-                      l_int32    connectivity)
+seedfillGrayLowSimple(uint32_t  *datas,
+                      int32_t    w,
+                      int32_t    h,
+                      int32_t    wpls,
+                      uint32_t  *datam,
+                      int32_t    wplm,
+                      int32_t    connectivity)
 {
-l_uint8    val2, val3, val4, val5, val7, val8;
-l_uint8    val, maxval, maskval;
-l_int32    i, j, imax, jmax;
-l_uint32  *lines, *linem;
+uint8_t    val2, val3, val4, val5, val7, val8;
+uint8_t    val, maxval, maskval;
+int32_t    i, j, imax, jmax;
+uint32_t  *lines, *linem;
 
     imax = h - 1;
     jmax = w - 1;
@@ -2244,18 +2244,18 @@ l_uint32  *lines, *linem;
  *          corresponding mask values in pixm.
  */
 static void
-seedfillGrayInvLowSimple(l_uint32  *datas,
-                         l_int32    w,
-                         l_int32    h,
-                         l_int32    wpls,
-                         l_uint32  *datam,
-                         l_int32    wplm,
-                         l_int32    connectivity)
+seedfillGrayInvLowSimple(uint32_t  *datas,
+                         int32_t    w,
+                         int32_t    h,
+                         int32_t    wpls,
+                         uint32_t  *datam,
+                         int32_t    wplm,
+                         int32_t    connectivity)
 {
-l_uint8    val1, val2, val3, val4, val5, val6, val7, val8;
-l_uint8    maxval, maskval;
-l_int32    i, j, imax, jmax;
-l_uint32  *lines, *linem;
+uint8_t    val1, val2, val3, val4, val5, val6, val7, val8;
+uint8_t    maxval, maskval;
+int32_t    i, j, imax, jmax;
+uint32_t  *lines, *linem;
 
     imax = h - 1;
     jmax = w - 1;
@@ -2409,8 +2409,8 @@ l_uint32  *lines, *linem;
 PIX *
 pixSeedfillGrayBasin(PIX     *pixb,
                      PIX     *pixm,
-                     l_int32  delta,
-                     l_int32  connectivity)
+                     int32_t  delta,
+                     int32_t  connectivity)
 {
 PIX  *pixbi, *pixmi, *pixsd;
 
@@ -2497,12 +2497,12 @@ PIX  *pixbi, *pixmi, *pixsd;
  */
 PIX *
 pixDistanceFunction(PIX     *pixs,
-                    l_int32  connectivity,
-                    l_int32  outdepth,
-                    l_int32  boundcond)
+                    int32_t  connectivity,
+                    int32_t  outdepth,
+                    int32_t  boundcond)
 {
-l_int32    w, h, wpld;
-l_uint32  *datad;
+int32_t    w, h, wpld;
+uint32_t  *datad;
 PIX       *pixd;
 
     if (!pixs || pixGetDepth(pixs) != 1)
@@ -2545,16 +2545,16 @@ PIX       *pixd;
  * \brief   distanceFunctionLow()
  */
 static void
-distanceFunctionLow(l_uint32  *datad,
-                    l_int32    w,
-                    l_int32    h,
-                    l_int32    d,
-                    l_int32    wpld,
-                    l_int32    connectivity)
+distanceFunctionLow(uint32_t  *datad,
+                    int32_t    w,
+                    int32_t    h,
+                    int32_t    d,
+                    int32_t    wpld,
+                    int32_t    connectivity)
 {
-l_int32    val1, val2, val3, val4, val5, val6, val7, val8, minval, val;
-l_int32    i, j, imax, jmax;
-l_uint32  *lined;
+int32_t    val1, val2, val3, val4, val5, val6, val7, val8, minval, val;
+int32_t    i, j, imax, jmax;
+uint32_t  *lined;
 
         /* One raster scan followed by one anti-raster scan.
          * This does not re-set the 1-boundary of pixels that
@@ -2750,10 +2750,10 @@ l_uint32  *lined;
  */
 PIX *
 pixSeedspread(PIX     *pixs,
-              l_int32  connectivity)
+              int32_t  connectivity)
 {
-l_int32    w, h, wplt, wplg;
-l_uint32  *datat, *datag;
+int32_t    w, h, wplt, wplg;
+uint32_t  *datat, *datag;
 PIX       *pixm, *pixt, *pixg, *pixd;
 
     if (!pixs || pixGetDepth(pixs) != 8)
@@ -2801,17 +2801,17 @@ PIX       *pixm, *pixt, *pixg, *pixd;
  *    See pixSeedspread() for a brief description of the algorithm here.
  */
 static void
-seedspreadLow(l_uint32  *datad,
-              l_int32    w,
-              l_int32    h,
-              l_int32    wpld,
-              l_uint32  *datat,
-              l_int32    wplt,
-              l_int32    connectivity)
+seedspreadLow(uint32_t  *datad,
+              int32_t    w,
+              int32_t    h,
+              int32_t    wpld,
+              uint32_t  *datat,
+              int32_t    wplt,
+              int32_t    connectivity)
 {
-l_int32    val1t, val2t, val3t, val4t, val5t, val6t, val7t, val8t;
-l_int32    i, j, imax, jmax, minval, valt, vald;
-l_uint32  *linet, *lined;
+int32_t    val1t, val2t, val3t, val4t, val5t, val6t, val7t, val8t;
+int32_t    i, j, imax, jmax, minval, valt, vald;
+uint32_t  *linet, *lined;
 
         /* One raster scan followed by one anti-raster scan.
          * pixt is initialized to have 0 on pixels where the
@@ -2973,8 +2973,8 @@ l_uint32  *linet, *lined;
  */
 l_ok
 pixLocalExtrema(PIX     *pixs,
-                l_int32  maxmin,
-                l_int32  minmax,
+                int32_t  maxmin,
+                int32_t  minmax,
                 PIX    **ppixmin,
                 PIX    **ppixmax)
 {
@@ -3033,15 +3033,15 @@ PIX  *pixmin, *pixmax, *pixt1, *pixt2;
  *          no upper bound (equivalent to maxval == 254).
  * </pre>
  */
-static l_int32
+static int32_t
 pixQualifyLocalMinima(PIX     *pixs,
                       PIX     *pixm,
-                      l_int32  maxval)
+                      int32_t  maxval)
 {
-l_int32    n, i, j, k, x, y, w, h, xc, yc, wc, hc, xon, yon;
-l_int32    vals, wpls, wplc, ismin;
-l_uint32   val;
-l_uint32  *datas, *datac, *lines, *linec;
+int32_t    n, i, j, k, x, y, w, h, xc, yc, wc, hc, xon, yon;
+int32_t    vals, wpls, wplc, ismin;
+uint32_t   val;
+uint32_t  *datas, *datac, *lines, *linec;
 BOXA      *boxa;
 PIX       *pix1, *pix2, *pix3;
 PIXA      *pixa;
@@ -3141,7 +3141,7 @@ PIXA      *pixa;
  */
 l_ok
 pixSelectedLocalExtrema(PIX     *pixs,
-                        l_int32  mindist,
+                        int32_t  mindist,
                         PIX    **ppixmin,
                         PIX    **ppixmax)
 {
@@ -3201,9 +3201,9 @@ PIX *
 pixFindEqualValues(PIX  *pixs1,
                    PIX  *pixs2)
 {
-l_int32    w1, h1, w2, h2, w, h;
-l_int32    i, j, val1, val2, wpls1, wpls2, wpld;
-l_uint32  *datas1, *datas2, *datad, *lines1, *lines2, *lined;
+int32_t    w1, h1, w2, h2, w, h;
+int32_t    i, j, val1, val2, wpls1, wpls2, wpld;
+uint32_t  *datas1, *datas2, *datad, *lines1, *lines2, *lined;
 PIX       *pixd;
 
     if (!pixs1 || pixGetDepth(pixs1) != 8)
@@ -3268,9 +3268,9 @@ pixSelectMinInConnComp(PIX    *pixs,
                        PTA   **ppta,
                        NUMA  **pnav)
 {
-l_int32    bx, by, bw, bh, i, j, c, n;
-l_int32    xs, ys, minx, miny, wpls, wplt, val, minval;
-l_uint32  *datas, *datat, *lines, *linet;
+int32_t    bx, by, bw, bh, i, j, c, n;
+int32_t    xs, ys, minx, miny, wpls, wplt, val, minval;
+uint32_t  *datas, *datat, *lines, *linet;
 BOXA      *boxa;
 NUMA      *nav;
 PIX       *pixt, *pixs2, *pixm2;
@@ -3377,8 +3377,8 @@ PIX *
 pixRemoveSeededComponents(PIX     *pixd,
                           PIX     *pixs,
                           PIX     *pixm,
-                          l_int32  connectivity,
-                          l_int32  bordersize)
+                          int32_t  connectivity,
+                          int32_t  bordersize)
 {
 PIX  *pixt;
 

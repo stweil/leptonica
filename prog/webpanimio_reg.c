@@ -49,7 +49,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32       niters, duration;
+int32_t       niters, duration;
 PIX          *pix1, *pix2;
 PIXA         *pixa;
 L_REGPARAMS  *rp;

@@ -215,7 +215,7 @@ int main(int    argc,
 {
 char    *str, *results_file;
 char     command[256], buf[256];
-l_int32  i, ntests, dotest, nfail, ret, start, stop;
+int32_t  i, ntests, dotest, nfail, ret, start, stop;
 SARRAY  *sa;
 
     if (argc != 2)

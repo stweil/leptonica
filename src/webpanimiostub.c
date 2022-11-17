@@ -42,26 +42,26 @@
 #if  !HAVE_LIBWEBP_ANIM   /* defined in environ.h */
 /* -----------------------------------------------*/
 
-l_ok pixaWriteWebPAnim(const char *filename, PIXA *pixa, l_int32 loopcount,
-                       l_int32 duration, l_int32 quality, l_int32 lossless)
+l_ok pixaWriteWebPAnim(const char *filename, PIXA *pixa, int32_t loopcount,
+                       int32_t duration, int32_t quality, int32_t lossless)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_ok pixaWriteStreamWebPAnim(FILE *fp, PIXA *pixa, l_int32 loopcount,
-                             l_int32 duration, l_int32 quality,
-                             l_int32 lossless)
+l_ok pixaWriteStreamWebPAnim(FILE *fp, PIXA *pixa, int32_t loopcount,
+                             int32_t duration, int32_t quality,
+                             int32_t lossless)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_ok pixaWriteMemWebPAnim(l_uint8 **pencdata, size_t *pencsize, PIXA *pixa,
-                          l_int32 loopcount, l_int32 duration,
-                          l_int32 quality, l_int32 lossless)
+l_ok pixaWriteMemWebPAnim(uint8_t **pencdata, size_t *pencsize, PIXA *pixa,
+                          int32_t loopcount, int32_t duration,
+                          int32_t quality, int32_t lossless)
 {
     return ERROR_INT("function not present", __func__, 1);
 }

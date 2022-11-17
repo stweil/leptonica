@@ -52,11 +52,11 @@
    /* Designed to work with amoris.2.150.jpg  */
 static PIX *MakeReplacementMask(PIX *pixs);
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32       bx, by, bw, bh;
-l_uint32      pixval;
+int32_t       bx, by, bw, bh;
+uint32_t      pixval;
 BOX          *box1, *box2;
 BOXA         *boxa;
 PIX          *pixs, *pixm, *pixd;

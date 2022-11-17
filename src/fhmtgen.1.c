@@ -36,12 +36,12 @@
 
 PIX *pixHMTDwa_1(PIX *pixd, PIX *pixs, const char *selname);
 PIX *pixFHMTGen_1(PIX *pixd, PIX *pixs, const char *selname);
-l_int32 fhmtgen_low_1(l_uint32 *datad, l_int32 w,
-                      l_int32 h, l_int32 wpld,
-                      l_uint32 *datas, l_int32 wpls,
-                      l_int32 index);
+int32_t fhmtgen_low_1(uint32_t *datad, int32_t w,
+                      int32_t h, int32_t wpld,
+                      uint32_t *datas, int32_t wpls,
+                      int32_t index);
 
-static l_int32   NUM_SELS_GENERATED = 10;
+static int32_t   NUM_SELS_GENERATED = 10;
 static char  SEL_NAMES[][80] = {
                              "sel_3hm",
                              "sel_3de",
@@ -120,8 +120,8 @@ pixFHMTGen_1(PIX         *pixd,
              PIX         *pixs,
              const char  *selname)
 {
-l_int32    i, index, found, w, h, wpls, wpld;
-l_uint32  *datad, *datas, *datat;
+int32_t    i, index, found, w, h, wpls, wpld;
+uint32_t  *datad, *datas, *datat;
 PIX       *pixt;
 
     if (!pixs)

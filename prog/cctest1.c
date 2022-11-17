@@ -29,7 +29,7 @@
  *
  *    This is a test of the following function:
  *
- *        BOXA   *pixConnComp(PIX *pixs, PIXA  **ppixa, l_int32 connectivity)
+ *        BOXA   *pixConnComp(PIX *pixs, PIXA  **ppixa, int32_t connectivity)
  *
  *                    pixs:  input pix
  *                    ppixa: &pixa (<optional> pixa of each c.c.)
@@ -49,11 +49,11 @@
 
 #define  NTIMES             2
 
-l_int32 main(l_int32  argc,
+int32_t main(int32_t  argc,
              char   **argv)
 {
 char     *filein;
-l_int32   i, n, count;
+int32_t   i, n, count;
 BOX      *box;
 BOXA     *boxa;
 PIX      *pixs, *pixd;

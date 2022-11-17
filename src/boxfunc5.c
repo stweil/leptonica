@@ -33,17 +33,17 @@
  *           BOXA     *boxaWindowedMedian()
  *           BOXA     *boxaModifyWithBoxa()
  *           BOXA     *boxaReconcilePairWidth()
- *           l_int32   boxaSizeConsistency()
+ *           int32_t   boxaSizeConsistency()
  *           BOXA     *boxaReconcileAllByMedian()
  *           BOXA     *boxaReconcileSidesByMedian()
  *    static void      adjustSidePlotName()  -- debug
  *           BOXA     *boxaReconcileSizeByMedian()
- *           l_int32   boxaPlotSides()   [for debugging]
- *           l_int32   boxaPlotSizes()   [for debugging]
+ *           int32_t   boxaPlotSides()   [for debugging]
+ *           int32_t   boxaPlotSizes()   [for debugging]
  *           BOXA     *boxaFillSequence()
- *    static l_int32   boxaFillAll()
- *           l_int32   boxaSizeVariation()
- *           l_int32   boxaMedianDimensions()
+ *    static int32_t   boxaFillAll()
+ *           int32_t   boxaSizeVariation()
+ *           int32_t   boxaMedianDimensions()
  * </pre>
  */
 
@@ -54,9 +54,9 @@
 #include <math.h>
 #include "allheaders.h"
 
-static l_int32 boxaFillAll(BOXA *boxa);
+static int32_t boxaFillAll(BOXA *boxa);
 static void adjustSidePlotName(char *buf, size_t size, const char *preface,
-                               l_int32 select);
+                               int32_t select);
 
 /*---------------------------------------------------------------------*
  *                        Boxa sequence fitting                        *
@@ -104,13 +104,13 @@ static void adjustSidePlotName(char *buf, size_t size, const char *preface,
  */
 BOXA *
 boxaSmoothSequenceMedian(BOXA    *boxas,
-                         l_int32  halfwin,
-                         l_int32  subflag,
-                         l_int32  maxdiff,
-                         l_int32  extrapixels,
-                         l_int32  debug)
+                         int32_t  halfwin,
+                         int32_t  subflag,
+                         int32_t  maxdiff,
+                         int32_t  extrapixels,
+                         int32_t  debug)
 {
-l_int32  n;
+int32_t  n;
 BOXA    *boxae, *boxao, *boxamede, *boxamedo, *boxame, *boxamo, *boxad;
 PIX     *pix1;
 
@@ -202,10 +202,10 @@ PIX     *pix1;
  */
 BOXA *
 boxaWindowedMedian(BOXA    *boxas,
-                   l_int32  halfwin,
-                   l_int32  debug)
+                   int32_t  halfwin,
+                   int32_t  debug)
 {
-l_int32  n, i, left, top, right, bot;
+int32_t  n, i, left, top, right, bot;
 BOX     *box;
 BOXA    *boxaf, *boxad;
 NUMA    *nal, *nat, *nar, *nab, *naml, *namt, *namr, *namb;
@@ -346,11 +346,11 @@ PIX     *pix1;
 BOXA *
 boxaModifyWithBoxa(BOXA    *boxas,
                    BOXA    *boxam,
-                   l_int32  subflag,
-                   l_int32  maxdiff,
-                   l_int32  extrapixels)
+                   int32_t  subflag,
+                   int32_t  maxdiff,
+                   int32_t  extrapixels)
 {
-l_int32  n, i, ls, ts, rs, bs, ws, hs, lm, tm, rm, bm, wm, hm, ld, td, rd, bd;
+int32_t  n, i, ls, ts, rs, bs, ws, hs, lm, tm, rm, bm, wm, hm, ld, td, rd, bd;
 BOX     *boxs, *boxm, *boxd, *boxempty;
 BOXA    *boxad;
 
@@ -459,12 +459,12 @@ BOXA    *boxad;
  */
 BOXA *
 boxaReconcilePairWidth(BOXA      *boxas,
-                       l_int32    delw,
-                       l_int32    op,
+                       int32_t    delw,
+                       int32_t    op,
                        l_float32  factor,
                        NUMA      *na)
 {
-l_int32  i, ne, no, nmin, xe, we, xo, wo, inde, indo, x, w;
+int32_t  i, ne, no, nmin, xe, we, xo, wo, inde, indo, x, w;
 BOX     *boxe, *boxo;
 BOXA    *boxae, *boxao, *boxad;
 
@@ -580,14 +580,14 @@ BOXA    *boxae, *boxao, *boxad;
  */
 l_ok
 boxaSizeConsistency(BOXA       *boxas,
-                    l_int32     type,
+                    int32_t     type,
                     l_float32   threshp,
                     l_float32   threshm,
                     l_float32  *pfvarp,
                     l_float32  *pfvarm,
-                    l_int32    *psame)
+                    int32_t    *psame)
 {
-l_int32    i, n, bw1, bh1, bw2, bh2, npairs;
+int32_t    i, n, bw1, bh1, bw2, bh2, npairs;
 l_float32  ave, fdiff, sumdiff, med, fvarp, fvarm;
 NUMA      *na1;
 
@@ -679,13 +679,13 @@ NUMA      *na1;
  */
 BOXA *
 boxaReconcileAllByMedian(BOXA    *boxas,
-                         l_int32  select1,
-                         l_int32  select2,
-                         l_int32  thresh,
-                         l_int32  extra,
+                         int32_t  select1,
+                         int32_t  select2,
+                         int32_t  thresh,
+                         int32_t  extra,
                          PIXA    *pixadb)
  {
-l_int32  ncols;
+int32_t  ncols;
 BOXA    *boxa1e, *boxa1o, *boxa2e, *boxa2o, *boxa3e, *boxa3o, *boxad;
 PIX     *pix1;
 
@@ -790,14 +790,14 @@ PIX     *pix1;
  */
 BOXA *
 boxaReconcileSidesByMedian(BOXA    *boxas,
-                           l_int32  select,
-                           l_int32  thresh,
-                           l_int32  extra,
+                           int32_t  select,
+                           int32_t  thresh,
+                           int32_t  extra,
                            PIXA    *pixadb)
  {
 char     buf[128];
-l_int32  i, n, diff;
-l_int32  left, right, top, bot, medleft, medright, medtop, medbot;
+int32_t  i, n, diff;
+int32_t  left, right, top, bot, medleft, medright, medtop, medbot;
 BOX     *box;
 BOXA    *boxa1, *boxad;
 PIX     *pix;
@@ -837,7 +837,7 @@ PIX     *pix;
     }
 
     if (pixadb) {
-        l_int32 ndb = pixaGetCount(pixadb);
+        int32_t ndb = pixaGetCount(pixadb);
         if (ndb == 0 || ndb == 5) {  /* first of even and odd box sets */
             adjustSidePlotName(buf, sizeof(buf), "init", select);
             boxaPlotSides(boxas, buf, NULL, NULL, NULL, NULL, &pix);
@@ -902,7 +902,7 @@ static void
 adjustSidePlotName(char        *buf,
                    size_t       size,
                    const char  *preface,
-                   l_int32      select)
+                   int32_t      select)
 {
     stringCopy(buf, preface, size - 8);
     if (select == L_ADJUST_LEFT)
@@ -966,7 +966,7 @@ adjustSidePlotName(char        *buf,
  */
 BOXA *
 boxaReconcileSizeByMedian(BOXA       *boxas,
-                          l_int32     type,
+                          int32_t     type,
                           l_float32   dfract,
                           l_float32   sfract,
                           l_float32   factor,
@@ -974,10 +974,10 @@ boxaReconcileSizeByMedian(BOXA       *boxas,
                           NUMA      **pnadelh,
                           l_float32  *pratiowh)
 {
-l_int32    i, n, ne, no, outfound, isvalid, ind, del, maxdel;
-l_int32    medw, medh, bw, bh, left, right, top, bot;
-l_int32    medleft, medlefte, medlefto, medright, medrighte, medrighto;
-l_int32    medtop, medtope, medtopo, medbot, medbote, medboto;
+int32_t    i, n, ne, no, outfound, isvalid, ind, del, maxdel;
+int32_t    medw, medh, bw, bh, left, right, top, bot;
+int32_t    medleft, medlefte, medlefto, medright, medrighte, medrighto;
+int32_t    medtop, medtope, medtopo, medbot, medbote, medboto;
 l_float32  brat;
 BOX       *box;
 BOXA      *boxa1, *boxae, *boxao, *boxad;
@@ -1094,7 +1094,7 @@ NUMA      *naind, *nadelw, *nadelh;
              * the median value for that side.  Then both sides are moved
              * an equal distance in or out to make w = %factor * medw. */
         boxad = boxaCreate(n);
-        maxdel = (l_int32)(sfract * medw + 0.5);
+        maxdel = (int32_t)(sfract * medw + 0.5);
         for (i = 0; i < n; i++) {
             box = boxaGetBox(boxas, i, L_COPY);
             boxIsValid(box, &isvalid);
@@ -1105,7 +1105,7 @@ NUMA      *naind, *nadelw, *nadelh;
                 boxGetSideLocations(box, &left, &right, NULL, NULL);
                 if (L_ABS(left - medleft) > maxdel) left = medleft;
                 if (L_ABS(right - medright) > maxdel) right = medright;
-                del = (l_int32)(factor * medw - (right - left)) / 2;
+                del = (int32_t)(factor * medw - (right - left)) / 2;
                 boxSetSide(box, L_SET_LEFT, left - del, 0);
                 boxSetSide(box, L_SET_RIGHT, right + del, 0);
             }
@@ -1182,7 +1182,7 @@ NUMA      *naind, *nadelw, *nadelh;
              * sides are moved an equal distance in or out to make
              * h = %factor * medh). */
         boxad = boxaCreate(n);
-        maxdel = (l_int32)(sfract * medh + 0.5);
+        maxdel = (int32_t)(sfract * medh + 0.5);
         for (i = 0; i < n; i++) {
             box = boxaGetBox(boxas, i, L_COPY);
             boxIsValid(box, &isvalid);
@@ -1193,7 +1193,7 @@ NUMA      *naind, *nadelw, *nadelh;
                 boxGetSideLocations(box, NULL, NULL, &top, &bot);
                 if (L_ABS(top - medtop) > maxdel) top = medtop;
                 if (L_ABS(bot - medbot) > maxdel) bot = medbot;
-                del = (l_int32)(factor * medh - (bot - top)) / 2;  /* typ > 0 */
+                del = (int32_t)(factor * medh - (bot - top)) / 2;  /* typ > 0 */
                 boxSetSide(box, L_SET_TOP, L_MAX(0, top - del), 0);
                 boxSetSide(box, L_SET_BOT, bot + del, 0);
             }
@@ -1242,9 +1242,9 @@ boxaPlotSides(BOXA        *boxa,
 {
 char            buf[128], titlebuf[128];
 char           *dataname;
-static l_int32  plotid = 0;
-l_int32         n, i, w, h, left, top, right, bot;
-l_int32         debugprint = FALSE;  /* change to TRUE to spam stderr */
+static int32_t  plotid = 0;
+int32_t         n, i, w, h, left, top, right, bot;
+int32_t         debugprint = FALSE;  /* change to TRUE to spam stderr */
 l_float32       med, dev;
 BOXA           *boxat;
 GPLOT          *gplot;
@@ -1370,8 +1370,8 @@ boxaPlotSizes(BOXA        *boxa,
               PIX        **ppixd)
 {
 char            buf[128], titlebuf[128];
-static l_int32  plotid = 0;
-l_int32         n, i, w, h;
+static int32_t  plotid = 0;
+int32_t         n, i, w, h;
 BOXA           *boxat;
 GPLOT          *gplot;
 NUMA           *naw, *nah;
@@ -1446,10 +1446,10 @@ NUMA           *naw, *nah;
  */
 BOXA *
 boxaFillSequence(BOXA    *boxas,
-                 l_int32  useflag,
-                 l_int32  debug)
+                 int32_t  useflag,
+                 int32_t  debug)
 {
-l_int32  n, nv;
+int32_t  n, nv;
 BOXA    *boxae, *boxao, *boxad;
 
     if (!boxas)
@@ -1501,11 +1501,11 @@ BOXA    *boxae, *boxao, *boxad;
  *          issues a warning.
  * </pre>
  */
-static l_int32
+static int32_t
 boxaFillAll(BOXA  *boxa)
 {
-l_int32   n, nv, i, j, spandown, spanup;
-l_int32  *indic;
+int32_t   n, nv, i, j, spandown, spanup;
+int32_t  *indic;
 BOX      *box, *boxt;
 
     if (!boxa)
@@ -1519,7 +1519,7 @@ BOX      *box, *boxt;
     }
 
         /* Make indicator array for valid boxes */
-    if ((indic = (l_int32 *)LEPT_CALLOC(n, sizeof(l_int32))) == NULL)
+    if ((indic = (int32_t *)LEPT_CALLOC(n, sizeof(int32_t))) == NULL)
         return ERROR_INT("indic not made", __func__, 1);
     for (i = 0; i < n; i++) {
         box = boxaGetValidBox(boxa, i, L_CLONE);
@@ -1585,13 +1585,13 @@ BOX      *box, *boxt;
  */
 l_ok
 boxaSizeVariation(BOXA       *boxa,
-                  l_int32     type,
+                  int32_t     type,
                   l_float32  *pdel_evenodd,
                   l_float32  *prms_even,
                   l_float32  *prms_odd,
                   l_float32  *prms_all)
 {
-l_int32    n, ne, no, nmin, vale, valo, i;
+int32_t    n, ne, no, nmin, vale, valo, i;
 l_float32  sum;
 BOXA      *boxae, *boxao;
 NUMA      *nae, *nao, *na_all;
@@ -1686,16 +1686,16 @@ NUMA      *nae, *nao, *na_all;
  */
 l_ok
 boxaMedianDimensions(BOXA     *boxas,
-                     l_int32  *pmedw,
-                     l_int32  *pmedh,
-                     l_int32  *pmedwe,
-                     l_int32  *pmedwo,
-                     l_int32  *pmedhe,
-                     l_int32  *pmedho,
+                     int32_t  *pmedw,
+                     int32_t  *pmedh,
+                     int32_t  *pmedwe,
+                     int32_t  *pmedwo,
+                     int32_t  *pmedhe,
+                     int32_t  *pmedho,
                      NUMA    **pnadelw,
                      NUMA    **pnadelh)
 {
-l_int32  i, n, bw, bh, medw, medh, medwe, medwo, medhe, medho;
+int32_t  i, n, bw, bh, medw, medh, medwe, medwo, medhe, medho;
 BOXA    *boxae, *boxao;
 NUMA    *nadelw, *nadelh;
 

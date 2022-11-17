@@ -46,8 +46,8 @@
  *         PIX     *pixCloseSafeBrick()
  *
  *     Binary composed morphological (raster) ops with brick Sels
- *         l_int32  selectComposableSels()
- *         l_int32  selectComposableSizes()
+ *         int32_t  selectComposableSels()
+ *         int32_t  selectComposableSizes()
  *         PIX     *pixDilateCompBrick()
  *         PIX     *pixErodeCompBrick()
  *         PIX     *pixOpenCompBrick()
@@ -56,7 +56,7 @@
  *
  *     Functions associated with boundary conditions
  *         void     resetMorphBoundaryCondition()
- *         l_int32  getMorphBorderPixelColor()
+ *         int32_t  getMorphBorderPixelColor()
  *
  *     Static helpers for arg processing
  *         static PIX     *processMorphArgs1()
@@ -173,10 +173,10 @@
      * in other files to access it directly.  However, in most
      * cases that is not necessary, because it can be reset
      * using resetMorphBoundaryCondition().  */
-LEPT_DLL l_int32  MORPH_BC = ASYMMETRIC_MORPH_BC;
+LEPT_DLL int32_t  MORPH_BC = ASYMMETRIC_MORPH_BC;
 
     /* We accept this cost in extra rasterops for decomposing exactly. */
-static const l_int32  ACCEPTABLE_COST = 5;
+static const int32_t  ACCEPTABLE_COST = 5;
 
     /* Static helpers for arg processing */
 static PIX * processMorphArgs1(PIX *pixd, PIX *pixs, SEL *sel, PIX **ppixt);
@@ -214,7 +214,7 @@ pixDilate(PIX  *pixd,
           PIX  *pixs,
           SEL  *sel)
 {
-l_int32  i, j, w, h, sx, sy, cx, cy, seldata;
+int32_t  i, j, w, h, sx, sy, cx, cy, seldata;
 PIX     *pixt;
 
     if ((pixd = processMorphArgs1(pixd, pixs, sel, &pixt)) == NULL)
@@ -266,8 +266,8 @@ pixErode(PIX  *pixd,
          PIX  *pixs,
          SEL  *sel)
 {
-l_int32  i, j, w, h, sx, sy, cx, cy, seldata;
-l_int32  xp, yp, xn, yn;
+int32_t  i, j, w, h, sx, sy, cx, cy, seldata;
+int32_t  xp, yp, xn, yn;
 PIX     *pixt;
 
     if ((pixd = processMorphArgs1(pixd, pixs, sel, &pixt)) == NULL)
@@ -339,8 +339,8 @@ pixHMT(PIX  *pixd,
        PIX  *pixs,
        SEL  *sel)
 {
-l_int32  i, j, w, h, sx, sy, cx, cy, firstrasterop, seldata;
-l_int32  xp, yp, xn, yn;
+int32_t  i, j, w, h, sx, sy, cx, cy, firstrasterop, seldata;
+int32_t  xp, yp, xn, yn;
 PIX     *pixt;
 
     if ((pixd = processMorphArgs1(pixd, pixs, sel, &pixt)) == NULL)
@@ -515,7 +515,7 @@ pixCloseSafe(PIX  *pixd,
              PIX  *pixs,
              SEL  *sel)
 {
-l_int32  xp, yp, xn, yn, xmax, xbord;
+int32_t  xp, yp, xn, yn, xmax, xbord;
 PIX     *pixt1, *pixt2;
 
     if (!pixs)
@@ -671,8 +671,8 @@ PIX  *pixt;
 PIX *
 pixDilateBrick(PIX     *pixd,
                PIX     *pixs,
-               l_int32  hsize,
-               l_int32  vsize)
+               int32_t  hsize,
+               int32_t  vsize)
 {
 PIX  *pixt;
 SEL  *sel, *selh, *selv;
@@ -739,8 +739,8 @@ SEL  *sel, *selh, *selv;
 PIX *
 pixErodeBrick(PIX     *pixd,
               PIX     *pixs,
-              l_int32  hsize,
-              l_int32  vsize)
+              int32_t  hsize,
+              int32_t  vsize)
 {
 PIX  *pixt;
 SEL  *sel, *selh, *selv;
@@ -807,8 +807,8 @@ SEL  *sel, *selh, *selv;
 PIX *
 pixOpenBrick(PIX     *pixd,
              PIX     *pixs,
-             l_int32  hsize,
-             l_int32  vsize)
+             int32_t  hsize,
+             int32_t  vsize)
 {
 PIX  *pixt;
 SEL  *sel, *selh, *selv;
@@ -877,8 +877,8 @@ SEL  *sel, *selh, *selv;
 PIX *
 pixCloseBrick(PIX     *pixd,
               PIX     *pixs,
-              l_int32  hsize,
-              l_int32  vsize)
+              int32_t  hsize,
+              int32_t  vsize)
 {
 PIX  *pixt;
 SEL  *sel, *selh, *selv;
@@ -952,10 +952,10 @@ SEL  *sel, *selh, *selv;
 PIX *
 pixCloseSafeBrick(PIX     *pixd,
                   PIX     *pixs,
-                  l_int32  hsize,
-                  l_int32  vsize)
+                  int32_t  hsize,
+                  int32_t  vsize)
 {
-l_int32  maxtrans, bordsize;
+int32_t  maxtrans, bordsize;
 PIX     *pixsb, *pixt, *pixdb;
 SEL     *sel, *selh, *selv;
 
@@ -1047,13 +1047,13 @@ SEL     *sel, *selh, *selv;
  *               256        |          1/8
  * </pre>
  */
-l_int32
-selectComposableSels(l_int32  size,
-                     l_int32  direction,
+int32_t
+selectComposableSels(int32_t  size,
+                     int32_t  direction,
                      SEL    **psel1,
                      SEL    **psel2)
 {
-l_int32  factor1, factor2;
+int32_t  factor1, factor2;
 
     if (!psel1 && !psel2)
         return ERROR_INT("neither &sel1 nor &sel2 are defined", __func__, 1);
@@ -1101,24 +1101,24 @@ l_int32  factor1, factor2;
  * </pre>
  */
 l_ok
-selectComposableSizes(l_int32   size,
-                      l_int32  *pfactor1,
-                      l_int32  *pfactor2)
+selectComposableSizes(int32_t   size,
+                      int32_t  *pfactor1,
+                      int32_t  *pfactor2)
 {
-l_int32  i, midval, val1, val2m, val2p;
-l_int32  index, prodm, prodp;
-l_int32  mincost, totcost, rastcostm, rastcostp, diffm, diffp;
-l_int32  lowval[256];
-l_int32  hival[256];
-l_int32  rastcost[256];  /* excess in sum of sizes (extra rasterops) */
-l_int32  diff[256];  /* diff between product (sel size) and input size */
+int32_t  i, midval, val1, val2m, val2p;
+int32_t  index, prodm, prodp;
+int32_t  mincost, totcost, rastcostm, rastcostp, diffm, diffp;
+int32_t  lowval[256];
+int32_t  hival[256];
+int32_t  rastcost[256];  /* excess in sum of sizes (extra rasterops) */
+int32_t  diff[256];  /* diff between product (sel size) and input size */
 
     if (size < 1 || size > 10000)
         return ERROR_INT("size < 1 or size > 10000", __func__, 1);
     if (!pfactor1 || !pfactor2)
         return ERROR_INT("&factor1 or &factor2 not defined", __func__, 1);
 
-    midval = (l_int32)(sqrt((l_float64)size) + 0.001);
+    midval = (int32_t)(sqrt((l_float64)size) + 0.001);
     if (midval * midval == size) {
         *pfactor1 = *pfactor2 = midval;
         return 0;
@@ -1213,8 +1213,8 @@ l_int32  diff[256];  /* diff between product (sel size) and input size */
 PIX *
 pixDilateCompBrick(PIX     *pixd,
                    PIX     *pixs,
-                   l_int32  hsize,
-                   l_int32  vsize)
+                   int32_t  hsize,
+                   int32_t  vsize)
 {
 PIX  *pix1, *pix2, *pix3;
 SEL  *selh1 = NULL;
@@ -1322,8 +1322,8 @@ SEL  *selv2 = NULL;
 PIX *
 pixErodeCompBrick(PIX     *pixd,
                   PIX     *pixs,
-                  l_int32  hsize,
-                  l_int32  vsize)
+                  int32_t  hsize,
+                  int32_t  vsize)
 {
 PIX  *pixt;
 SEL  *selh1 = NULL;
@@ -1422,8 +1422,8 @@ SEL  *selv2 = NULL;
 PIX *
 pixOpenCompBrick(PIX     *pixd,
                  PIX     *pixs,
-                 l_int32  hsize,
-                 l_int32  vsize)
+                 int32_t  hsize,
+                 int32_t  vsize)
 {
 PIX  *pixt;
 SEL  *selh1 = NULL;
@@ -1530,8 +1530,8 @@ SEL  *selv2 = NULL;
 PIX *
 pixCloseCompBrick(PIX     *pixd,
                   PIX     *pixs,
-                  l_int32  hsize,
-                  l_int32  vsize)
+                  int32_t  hsize,
+                  int32_t  vsize)
 {
 PIX  *pixt;
 SEL  *selh1 = NULL;
@@ -1643,10 +1643,10 @@ SEL  *selv2 = NULL;
 PIX *
 pixCloseSafeCompBrick(PIX     *pixd,
                       PIX     *pixs,
-                      l_int32  hsize,
-                      l_int32  vsize)
+                      int32_t  hsize,
+                      int32_t  vsize)
 {
-l_int32  maxtrans, bordsize;
+int32_t  maxtrans, bordsize;
 PIX     *pixsb, *pixt, *pixdb;
 SEL     *selh1 = NULL;
 SEL     *selh2 = NULL;
@@ -1739,7 +1739,7 @@ SEL     *selv2 = NULL;
  * \return  void
  */
 void
-resetMorphBoundaryCondition(l_int32  bc)
+resetMorphBoundaryCondition(int32_t  bc)
 {
     if (bc != SYMMETRIC_MORPH_BC && bc != ASYMMETRIC_MORPH_BC) {
         L_WARNING("invalid bc; using asymmetric\n", __func__);
@@ -1757,9 +1757,9 @@ resetMorphBoundaryCondition(l_int32  bc)
  * \param[in]    depth of pix
  * \return  color of border pixels for this operation
  */
-l_uint32
-getMorphBorderPixelColor(l_int32  type,
-                         l_int32  depth)
+uint32_t
+getMorphBorderPixelColor(int32_t  type,
+                         int32_t  depth)
 {
     if (type != L_MORPH_DILATE && type != L_MORPH_ERODE)
         return ERROR_INT("invalid type", __func__, 0);
@@ -1802,7 +1802,7 @@ processMorphArgs1(PIX   *pixd,
                   SEL   *sel,
                   PIX  **ppixt)
 {
-l_int32  sx, sy;
+int32_t  sx, sy;
 
     if (!ppixt)
         return (PIX *)ERROR_PTR("&pixt not defined", __func__, pixd);
@@ -1847,7 +1847,7 @@ processMorphArgs2(PIX   *pixd,
                   PIX   *pixs,
                   SEL   *sel)
 {
-l_int32  sx, sy;
+int32_t  sx, sy;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, pixd);

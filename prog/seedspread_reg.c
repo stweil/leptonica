@@ -37,12 +37,12 @@
 
 #include "allheaders.h"
 
-static const l_int32  scalefact = 1.0;
+static const int32_t  scalefact = 1.0;
 
 int main(int    argc,
          char **argv)
 {
-l_int32       i, j, x, y, val;
+int32_t       i, j, x, y, val;
 PIX          *pixsq, *pixs, *pixc, *pixd;
 PIXA         *pixa;
 L_REGPARAMS  *rp;

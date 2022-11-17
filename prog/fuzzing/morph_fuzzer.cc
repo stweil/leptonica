@@ -33,7 +33,7 @@ LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
     pixDestroy(&pix);
     selDestroy(&sel);
 
-    for (l_int32 i = 0; i < 5; i++) {
+    for (int32_t i = 0; i < 5; i++) {
         if ((sel = selCreate (i, i, "sel_5dp")) == NULL)
             continue;
         char *selname = selGetName(sel);

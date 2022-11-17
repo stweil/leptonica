@@ -50,7 +50,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32      i, w, h, format;
+int32_t      i, w, h, format;
 char         filename[][64] = {BINARY_IMAGE,
                                TWO_BPP_IMAGE_NO_CMAP, TWO_BPP_IMAGE_CMAP,
                                FOUR_BPP_IMAGE_NO_CMAP, FOUR_BPP_IMAGE_CMAP,

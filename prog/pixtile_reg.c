@@ -35,9 +35,9 @@
 #include "allheaders.h"
 #include "pix_internal.h"
 
-static l_int32 TestTiling(PIX *pixd, PIX *pixs, l_int32 nx, l_int32 ny,
-                          l_int32 w, l_int32 h, l_int32 xoverlap,
-                          l_int32 yoverlap);
+static int32_t TestTiling(PIX *pixd, PIX *pixs, int32_t nx, int32_t ny,
+                          int32_t w, int32_t h, int32_t xoverlap,
+                          int32_t yoverlap);
 
 
 int main(int    argc,
@@ -64,17 +64,17 @@ PIX  *pixs, *pixd;
 }
 
 
-l_int32
+int32_t
 TestTiling(PIX     *pixd,
            PIX     *pixs,
-           l_int32  nx,
-           l_int32  ny,
-           l_int32  w,
-           l_int32  h,
-           l_int32  xoverlap,
-           l_int32  yoverlap)
+           int32_t  nx,
+           int32_t  ny,
+           int32_t  w,
+           int32_t  h,
+           int32_t  xoverlap,
+           int32_t  yoverlap)
 {
-l_int32     i, j, same;
+int32_t     i, j, same;
 PIX        *pixt;
 PIXTILING  *pt;
 

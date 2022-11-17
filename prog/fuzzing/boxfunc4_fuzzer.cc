@@ -12,7 +12,7 @@ LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
 
 	PIX       *pix1;
 	l_float32  fract;
-	l_int32    minx, miny, maxx, maxy, changed;
+	int32_t    minx, miny, maxx, maxy, changed;
 	
 	pix1 = boxaDisplayTiled(boxa_payload, NULL, 0, -1, 1500,
                                 2, 1.0, 0, 3, 2);

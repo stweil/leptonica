@@ -48,10 +48,10 @@
  *           BOXA        *boxaAffineTransform()
  *
  *      Matrix operations
- *           l_int32      l_productMatVec()
- *           l_int32      l_productMat2()
- *           l_int32      l_productMat3()
- *           l_int32      l_productMat4()
+ *           int32_t      l_productMatVec()
+ *           int32_t      l_productMat2()
+ *           int32_t      l_productMat3()
+ *           int32_t      l_productMat4()
  * </pre>
  */
 
@@ -218,7 +218,7 @@ ptaTranslate(PTA       *ptas,
              l_float32  transx,
              l_float32  transy)
 {
-l_int32    i, npts;
+int32_t    i, npts;
 l_float32  x, y;
 PTA       *ptad;
 
@@ -255,7 +255,7 @@ ptaScale(PTA       *ptas,
          l_float32  scalex,
          l_float32  scaley)
 {
-l_int32    i, npts;
+int32_t    i, npts;
 l_float32  x, y;
 PTA       *ptad;
 
@@ -305,7 +305,7 @@ ptaRotate(PTA       *ptas,
           l_float32  yc,
           l_float32  angle)
 {
-l_int32    i, npts;
+int32_t    i, npts;
 l_float32  x, y, xp, yp, sina, cosa;
 PTA       *ptad;
 
@@ -439,7 +439,7 @@ PTA *
 ptaAffineTransform(PTA        *ptas,
                    l_float32  *mat)
 {
-l_int32    i, npts;
+int32_t    i, npts;
 l_float32  vecs[3], vecd[3];
 PTA       *ptad;
 
@@ -506,9 +506,9 @@ l_ok
 l_productMatVec(l_float32  *mat,
                 l_float32  *vecs,
                 l_float32  *vecd,
-                l_int32     size)
+                int32_t     size)
 {
-l_int32  i, j;
+int32_t  i, j;
 
     if (!mat)
         return ERROR_INT("matrix not defined", __func__, 1);
@@ -540,9 +540,9 @@ l_ok
 l_productMat2(l_float32  *mat1,
               l_float32  *mat2,
               l_float32  *matd,
-              l_int32     size)
+              int32_t     size)
 {
-l_int32  i, j, k, index;
+int32_t  i, j, k, index;
 
     if (!mat1)
         return ERROR_INT("matrix 1 not defined", __func__, 1);
@@ -578,7 +578,7 @@ l_productMat3(l_float32  *mat1,
               l_float32  *mat2,
               l_float32  *mat3,
               l_float32  *matd,
-              l_int32     size)
+              int32_t     size)
 {
 l_float32  *matt;
 
@@ -618,7 +618,7 @@ l_productMat4(l_float32  *mat1,
               l_float32  *mat3,
               l_float32  *mat4,
               l_float32  *matd,
-              l_int32     size)
+              int32_t     size)
 {
 l_float32  *matt;
 

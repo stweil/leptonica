@@ -52,12 +52,12 @@
 
 #include "allheaders.h"
 
-void SaveAndDisplayPix(L_REGPARAMS *rp, PIXA **ppixa, l_int32 x, l_int32 y);
+void SaveAndDisplayPix(L_REGPARAMS *rp, PIXA **ppixa, int32_t x, int32_t y);
 
 int main(int    argc,
          char **argv)
 {
-l_int32       i;
+int32_t       i;
 l_float32     pi, scale, angle;
 PIX          *pixc, *pixm, *pix1, *pix2, *pix3;
 PIXA         *pixa;
@@ -218,8 +218,8 @@ L_REGPARAMS  *rp;
 void
 SaveAndDisplayPix(L_REGPARAMS  *rp,
                   PIXA        **ppixa,
-                  l_int32       x,
-                  l_int32       y)
+                  int32_t       x,
+                  int32_t       y)
 {
 PIX  *pix1;
 

@@ -58,8 +58,8 @@
      */
 struct L_Stack
 {
-    l_int32          nalloc;     /*!< size of ptr array              */
-    l_int32          n;          /*!< number of stored elements      */
+    int32_t          nalloc;     /*!< size of ptr array              */
+    int32_t          n;          /*!< number of stored elements      */
     void           **array;      /*!< ptr array                      */
     struct L_Stack  *auxstack;   /*!< auxiliary stack                */
 };

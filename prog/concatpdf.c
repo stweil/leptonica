@@ -91,12 +91,12 @@
 #include <sys/types.h>
 #include "allheaders.h"
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
 char       buf[256];
 char      *basedir, *fname, *tail, *basename, *imagedir, *title, *outfile;
-l_int32    res, quality, i, n, ret;
+int32_t    res, quality, i, n, ret;
 l_float32  scalefactor;
 PIX       *pixs, *pix1;
 PIXA      *pixa1;

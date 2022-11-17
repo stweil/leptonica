@@ -5,7 +5,7 @@ LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 {
     leptSetStdNullHandler();
 
-    l_int32      score;
+    int32_t      score;
     PIX          *pixs;
     PIX          *pix1, *pix2, *pix3, *pix4;
     PIXA         *pixa1, *pixa2;

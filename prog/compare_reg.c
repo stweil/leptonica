@@ -40,11 +40,11 @@
 #include "string.h"
 #include "allheaders.h"
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32       delx, dely, etransx, etransy, w, h, area1, area2;
-l_int32      *stab, *ctab;
+int32_t       delx, dely, etransx, etransy, w, h, area1, area2;
+int32_t      *stab, *ctab;
 l_float32     cx1, cy1, cx2, cy2, score, fract;
 PIX          *pix0, *pix1, *pix2, *pix3, *pix4, *pix5;
 L_REGPARAMS  *rp;

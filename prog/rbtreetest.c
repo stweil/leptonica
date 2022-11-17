@@ -40,10 +40,10 @@
 #define PRINT_FULL_TREE  0
 #define TRACE            0
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32    i;
+int32_t    i;
 RB_TYPE    x, y;
 RB_TYPE   *pval;
 L_RBTREE  *t;

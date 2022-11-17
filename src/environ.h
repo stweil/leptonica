@@ -39,31 +39,7 @@
  *          _MSC_VER     =>     msvc                                      *
  *------------------------------------------------------------------------*/
 
-/* MS VC++ does not provide stdint.h, so define the missing types here */
-
-
-#ifndef _MSC_VER
 #include <stdint.h>
-
-#else
-/* Note that _WIN32 is defined for both 32 and 64 bit applications,
-   whereas _WIN64 is defined only for the latter */
-
-#ifdef _WIN64
-typedef __int64 intptr_t;
-typedef unsigned __int64 uintptr_t;
-#else
-typedef int intptr_t;
-typedef unsigned int uintptr_t;
-#endif
-
-/* VC++6 doesn't seem to have powf, expf. */
-#if (_MSC_VER < 1400)
-#define powf(x, y) (float)pow((double)(x), (double)(y))
-#define expf(x) (float)exp((double)(x))
-#endif
-
-#endif /* _MSC_VER */
 
 #if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 201112L) && !defined(__STDC_NO_ATOMICS__)
 #include <stdatomic.h>
@@ -221,21 +197,8 @@ typedef uintptr_t l_uintptr_t;
  *                          Built-in types                            *
  *--------------------------------------------------------------------*/
 typedef int                     l_ok;    /*!< return type 0 if OK, 1 on error */
-typedef signed char             l_int8;     /*!< signed 8-bit value */
-typedef unsigned char           l_uint8;    /*!< unsigned 8-bit value */
-typedef short                   l_int16;    /*!< signed 16-bit value */
-typedef unsigned short          l_uint16;   /*!< unsigned 16-bit value */
-typedef int                     l_int32;    /*!< signed 32-bit value */
-typedef unsigned int            l_uint32;   /*!< unsigned 32-bit value */
 typedef float                   l_float32;  /*!< 32-bit floating point value */
 typedef double                  l_float64;  /*!< 64-bit floating point value */
-#ifdef COMPILER_MSVC
-typedef __int64                 l_int64;    /*!< signed 64-bit value */
-typedef unsigned __int64        l_uint64;   /*!< unsigned 64-bit value */
-#else
-typedef long long               l_int64;    /*!< signed 64-bit value */
-typedef unsigned long long      l_uint64;   /*!< unsigned 64-bit value */
-#endif  /* COMPILER_MSVC */
 
 
 /*-------------------------------------------------------------------------*
@@ -249,7 +212,7 @@ typedef unsigned long long      l_uint64;   /*!< unsigned 64-bit value */
  * of LeptDebugOK is 0, and it is set in writefile.c.  This value can be   *
  * over-ridden, for development and debugging, by setLeptDebugOK().        *
  *-------------------------------------------------------------------------*/
-LEPT_DLL extern l_int32  LeptDebugOK;  /* default is 0 */
+LEPT_DLL extern int32_t  LeptDebugOK;  /* default is 0 */
 
 
 /*------------------------------------------------------------------------*
@@ -337,10 +300,10 @@ typedef void *L_TIMER;
 
 /*! Timing struct */
 struct L_WallTimer {
-    l_int32  start_sec;
-    l_int32  start_usec;
-    l_int32  stop_sec;
-    l_int32  stop_usec;
+    int32_t  start_sec;
+    int32_t  start_usec;
+    int32_t  stop_sec;
+    int32_t  stop_usec;
 };
 typedef struct L_WallTimer  L_WALLTIMER;
 
@@ -486,7 +449,7 @@ enum {
 
 
 /*!  The run-time message severity threshold is defined in utils1.c.  */
-LEPT_DLL extern l_int32  LeptMsgSeverity;
+LEPT_DLL extern int32_t  LeptMsgSeverity;
 
 /*
  * <pre>
@@ -495,7 +458,7 @@ LEPT_DLL extern l_int32  LeptMsgSeverity;
  *  Messages are of two types.
  *
  *  (1) The messages
- *      ERROR_INT(a,b,c)       : returns l_int32
+ *      ERROR_INT(a,b,c)       : returns int32_t
  *      ERROR_FLOAT(a,b,c)     : returns l_float32
  *      ERROR_PTR(a,b,c)       : returns void*
  *  are used to return from functions and take a fixed set of parameters:
@@ -543,7 +506,7 @@ LEPT_DLL extern l_int32  LeptMsgSeverity;
 #ifdef  NO_CONSOLE_IO
 
   #define PROCNAME(name)
-  #define ERROR_INT(a, b, c)            ((l_int32)(c))
+  #define ERROR_INT(a, b, c)            ((int32_t)(c))
   #define ERROR_FLOAT(a, b, c)          ((l_float32)(c))
   #define ERROR_PTR(a, b, c)            ((void *)(c))
   #define L_ERROR(a, ...)
@@ -557,7 +520,7 @@ LEPT_DLL extern l_int32  LeptMsgSeverity;
       ((l) >= MINIMUM_SEVERITY && (l) >= LeptMsgSeverity ? (t) : (f))
 
   #define ERROR_INT(a, b, c) \
-      IF_SEV(L_SEVERITY_ERROR, returnErrorInt((a), (b), (c)), (l_int32)(c))
+      IF_SEV(L_SEVERITY_ERROR, returnErrorInt((a), (b), (c)), (int32_t)(c))
   #define ERROR_FLOAT(a, b, c) \
       IF_SEV(L_SEVERITY_ERROR, returnErrorFloat((a), (b), (c)), (l_float32)(c))
   #define ERROR_PTR(a, b, c) \

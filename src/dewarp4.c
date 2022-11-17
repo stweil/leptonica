@@ -33,24 +33,24 @@
  *    Reference model (book-level, dewarpa) operations and debugging output
  *
  *      Top-level single page dewarper
- *          l_int32            dewarpSinglePage()
- *          l_int32            dewarpSinglePageInit()
- *          l_int32            dewarpSinglePageRun()
+ *          int32_t            dewarpSinglePage()
+ *          int32_t            dewarpSinglePageInit()
+ *          int32_t            dewarpSinglePageRun()
  *
  *      Operations on dewarpa
- *          l_int32            dewarpaListPages()
- *          l_int32            dewarpaSetValidModels()
- *          l_int32            dewarpaInsertRefModels()
- *          l_int32            dewarpaStripRefModels()
- *          l_int32            dewarpaRestoreModels()
+ *          int32_t            dewarpaListPages()
+ *          int32_t            dewarpaSetValidModels()
+ *          int32_t            dewarpaInsertRefModels()
+ *          int32_t            dewarpaStripRefModels()
+ *          int32_t            dewarpaRestoreModels()
  *
  *      Dewarp debugging output
- *          l_int32            dewarpaInfo()
- *          l_int32            dewarpaModelStats()
- *          static l_int32     dewarpaTestForValidModel()
- *          l_int32            dewarpaShowArrays()
- *          l_int32            dewarpDebug()
- *          l_int32            dewarpShowResults()
+ *          int32_t            dewarpaInfo()
+ *          int32_t            dewarpaModelStats()
+ *          static int32_t     dewarpaTestForValidModel()
+ *          int32_t            dewarpaShowArrays()
+ *          int32_t            dewarpDebug()
+ *          int32_t            dewarpShowResults()
  * </pre>
  */
 
@@ -61,15 +61,15 @@
 #include <math.h>
 #include "allheaders.h"
 
-static l_int32 dewarpaTestForValidModel(L_DEWARPA *dewa, L_DEWARP *dew,
-                                        l_int32 notests);
+static int32_t dewarpaTestForValidModel(L_DEWARPA *dewa, L_DEWARP *dew,
+                                        int32_t notests);
 
 #ifndef  NO_CONSOLE_IO
 #define  DEBUG_INVALID_MODELS      0   /* set this to 1 for debugging */
 #endif  /* !NO_CONSOLE_IO */
 
     /* Special parameter value */
-static const l_int32  GrayInValue = 200;
+static const int32_t  GrayInValue = 200;
 
 /*----------------------------------------------------------------------*
  *                   Top-level single page dewarper                     *
@@ -98,13 +98,13 @@ static const l_int32  GrayInValue = 200;
  */
 l_ok
 dewarpSinglePage(PIX         *pixs,
-                 l_int32      thresh,
-                 l_int32      adaptive,
-                 l_int32      useboth,
-                 l_int32      check_columns,
+                 int32_t      thresh,
+                 int32_t      adaptive,
+                 int32_t      useboth,
+                 int32_t      check_columns,
                  PIX        **ppixd,
                  L_DEWARPA  **pdewa,
-                 l_int32      debug)
+                 int32_t      debug)
 {
 L_DEWARPA  *dewa;
 PIX        *pixb;
@@ -164,10 +164,10 @@ PIX        *pixb;
  */
 l_ok
 dewarpSinglePageInit(PIX         *pixs,
-                     l_int32      thresh,
-                     l_int32      adaptive,
-                     l_int32      useboth,
-                     l_int32      check_columns,
+                     int32_t      thresh,
+                     int32_t      adaptive,
+                     int32_t      useboth,
+                     int32_t      check_columns,
                      PIX        **ppixb,
                      L_DEWARPA  **pdewa)
 {
@@ -227,10 +227,10 @@ dewarpSinglePageRun(PIX        *pixs,
                     PIX        *pixb,
                     L_DEWARPA  *dewa,
                     PIX       **ppixd,
-                    l_int32     debug)
+                    int32_t     debug)
 {
 const char  *debugfile;
-l_int32      vsuccess, ret;
+int32_t      vsuccess, ret;
 L_DEWARP    *dew;
 
     if (!ppixd)
@@ -289,7 +289,7 @@ L_DEWARP    *dew;
 l_ok
 dewarpaListPages(L_DEWARPA  *dewa)
 {
-l_int32    i;
+int32_t    i;
 L_DEWARP  *dew;
 NUMA      *namodels, *napages;
 
@@ -338,10 +338,10 @@ NUMA      *namodels, *napages;
  */
 l_ok
 dewarpaSetValidModels(L_DEWARPA  *dewa,
-                      l_int32     notests,
-                      l_int32     debug)
+                      int32_t     notests,
+                      int32_t     debug)
 {
-l_int32    i, n, maxcurv, diffcurv, diffedge;
+int32_t    i, n, maxcurv, diffcurv, diffedge;
 L_DEWARP  *dew;
 
     if (!dewa)
@@ -442,10 +442,10 @@ L_DEWARP  *dew;
  */
 l_ok
 dewarpaInsertRefModels(L_DEWARPA  *dewa,
-                       l_int32     notests,
-                       l_int32     debug)
+                       int32_t     notests,
+                       int32_t     debug)
 {
-l_int32    i, j, n, val, min, distdown, distup;
+int32_t    i, j, n, val, min, distdown, distup;
 L_DEWARP  *dew;
 NUMA      *na, *nah;
 
@@ -572,7 +572,7 @@ NUMA      *na, *nah;
 l_ok
 dewarpaStripRefModels(L_DEWARPA  *dewa)
 {
-l_int32    i;
+int32_t    i;
 L_DEWARP  *dew;
 
     if (!dewa)
@@ -611,7 +611,7 @@ L_DEWARP  *dew;
 l_ok
 dewarpaRestoreModels(L_DEWARPA  *dewa)
 {
-l_int32    i;
+int32_t    i;
 L_DEWARP  *dew;
 
     if (!dewa)
@@ -655,7 +655,7 @@ l_ok
 dewarpaInfo(FILE       *fp,
             L_DEWARPA  *dewa)
 {
-l_int32    i, n, pageno, nnone, nvsuccess, nvvalid, nhsuccess, nhvalid, nref;
+int32_t    i, n, pageno, nnone, nvsuccess, nvvalid, nhsuccess, nhvalid, nref;
 L_DEWARP  *dew;
 
     if (!fp)
@@ -743,14 +743,14 @@ L_DEWARP  *dew;
  */
 l_ok
 dewarpaModelStats(L_DEWARPA  *dewa,
-                  l_int32    *pnnone,
-                  l_int32    *pnvsuccess,
-                  l_int32    *pnvvalid,
-                  l_int32    *pnhsuccess,
-                  l_int32    *pnhvalid,
-                  l_int32    *pnref)
+                  int32_t    *pnnone,
+                  int32_t    *pnvsuccess,
+                  int32_t    *pnvvalid,
+                  int32_t    *pnhsuccess,
+                  int32_t    *pnhvalid,
+                  int32_t    *pnref)
 {
-l_int32    i, n, pageno, nnone, nvsuccess, nvvalid, nhsuccess, nhvalid, nref;
+int32_t    i, n, pageno, nnone, nvsuccess, nvvalid, nhsuccess, nhvalid, nref;
 L_DEWARP  *dew;
 
     if (!dewa)
@@ -807,12 +807,12 @@ L_DEWARP  *dew;
  *          so the value of useboth is not considered here.
  * </pre>
  */
-static l_int32
+static int32_t
 dewarpaTestForValidModel(L_DEWARPA  *dewa,
                          L_DEWARP   *dew,
-                         l_int32     notests)
+                         int32_t     notests)
 {
-l_int32  maxcurv, diffcurv, diffedge;
+int32_t  maxcurv, diffcurv, diffedge;
 
     if (!dewa || !dew)
         return ERROR_INT("dewa and dew not both defined", __func__, 1);
@@ -896,11 +896,11 @@ l_int32  maxcurv, diffcurv, diffedge;
 l_ok
 dewarpaShowArrays(L_DEWARPA   *dewa,
                   l_float32    scalefact,
-                  l_int32      first,
-                  l_int32      last)
+                  int32_t      first,
+                  int32_t      last)
 {
 char       buf[256];
-l_int32    i, svd, shd;
+int32_t    i, svd, shd;
 L_BMF     *bmf;
 L_DEWARP  *dew;
 PIX       *pixv, *pixvs, *pixh, *pixhs, *pixt, *pixd;
@@ -990,11 +990,11 @@ PIXA      *pixa;
 l_ok
 dewarpDebug(L_DEWARP    *dew,
             const char  *subdirs,
-            l_int32      index)
+            int32_t      index)
 {
 char     fname[256];
 char    *outdir;
-l_int32  svd, shd;
+int32_t  svd, shd;
 PIX     *pixv, *pixh;
 
     if (!dew)
@@ -1076,12 +1076,12 @@ l_ok
 dewarpShowResults(L_DEWARPA   *dewa,
                   SARRAY      *sa,
                   BOXA        *boxa,
-                  l_int32      firstpage,
-                  l_int32      lastpage,
+                  int32_t      firstpage,
+                  int32_t      lastpage,
                   const char  *pdfout)
 {
 char       bufstr[256];
-l_int32    i, modelpage;
+int32_t    i, modelpage;
 L_BMF     *bmf;
 BOX       *box;
 L_DEWARP  *dew;

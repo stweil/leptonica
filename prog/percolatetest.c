@@ -37,13 +37,13 @@
 
 #include "allheaders.h"
 
-static PIX *PixDisplayWithColormap(PIX *pixs, l_int32 repl);
+static PIX *PixDisplayWithColormap(PIX *pixs, int32_t repl);
 
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32  i, x, y, ncc, npta;
+int32_t  i, x, y, ncc, npta;
 NUMA    *na1;
 PIX     *pixs, *pix1, *pix2, *pix3;
 PIXA    *pixa;
@@ -306,7 +306,7 @@ PTAA    *ptaa;
      * using a random colormap whose index is the LSB of each pixel value,
      * and where white is at index 0. */
 PIX *
-PixDisplayWithColormap(PIX *pixs, l_int32 repl)
+PixDisplayWithColormap(PIX *pixs, int32_t repl)
 {
 PIX      *pix1, *pixd;
 PIXCMAP  *cmap;

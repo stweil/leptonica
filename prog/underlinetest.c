@@ -44,7 +44,7 @@ static const char *files[] = {"underline1.jpg", "underline2.jpg",
 int main(int    argc,
          char **argv)
 {
-l_int32  i;
+int32_t  i;
 PIX     *pixs, *pixg, *pixg2, *pixb, *pixm, *pixsd, *pixsdd, *pixt, *pixd;
 PIXA    *pixa;
 

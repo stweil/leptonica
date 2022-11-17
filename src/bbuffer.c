@@ -31,16 +31,16 @@
  *      Create/Destroy BBuffer
  *          L_BBUFFER      *bbufferCreate()
  *          void           *bbufferDestroy()
- *          l_uint8        *bbufferDestroyAndSaveData()
+ *          uint8_t        *bbufferDestroyAndSaveData()
  *
  *      Operations to read data TO a BBuffer
- *          l_int32         bbufferRead()
- *          l_int32         bbufferReadStream()
- *          l_int32         bbufferExtendArray()
+ *          int32_t         bbufferRead()
+ *          int32_t         bbufferReadStream()
+ *          int32_t         bbufferExtendArray()
  *
  *      Operations to write data FROM a BBuffer
- *          l_int32         bbufferWrite()
- *          l_int32         bbufferWriteStream()
+ *          int32_t         bbufferWrite()
+ *          int32_t         bbufferWriteStream()
  *
  *    The bbuffer is an implementation of a byte queue.
  *    The bbuffer holds a byte array from which bytes are
@@ -105,8 +105,8 @@
 #include "allheaders.h"
 
    /* Bounds on array size */
-static const l_uint32  MaxArraySize = 1000000000;   /* 10^9 bytes */
-static const l_int32   InitialArraySize = 1024;     /*!< n'importe quoi */
+static const uint32_t  MaxArraySize = 1000000000;   /* 10^9 bytes */
+static const int32_t   InitialArraySize = 1024;     /*!< n'importe quoi */
 
 /*--------------------------------------------------------------------------*
  *                         BBuffer create/destroy                           *
@@ -127,8 +127,8 @@ static const l_int32   InitialArraySize = 1024;     /*!< n'importe quoi */
  * </pre>
  */
 L_BBUFFER *
-bbufferCreate(const l_uint8  *indata,
-              l_int32         nalloc)
+bbufferCreate(const uint8_t  *indata,
+              int32_t         nalloc)
 {
 L_BBUFFER  *bb;
 
@@ -136,7 +136,7 @@ L_BBUFFER  *bb;
         nalloc = InitialArraySize;
 
     bb = (L_BBUFFER *)LEPT_CALLOC(1, sizeof(L_BBUFFER));
-    if ((bb->array = (l_uint8 *)LEPT_CALLOC(nalloc, sizeof(l_uint8))) == NULL) {
+    if ((bb->array = (uint8_t *)LEPT_CALLOC(nalloc, sizeof(uint8_t))) == NULL) {
         LEPT_FREE(bb);
         return (L_BBUFFER *)ERROR_PTR("byte array not made", __func__, NULL);
     }
@@ -198,11 +198,11 @@ L_BBUFFER  *bb;
  *      (1) Copies data to newly allocated array; then destroys the bbuffer.
  * </pre>
  */
-l_uint8 *
+uint8_t *
 bbufferDestroyAndSaveData(L_BBUFFER  **pbb,
                           size_t      *pnbytes)
 {
-l_uint8    *array;
+uint8_t    *array;
 size_t      nbytes;
 L_BBUFFER  *bb;
 
@@ -222,7 +222,7 @@ L_BBUFFER  *bb;
         /* write all unwritten bytes out to a new array */
     nbytes = bb->n - bb->nwritten;
     *pnbytes = nbytes;
-    if ((array = (l_uint8 *)LEPT_CALLOC(nbytes, sizeof(l_uint8))) == NULL) {
+    if ((array = (uint8_t *)LEPT_CALLOC(nbytes, sizeof(uint8_t))) == NULL) {
         L_WARNING("calloc failure for array\n", __func__);
         return NULL;
     }
@@ -257,10 +257,10 @@ L_BBUFFER  *bb;
  */
 l_ok
 bbufferRead(L_BBUFFER  *bb,
-            l_uint8    *src,
-            l_int32     nbytes)
+            uint8_t    *src,
+            int32_t     nbytes)
 {
-l_int32  navail, nadd, nwritten;
+int32_t  navail, nadd, nwritten;
 
     if (!bb)
         return ERROR_INT("bb not defined", __func__, 1);
@@ -302,9 +302,9 @@ l_int32  navail, nadd, nwritten;
 l_ok
 bbufferReadStream(L_BBUFFER  *bb,
                   FILE       *fp,
-                  l_int32     nbytes)
+                  int32_t     nbytes)
 {
-l_int32  navail, nadd, nread, nwritten;
+int32_t  navail, nadd, nread, nwritten;
 
     if (!bb)
         return ERROR_INT("bb not defined", __func__, 1);
@@ -351,12 +351,12 @@ l_int32  navail, nadd, nread, nwritten;
  */
 l_ok
 bbufferExtendArray(L_BBUFFER  *bb,
-                   l_int32     nbytes)
+                   int32_t     nbytes)
 {
     if (!bb)
         return ERROR_INT("bb not defined", __func__, 1);
 
-    if ((bb->array = (l_uint8 *)reallocNew((void **)&bb->array,
+    if ((bb->array = (uint8_t *)reallocNew((void **)&bb->array,
                                 bb->nalloc,
                                 bb->nalloc + nbytes)) == NULL)
             return ERROR_INT("new ptr array not returned", __func__, 1);
@@ -380,7 +380,7 @@ bbufferExtendArray(L_BBUFFER  *bb,
  */
 l_ok
 bbufferWrite(L_BBUFFER  *bb,
-             l_uint8    *dest,
+             uint8_t    *dest,
              size_t      nbytes,
              size_t     *pnout)
 {

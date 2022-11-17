@@ -47,12 +47,12 @@
 #define  TEST4   1
 #define  TEST5   1
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_uint8     *bytea1, *bytea2;
-l_int32      i, j, n, maxi, maxj, istext, w1, h1, w2, h2;
-l_int32      debug;
+uint8_t     *bytea1, *bytea2;
+int32_t      i, j, n, maxi, maxj, istext, w1, h1, w2, h2;
+int32_t      debug;
 size_t       size1, size2;
 l_float32    score, maxscore;
 l_float32   *scores;

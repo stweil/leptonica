@@ -40,24 +40,24 @@
  *
  *      Accessors
  *           size_t        l_byteaGetSize()
- *           l_uint8      *l_byteaGetData()
- *           l_uint8      *l_byteaCopyData()
+ *           uint8_t      *l_byteaGetData()
+ *           uint8_t      *l_byteaCopyData()
  *
  *      Appending
- *           l_int32       l_byteaAppendData()
- *           l_int32       l_byteaAppendString()
- *           static l_int32  l_byteaExtendArrayToSize()
+ *           int32_t       l_byteaAppendData()
+ *           int32_t       l_byteaAppendString()
+ *           static int32_t  l_byteaExtendArrayToSize()
  *
  *      Join/Split
- *           l_int32       l_byteaJoin()
- *           l_int32       l_byteaSplit()
+ *           int32_t       l_byteaJoin()
+ *           int32_t       l_byteaSplit()
  *
  *      Search
- *           l_int32       l_byteaFindEachSequence()
+ *           int32_t       l_byteaFindEachSequence()
  *
  *      Output to file
- *           l_int32       l_byteaWrite()
- *           l_int32       l_byteaWriteStream()
+ *           int32_t       l_byteaWrite()
+ *           int32_t       l_byteaWriteStream()
  *
  *   The internal data array is always null-terminated, for ease of use
  *   in the event that it is an ascii string without null bytes.
@@ -73,11 +73,11 @@
 #include "array_internal.h"
 
     /* Bounds on array size */
-static const l_uint32  MaxArraySize = 1000000000;   /* 10^9 bytes */
-static const l_int32   InitialArraySize = 200;      /*!< n'importe quoi */
+static const uint32_t  MaxArraySize = 1000000000;   /* 10^9 bytes */
+static const int32_t   InitialArraySize = 200;      /*!< n'importe quoi */
 
     /* Static function */
-static l_int32 l_byteaExtendArrayToSize(L_BYTEA *ba, size_t size);
+static int32_t l_byteaExtendArrayToSize(L_BYTEA *ba, size_t size);
 
 /*---------------------------------------------------------------------*
  *                  Creation, copy, clone, destruction                 *
@@ -102,7 +102,7 @@ L_BYTEA  *ba;
     if (nbytes <= 0 || nbytes > MaxArraySize)
         nbytes = InitialArraySize;
     ba = (L_BYTEA *)LEPT_CALLOC(1, sizeof(L_BYTEA));
-    ba->data = (l_uint8 *)LEPT_CALLOC(nbytes + 1, sizeof(l_uint8));
+    ba->data = (uint8_t *)LEPT_CALLOC(nbytes + 1, sizeof(uint8_t));
     if (!ba->data) {
         l_byteaDestroy(&ba);
         return (L_BYTEA *)ERROR_PTR("ba array not made", __func__, NULL);
@@ -121,7 +121,7 @@ L_BYTEA  *ba;
  * \return  l_bytea, or NULL on error
  */
 L_BYTEA *
-l_byteaInitFromMem(const l_uint8  *data,
+l_byteaInitFromMem(const uint8_t  *data,
                    size_t          size)
 {
 L_BYTEA  *ba;
@@ -175,7 +175,7 @@ L_BYTEA  *ba;
 L_BYTEA *
 l_byteaInitFromStream(FILE  *fp)
 {
-l_uint8  *data;
+uint8_t  *data;
 size_t    nbytes;
 L_BYTEA  *ba;
 
@@ -209,7 +209,7 @@ L_BYTEA  *ba;
  */
 L_BYTEA *
 l_byteaCopy(L_BYTEA  *bas,
-            l_int32   copyflag)
+            int32_t   copyflag)
 {
     if (!bas)
         return (L_BYTEA *)ERROR_PTR("bas not defined", __func__, NULL);
@@ -289,14 +289,14 @@ l_byteaGetSize(L_BYTEA  *ba)
  *      (1) The returned ptr is owned by %ba.  Do not free it!
  * </pre>
  */
-l_uint8 *
+uint8_t *
 l_byteaGetData(L_BYTEA  *ba,
                size_t   *psize)
 {
     if (!ba)
-        return (l_uint8 *)ERROR_PTR("ba not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("ba not defined", __func__, NULL);
     if (!psize)
-        return (l_uint8 *)ERROR_PTR("&size not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("&size not defined", __func__, NULL);
 
     *psize = ba->size;
     return ba->data;
@@ -316,17 +316,17 @@ l_byteaGetData(L_BYTEA  *ba,
  *          still owns the original data array.
  * </pre>
  */
-l_uint8 *
+uint8_t *
 l_byteaCopyData(L_BYTEA  *ba,
                 size_t   *psize)
 {
-l_uint8  *data;
+uint8_t  *data;
 
     if (!psize)
-        return (l_uint8 *)ERROR_PTR("&size not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("&size not defined", __func__, NULL);
     *psize = 0;
     if (!ba)
-        return (l_uint8 *)ERROR_PTR("ba not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("ba not defined", __func__, NULL);
 
     data = l_byteaGetData(ba, psize);
     return l_binaryCopy(data, *psize);
@@ -346,7 +346,7 @@ l_uint8  *data;
  */
 l_ok
 l_byteaAppendData(L_BYTEA        *ba,
-                  const l_uint8  *newdata,
+                  const uint8_t  *newdata,
                   size_t          newbytes)
 {
 size_t  size, nalloc, reqsize;
@@ -416,7 +416,7 @@ size_t  size, len, nalloc, reqsize;
  *      (2) The max buffer size is 1 GB.
  * </pre>
  */
-static l_int32
+static int32_t
 l_byteaExtendArrayToSize(L_BYTEA  *ba,
                          size_t    size)
 {
@@ -432,7 +432,7 @@ l_byteaExtendArrayToSize(L_BYTEA  *ba,
     }
 
     if ((ba->data =
-        (l_uint8 *)reallocNew((void **)&ba->data, ba->nalloc, size)) == NULL)
+        (uint8_t *)reallocNew((void **)&ba->data, ba->nalloc, size)) == NULL)
         return ERROR_INT("new array not returned", __func__, 1);
     ba->nalloc = size;
     return 0;
@@ -459,7 +459,7 @@ l_ok
 l_byteaJoin(L_BYTEA   *ba1,
             L_BYTEA  **pba2)
 {
-l_uint8  *data2;
+uint8_t  *data2;
 size_t    nbytes2;
 L_BYTEA  *ba2;
 
@@ -490,7 +490,7 @@ l_byteaSplit(L_BYTEA   *ba1,
              size_t     splitloc,
              L_BYTEA  **pba2)
 {
-l_uint8  *data1;
+uint8_t  *data1;
 size_t    nbytes1, nbytes2;
 
     if (!pba2)
@@ -528,11 +528,11 @@ size_t    nbytes1, nbytes2;
  */
 l_ok
 l_byteaFindEachSequence(L_BYTEA        *ba,
-                        const l_uint8  *sequence,
+                        const uint8_t  *sequence,
                         size_t          seqlen,
                         L_DNA         **pda)
 {
-l_uint8  *data;
+uint8_t  *data;
 size_t    size;
 
     if (!pda)
@@ -568,7 +568,7 @@ l_byteaWrite(const char  *fname,
              size_t       startloc,
              size_t       nbytes)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (!fname)
@@ -600,7 +600,7 @@ l_byteaWriteStream(FILE     *fp,
                    size_t    startloc,
                    size_t    nbytes)
 {
-l_uint8  *data;
+uint8_t  *data;
 size_t    size, maxbytes;
 
     if (!fp)

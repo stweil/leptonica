@@ -45,7 +45,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32    dir;
+int32_t    dir;
 PIX       *pixs, *pixd, *pixt;
 l_float32  pops;
 char      *filein, *fileout;

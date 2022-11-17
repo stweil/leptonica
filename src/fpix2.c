@@ -50,10 +50,10 @@
  *          FPIX          *dpixConvertToFPix()
  *
  *    Min/max value
- *          l_int32        fpixGetMin()
- *          l_int32        fpixGetMax()
- *          l_int32        dpixGetMin()
- *          l_int32        dpixGetMax()
+ *          int32_t        fpixGetMin()
+ *          int32_t        fpixGetMax()
+ *          int32_t        dpixGetMin()
+ *          int32_t        dpixGetMax()
  *
  *    Integer scaling
  *          FPIX          *fpixScaleByInteger()
@@ -61,13 +61,13 @@
  *
  *    Arithmetic operations
  *          FPIX          *fpixLinearCombination()
- *          l_int32        fpixAddMultConstant()
+ *          int32_t        fpixAddMultConstant()
  *          DPIX          *dpixLinearCombination()
- *          l_int32        dpixAddMultConstant()
+ *          int32_t        dpixAddMultConstant()
  *
  *    Set all
- *          l_int32        fpixSetAllArbitrary()
- *          l_int32        dpixSetAllArbitrary()
+ *          int32_t        fpixSetAllArbitrary()
+ *          int32_t        dpixSetAllArbitrary()
  *
  *    FPix border functions
  *          FPIX          *fpixAddBorder()
@@ -77,7 +77,7 @@
  *          FPIX          *fpixAddSlopeBorder()
  *
  *    FPix simple rasterop
- *          l_int32        fpixRasterop()
+ *          int32_t        fpixRasterop()
  *
  *    FPix rotation by multiples of 90 degrees
  *          FPIX          *fpixRotateOrth()
@@ -91,7 +91,7 @@
  *          FPIX          *fpixAffine()
  *          FPIX          *fpixProjectivePta()
  *          FPIX          *fpixProjective()
- *          l_int32        linearInterpolatePixelFloat()
+ *          int32_t        linearInterpolatePixelFloat()
  *
  *    Thresholding to 1 bpp Pix
  *          PIX           *fpixThresholdToPix()
@@ -128,11 +128,11 @@
  */
 FPIX *
 pixConvertToFPix(PIX     *pixs,
-                 l_int32  ncomps)
+                 int32_t  ncomps)
 {
-l_int32     w, h, d, i, j, val, wplt, wpld;
-l_uint32    uval;
-l_uint32   *datat, *linet;
+int32_t     w, h, d, i, j, val, wplt, wpld;
+uint32_t    uval;
+uint32_t   *datat, *linet;
 l_float32  *datad, *lined;
 PIX        *pixt;
 FPIX       *fpixd;
@@ -219,11 +219,11 @@ FPIX       *fpixd;
  */
 DPIX *
 pixConvertToDPix(PIX     *pixs,
-                 l_int32  ncomps)
+                 int32_t  ncomps)
 {
-l_int32     w, h, d, i, j, val, wplt, wpld;
-l_uint32    uval;
-l_uint32   *datat, *linet;
+int32_t     w, h, d, i, j, val, wplt, wpld;
+uint32_t    uval;
+uint32_t   *datat, *linet;
 l_float64  *datad, *lined;
 PIX        *pixt;
 DPIX       *dpixd;
@@ -318,15 +318,15 @@ DPIX       *dpixd;
  */
 PIX *
 fpixConvertToPix(FPIX    *fpixs,
-                 l_int32  outdepth,
-                 l_int32  negvals,
-                 l_int32  errorflag)
+                 int32_t  outdepth,
+                 int32_t  negvals,
+                 int32_t  errorflag)
 {
-l_int32     w, h, i, j, wpls, wpld;
-l_uint32    vald, maxval;
+int32_t     w, h, i, j, wpls, wpld;
+uint32_t    vald, maxval;
 l_float32   val;
 l_float32  *datas, *lines;
-l_uint32   *datad, *lined;
+uint32_t   *datad, *lined;
 PIX        *pixd;
 
     if (!fpixs)
@@ -362,8 +362,8 @@ PIX        *pixd;
 
         /* Gather statistics if %errorflag = TRUE */
     if (errorflag) {
-        l_int32  negs = 0;
-        l_int32  overvals = 0;
+        int32_t  negs = 0;
+        int32_t  overvals = 0;
         for (i = 0; i < h; i++) {
             lines = datas + i * wpls;
             for (j = 0; j < w; j++) {
@@ -391,11 +391,11 @@ PIX        *pixd;
         for (j = 0; j < w; j++) {
             val = lines[j];
             if (val >= 0.0)
-                vald = (l_uint32)(val + 0.5);
+                vald = (uint32_t)(val + 0.5);
             else if (negvals == L_CLIP_TO_ZERO)  /* and val < 0.0 */
                 vald = 0;
             else
-                vald = (l_uint32)(-val + 0.5);
+                vald = (uint32_t)(-val + 0.5);
             if (vald > maxval)
                 vald = maxval;
 
@@ -421,11 +421,11 @@ PIX        *pixd;
 PIX *
 fpixDisplayMaxDynamicRange(FPIX  *fpixs)
 {
-l_uint8     dval;
-l_int32     i, j, w, h, wpls, wpld;
+uint8_t     dval;
+int32_t     i, j, w, h, wpls, wpld;
 l_float32   factor, sval, maxval;
 l_float32  *lines, *datas;
-l_uint32   *lined, *datad;
+uint32_t   *lined, *datad;
 PIX        *pixd;
 
     if (!fpixs)
@@ -458,7 +458,7 @@ PIX        *pixd;
         for (j = 0; j < w; j++) {
             sval = *(lines + j);
             if (sval < 0.0) sval = 0.0;
-            dval = (l_uint8)(factor * sval + 0.5);
+            dval = (uint8_t)(factor * sval + 0.5);
             SET_DATA_BYTE(lined, j, dval);
         }
     }
@@ -476,7 +476,7 @@ PIX        *pixd;
 DPIX *
 fpixConvertToDPix(FPIX  *fpix)
 {
-l_int32     w, h, i, j, wpls, wpld;
+int32_t     w, h, i, j, wpls, wpld;
 l_float32   val;
 l_float32  *datas, *lines;
 l_float64  *datad, *lined;
@@ -531,15 +531,15 @@ DPIX       *dpix;
  */
 PIX *
 dpixConvertToPix(DPIX    *dpixs,
-                 l_int32  outdepth,
-                 l_int32  negvals,
-                 l_int32  errorflag)
+                 int32_t  outdepth,
+                 int32_t  negvals,
+                 int32_t  errorflag)
 {
-l_int32     w, h, i, j, wpls, wpld, maxval;
-l_uint32    vald;
+int32_t     w, h, i, j, wpls, wpld, maxval;
+uint32_t    vald;
 l_float64   val;
 l_float64  *datas, *lines;
-l_uint32   *datad, *lined;
+uint32_t   *datad, *lined;
 PIX        *pixd;
 
     if (!dpixs)
@@ -574,8 +574,8 @@ PIX        *pixd;
 
         /* Gather statistics if %errorflag = TRUE */
     if (errorflag) {
-        l_int32  negs = 0;
-        l_int32  overvals = 0;
+        int32_t  negs = 0;
+        int32_t  overvals = 0;
         for (i = 0; i < h; i++) {
             lines = datas + i * wpls;
             for (j = 0; j < w; j++) {
@@ -603,12 +603,12 @@ PIX        *pixd;
         for (j = 0; j < w; j++) {
             val = lines[j];
             if (val >= 0.0) {
-                vald = (l_uint32)(val + 0.5);
+                vald = (uint32_t)(val + 0.5);
             } else {  /* val < 0.0 */
                 if (negvals == L_CLIP_TO_ZERO)
                     vald = 0;
                 else
-                    vald = (l_uint32)(-val + 0.5);
+                    vald = (uint32_t)(-val + 0.5);
             }
             if (vald > maxval)
                 vald = maxval;
@@ -634,7 +634,7 @@ PIX        *pixd;
 FPIX *
 dpixConvertToFPix(DPIX  *dpix)
 {
-l_int32     w, h, i, j, wpls, wpld;
+int32_t     w, h, i, j, wpls, wpld;
 l_float64   val;
 l_float32  *datad, *lined;
 l_float64  *datas, *lines;
@@ -680,10 +680,10 @@ FPIX       *fpix;
 l_ok
 fpixGetMin(FPIX       *fpix,
            l_float32  *pminval,
-           l_int32    *pxminloc,
-           l_int32    *pyminloc)
+           int32_t    *pxminloc,
+           int32_t    *pyminloc)
 {
-l_int32     i, j, w, h, wpl, xminloc, yminloc;
+int32_t     i, j, w, h, wpl, xminloc, yminloc;
 l_float32  *data, *line;
 l_float32   minval;
 
@@ -731,10 +731,10 @@ l_float32   minval;
 l_ok
 fpixGetMax(FPIX       *fpix,
            l_float32  *pmaxval,
-           l_int32    *pxmaxloc,
-           l_int32    *pymaxloc)
+           int32_t    *pxmaxloc,
+           int32_t    *pymaxloc)
 {
-l_int32     i, j, w, h, wpl, xmaxloc, ymaxloc;
+int32_t     i, j, w, h, wpl, xmaxloc, ymaxloc;
 l_float32  *data, *line;
 l_float32   maxval;
 
@@ -782,10 +782,10 @@ l_float32   maxval;
 l_ok
 dpixGetMin(DPIX       *dpix,
            l_float64  *pminval,
-           l_int32    *pxminloc,
-           l_int32    *pyminloc)
+           int32_t    *pxminloc,
+           int32_t    *pyminloc)
 {
-l_int32     i, j, w, h, wpl, xminloc, yminloc;
+int32_t     i, j, w, h, wpl, xminloc, yminloc;
 l_float64  *data, *line;
 l_float64   minval;
 
@@ -833,10 +833,10 @@ l_float64   minval;
 l_ok
 dpixGetMax(DPIX       *dpix,
            l_float64  *pmaxval,
-           l_int32    *pxmaxloc,
-           l_int32    *pymaxloc)
+           int32_t    *pxmaxloc,
+           int32_t    *pymaxloc)
 {
-l_int32     i, j, w, h, wpl, xmaxloc, ymaxloc;
+int32_t     i, j, w, h, wpl, xmaxloc, ymaxloc;
 l_float64  *data, *line;
 l_float64   maxval;
 
@@ -897,9 +897,9 @@ l_float64   maxval;
  */
 FPIX *
 fpixScaleByInteger(FPIX    *fpixs,
-                   l_int32  factor)
+                   int32_t  factor)
 {
-l_int32     i, j, k, m, ws, hs, wd, hd, wpls, wpld;
+int32_t     i, j, k, m, ws, hs, wd, hd, wpls, wpld;
 l_float32   val0, val1, val2, val3;
 l_float32  *datas, *datad, *lines, *lined, *fract;
 FPIX       *fpixd;
@@ -987,9 +987,9 @@ FPIX       *fpixd;
  */
 DPIX *
 dpixScaleByInteger(DPIX    *dpixs,
-                   l_int32  factor)
+                   int32_t  factor)
 {
-l_int32     i, j, k, m, ws, hs, wd, hd, wpls, wpld;
+int32_t     i, j, k, m, ws, hs, wd, hd, wpls, wpld;
 l_float64   val0, val1, val2, val3;
 l_float64  *datas, *datad, *lines, *lined, *fract;
 DPIX       *dpixd;
@@ -1085,7 +1085,7 @@ fpixLinearCombination(FPIX      *fpixd,
                       l_float32  a,
                       l_float32  b)
 {
-l_int32     i, j, ws, hs, w, h, wpls, wpld;
+int32_t     i, j, ws, hs, w, h, wpls, wpld;
 l_float32  *datas, *datad, *lines, *lined;
 
     if (!fpixs1)
@@ -1137,7 +1137,7 @@ fpixAddMultConstant(FPIX      *fpix,
                     l_float32  addc,
                     l_float32  multc)
 {
-l_int32     i, j, w, h, wpl;
+int32_t     i, j, w, h, wpl;
 l_float32  *line, *data;
 
     if (!fpix)
@@ -1195,7 +1195,7 @@ dpixLinearCombination(DPIX      *dpixd,
                       l_float32  a,
                       l_float32  b)
 {
-l_int32     i, j, ws, hs, w, h, wpls, wpld;
+int32_t     i, j, ws, hs, w, h, wpls, wpld;
 l_float64  *datas, *datad, *lines, *lined;
 
     if (!dpixs1)
@@ -1247,7 +1247,7 @@ dpixAddMultConstant(DPIX      *dpix,
                     l_float64  addc,
                     l_float64  multc)
 {
-l_int32     i, j, w, h, wpl;
+int32_t     i, j, w, h, wpl;
 l_float64  *line, *data;
 
     if (!dpix)
@@ -1291,7 +1291,7 @@ l_ok
 fpixSetAllArbitrary(FPIX      *fpix,
                     l_float32  inval)
 {
-l_int32     i, j, w, h;
+int32_t     i, j, w, h;
 l_float32  *data, *line;
 
     if (!fpix)
@@ -1320,7 +1320,7 @@ l_ok
 dpixSetAllArbitrary(DPIX      *dpix,
                     l_float64  inval)
 {
-l_int32     i, j, w, h;
+int32_t     i, j, w, h;
 l_float64  *data, *line;
 
     if (!dpix)
@@ -1355,12 +1355,12 @@ l_float64  *data, *line;
  */
 FPIX *
 fpixAddBorder(FPIX    *fpixs,
-              l_int32  left,
-              l_int32  right,
-              l_int32  top,
-              l_int32  bot)
+              int32_t  left,
+              int32_t  right,
+              int32_t  top,
+              int32_t  bot)
 {
-l_int32  ws, hs, wd, hd;
+int32_t  ws, hs, wd, hd;
 FPIX    *fpixd;
 
     if (!fpixs)
@@ -1389,12 +1389,12 @@ FPIX    *fpixd;
  */
 FPIX *
 fpixRemoveBorder(FPIX    *fpixs,
-                 l_int32  left,
-                 l_int32  right,
-                 l_int32  top,
-                 l_int32  bot)
+                 int32_t  left,
+                 int32_t  right,
+                 int32_t  top,
+                 int32_t  bot)
 {
-l_int32  ws, hs, wd, hd;
+int32_t  ws, hs, wd, hd;
 FPIX    *fpixd;
 
     if (!fpixs)
@@ -1431,12 +1431,12 @@ FPIX    *fpixd;
  */
 FPIX *
 fpixAddMirroredBorder(FPIX    *fpixs,
-                      l_int32  left,
-                      l_int32  right,
-                      l_int32  top,
-                      l_int32  bot)
+                      int32_t  left,
+                      int32_t  right,
+                      int32_t  top,
+                      int32_t  bot)
 {
-l_int32  i, j, w, h;
+int32_t  i, j, w, h;
 FPIX    *fpixd;
 
     if (!fpixs)
@@ -1476,12 +1476,12 @@ FPIX    *fpixd;
  */
 FPIX *
 fpixAddContinuedBorder(FPIX    *fpixs,
-                       l_int32  left,
-                       l_int32  right,
-                       l_int32  top,
-                       l_int32  bot)
+                       int32_t  left,
+                       int32_t  right,
+                       int32_t  top,
+                       int32_t  bot)
 {
-l_int32  i, j, w, h;
+int32_t  i, j, w, h;
 FPIX    *fpixd;
 
     if (!fpixs)
@@ -1519,12 +1519,12 @@ FPIX    *fpixd;
  */
 FPIX *
 fpixAddSlopeBorder(FPIX    *fpixs,
-                   l_int32  left,
-                   l_int32  right,
-                   l_int32  top,
-                   l_int32  bot)
+                   int32_t  left,
+                   int32_t  right,
+                   int32_t  top,
+                   int32_t  bot)
 {
-l_int32    i, j, w, h, fullw, fullh;
+int32_t    i, j, w, h, fullw, fullh;
 l_float32  val1, val2, del;
 FPIX      *fpixd;
 
@@ -1606,16 +1606,16 @@ FPIX      *fpixd;
  */
 l_ok
 fpixRasterop(FPIX    *fpixd,
-             l_int32  dx,
-             l_int32  dy,
-             l_int32  dw,
-             l_int32  dh,
+             int32_t  dx,
+             int32_t  dy,
+             int32_t  dw,
+             int32_t  dh,
              FPIX    *fpixs,
-             l_int32  sx,
-             l_int32  sy)
+             int32_t  sx,
+             int32_t  sy)
 {
-l_int32     fsw, fsh, fdw, fdh, dhangw, shangw, dhangh, shangh;
-l_int32     i, j, wpls, wpld;
+int32_t     fsw, fsh, fdw, fdh, dhangw, shangw, dhangh, shangh;
+int32_t     i, j, wpls, wpld;
 l_float32  *datas, *datad, *lines, *lined;
 
     if (!fpixs)
@@ -1704,7 +1704,7 @@ l_float32  *datas, *datad, *lines, *lined;
  */
 FPIX *
 fpixRotateOrth(FPIX     *fpixs,
-               l_int32  quads)
+               int32_t  quads)
 {
     if (!fpixs)
         return (FPIX *)ERROR_PTR("fpixs not defined", __func__, NULL);
@@ -1776,9 +1776,9 @@ fpixRotate180(FPIX  *fpixd,
  */
 FPIX *
 fpixRotate90(FPIX    *fpixs,
-             l_int32  direction)
+             int32_t  direction)
 {
-l_int32     i, j, wd, hd, wpls, wpld;
+int32_t     i, j, wd, hd, wpls, wpld;
 l_float32  *datas, *datad, *lines, *lined;
 FPIX       *fpixd;
 
@@ -1844,7 +1844,7 @@ FPIX *
 fpixFlipLR(FPIX  *fpixd,
            FPIX  *fpixs)
 {
-l_int32     i, j, w, h, wpl, bpl;
+int32_t     i, j, w, h, wpl, bpl;
 l_float32  *line, *data, *buffer;
 
     if (!fpixs)
@@ -1894,7 +1894,7 @@ FPIX *
 fpixFlipTB(FPIX  *fpixd,
            FPIX  *fpixs)
 {
-l_int32     i, k, h, h2, wpl, bpl;
+int32_t     i, k, h, h2, wpl, bpl;
 l_float32  *linet, *lineb, *data, *buffer;
 
     if (!fpixs)
@@ -1951,7 +1951,7 @@ FPIX *
 fpixAffinePta(FPIX      *fpixs,
               PTA       *ptad,
               PTA       *ptas,
-              l_int32    border,
+              int32_t    border,
               l_float32  inval)
 {
 l_float32  *vc;
@@ -2007,7 +2007,7 @@ fpixAffine(FPIX       *fpixs,
            l_float32  *vc,
            l_float32   inval)
 {
-l_int32     i, j, w, h, wpld;
+int32_t     i, j, w, h, wpld;
 l_float32   val;
 l_float32  *datas, *datad, *lined;
 l_float32   x, y;
@@ -2066,7 +2066,7 @@ FPIX *
 fpixProjectivePta(FPIX      *fpixs,
                   PTA       *ptad,
                   PTA       *ptas,
-                  l_int32    border,
+                  int32_t    border,
                   l_float32  inval)
 {
 l_float32  *vc;
@@ -2122,7 +2122,7 @@ fpixProjective(FPIX       *fpixs,
                l_float32  *vc,
                l_float32   inval)
 {
-l_int32     i, j, w, h, wpld;
+int32_t     i, j, w, h, wpld;
 l_float32   val;
 l_float32  *datas, *datad, *lined;
 l_float32   x, y;
@@ -2175,14 +2175,14 @@ FPIX       *fpixd;
  */
 l_ok
 linearInterpolatePixelFloat(l_float32  *datas,
-                            l_int32     w,
-                            l_int32     h,
+                            int32_t     w,
+                            int32_t     h,
                             l_float32   x,
                             l_float32   y,
                             l_float32   inval,
                             l_float32  *pval)
 {
-l_int32     xpm, ypm, xp, yp, xf, yf;
+int32_t     xpm, ypm, xp, yp, xf, yf;
 l_float32   v00, v01, v10, v11;
 l_float32  *lines;
 
@@ -2196,8 +2196,8 @@ l_float32  *lines;
     if (x < 0.0 || y < 0.0 || x > w - 2.0 || y > h - 2.0)
         return 0;
 
-    xpm = (l_int32)(16.0 * x + 0.5);
-    ypm = (l_int32)(16.0 * y + 0.5);
+    xpm = (int32_t)(16.0 * x + 0.5);
+    ypm = (int32_t)(16.0 * y + 0.5);
     xp = xpm >> 4;
     yp = ypm >> 4;
     xf = xpm & 0x0f;
@@ -2239,9 +2239,9 @@ PIX *
 fpixThresholdToPix(FPIX      *fpix,
                    l_float32  thresh)
 {
-l_int32     i, j, w, h, wpls, wpld;
+int32_t     i, j, w, h, wpls, wpld;
 l_float32  *datas, *lines;
-l_uint32   *datad, *lined;
+uint32_t   *datad, *lined;
 PIX        *pixd;
 
     if (!fpix)
@@ -2300,9 +2300,9 @@ pixComponentFunction(PIX       *pix,
                      l_float32  gdenom,
                      l_float32  bdenom)
 {
-l_int32     i, j, w, h, wpls, wpld, rval, gval, bval, zerodenom, onedenom;
+int32_t     i, j, w, h, wpls, wpld, rval, gval, bval, zerodenom, onedenom;
 l_float32   fnum, fdenom;
-l_uint32   *datas, *lines;
+uint32_t   *datas, *lines;
 l_float32  *datad, *lined, *recip;
 FPIX       *fpixd;
 

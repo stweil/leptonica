@@ -88,11 +88,11 @@ The C code in leptonica follows these conventions:
        allow at least 2 spaces between type and variable name (including '*')
 
        function(PIX        *pixs,
-                l_int32     factor,
+                int32_t     factor,
                 l_float32  *pave)
        {
        char        buf[BUF_SIZE];
-       l_int32     w, h, d;
+       int32_t     w, h, d;
        l_float32  *vect;
 
    (e) Braces are placed like this for 'if', 'while', 'do':

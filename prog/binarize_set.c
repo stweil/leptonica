@@ -62,8 +62,8 @@ int main(int    argc,
          char **argv)
 {
 char     *infile;
-l_int32   w, d, threshval, ival, newval;
-l_uint32  val;
+int32_t   w, d, threshval, ival, newval;
+uint32_t  val;
 PIX      *pixs, *pixg, *pixg2;
 PIX      *pix1, *pix2;
 PIXA     *pixa;

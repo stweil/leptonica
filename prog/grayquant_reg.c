@@ -36,16 +36,16 @@
 
 #include "allheaders.h"
 
-static const l_int32  THRESHOLD = 130;
+static const int32_t  THRESHOLD = 130;
     /* nlevels for 4 bpp output; anything between 2 and 16 is allowed */
-static const l_int32  NLEVELS = 4;
+static const int32_t  NLEVELS = 4;
 
 
 int main(int    argc,
          char **argv)
 {
 const char   *str;
-l_int32       index, w, h;
+int32_t       index, w, h;
 BOX          *box;
 PIX          *pixs, *pix1, *pix2, *pix3, *pix4, *pix5, *pix6;
 PIXA         *pixa;

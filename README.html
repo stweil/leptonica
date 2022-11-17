@@ -619,43 +619,6 @@ that you are using the static makefiles and customizing environ.h.
 
 5. Typedefs
 
-   A deficiency of C is that no standard has been universally
-   adopted for typedefs of the built-in types.  As a result,
-   typedef conflicts are common, and cause no end of havoc when
-   you try to link different libraries.  If you're lucky, you
-   can find an order in which the libraries can be linked
-   to avoid these conflicts, but the state of affairs is aggravating.
-
-   The most common typedefs use lower case variables: uint8, int8, ...
-   The png library avoids typedef conflicts by altruistically
-   appending "png_" to the type names.  Following that approach,
-   Leptonica appends "l_" to the type name.  This should avoid
-   just about all conflicts.  In the highly unlikely event that it doesn't,
-   here's a simple way to change the type declarations throughout
-   the Leptonica code:
-    (1) customize a file "converttypes.sed" with the following lines:
-        /l_uint8/s//YOUR_UINT8_NAME/g
-        /l_int8/s//YOUR_INT8_NAME/g
-        /l_uint16/s//YOUR_UINT16_NAME/g
-        /l_int16/s//YOUR_INT16_NAME/g
-        /l_uint32/s//YOUR_UINT32_NAME/g
-        /l_int32/s//YOUR_INT32_NAME/g
-        /l_float32/s//YOUR_FLOAT32_NAME/g
-        /l_float64/s//YOUR_FLOAT64_NAME/g
-    (2) in the src and prog directories:
-       - if you have a version of sed that does in-place conversion:
-            sed -i -f converttypes.sed *
-       - else, do something like (in csh)
-           foreach file (*)
-           sed -f converttypes.sed $file > tempdir/$file
-           end
-
-   If you are using Leptonica with a large code base that typedefs the
-   built-in types differently from Leptonica, just edit the typedefs
-   in environ.h.  This should have no side-effects with other libraries,
-   and no issues should arise with the location in which liblept is
-   included.
-
    For compatibility with 64 bit hardware and compilers, where
    necessary we use the typedefs in stdint.h to specify the pointer
    size (either 4 or 8 byte).

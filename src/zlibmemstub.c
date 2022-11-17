@@ -42,16 +42,16 @@
 #if  !HAVE_LIBZ   /* defined in environ.h */
 /* --------------------------------------------*/
 
-l_uint8 * zlibCompress(const l_uint8 *datain, size_t nin, size_t *pnout)
+uint8_t * zlibCompress(const uint8_t *datain, size_t nin, size_t *pnout)
 {
-    return (l_uint8 *)ERROR_PTR("function not present", __func__, NULL);
+    return (uint8_t *)ERROR_PTR("function not present", __func__, NULL);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_uint8 * zlibUncompress(const l_uint8 *datain, size_t nin, size_t *pnout)
+uint8_t * zlibUncompress(const uint8_t *datain, size_t nin, size_t *pnout)
 {
-    return (l_uint8 *)ERROR_PTR("function not present", __func__, NULL);
+    return (uint8_t *)ERROR_PTR("function not present", __func__, NULL);
 }
 
 /* --------------------------------------------*/

@@ -55,7 +55,7 @@ int main(int    argc,
 {
 char          buf[512];
 char         *psname, *pdfname;
-l_int32       w, h, wc, hc, ret;
+int32_t       w, h, wc, hc, ret;
 l_float32     scalefactor;
 PIX          *pixs, *pixc, *pixht, *pixtxt, *pixmfull;
 PIX          *pix4c, *pix8c, *pix8g, *pix32, *pixcs, *pixcs2;

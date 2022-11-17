@@ -41,8 +41,8 @@
 
 #include "allheaders.h"
 
-static void TestDistance(PIXA *pixa, PIX *pixs, l_int32 conn,
-                         l_int32 depth, l_int32 bc, L_REGPARAMS *rp);
+static void TestDistance(PIXA *pixa, PIX *pixs, int32_t conn,
+                         int32_t depth, int32_t bc, L_REGPARAMS *rp);
 
 #define  DEBUG    0
 
@@ -50,7 +50,7 @@ static void TestDistance(PIXA *pixa, PIX *pixs, l_int32 conn,
 int main(int    argc,
          char **argv)
 {
-l_int32       i, j, k, index, conn, depth, bc;
+int32_t       i, j, k, index, conn, depth, bc;
 BOX          *box;
 PIX          *pix, *pixs, *pixd;
 PIXA         *pixa;
@@ -97,9 +97,9 @@ L_REGPARAMS  *rp;
 static void
 TestDistance(PIXA         *pixa,
              PIX          *pixs,
-             l_int32       conn,
-             l_int32       depth,
-             l_int32       bc,
+             int32_t       conn,
+             int32_t       depth,
+             int32_t       bc,
              L_REGPARAMS  *rp)
 {
 PIX  *pixt1, *pixt2, *pixt3, *pixt4, *pixt5;

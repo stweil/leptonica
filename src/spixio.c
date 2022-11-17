@@ -35,17 +35,17 @@
  *
  *      Reading spix from file
  *           PIX        *pixReadStreamSpix()
- *           l_int32     readHeaderSpix()
- *           l_int32     freadHeaderSpix()
- *           l_int32     sreadHeaderSpix()
+ *           int32_t     readHeaderSpix()
+ *           int32_t     freadHeaderSpix()
+ *           int32_t     sreadHeaderSpix()
  *
  *      Writing spix to file
- *           l_int32     pixWriteStreamSpix()
+ *           int32_t     pixWriteStreamSpix()
  *
  *      Low-level serialization of pix to/from memory (uncompressed)
  *           PIX        *pixReadMemSpix()
- *           l_int32     pixWriteMemSpix()
- *           l_int32     pixSerializeToMemory()
+ *           int32_t     pixWriteMemSpix()
+ *           int32_t     pixSerializeToMemory()
  *           PIX        *pixDeserializeFromMemory()
  *
  *    Note: these functions have not been extensively tested for fuzzing
@@ -64,9 +64,9 @@
 #include "allheaders.h"
 
     /* Image dimension limits */
-static const l_int32  MaxAllowedWidth = 1000000;
-static const l_int32  MaxAllowedHeight = 1000000;
-static const l_int64  MaxAllowedArea = 400000000LL;
+static const int32_t  MaxAllowedWidth = 1000000;
+static const int32_t  MaxAllowedHeight = 1000000;
+static const int64_t  MaxAllowedArea = 400000000LL;
 
 #ifndef  NO_CONSOLE_IO
 #define  DEBUG_SERIALIZE      0
@@ -92,7 +92,7 @@ PIX *
 pixReadStreamSpix(FILE  *fp)
 {
 size_t    nbytes;
-l_uint8  *data;
+uint8_t  *data;
 PIX      *pix;
 
     if (!fp)
@@ -126,13 +126,13 @@ PIX      *pix;
  */
 l_ok
 readHeaderSpix(const char *filename,
-               l_int32    *pwidth,
-               l_int32    *pheight,
-               l_int32    *pbps,
-               l_int32    *pspp,
-               l_int32    *piscmap)
+               int32_t    *pwidth,
+               int32_t    *pheight,
+               int32_t    *pbps,
+               int32_t    *pspp,
+               int32_t    *piscmap)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (!filename)
@@ -165,14 +165,14 @@ FILE    *fp;
  */
 l_ok
 freadHeaderSpix(FILE     *fp,
-                l_int32  *pwidth,
-                l_int32  *pheight,
-                l_int32  *pbps,
-                l_int32  *pspp,
-                l_int32  *piscmap)
+                int32_t  *pwidth,
+                int32_t  *pheight,
+                int32_t  *pbps,
+                int32_t  *pspp,
+                int32_t  *piscmap)
 {
-l_int32   nbytes, ret;
-l_uint32  data[6];
+int32_t   nbytes, ret;
+uint32_t  data[6];
 
     if (!fp)
         return ERROR_INT("stream not defined", __func__, 1);
@@ -207,16 +207,16 @@ l_uint32  data[6];
  * </pre>
  */
 l_ok
-sreadHeaderSpix(const l_uint32  *data,
+sreadHeaderSpix(const uint32_t  *data,
                 size_t           size,
-                l_int32         *pwidth,
-                l_int32         *pheight,
-                l_int32         *pbps,
-                l_int32         *pspp,
-                l_int32         *piscmap)
+                int32_t         *pwidth,
+                int32_t         *pheight,
+                int32_t         *pbps,
+                int32_t         *pspp,
+                int32_t         *piscmap)
 {
 char    *id;
-l_int32  d, ncolors;
+int32_t  d, ncolors;
 
     if (!data)
         return ERROR_INT("data not defined", __func__, 1);
@@ -265,7 +265,7 @@ l_ok
 pixWriteStreamSpix(FILE  *fp,
                    PIX   *pix)
 {
-l_uint8  *data;
+uint8_t  *data;
 size_t    size;
 
     if (!fp)
@@ -292,10 +292,10 @@ size_t    size;
  * \return  pix, or NULL on error
  */
 PIX *
-pixReadMemSpix(const l_uint8  *data,
+pixReadMemSpix(const uint8_t  *data,
                size_t          size)
 {
-    return pixDeserializeFromMemory((l_uint32 *)data, size);
+    return pixDeserializeFromMemory((uint32_t *)data, size);
 }
 
 
@@ -308,11 +308,11 @@ pixReadMemSpix(const l_uint8  *data,
  * \return  0 if OK, 1 on error
  */
 l_ok
-pixWriteMemSpix(l_uint8  **pdata,
+pixWriteMemSpix(uint8_t  **pdata,
                 size_t    *psize,
                 PIX       *pix)
 {
-    return pixSerializeToMemory(pix, (l_uint32 **)pdata, psize);
+    return pixSerializeToMemory(pix, (uint32_t **)pdata, psize);
 }
 
 
@@ -342,14 +342,14 @@ pixWriteMemSpix(l_uint8  **pdata,
  */
 l_ok
 pixSerializeToMemory(PIX        *pixs,
-                     l_uint32  **pdata,
+                     uint32_t  **pdata,
                      size_t     *pnbytes)
 {
 char      *id;
-l_int32    w, h, d, wpl, rdatasize, ncolors, nbytes, index, valid;
-l_uint8   *cdata;  /* data in colormap array (4 bytes/color table entry) */
-l_uint32  *data;
-l_uint32  *rdata;  /* data in pix raster */
+int32_t    w, h, d, wpl, rdatasize, ncolors, nbytes, index, valid;
+uint8_t   *cdata;  /* data in colormap array (4 bytes/color table entry) */
+uint32_t  *data;
+uint32_t  *rdata;  /* data in pix raster */
 PIXCMAP   *cmap;
 
     if (!pdata || !pnbytes)
@@ -373,7 +373,7 @@ PIXCMAP   *cmap;
     }
 
     nbytes = 24 + 4 * ncolors + 4 + rdatasize;
-    if ((data = (l_uint32 *)LEPT_CALLOC(nbytes / 4, sizeof(l_uint32)))
+    if ((data = (uint32_t *)LEPT_CALLOC(nbytes / 4, sizeof(uint32_t)))
          == NULL) {
         LEPT_FREE(cdata);
         return ERROR_INT("data not made", __func__, 1);
@@ -421,12 +421,12 @@ PIXCMAP   *cmap;
  * </pre>
  */
 PIX *
-pixDeserializeFromMemory(const l_uint32  *data,
+pixDeserializeFromMemory(const uint32_t  *data,
                          size_t           nbytes)
 {
 char      *id;
-l_int32    w, h, d, pixdata_size, memdata_size, imdata_size, ncolors, valid;
-l_uint32  *imdata;  /* data in pix raster */
+int32_t    w, h, d, pixdata_size, memdata_size, imdata_size, ncolors, valid;
+uint32_t  *imdata;  /* data in pix raster */
 PIX       *pix1, *pixd;
 PIXCMAP   *cmap;
 
@@ -452,7 +452,7 @@ PIXCMAP   *cmap;
         return (PIX *)ERROR_PTR("invalid height", __func__, NULL);
     if (1LL * w * h > MaxAllowedArea)
         return (PIX *)ERROR_PTR("area too large", __func__, NULL);
-    if (ncolors < 0 || ncolors > 256 || ncolors + 7 >= nbytes/sizeof(l_int32))
+    if (ncolors < 0 || ncolors > 256 || ncolors + 7 >= nbytes/sizeof(int32_t))
         return (PIX *)ERROR_PTR("invalid ncolors", __func__, NULL);
     if ((pix1 = pixCreateHeader(w, h, d)) == NULL)  /* just make the header */
         return (PIX *)ERROR_PTR("failed to make header", __func__, NULL);
@@ -470,7 +470,7 @@ PIXCMAP   *cmap;
     if ((pixd = pixCreate(w, h, d)) == NULL)
         return (PIX *)ERROR_PTR("pix not made", __func__, NULL);
     if (ncolors > 0) {
-        cmap = pixcmapDeserializeFromMemory((l_uint8 *)(&data[6]), 4, ncolors);
+        cmap = pixcmapDeserializeFromMemory((uint8_t *)(&data[6]), 4, ncolors);
         if (!cmap) {
             pixDestroy(&pixd);
             return (PIX *)ERROR_PTR("cmap not made", __func__, NULL);

@@ -37,42 +37,42 @@
  *      (4) Simple method for byte-processing images (instead of words)
  *
  *      Pixel poking
- *           l_int32     pixGetPixel()
- *           l_int32     pixSetPixel()
- *           l_int32     pixGetRGBPixel()
- *           l_int32     pixSetRGBPixel()
- *           l_int32     pixSetCmapPixel()
- *           l_int32     pixGetRandomPixel()
- *           l_int32     pixClearPixel()
- *           l_int32     pixFlipPixel()
+ *           int32_t     pixGetPixel()
+ *           int32_t     pixSetPixel()
+ *           int32_t     pixGetRGBPixel()
+ *           int32_t     pixSetRGBPixel()
+ *           int32_t     pixSetCmapPixel()
+ *           int32_t     pixGetRandomPixel()
+ *           int32_t     pixClearPixel()
+ *           int32_t     pixFlipPixel()
  *           void        setPixelLow()
  *
  *      Find black or white value
- *           l_int32     pixGetBlackOrWhiteVal()
+ *           int32_t     pixGetBlackOrWhiteVal()
  *
  *      Full image clear/set/set-to-arbitrary-value
- *           l_int32     pixClearAll()
- *           l_int32     pixSetAll()
- *           l_int32     pixSetAllGray()
- *           l_int32     pixSetAllArbitrary()
- *           l_int32     pixSetBlackOrWhite()
- *           l_int32     pixSetComponentArbitrary()
+ *           int32_t     pixClearAll()
+ *           int32_t     pixSetAll()
+ *           int32_t     pixSetAllGray()
+ *           int32_t     pixSetAllArbitrary()
+ *           int32_t     pixSetBlackOrWhite()
+ *           int32_t     pixSetComponentArbitrary()
  *
  *      Rectangular region clear/set/set-to-arbitrary-value/blend
- *           l_int32     pixClearInRect()
- *           l_int32     pixSetInRect()
- *           l_int32     pixSetInRectArbitrary()
- *           l_int32     pixBlendInRect()
+ *           int32_t     pixClearInRect()
+ *           int32_t     pixSetInRect()
+ *           int32_t     pixSetInRectArbitrary()
+ *           int32_t     pixBlendInRect()
  *
  *      Set pad bits
- *           l_int32     pixSetPadBits()
- *           l_int32     pixSetPadBitsBand()
+ *           int32_t     pixSetPadBits()
+ *           int32_t     pixSetPadBitsBand()
  *
  *      Assign border pixels
- *           l_int32     pixSetOrClearBorder()
- *           l_int32     pixSetBorderVal()
- *           l_int32     pixSetBorderRingVal()
- *           l_int32     pixSetMirroredBorder()
+ *           int32_t     pixSetOrClearBorder()
+ *           int32_t     pixSetBorderVal()
+ *           int32_t     pixSetBorderRingVal()
+ *           int32_t     pixSetMirroredBorder()
  *           PIX        *pixCopyBorder()
  *
  *      Add and remove border
@@ -89,44 +89,44 @@
  *           PIX        *pixAddContinuedBorder()
  *
  *      Helper functions using alpha
- *           l_int32     pixShiftAndTransferAlpha()
+ *           int32_t     pixShiftAndTransferAlpha()
  *           PIX        *pixDisplayLayersRGBA()
  *
  *      Color sample setting and extraction
  *           PIX        *pixCreateRGBImage()
  *           PIX        *pixGetRGBComponent()
- *           l_int32     pixSetRGBComponent()
+ *           int32_t     pixSetRGBComponent()
  *           PIX        *pixGetRGBComponentCmap()
- *           l_int32     pixCopyRGBComponent()
- *           l_int32     composeRGBPixel()
- *           l_int32     composeRGBAPixel()
+ *           int32_t     pixCopyRGBComponent()
+ *           int32_t     composeRGBPixel()
+ *           int32_t     composeRGBAPixel()
  *           void        extractRGBValues()
  *           void        extractRGBAValues()
- *           l_int32     extractMinMaxComponent()
- *           l_int32     pixGetRGBLine()
+ *           int32_t     extractMinMaxComponent()
+ *           int32_t     pixGetRGBLine()
  *
  *      Raster line pixel setter
- *           l_int32     setLineDataVal()
+ *           int32_t     setLineDataVal()
  *
  *      Conversion between big and little endians
  *           PIX        *pixEndianByteSwapNew()
- *           l_int32     pixEndianByteSwap()
- *           l_int32     lineEndianByteSwap()
+ *           int32_t     pixEndianByteSwap()
+ *           int32_t     lineEndianByteSwap()
  *           PIX        *pixEndianTwoByteSwapNew()
- *           l_int32     pixEndianTwoByteSwap()
+ *           int32_t     pixEndianTwoByteSwap()
  *
  *      Extract raster data as binary string
- *           l_int32     pixGetRasterData()
+ *           int32_t     pixGetRasterData()
  *
  *      Test alpha component opaqueness
- *           l_int32     pixAlphaIsOpaque()
+ *           int32_t     pixAlphaIsOpaque()
  *
  *      Infer resolution from image size
- *           l_int32     pixInferResolution()
+ *           int32_t     pixInferResolution()
  *
  *      Setup helpers for 8 bpp byte processing
- *           l_uint8   **pixSetupByteProcessing()
- *           l_int32     pixCleanupByteProcessing()
+ *           uint8_t   **pixSetupByteProcessing()
+ *           int32_t     pixCleanupByteProcessing()
  *
  *      Setting parameters for antialias masking with alpha transforms
  *           void        l_setAlphaMaskBorder()
@@ -141,7 +141,7 @@
 #include "allheaders.h"
 #include "pix_internal.h"
 
-static const l_uint32 rmask32[] = {0x0,
+static const uint32_t rmask32[] = {0x0,
     0x00000001, 0x00000003, 0x00000007, 0x0000000f,
     0x0000001f, 0x0000003f, 0x0000007f, 0x000000ff,
     0x000001ff, 0x000003ff, 0x000007ff, 0x00000fff,
@@ -190,12 +190,12 @@ LEPT_DLL l_float32  AlphaMaskBorderVals[2] = {0.0, 0.5};
  */
 l_ok
 pixGetPixel(PIX       *pix,
-            l_int32    x,
-            l_int32    y,
-            l_uint32  *pval)
+            int32_t    x,
+            int32_t    y,
+            uint32_t  *pval)
 {
-l_int32    w, h, d, wpl, val;
-l_uint32  *line, *data;
+int32_t    w, h, d, wpl, val;
+uint32_t  *line, *data;
 
     if (!pval)
         return ERROR_INT("&val not defined", __func__, 1);
@@ -261,12 +261,12 @@ l_uint32  *line, *data;
  */
 l_ok
 pixSetPixel(PIX      *pix,
-            l_int32   x,
-            l_int32   y,
-            l_uint32  val)
+            int32_t   x,
+            int32_t   y,
+            uint32_t  val)
 {
-l_int32    w, h, d, wpl;
-l_uint32  *line, *data;
+int32_t    w, h, d, wpl;
+uint32_t  *line, *data;
 
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -326,14 +326,14 @@ l_uint32  *line, *data;
  */
 l_ok
 pixGetRGBPixel(PIX      *pix,
-               l_int32   x,
-               l_int32   y,
-               l_int32  *prval,
-               l_int32  *pgval,
-               l_int32  *pbval)
+               int32_t   x,
+               int32_t   y,
+               int32_t  *prval,
+               int32_t  *pgval,
+               int32_t  *pbval)
 {
-l_int32    w, h, d, wpl;
-l_uint32  *data, *ppixel;
+int32_t    w, h, d, wpl;
+uint32_t  *data, *ppixel;
 
     if (prval) *prval = 0;
     if (pgval) *pgval = 0;
@@ -376,15 +376,15 @@ l_uint32  *data, *ppixel;
  */
 l_ok
 pixSetRGBPixel(PIX     *pix,
-               l_int32  x,
-               l_int32  y,
-               l_int32  rval,
-               l_int32  gval,
-               l_int32  bval)
+               int32_t  x,
+               int32_t  y,
+               int32_t  rval,
+               int32_t  gval,
+               int32_t  bval)
 {
-l_int32    w, h, d, wpl;
-l_uint32   pixel;
-l_uint32  *data, *line;
+int32_t    w, h, d, wpl;
+uint32_t   pixel;
+uint32_t  *data, *line;
 
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -432,13 +432,13 @@ l_uint32  *data, *line;
  */
 l_ok
 pixSetCmapPixel(PIX     *pix,
-                l_int32  x,
-                l_int32  y,
-                l_int32  rval,
-                l_int32  gval,
-                l_int32  bval)
+                int32_t  x,
+                int32_t  y,
+                int32_t  rval,
+                int32_t  gval,
+                int32_t  bval)
 {
-l_int32   w, h, d, index;
+int32_t   w, h, d, index;
 PIXCMAP  *cmap;
 
     if (!pix)
@@ -478,12 +478,12 @@ PIXCMAP  *cmap;
  */
 l_ok
 pixGetRandomPixel(PIX       *pix,
-                  l_uint32  *pval,
-                  l_int32   *px,
-                  l_int32   *py)
+                  uint32_t  *pval,
+                  int32_t   *px,
+                  int32_t   *py)
 {
-l_int32   w, h, x, y, rval, gval, bval;
-l_uint32  val;
+int32_t   w, h, x, y, rval, gval, bval;
+uint32_t  val;
 PIXCMAP  *cmap;
 
     if (pval) *pval = 0;
@@ -528,11 +528,11 @@ PIXCMAP  *cmap;
  */
 l_ok
 pixClearPixel(PIX     *pix,
-              l_int32  x,
-              l_int32  y)
+              int32_t  x,
+              int32_t  y)
 {
-l_int32    w, h, d, wpl;
-l_uint32  *line, *data;
+int32_t    w, h, d, wpl;
+uint32_t  *line, *data;
 
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -588,12 +588,12 @@ l_uint32  *line, *data;
  */
 l_ok
 pixFlipPixel(PIX     *pix,
-             l_int32  x,
-             l_int32  y)
+             int32_t  x,
+             int32_t  y)
 {
-l_int32    w, h, d, wpl;
-l_uint32   val;
-l_uint32  *line, *data;
+int32_t    w, h, d, wpl;
+uint32_t   val;
+uint32_t  *line, *data;
 
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -662,10 +662,10 @@ l_uint32  *line, *data;
  * </pre>
  */
 void
-setPixelLow(l_uint32  *line,
-            l_int32    x,
-            l_int32    depth,
-            l_uint32   val)
+setPixelLow(uint32_t  *line,
+            int32_t    x,
+            int32_t    depth,
+            uint32_t   val)
 {
     switch (depth)
     {
@@ -717,10 +717,10 @@ setPixelLow(l_uint32  *line,
  */
 l_ok
 pixGetBlackOrWhiteVal(PIX       *pixs,
-                      l_int32    op,
-                      l_uint32  *pval)
+                      int32_t    op,
+                      uint32_t  *pval)
 {
-l_int32   d, val;
+int32_t   d, val;
 PIXCMAP  *cmap;
 
     if (!pval)
@@ -798,7 +798,7 @@ pixClearAll(PIX  *pix)
 l_ok
 pixSetAll(PIX  *pix)
 {
-l_int32   n;
+int32_t   n;
 PIXCMAP  *cmap;
 
     if (!pix)
@@ -837,10 +837,10 @@ PIXCMAP  *cmap;
  */
 l_ok
 pixSetAllGray(PIX     *pix,
-              l_int32  grayval)
+              int32_t  grayval)
 {
-l_int32   d, spp, index;
-l_uint32  val32;
+int32_t   d, spp, index;
+uint32_t  val32;
 PIX      *alpha;
 PIXCMAP  *cmap;
 
@@ -927,11 +927,11 @@ PIXCMAP  *cmap;
  */
 l_ok
 pixSetAllArbitrary(PIX      *pix,
-                   l_uint32  val)
+                   uint32_t  val)
 {
-l_int32    n, i, j, w, h, d, wpl, npix;
-l_uint32   maxval, wordval;
-l_uint32  *data, *line;
+int32_t    n, i, j, w, h, d, wpl, npix;
+uint32_t   maxval, wordval;
+uint32_t  *data, *line;
 PIXCMAP   *cmap;
 
     if (!pix)
@@ -995,9 +995,9 @@ PIXCMAP   *cmap;
  */
 l_ok
 pixSetBlackOrWhite(PIX     *pixs,
-                   l_int32  op)
+                   int32_t  op)
 {
-l_int32   d, index;
+int32_t   d, index;
 PIXCMAP  *cmap;
 
     if (!pixs)
@@ -1040,12 +1040,12 @@ PIXCMAP  *cmap;
  */
 l_ok
 pixSetComponentArbitrary(PIX     *pix,
-                         l_int32  comp,
-                         l_int32  val)
+                         int32_t  comp,
+                         int32_t  val)
 {
-l_int32    i, nwords;
-l_uint32   mask1, mask2;
-l_uint32  *data;
+int32_t    i, nwords;
+uint32_t   mask1, mask2;
+uint32_t  *data;
 
     if (!pix || pixGetDepth(pix) != 32)
         return ERROR_INT("pix not defined or not 32 bpp", __func__, 1);
@@ -1090,7 +1090,7 @@ l_ok
 pixClearInRect(PIX  *pix,
                BOX  *box)
 {
-l_int32  x, y, w, h;
+int32_t  x, y, w, h;
 
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1123,7 +1123,7 @@ l_ok
 pixSetInRect(PIX  *pix,
              BOX  *box)
 {
-l_int32   n, x, y, w, h;
+int32_t   n, x, y, w, h;
 PIXCMAP  *cmap;
 
     if (!pix)
@@ -1162,10 +1162,10 @@ PIXCMAP  *cmap;
 l_ok
 pixSetInRectArbitrary(PIX      *pix,
                       BOX      *box,
-                      l_uint32  val)
+                      uint32_t  val)
 {
-l_int32    n, x, y, xstart, xend, ystart, yend, bw, bh, w, h, d, wpl, maxval;
-l_uint32  *data, *line;
+int32_t    n, x, y, xstart, xend, ystart, yend, bw, bh, w, h, d, wpl, maxval;
+uint32_t  *data, *line;
 BOX       *boxc;
 PIXCMAP   *cmap;
 
@@ -1261,13 +1261,13 @@ PIXCMAP   *cmap;
 l_ok
 pixBlendInRect(PIX       *pixs,
                BOX       *box,
-               l_uint32   val,
+               uint32_t   val,
                l_float32  fract)
 {
-l_int32    i, j, bx, by, bw, bh, w, h, wpls;
-l_int32    prval, pgval, pbval, rval, gval, bval;
-l_uint32   val32;
-l_uint32  *datas, *lines;
+int32_t    i, j, bx, by, bw, bh, w, h, wpls;
+int32_t    prval, pgval, pbval, rval, gval, bval;
+uint32_t   val32;
+uint32_t  *datas, *lines;
 
     if (!pixs || pixGetDepth(pixs) != 32)
         return ERROR_INT("pixs not defined or not 32 bpp", __func__, 1);
@@ -1282,9 +1282,9 @@ l_uint32  *datas, *lines;
             for (j = 0; j < w; j++) {
                 val32 = *(lines + j);
                 extractRGBValues(val32, &prval, &pgval, &pbval);
-                prval = (l_int32)((1. - fract) * prval + fract * rval);
-                pgval = (l_int32)((1. - fract) * pgval + fract * gval);
-                pbval = (l_int32)((1. - fract) * pbval + fract * bval);
+                prval = (int32_t)((1. - fract) * prval + fract * rval);
+                pgval = (int32_t)((1. - fract) * pgval + fract * gval);
+                pbval = (int32_t)((1. - fract) * pbval + fract * bval);
                 composeRGBPixel(prval, pgval, pbval, &val32);
                 *(lines + j) = val32;
             }
@@ -1300,9 +1300,9 @@ l_uint32  *datas, *lines;
             if (bx + j < 0 || bx + j >= w) continue;
             val32 = *(lines + bx + j);
             extractRGBValues(val32, &prval, &pgval, &pbval);
-            prval = (l_int32)((1. - fract) * prval + fract * rval);
-            pgval = (l_int32)((1. - fract) * pgval + fract * gval);
-            pbval = (l_int32)((1. - fract) * pbval + fract * bval);
+            prval = (int32_t)((1. - fract) * prval + fract * rval);
+            pgval = (int32_t)((1. - fract) * pgval + fract * gval);
+            pbval = (int32_t)((1. - fract) * pbval + fract * bval);
             composeRGBPixel(prval, pgval, pbval, &val32);
             *(lines + bx + j) = val32;
         }
@@ -1344,11 +1344,11 @@ l_uint32  *datas, *lines;
  */
 l_ok
 pixSetPadBits(PIX     *pix,
-              l_int32  val)
+              int32_t  val)
 {
-l_int32    i, w, h, d, wpl, endbits, fullwords;
-l_uint32   mask;
-l_uint32  *data, *pword;
+int32_t    i, w, h, d, wpl, endbits, fullwords;
+uint32_t   mask;
+uint32_t  *data, *pword;
 
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1359,7 +1359,7 @@ l_uint32  *data, *pword;
 
     data = pixGetData(pix);
     wpl = pixGetWpl(pix);
-    endbits = 32 - (((l_int64)w * d) % 32);
+    endbits = 32 - (((int64_t)w * d) % 32);
     if (endbits == 32)  /* no partial word */
         return 0;
     fullwords = (1LL * w * d) / 32;
@@ -1402,13 +1402,13 @@ l_uint32  *data, *pword;
  */
 l_ok
 pixSetPadBitsBand(PIX     *pix,
-                  l_int32  by,
-                  l_int32  bh,
-                  l_int32  val)
+                  int32_t  by,
+                  int32_t  bh,
+                  int32_t  val)
 {
-l_int32    i, w, h, d, wpl, endbits, fullwords;
-l_uint32   mask;
-l_uint32  *data, *pword;
+int32_t    i, w, h, d, wpl, endbits, fullwords;
+uint32_t   mask;
+uint32_t  *data, *pword;
 
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1426,10 +1426,10 @@ l_uint32  *data, *pword;
 
     data = pixGetData(pix);
     wpl = pixGetWpl(pix);
-    endbits = 32 - (((l_int64)w * d) % 32);
+    endbits = 32 - (((int64_t)w * d) % 32);
     if (endbits == 32)  /* no partial word */
         return 0;
-    fullwords = (l_int64)w * d / 32;
+    fullwords = (int64_t)w * d / 32;
 
     mask = rmask32[endbits];
     if (val == 0)
@@ -1472,13 +1472,13 @@ l_uint32  *data, *pword;
  */
 l_ok
 pixSetOrClearBorder(PIX     *pixs,
-                    l_int32  left,
-                    l_int32  right,
-                    l_int32  top,
-                    l_int32  bot,
-                    l_int32  op)
+                    int32_t  left,
+                    int32_t  right,
+                    int32_t  top,
+                    int32_t  bot,
+                    int32_t  op)
 {
-l_int32  w, h;
+int32_t  w, h;
 
     if (!pixs)
         return ERROR_INT("pixs not defined", __func__, 1);
@@ -1519,14 +1519,14 @@ l_int32  w, h;
  */
 l_ok
 pixSetBorderVal(PIX      *pixs,
-                l_int32   left,
-                l_int32   right,
-                l_int32   top,
-                l_int32   bot,
-                l_uint32  val)
+                int32_t   left,
+                int32_t   right,
+                int32_t   top,
+                int32_t   bot,
+                uint32_t  val)
 {
-l_int32    w, h, d, wpls, i, j, bstart, rstart;
-l_uint32  *datas, *lines;
+int32_t    w, h, d, wpls, i, j, bstart, rstart;
+uint32_t  *datas, *lines;
 
     if (!pixs)
         return ERROR_INT("pixs not defined", __func__, 1);
@@ -1621,10 +1621,10 @@ l_uint32  *datas, *lines;
  */
 l_ok
 pixSetBorderRingVal(PIX      *pixs,
-                    l_int32   dist,
-                    l_uint32  val)
+                    int32_t   dist,
+                    uint32_t  val)
 {
-l_int32  w, h, d, i, j, xend, yend;
+int32_t  w, h, d, i, j, xend, yend;
 
     if (!pixs)
         return ERROR_INT("pixs not defined", __func__, 1);
@@ -1670,12 +1670,12 @@ l_int32  w, h, d, i, j, xend, yend;
  */
 l_ok
 pixSetMirroredBorder(PIX     *pixs,
-                     l_int32  left,
-                     l_int32  right,
-                     l_int32  top,
-                     l_int32  bot)
+                     int32_t  left,
+                     int32_t  right,
+                     int32_t  top,
+                     int32_t  bot)
 {
-l_int32  i, j, w, h;
+int32_t  i, j, w, h;
 
     if (!pixs)
         return ERROR_INT("pixs not defined", __func__, 1);
@@ -1720,12 +1720,12 @@ l_int32  i, j, w, h;
 PIX *
 pixCopyBorder(PIX     *pixd,
               PIX     *pixs,
-              l_int32  left,
-              l_int32  right,
-              l_int32  top,
-              l_int32  bot)
+              int32_t  left,
+              int32_t  right,
+              int32_t  top,
+              int32_t  bot)
 {
-l_int32  w, h;
+int32_t  w, h;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, pixd);
@@ -1771,8 +1771,8 @@ l_int32  w, h;
  */
 PIX *
 pixAddBorder(PIX      *pixs,
-             l_int32   npix,
-             l_uint32  val)
+             int32_t   npix,
+             uint32_t  val)
 {
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -1797,7 +1797,7 @@ pixAddBorder(PIX      *pixs,
  *      (2) The only complication is that pixs may have a colormap.
  *          There are two ways to add the black or white border:
  *          (a) As done here (simplest, most efficient)
- *          (b) l_int32 ws, hs, d;
+ *          (b) int32_t ws, hs, d;
  *              pixGetDimensions(pixs, &ws, &hs, &d);
  *              Pix *pixd = pixCreate(ws + left + right, hs + top + bot, d);
  *              PixColormap *cmap = pixGetColormap(pixs);
@@ -1809,13 +1809,13 @@ pixAddBorder(PIX      *pixs,
  */
 PIX *
 pixAddBlackOrWhiteBorder(PIX     *pixs,
-                         l_int32  left,
-                         l_int32  right,
-                         l_int32  top,
-                         l_int32  bot,
-                         l_int32  op)
+                         int32_t  left,
+                         int32_t  right,
+                         int32_t  top,
+                         int32_t  bot,
+                         int32_t  op)
 {
-l_uint32  val;
+uint32_t  val;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -1861,13 +1861,13 @@ l_uint32  val;
  */
 PIX *
 pixAddBorderGeneral(PIX      *pixs,
-                    l_int32   left,
-                    l_int32   right,
-                    l_int32   top,
-                    l_int32   bot,
-                    l_uint32  val)
+                    int32_t   left,
+                    int32_t   right,
+                    int32_t   top,
+                    int32_t   bot,
+                    uint32_t  val)
 {
-l_int32  ws, hs, wd, hd, d, maxval, op;
+int32_t  ws, hs, wd, hd, d, maxval, op;
 PIX     *pixd;
 
     if (!pixs)
@@ -1929,15 +1929,15 @@ PIX     *pixd;
  */
 PIX *
 pixAddMultipleBlackWhiteBorders(PIX      *pixs,
-                                l_int32   nblack1,
-                                l_int32   nwhite1,
-                                l_int32   nblack2,
-                                l_int32   nwhite2,
-                                l_int32   nblack3,
-                                l_int32   nwhite3)
+                                int32_t   nblack1,
+                                int32_t   nwhite1,
+                                int32_t   nblack2,
+                                int32_t   nwhite2,
+                                int32_t   nblack3,
+                                int32_t   nwhite3)
 {
-l_int32  i, color;
-l_int32  w[6];
+int32_t  i, color;
+int32_t  w[6];
 PIX     *pix1, *pixd;
 
     if (!pixs)
@@ -1975,7 +1975,7 @@ PIX     *pix1, *pixd;
  */
 PIX *
 pixRemoveBorder(PIX     *pixs,
-                l_int32  npix)
+                int32_t  npix)
 {
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -1994,12 +1994,12 @@ pixRemoveBorder(PIX     *pixs,
  */
 PIX *
 pixRemoveBorderGeneral(PIX     *pixs,
-                       l_int32  left,
-                       l_int32  right,
-                       l_int32  top,
-                       l_int32  bot)
+                       int32_t  left,
+                       int32_t  right,
+                       int32_t  top,
+                       int32_t  bot)
 {
-l_int32  ws, hs, wd, hd, d;
+int32_t  ws, hs, wd, hd, d;
 PIX     *pixd;
 
     if (!pixs)
@@ -2045,10 +2045,10 @@ PIX     *pixd;
  */
 PIX *
 pixRemoveBorderToSize(PIX     *pixs,
-                      l_int32  wd,
-                      l_int32  hd)
+                      int32_t  wd,
+                      int32_t  hd)
 {
-l_int32  w, h, top, bot, left, right, delta;
+int32_t  w, h, top, bot, left, right, delta;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -2098,12 +2098,12 @@ l_int32  w, h, top, bot, left, right, delta;
  */
 PIX  *
 pixAddMirroredBorder(PIX      *pixs,
-                      l_int32  left,
-                      l_int32  right,
-                      l_int32  top,
-                      l_int32  bot)
+                      int32_t  left,
+                      int32_t  right,
+                      int32_t  top,
+                      int32_t  bot)
 {
-l_int32  i, j, w, h;
+int32_t  i, j, w, h;
 PIX     *pixd;
 
     if (!pixs)
@@ -2149,12 +2149,12 @@ PIX     *pixd;
  */
 PIX  *
 pixAddRepeatedBorder(PIX      *pixs,
-                     l_int32  left,
-                     l_int32  right,
-                     l_int32  top,
-                     l_int32  bot)
+                     int32_t  left,
+                     int32_t  right,
+                     int32_t  top,
+                     int32_t  bot)
 {
-l_int32  w, h;
+int32_t  w, h;
 PIX     *pixd;
 
     if (!pixs)
@@ -2203,12 +2203,12 @@ PIX     *pixd;
  */
 PIX  *
 pixAddMixedBorder(PIX      *pixs,
-                  l_int32  left,
-                  l_int32  right,
-                  l_int32  top,
-                  l_int32  bot)
+                  int32_t  left,
+                  int32_t  right,
+                  int32_t  top,
+                  int32_t  bot)
 {
-l_int32  j, w, h;
+int32_t  j, w, h;
 PIX     *pixd;
 
     if (!pixs)
@@ -2248,12 +2248,12 @@ PIX     *pixd;
  */
 PIX *
 pixAddContinuedBorder(PIX     *pixs,
-                      l_int32  left,
-                      l_int32  right,
-                      l_int32  top,
-                      l_int32  bot)
+                      int32_t  left,
+                      int32_t  right,
+                      int32_t  top,
+                      int32_t  bot)
 {
-l_int32  i, j, w, h;
+int32_t  i, j, w, h;
 PIX     *pixd;
 
     if (!pixs)
@@ -2293,7 +2293,7 @@ pixShiftAndTransferAlpha(PIX       *pixd,
                          l_float32  shiftx,
                          l_float32  shifty)
 {
-l_int32  w, h;
+int32_t  w, h;
 PIX     *pix1, *pix2;
 
     if (!pixs || !pixd)
@@ -2338,10 +2338,10 @@ PIX     *pix1, *pix2;
  */
 PIX *
 pixDisplayLayersRGBA(PIX      *pixs,
-                     l_uint32  val,
-                     l_int32   maxw)
+                     uint32_t  val,
+                     int32_t   maxw)
 {
-l_int32    w, width;
+int32_t    w, width;
 l_float32  scalefact;
 PIX       *pix1, *pix2, *pixd;
 PIXA      *pixa;
@@ -2363,7 +2363,7 @@ PIXCMAP   *cmap;
 
         /* Scale if necessary so the output width is not larger than maxw */
     scalefact = (maxw == 0) ? 1.0 : L_MIN(1.0, (l_float32)(maxw) / w);
-    width = (l_int32)(scalefact * w);
+    width = (int32_t)(scalefact * w);
 
     pixa = pixaCreate(3);
     pixSetSpp(pix1, 3);
@@ -2411,7 +2411,7 @@ pixCreateRGBImage(PIX  *pixr,
                   PIX  *pixg,
                   PIX  *pixb)
 {
-l_int32  wr, wg, wb, hr, hg, hb, dr, dg, db;
+int32_t  wr, wg, wb, hr, hg, hb, dr, dg, db;
 PIX     *pixd;
 
     if (!pixr)
@@ -2462,11 +2462,11 @@ PIX     *pixd;
  */
 PIX *
 pixGetRGBComponent(PIX     *pixs,
-                   l_int32  comp)
+                   int32_t  comp)
 {
-l_int32    i, j, w, h, wpls, wpld, val;
-l_uint32  *lines, *lined;
-l_uint32  *datas, *datad;
+int32_t    i, j, w, h, wpls, wpld, val;
+uint32_t  *lines, *lined;
+uint32_t  *datas, *datad;
 PIX       *pixd;
 
     if (!pixs)
@@ -2520,13 +2520,13 @@ PIX       *pixd;
 l_ok
 pixSetRGBComponent(PIX     *pixd,
                    PIX     *pixs,
-                   l_int32  comp)
+                   int32_t  comp)
 {
-l_uint8    srcbyte;
-l_int32    i, j, w, h, ws, hs, wd, hd;
-l_int32    wpls, wpld;
-l_uint32  *lines, *lined;
-l_uint32  *datas, *datad;
+uint8_t    srcbyte;
+int32_t    i, j, w, h, ws, hs, wd, hd;
+int32_t    wpls, wpld;
+uint32_t  *lines, *lined;
+uint32_t  *datas, *datad;
 
     if (!pixd)
         return ERROR_INT("pixd not defined", __func__, 1);
@@ -2579,12 +2579,12 @@ l_uint32  *datas, *datad;
  */
 PIX *
 pixGetRGBComponentCmap(PIX     *pixs,
-                       l_int32  comp)
+                       int32_t  comp)
 {
-l_int32     i, j, w, h, val, index, valid;
-l_int32     wplc, wpld;
-l_uint32   *linec, *lined;
-l_uint32   *datac, *datad;
+int32_t     i, j, w, h, val, index, valid;
+int32_t     wplc, wpld;
+uint32_t   *linec, *lined;
+uint32_t   *datac, *datad;
 PIX        *pixc, *pixd;
 PIXCMAP    *cmap;
 RGBA_QUAD  *cta;
@@ -2668,12 +2668,12 @@ RGBA_QUAD  *cta;
 l_ok
 pixCopyRGBComponent(PIX     *pixd,
                     PIX     *pixs,
-                    l_int32  comp)
+                    int32_t  comp)
 {
-l_int32    i, j, w, h, ws, hs, wd, hd, val;
-l_int32    wpls, wpld;
-l_uint32  *lines, *lined;
-l_uint32  *datas, *datad;
+int32_t    i, j, w, h, ws, hs, wd, hd, val;
+int32_t    wpls, wpld;
+uint32_t  *lines, *lined;
+uint32_t  *datas, *datad;
 
     if (!pixd && pixGetDepth(pixd) != 32)
         return ERROR_INT("pixd not defined or not 32 bpp", __func__, 1);
@@ -2725,17 +2725,17 @@ l_uint32  *datas, *datad;
  * </pre>
  */
 l_ok
-composeRGBPixel(l_int32    rval,
-                l_int32    gval,
-                l_int32    bval,
-                l_uint32  *ppixel)
+composeRGBPixel(int32_t    rval,
+                int32_t    gval,
+                int32_t    bval,
+                uint32_t  *ppixel)
 {
     if (!ppixel)
         return ERROR_INT("&pixel not defined", __func__, 1);
 
-    *ppixel = ((l_uint32)rval << L_RED_SHIFT) |
-              ((l_uint32)gval << L_GREEN_SHIFT) |
-              ((l_uint32)bval << L_BLUE_SHIFT);
+    *ppixel = ((uint32_t)rval << L_RED_SHIFT) |
+              ((uint32_t)gval << L_GREEN_SHIFT) |
+              ((uint32_t)bval << L_BLUE_SHIFT);
     return 0;
 }
 
@@ -2755,18 +2755,18 @@ composeRGBPixel(l_int32    rval,
  * </pre>
  */
 l_ok
-composeRGBAPixel(l_int32    rval,
-                 l_int32    gval,
-                 l_int32    bval,
-                 l_int32    aval,
-                 l_uint32  *ppixel)
+composeRGBAPixel(int32_t    rval,
+                 int32_t    gval,
+                 int32_t    bval,
+                 int32_t    aval,
+                 uint32_t  *ppixel)
 {
     if (!ppixel)
         return ERROR_INT("&pixel not defined", __func__, 1);
 
-    *ppixel = ((l_uint32)rval << L_RED_SHIFT) |
-              ((l_uint32)gval << L_GREEN_SHIFT) |
-              ((l_uint32)bval << L_BLUE_SHIFT) |
+    *ppixel = ((uint32_t)rval << L_RED_SHIFT) |
+              ((uint32_t)gval << L_GREEN_SHIFT) |
+              ((uint32_t)bval << L_BLUE_SHIFT) |
               aval;
     return 0;
 }
@@ -2790,10 +2790,10 @@ composeRGBAPixel(l_int32    rval,
  * </pre>
  */
 void
-extractRGBValues(l_uint32  pixel,
-                 l_int32  *prval,
-                 l_int32  *pgval,
-                 l_int32  *pbval)
+extractRGBValues(uint32_t  pixel,
+                 int32_t  *prval,
+                 int32_t  *pgval,
+                 int32_t  *pbval)
 {
     if (prval) *prval = (pixel >> L_RED_SHIFT) & 0xff;
     if (pgval) *pgval = (pixel >> L_GREEN_SHIFT) & 0xff;
@@ -2812,11 +2812,11 @@ extractRGBValues(l_uint32  pixel,
  * \return  void
  */
 void
-extractRGBAValues(l_uint32  pixel,
-                  l_int32  *prval,
-                  l_int32  *pgval,
-                  l_int32  *pbval,
-                  l_int32  *paval)
+extractRGBAValues(uint32_t  pixel,
+                  int32_t  *prval,
+                  int32_t  *pgval,
+                  int32_t  *pbval,
+                  int32_t  *paval)
 {
     if (prval) *prval = (pixel >> L_RED_SHIFT) & 0xff;
     if (pgval) *pgval = (pixel >> L_GREEN_SHIFT) & 0xff;
@@ -2832,11 +2832,11 @@ extractRGBAValues(l_uint32  pixel,
  * \param[in]   type    L_CHOOSE_MIN or L_CHOOSE_MAX
  * \return  component in range [0 ... 255], or NULL on error
  */
-l_int32
-extractMinMaxComponent(l_uint32  pixel,
-                       l_int32   type)
+int32_t
+extractMinMaxComponent(uint32_t  pixel,
+                       int32_t   type)
 {
-l_int32  rval, gval, bval, val;
+int32_t  rval, gval, bval, val;
 
     extractRGBValues(pixel, &rval, &gval, &bval);
     if (type == L_CHOOSE_MIN) {
@@ -2868,14 +2868,14 @@ l_int32  rval, gval, bval, val;
  */
 l_ok
 pixGetRGBLine(PIX      *pixs,
-              l_int32   row,
-              l_uint8  *bufr,
-              l_uint8  *bufg,
-              l_uint8  *bufb)
+              int32_t   row,
+              uint8_t  *bufr,
+              uint8_t  *bufg,
+              uint8_t  *bufb)
 {
-l_uint32  *lines;
-l_int32    j, w, h;
-l_int32    wpls;
+uint32_t  *lines;
+int32_t    j, w, h;
+int32_t    wpls;
 
     if (!pixs)
         return ERROR_INT("pixs not defined", __func__, 1);
@@ -2920,10 +2920,10 @@ l_int32    wpls;
  * </pre>
  */
 l_ok
-setLineDataVal(l_uint32  *line,
-               l_int32    j,
-               l_int32    d,
-               l_uint32   val)
+setLineDataVal(uint32_t  *line,
+               int32_t    j,
+               int32_t    d,
+               uint32_t   val)
 {
     if (!line)
         return ERROR_INT("line not defined", __func__, 1);
@@ -2978,9 +2978,9 @@ setLineDataVal(l_uint32  *line,
 PIX *
 pixEndianByteSwapNew(PIX  *pixs)
 {
-l_uint32  *datas, *datad;
-l_int32    i, j, h, wpl;
-l_uint32   word;
+uint32_t  *datas, *datad;
+int32_t    i, j, h, wpl;
+uint32_t   word;
 PIX       *pixd;
 
 #ifdef L_BIG_ENDIAN
@@ -3040,9 +3040,9 @@ PIX       *pixd;
 l_ok
 pixEndianByteSwap(PIX  *pixs)
 {
-l_uint32  *data;
-l_int32    i, j, h, wpl;
-l_uint32   word;
+uint32_t  *data;
+int32_t    i, j, h, wpl;
+uint32_t   word;
 
 #ifdef L_BIG_ENDIAN
 
@@ -3093,13 +3093,13 @@ l_uint32   word;
  *          from left to right in the image.
  * </pre>
  */
-l_int32
-lineEndianByteSwap(l_uint32  *datad,
-                   l_uint32  *datas,
-                   l_int32    wpl)
+int32_t
+lineEndianByteSwap(uint32_t  *datad,
+                   uint32_t  *datas,
+                   int32_t    wpl)
 {
-l_int32   j;
-l_uint32  word;
+int32_t   j;
+uint32_t  word;
 
     if (!datad || !datas)
         return ERROR_INT("datad and datas not both defined", __func__, 1);
@@ -3147,9 +3147,9 @@ l_uint32  word;
 PIX *
 pixEndianTwoByteSwapNew(PIX  *pixs)
 {
-l_uint32  *datas, *datad;
-l_int32    i, j, h, wpl;
-l_uint32   word;
+uint32_t  *datas, *datad;
+int32_t    i, j, h, wpl;
+uint32_t   word;
 PIX       *pixd;
 
 #ifdef L_BIG_ENDIAN
@@ -3199,9 +3199,9 @@ PIX       *pixd;
 l_ok
 pixEndianTwoByteSwap(PIX  *pixs)
 {
-l_uint32  *data;
-l_int32    i, j, h, wpl;
-l_uint32   word;
+uint32_t  *data;
+int32_t    i, j, h, wpl;
+uint32_t   word;
 
 #ifdef L_BIG_ENDIAN
 
@@ -3250,13 +3250,13 @@ l_uint32   word;
  */
 l_ok
 pixGetRasterData(PIX       *pixs,
-                 l_uint8  **pdata,
+                 uint8_t  **pdata,
                  size_t    *pnbytes)
 {
-l_int32    w, h, d, wpl, i, j, rval, gval, bval;
-l_int32    databpl;  /* bytes for each raster line in returned data */
-l_uint8   *line, *data;  /* packed data in returned array */
-l_uint32  *rline, *rdata;  /* data in pix raster */
+int32_t    w, h, d, wpl, i, j, rval, gval, bval;
+int32_t    databpl;  /* bytes for each raster line in returned data */
+uint8_t   *line, *data;  /* packed data in returned array */
+uint32_t  *rline, *rdata;  /* data in pix raster */
 
     if (pdata) *pdata = NULL;
     if (pnbytes) *pnbytes = 0;
@@ -3281,7 +3281,7 @@ l_uint32  *rline, *rdata;  /* data in pix raster */
         databpl = w * (d / 8);
     else  /* d == 32 bpp rgb */
         databpl = 3 * w;
-    if ((data = (l_uint8 *)LEPT_CALLOC((size_t)databpl * h, sizeof(l_uint8)))
+    if ((data = (uint8_t *)LEPT_CALLOC((size_t)databpl * h, sizeof(uint8_t)))
             == NULL)
         return ERROR_INT("data not allocated", __func__, 1);
     *pdata = data;
@@ -3333,9 +3333,9 @@ l_uint32  *rline, *rdata;  /* data in pix raster */
 l_ok
 pixInferResolution(PIX       *pix,
                    l_float32  longside,
-                   l_int32   *pres)
+                   int32_t   *pres)
 {
-l_int32  w, h, maxdim, res;
+int32_t  w, h, maxdim, res;
 
     if (!pres)
         return ERROR_INT("&res not defined", __func__, 1);
@@ -3347,7 +3347,7 @@ l_int32  w, h, maxdim, res;
 
     pixGetDimensions(pix, &w, &h, NULL);
     maxdim = L_MAX(w, h);
-    res = (l_int32)(maxdim / longside + 0.5);
+    res = (int32_t)(maxdim / longside + 0.5);
     res = L_MAX(res, 1);  /* don't let it be 0 */
     if (res < 10)
         L_WARNING("low inferred resolution: %d ppi\n", __func__, res);
@@ -3376,10 +3376,10 @@ l_int32  w, h, maxdim, res;
  */
 l_ok
 pixAlphaIsOpaque(PIX      *pix,
-                 l_int32  *popaque)
+                 int32_t  *popaque)
 {
-l_int32    w, h, wpl, i, j, alpha;
-l_uint32  *data, *line;
+int32_t    w, h, wpl, i, j, alpha;
+uint32_t  *data, *line;
 
     if (!popaque)
         return ERROR_INT("&opaque not defined", __func__, 1);
@@ -3426,9 +3426,9 @@ l_uint32  *data, *line;
  *      (2) After processing, you must call pixCleanupByteProcessing(),
  *          which frees the lineptr array and restores byte order.
  *      (3) Usage:
- *              l_uint8 **lineptrs = pixSetupByteProcessing(pix, &w, &h);
+ *              uint8_t **lineptrs = pixSetupByteProcessing(pix, &w, &h);
  *              for (i = 0; i < h; i++) {
- *                  l_uint8 *line = lineptrs[i];
+ *                  uint8_t *line = lineptrs[i];
  *                  for (j = 0; j < w; j++) {
  *                      val = line[j];
  *                      ...
@@ -3437,26 +3437,26 @@ l_uint32  *data, *line;
  *              pixCleanupByteProcessing(pix, lineptrs);
  * </pre>
  */
-l_uint8 **
+uint8_t **
 pixSetupByteProcessing(PIX      *pix,
-                       l_int32  *pw,
-                       l_int32  *ph)
+                       int32_t  *pw,
+                       int32_t  *ph)
 {
-l_int32  w, h;
+int32_t  w, h;
 
     if (pw) *pw = 0;
     if (ph) *ph = 0;
     if (!pix || pixGetDepth(pix) != 8)
-        return (l_uint8 **)ERROR_PTR("pix not defined or not 8 bpp",
+        return (uint8_t **)ERROR_PTR("pix not defined or not 8 bpp",
                                      __func__, NULL);
     pixGetDimensions(pix, &w, &h, NULL);
     if (pw) *pw = w;
     if (ph) *ph = h;
     if (pixGetColormap(pix))
-        return (l_uint8 **)ERROR_PTR("pix has colormap", __func__, NULL);
+        return (uint8_t **)ERROR_PTR("pix has colormap", __func__, NULL);
 
     pixEndianByteSwap(pix);
-    return (l_uint8 **)pixGetLinePtrs(pix, NULL);
+    return (uint8_t **)pixGetLinePtrs(pix, NULL);
 }
 
 
@@ -3475,7 +3475,7 @@ l_int32  w, h;
  */
 l_ok
 pixCleanupByteProcessing(PIX      *pix,
-                         l_uint8 **lineptrs)
+                         uint8_t **lineptrs)
 {
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);

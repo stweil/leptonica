@@ -39,9 +39,9 @@
 
 #include "allheaders.h"
 
-void BoxaSortTest(L_REGPARAMS *rp, const char *fname, l_int32 index,
+void BoxaSortTest(L_REGPARAMS *rp, const char *fname, int32_t index,
                   const char *text);
-void PixaSortTest(L_REGPARAMS *rp, const char *fname, l_int32 index,
+void PixaSortTest(L_REGPARAMS *rp, const char *fname, int32_t index,
                   const char *text);
 
 int main(int    argc,
@@ -74,10 +74,10 @@ L_REGPARAMS  *rp;
 void
 BoxaSortTest(L_REGPARAMS  *rp,
              const char   *fname,
-             l_int32       index,
+             int32_t       index,
              const char   *text)
 {
-l_int32   i, n, m, imax, w, h, x, count, same;
+int32_t   i, n, m, imax, w, h, x, count, same;
 BOX      *box;
 BOXA     *boxa, *boxa1, *boxa2, *boxa3;
 NUMA     *na, *nad1, *nad2, *nad3, *naindex;
@@ -193,10 +193,10 @@ char      buf[256];
 void
 PixaSortTest(L_REGPARAMS  *rp,
              const char   *fname,
-             l_int32       index,
+             int32_t       index,
              const char   *text)
 {
-l_int32  same;
+int32_t  same;
 BOXA    *boxa, *boxa1, *boxa2;
 NUMA    *nap1, *nap2, *naindex;
 PIX     *pixs;

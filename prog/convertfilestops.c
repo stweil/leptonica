@@ -56,7 +56,7 @@ int main(int    argc,
          char **argv)
 {
 char    *dirin, *substr, *fileout;
-l_int32  res;
+int32_t  res;
 
     if (argc != 5) {
         lept_stderr(

@@ -42,8 +42,8 @@ static PIX *DisplayBoxa(BOXA  *boxa);
 int main(int    argc,
          char **argv)
 {
-l_uint8      *data1, *data2;
-l_int32       same;
+uint8_t      *data1, *data2;
+int32_t       same;
 size_t        size1, size2;
 l_float32     diffarea, diffxor;
 BOX          *box;
@@ -123,7 +123,7 @@ L_REGPARAMS  *rp;
 static PIX *
 DisplayBoxa(BOXA  *boxa)
 {
-l_int32  w, h;
+int32_t  w, h;
 BOX     *box;
 PIX     *pix1, *pix2, *pix3;
 PIXA    *pixa;

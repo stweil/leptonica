@@ -32,29 +32,29 @@
  *      Solve a sudoku by brute force search
  *
  *      Read input data from file or string
- *          l_int32         *sudokuReadFile()
- *          l_int32         *sudokuReadString()
+ *          int32_t         *sudokuReadFile()
+ *          int32_t         *sudokuReadString()
  *
  *      Create/destroy
  *          L_SUDOKU        *sudokuCreate()
  *          void             sudokuDestroy()
  *
  *      Solve the puzzle
- *          l_int32          sudokuSolve()
- *          static l_int32   sudokuValidState()
- *          static l_int32   sudokuNewGuess()
- *          static l_int32   sudokuTestState()
+ *          int32_t          sudokuSolve()
+ *          static int32_t   sudokuValidState()
+ *          static int32_t   sudokuNewGuess()
+ *          static int32_t   sudokuTestState()
  *
  *      Test for uniqueness
- *          l_int32          sudokuTestUniqueness()
- *          static l_int32   sudokuCompareState()
- *          static l_int32  *sudokuRotateArray()
+ *          int32_t          sudokuTestUniqueness()
+ *          static int32_t   sudokuCompareState()
+ *          static int32_t  *sudokuRotateArray()
  *
  *      Generation
  *          L_SUDOKU        *sudokuGenerate()
  *
  *      Output
- *          l_int32          sudokuOutput()
+ *          int32_t          sudokuOutput()
  *
  *  Solving sudokus is a somewhat addictive pastime.  The rules are
  *  simple but it takes just enough concentration to make it rewarding
@@ -144,12 +144,12 @@
 
 #include "allheaders.h"
 
-static l_int32 sudokuValidState(l_int32  *state);
-static l_int32 sudokuNewGuess(L_SUDOKU  *sud);
-static l_int32 sudokuTestState(l_int32  *state, l_int32  index);
-static l_int32 sudokuCompareState(L_SUDOKU  *sud1, L_SUDOKU  *sud2,
-                                  l_int32  quads, l_int32  *psame);
-static l_int32 *sudokuRotateArray(l_int32  *array, l_int32  quads);
+static int32_t sudokuValidState(int32_t  *state);
+static int32_t sudokuNewGuess(L_SUDOKU  *sud);
+static int32_t sudokuTestState(int32_t  *state, int32_t  index);
+static int32_t sudokuCompareState(L_SUDOKU  *sud1, L_SUDOKU  *sud2,
+                                  int32_t  quads, int32_t  *psame);
+static int32_t *sudokuRotateArray(int32_t  *array, int32_t  quads);
 
 /* --------------------------------------------------------------- */
 /*               An example of a valid solution                    */
@@ -183,18 +183,18 @@ static const char valid_solution[] = "3 8 7 2 6 4 1 9 5 "
  *            by a space
  * </pre>
  */
-l_int32 *
+int32_t *
 sudokuReadFile(const char  *filename)
 {
 char     *str, *strj;
-l_uint8  *data;
-l_int32   i, j, nlines, val, index, error;
-l_int32  *array;
+uint8_t  *data;
+int32_t   i, j, nlines, val, index, error;
+int32_t  *array;
 size_t    size;
 SARRAY   *saline, *sa1, *sa2;
 
     if (!filename)
-        return (l_int32 *)ERROR_PTR("filename not defined", __func__, NULL);
+        return (int32_t *)ERROR_PTR("filename not defined", __func__, NULL);
     data = l_binaryRead(filename, &size);
     sa1 = sarrayCreateLinesFromString((char *)data, 0);
     sa2 = sarrayCreate(9);
@@ -212,13 +212,13 @@ SARRAY   *saline, *sa1, *sa2;
     if (nlines != 9) {
         sarrayDestroy(&sa2);
         L_ERROR("file has %d lines\n", __func__, nlines);
-        return (l_int32 *)ERROR_PTR("invalid file", __func__, NULL);
+        return (int32_t *)ERROR_PTR("invalid file", __func__, NULL);
     }
 
         /* Read the data into the array, verifying that each data
          * line has 9 numbers. */
     error = FALSE;
-    array = (l_int32 *)LEPT_CALLOC(81, sizeof(l_int32));
+    array = (int32_t *)LEPT_CALLOC(81, sizeof(int32_t));
     for (i = 0, index = 0; i < 9; i++) {
         str = sarrayGetString(sa2, i, L_NOCOPY);
         saline = sarrayCreateWordsFromString(str);
@@ -241,7 +241,7 @@ SARRAY   *saline, *sa1, *sa2;
 
     if (error) {
         LEPT_FREE(array);
-        return (l_int32 *)ERROR_PTR("invalid data", __func__, NULL);
+        return (int32_t *)ERROR_PTR("invalid data", __func__, NULL);
     }
 
     return array;
@@ -260,21 +260,21 @@ SARRAY   *saline, *sa1, *sa2;
  *          by 81 spaces.
  * </pre>
  */
-l_int32 *
+int32_t *
 sudokuReadString(const char  *str)
 {
-l_int32   i;
-l_int32  *array;
+int32_t   i;
+int32_t  *array;
 
     if (!str)
-        return (l_int32 *)ERROR_PTR("str not defined", __func__, NULL);
+        return (int32_t *)ERROR_PTR("str not defined", __func__, NULL);
 
         /* Read in the initial solution */
-    array = (l_int32 *)LEPT_CALLOC(81, sizeof(l_int32));
+    array = (int32_t *)LEPT_CALLOC(81, sizeof(int32_t));
     for (i = 0; i < 81; i++) {
         if (sscanf(str + 2 * i, "%d ", &array[i]) != 1) {
             LEPT_FREE(array);
-            return (l_int32 *)ERROR_PTR("invalid format", __func__, NULL);
+            return (int32_t *)ERROR_PTR("invalid format", __func__, NULL);
         }
     }
 
@@ -300,9 +300,9 @@ l_int32  *array;
  * </pre>
  */
 L_SUDOKU *
-sudokuCreate(l_int32  *array)
+sudokuCreate(int32_t  *array)
 {
-l_int32    i, val, locs_index;
+int32_t    i, val, locs_index;
 L_SUDOKU  *sud;
 
     if (!array)
@@ -310,9 +310,9 @@ L_SUDOKU  *sud;
 
     locs_index = 0;  /* into locs array */
     sud = (L_SUDOKU *)LEPT_CALLOC(1, sizeof(L_SUDOKU));
-    sud->locs = (l_int32 *)LEPT_CALLOC(81, sizeof(l_int32));
-    sud->init = (l_int32 *)LEPT_CALLOC(81, sizeof(l_int32));
-    sud->state = (l_int32 *)LEPT_CALLOC(81, sizeof(l_int32));
+    sud->locs = (int32_t *)LEPT_CALLOC(81, sizeof(int32_t));
+    sud->init = (int32_t *)LEPT_CALLOC(81, sizeof(int32_t));
+    sud->state = (int32_t *)LEPT_CALLOC(81, sizeof(int32_t));
     for (i = 0; i < 81; i++) {
         val = array[i];
         sud->init[i] = val;
@@ -363,7 +363,7 @@ L_SUDOKU  *sud;
  * \return  1 on success, 0 on failure to solve note reversal of
  *              typical unix returns
  */
-l_int32
+int32_t
 sudokuSolve(L_SUDOKU  *sud)
 {
     if (!sud)
@@ -402,10 +402,10 @@ sudokuSolve(L_SUDOKU  *sud)
  *          All values of 0 are ignored.
  * </pre>
  */
-static l_int32
-sudokuValidState(l_int32  *state)
+static int32_t
+sudokuValidState(int32_t  *state)
 {
-l_int32  i;
+int32_t  i;
 
     if (!state)
         return ERROR_INT("state not defined", __func__, 0);
@@ -437,11 +437,11 @@ l_int32  i;
  *          exhaust possibilities for the first location.
  * </pre>
  */
-static l_int32
+static int32_t
 sudokuNewGuess(L_SUDOKU  *sud)
 {
-l_int32   index, val, valid;
-l_int32  *locs, *state;
+int32_t   index, val, valid;
+int32_t  *locs, *state;
 
     locs = sud->locs;
     state = sud->state;
@@ -479,12 +479,12 @@ l_int32  *locs, *state;
  * \param[in]    index    into state element that we are testing
  * \return  1 if valid; 0 if invalid no error checking
  */
-static l_int32
-sudokuTestState(l_int32  *state,
-                l_int32   index)
+static int32_t
+sudokuTestState(int32_t  *state,
+                int32_t   index)
 {
-l_int32  i, j, val, row, rowstart, rowend, col;
-l_int32  blockrow, blockcol, blockstart, rowindex, locindex;
+int32_t  i, j, val, row, rowstart, rowend, col;
+int32_t  blockrow, blockcol, blockstart, rowindex, locindex;
 
     if ((val = state[index]) == 0)  /* automatically valid */
         return 1;
@@ -551,11 +551,11 @@ l_int32  blockrow, blockcol, blockstart, rowindex, locindex;
  * </pre>
  */
 l_ok
-sudokuTestUniqueness(l_int32  *array,
-                     l_int32  *punique)
+sudokuTestUniqueness(int32_t  *array,
+                     int32_t  *punique)
 {
-l_int32    same1, same2, same3;
-l_int32   *array1, *array2, *array3;
+int32_t    same1, same2, same3;
+int32_t   *array1, *array2, *array3;
 L_SUDOKU  *sud, *sud1, *sud2, *sud3;
 
     if (!punique)
@@ -609,14 +609,14 @@ L_SUDOKU  *sud, *sud1, *sud2, *sud3;
  *          solution to sud2.
  * </pre>
  */
-static l_int32
+static int32_t
 sudokuCompareState(L_SUDOKU  *sud1,
                    L_SUDOKU  *sud2,
-                   l_int32    quads,
-                   l_int32   *psame)
+                   int32_t    quads,
+                   int32_t   *psame)
 {
-l_int32   i, same;
-l_int32  *array;
+int32_t   i, same;
+int32_t  *array;
 
     if (!psame)
         return ERROR_INT("&same not defined", __func__, 1);
@@ -650,19 +650,19 @@ l_int32  *array;
  * \param[in]    quads     1-3; number of 90 degree cw rotations
  * \return  rarray rotated array, or NULL on error
  */
-static l_int32 *
-sudokuRotateArray(l_int32  *array,
-                  l_int32   quads)
+static int32_t *
+sudokuRotateArray(int32_t  *array,
+                  int32_t   quads)
 {
-l_int32   i, j, sindex, dindex;
-l_int32  *rarray;
+int32_t   i, j, sindex, dindex;
+int32_t  *rarray;
 
     if (!array)
-        return (l_int32 *)ERROR_PTR("array not defined", __func__, NULL);
+        return (int32_t *)ERROR_PTR("array not defined", __func__, NULL);
     if (quads < 1 || quads > 3)
-        return (l_int32 *)ERROR_PTR("valid quads in {1,2,3}", __func__, NULL);
+        return (int32_t *)ERROR_PTR("valid quads in {1,2,3}", __func__, NULL);
 
-    rarray = (l_int32 *)LEPT_CALLOC(81, sizeof(l_int32));
+    rarray = (int32_t *)LEPT_CALLOC(81, sizeof(int32_t));
     if (quads == 1) {
         for (j = 0, dindex = 0; j < 9; j++) {
              for (i = 8; i >= 0; i--) {
@@ -714,12 +714,12 @@ l_int32  *rarray;
  * </pre>
  */
 L_SUDOKU *
-sudokuGenerate(l_int32  *array,
-               l_int32   seed,
-               l_int32   minelems,
-               l_int32   maxtries)
+sudokuGenerate(int32_t  *array,
+               int32_t   seed,
+               int32_t   minelems,
+               int32_t   maxtries)
 {
-l_int32    index, sector, nzeros, removefirst, tries, val, oldval, unique;
+int32_t    index, sector, nzeros, removefirst, tries, val, oldval, unique;
 L_SUDOKU  *sud, *testsud;
 
     if (!array)
@@ -834,12 +834,12 @@ L_SUDOKU  *sud, *testsud;
  *          of the solution.
  * </pre>
  */
-l_int32
+int32_t
 sudokuOutput(L_SUDOKU  *sud,
-             l_int32    arraytype)
+             int32_t    arraytype)
 {
-l_int32   i, j;
-l_int32  *array;
+int32_t   i, j;
+int32_t  *array;
 
     if (!sud)
         return ERROR_INT("sud not defined", __func__, 1);

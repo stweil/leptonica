@@ -47,11 +47,11 @@
  *
  *      Other transforms
  *          NUMA        *numaTransform()
- *          l_int32      numaSimpleStats()
- *          l_int32      numaWindowedStats()
+ *          int32_t      numaSimpleStats()
+ *          int32_t      numaWindowedStats()
  *          NUMA        *numaWindowedMean()
  *          NUMA        *numaWindowedMeanSquare()
- *          l_int32      numaWindowedVariance()
+ *          int32_t      numaWindowedVariance()
  *          NUMA        *numaWindowedMedian()
  *          NUMA        *numaConvertToInt()
  *
@@ -61,37 +61,37 @@
  *          NUMA        *numaMakeHistogramClipped()
  *          NUMA        *numaRebinHistogram()
  *          NUMA        *numaNormalizeHistogram()
- *          l_int32      numaGetStatsUsingHistogram()
- *          l_int32      numaGetHistogramStats()
- *          l_int32      numaGetHistogramStatsOnInterval()
- *          l_int32      numaMakeRankFromHistogram()
- *          l_int32      numaHistogramGetRankFromVal()
- *          l_int32      numaHistogramGetValFromRank()
- *          l_int32      numaDiscretizeSortedInBins()
- *          l_int32      numaDiscretizeHistoInBins()
- *          l_int32      numaGetRankBinValues()
+ *          int32_t      numaGetStatsUsingHistogram()
+ *          int32_t      numaGetHistogramStats()
+ *          int32_t      numaGetHistogramStatsOnInterval()
+ *          int32_t      numaMakeRankFromHistogram()
+ *          int32_t      numaHistogramGetRankFromVal()
+ *          int32_t      numaHistogramGetValFromRank()
+ *          int32_t      numaDiscretizeSortedInBins()
+ *          int32_t      numaDiscretizeHistoInBins()
+ *          int32_t      numaGetRankBinValues()
  *          NUMA        *numaGetUniformBinSizes()
  *
  *      Splitting a distribution
- *          l_int32      numaSplitDistribution()
+ *          int32_t      numaSplitDistribution()
  *
  *      Comparing histograms
- *          l_int32      grayHistogramsToEMD()
- *          l_int32      numaEarthMoverDistance()
- *          l_int32      grayInterHistogramStats()
+ *          int32_t      grayHistogramsToEMD()
+ *          int32_t      numaEarthMoverDistance()
+ *          int32_t      grayInterHistogramStats()
  *
  *      Extrema finding
  *          NUMA        *numaFindPeaks()
  *          NUMA        *numaFindExtrema()
  *          NUMA        *numaFindLocForThreshold()
- *          l_int32     *numaCountReversals()
+ *          int32_t     *numaCountReversals()
  *
  *      Threshold crossings and frequency analysis
- *          l_int32      numaSelectCrossingThreshold()
+ *          int32_t      numaSelectCrossingThreshold()
  *          NUMA        *numaCrossingsByThreshold()
  *          NUMA        *numaCrossingsByPeaks()
  *          NUMA        *numaEvalBestHaarParameters()
- *          l_int32      numaEvalHaarSum()
+ *          int32_t      numaEvalHaarSum()
  *
  *      Generating numbers in a range under constraints
  *          NUMA        *genConstrainedNumaInRange()
@@ -102,7 +102,7 @@
  *        (see numabasic.c), never the fields directly.
  *
  *    (2) The number array holds l_float32 values.  It can also
- *        be used to store l_int32 values.  See numabasic.c for
+ *        be used to store int32_t values.  See numabasic.c for
  *        details on using the accessors.  Integers larger than
  *        about 10M will lose accuracy due on retrieval due to round-off.
  *        For large integers, use the dna (array of l_float64) instead.
@@ -142,11 +142,11 @@
 #include "allheaders.h"
 
     /* bin sizes in numaMakeHistogram() */
-static const l_int32 BinSizeArray[] = {2, 5, 10, 20, 50, 100, 200, 500, 1000,\
+static const int32_t BinSizeArray[] = {2, 5, 10, 20, 50, 100, 200, 500, 1000,\
                       2000, 5000, 10000, 20000, 50000, 100000, 200000,\
                       500000, 1000000, 2000000, 5000000, 10000000,\
                       200000000, 50000000, 100000000};
-static const l_int32 NBinSizes = 24;
+static const int32_t NBinSizes = 24;
 
 
 #ifndef  NO_CONSOLE_IO
@@ -181,9 +181,9 @@ static const l_int32 NBinSizes = 24;
  */
 NUMA *
 numaErode(NUMA    *nas,
-          l_int32  size)
+          int32_t  size)
 {
-l_int32     i, j, n, hsize, len;
+int32_t     i, j, n, hsize, len;
 l_float32   minval;
 l_float32  *fa, *fas, *fad;
 NUMA       *nad;
@@ -248,9 +248,9 @@ NUMA       *nad;
  */
 NUMA *
 numaDilate(NUMA    *nas,
-           l_int32  size)
+           int32_t  size)
 {
-l_int32     i, j, n, hsize, len;
+int32_t     i, j, n, hsize, len;
 l_float32   maxval;
 l_float32  *fa, *fas, *fad;
 NUMA       *nad;
@@ -315,7 +315,7 @@ NUMA       *nad;
  */
 NUMA *
 numaOpen(NUMA    *nas,
-         l_int32  size)
+         int32_t  size)
 {
 NUMA  *nat, *nad;
 
@@ -360,7 +360,7 @@ NUMA  *nat, *nad;
  */
 NUMA *
 numaClose(NUMA    *nas,
-          l_int32  size)
+          int32_t  size)
 {
 NUMA  *nab, *nat1, *nat2, *nad;
 
@@ -408,7 +408,7 @@ numaTransform(NUMA      *nas,
               l_float32  shift,
               l_float32  scale)
 {
-l_int32    i, n;
+int32_t    i, n;
 l_float32  val;
 NUMA      *nad;
 
@@ -440,13 +440,13 @@ NUMA      *nad;
  */
 l_ok
 numaSimpleStats(NUMA       *na,
-                l_int32     first,
-                l_int32     last,
+                int32_t     first,
+                int32_t     last,
                 l_float32  *pmean,
                 l_float32  *pvar,
                 l_float32  *prvar)
 {
-l_int32    i, n, ni;
+int32_t    i, n, ni;
 l_float32  sum, sumsq, val, mean, var;
 
     if (pmean) *pmean = 0.0;
@@ -523,7 +523,7 @@ l_float32  sum, sumsq, val, mean, var;
  */
 l_ok
 numaWindowedStats(NUMA    *nas,
-                  l_int32  wc,
+                  int32_t  wc,
                   NUMA   **pnam,
                   NUMA   **pnams,
                   NUMA   **pnav,
@@ -572,9 +572,9 @@ NUMA  *nam, *nams;
  */
 NUMA *
 numaWindowedMean(NUMA    *nas,
-                 l_int32  wc)
+                 int32_t  wc)
 {
-l_int32     i, n, n1, width;
+int32_t     i, n, n1, width;
 l_float32   sum, norm;
 l_float32  *fa1, *fad, *suma;
 NUMA       *na1, *nad;
@@ -630,9 +630,9 @@ NUMA       *na1, *nad;
  */
 NUMA *
 numaWindowedMeanSquare(NUMA    *nas,
-                       l_int32  wc)
+                       int32_t  wc)
 {
-l_int32     i, n, n1, width;
+int32_t     i, n, n1, width;
 l_float32   sum, norm;
 l_float32  *fa1, *fad, *suma;
 NUMA       *na1, *nad;
@@ -700,7 +700,7 @@ numaWindowedVariance(NUMA   *nam,
                      NUMA  **pnav,
                      NUMA  **pnarv)
 {
-l_int32     i, nm, nms;
+int32_t     i, nm, nms;
 l_float32   var;
 l_float32  *fam, *fams, *fav, *farv;
 NUMA       *nav, *narv;  /* variance and square root of variance */
@@ -762,9 +762,9 @@ NUMA       *nav, *narv;  /* variance and square root of variance */
  */
 NUMA *
 numaWindowedMedian(NUMA    *nas,
-                   l_int32  halfwin)
+                   int32_t  halfwin)
 {
-l_int32    i, n;
+int32_t    i, n;
 l_float32  medval;
 NUMA      *na1, *na2, *nad;
 
@@ -810,7 +810,7 @@ NUMA      *na1, *na2, *nad;
 NUMA *
 numaConvertToInt(NUMA  *nas)
 {
-l_int32  i, n, ival;
+int32_t  i, n, ival;
 NUMA    *nad;
 
     if (!nas)
@@ -859,12 +859,12 @@ NUMA    *nad;
  */
 NUMA *
 numaMakeHistogram(NUMA     *na,
-                  l_int32   maxbins,
-                  l_int32  *pbinsize,
-                  l_int32  *pbinstart)
+                  int32_t   maxbins,
+                  int32_t  *pbinsize,
+                  int32_t  *pbinstart)
 {
-l_int32    i, n, ival, hval;
-l_int32    iminval, imaxval, range, binsize, nbins, ibin;
+int32_t    i, n, ival, hval;
+int32_t    iminval, imaxval, range, binsize, nbins, ibin;
 l_float32  val, ratio;
 NUMA      *nai, *nahist;
 
@@ -877,9 +877,9 @@ NUMA      *nai, *nahist;
 
         /* Determine input range */
     numaGetMin(na, &val, NULL);
-    iminval = (l_int32)(val + 0.5);
+    iminval = (int32_t)(val + 0.5);
     numaGetMax(na, &val, NULL);
-    imaxval = (l_int32)(val + 0.5);
+    imaxval = (int32_t)(val + 0.5);
     if (pbinstart == NULL) {  /* clip negative vals; start from 0 */
         iminval = 0;
         if (imaxval < 0)
@@ -970,9 +970,9 @@ NUMA      *nai, *nahist;
  */
 NUMA *
 numaMakeHistogramAuto(NUMA    *na,
-                      l_int32  maxbins)
+                      int32_t  maxbins)
 {
-l_int32    i, n, imin, imax, irange, ibin, ival, allints;
+int32_t    i, n, imin, imax, irange, ibin, ival, allints;
 l_float32  minval, maxval, range, binsize, fval;
 NUMA      *nah;
 
@@ -990,8 +990,8 @@ NUMA      *nah;
 
         /* Do simple integer binning if possible */
     if (allints && (maxval - minval < maxbins)) {
-        imin = (l_int32)minval;
-        imax = (l_int32)maxval;
+        imin = (int32_t)minval;
+        imax = (int32_t)maxval;
         irange = imax - imin + 1;
         nah = numaCreate(irange);
         numaSetCount(nah, irange);  /* init */
@@ -1020,7 +1020,7 @@ NUMA      *nah;
     numaSetParameters(nah, minval, binsize);
     for (i = 0; i < n; i++) {
         numaGetFValue(na, i, &fval);
-        ibin = (l_int32)((fval - minval) / binsize);
+        ibin = (int32_t)((fval - minval) / binsize);
         ibin = L_MIN(ibin, maxbins - 1);  /* "edge" case; stay in bounds */
         numaGetIValue(nah, ibin, &ival);
         numaSetValue(nah, ibin, ival + 1.0);
@@ -1055,7 +1055,7 @@ numaMakeHistogramClipped(NUMA      *na,
                          l_float32  binsize,
                          l_float32  maxsize)
 {
-l_int32    i, n, nbins, ival, ibin;
+int32_t    i, n, nbins, ival, ibin;
 l_float32  val, maxval;
 NUMA      *nad;
 
@@ -1069,7 +1069,7 @@ NUMA      *nad;
     numaGetMax(na, &maxval, NULL);
     n = numaGetCount(na);
     maxsize = L_MIN(maxsize, maxval);
-    nbins = (l_int32)(maxsize / binsize) + 1;
+    nbins = (int32_t)(maxsize / binsize) + 1;
 
 /*    lept_stderr("maxsize = %7.3f, nbins = %d\n", maxsize, nbins); */
 
@@ -1079,7 +1079,7 @@ NUMA      *nad;
     numaSetCount(nad, nbins);  /* interpret zeroes in bins as data */
     for (i = 0; i < n; i++) {
         numaGetFValue(na, i, &val);
-        ibin = (l_int32)(val / binsize);
+        ibin = (int32_t)(val / binsize);
         if (ibin >= 0 && ibin < nbins) {
             numaGetIValue(nad, ibin, &ival);
             numaSetValue(nad, ibin, ival + 1.0);
@@ -1099,9 +1099,9 @@ NUMA      *nad;
  */
 NUMA *
 numaRebinHistogram(NUMA    *nas,
-                   l_int32  newsize)
+                   int32_t  newsize)
 {
-l_int32    i, j, ns, nd, index, count, val;
+int32_t    i, j, ns, nd, index, count, val;
 l_float32  start, oldsize;
 NUMA      *nad;
 
@@ -1147,7 +1147,7 @@ NUMA *
 numaNormalizeHistogram(NUMA      *nas,
                        l_float32  tsum)
 {
-l_int32    i, ns;
+int32_t    i, ns;
 l_float32  sum, factor, fval;
 NUMA      *nad;
 
@@ -1225,7 +1225,7 @@ NUMA      *nad;
  */
 l_ok
 numaGetStatsUsingHistogram(NUMA       *na,
-                           l_int32     maxbins,
+                           int32_t     maxbins,
                            l_float32  *pmin,
                            l_float32  *pmax,
                            l_float32  *pmean,
@@ -1235,7 +1235,7 @@ numaGetStatsUsingHistogram(NUMA       *na,
                            l_float32  *prval,
                            NUMA      **phisto)
 {
-l_int32    i, n;
+int32_t    i, n;
 l_float32  minval, maxval, fval, mean, sum;
 NUMA      *nah;
 
@@ -1363,14 +1363,14 @@ l_ok
 numaGetHistogramStatsOnInterval(NUMA       *nahisto,
                                 l_float32   startx,
                                 l_float32   deltax,
-                                l_int32     ifirst,
-                                l_int32     ilast,
+                                int32_t     ifirst,
+                                int32_t     ilast,
                                 l_float32  *pxmean,
                                 l_float32  *pxmedian,
                                 l_float32  *pxmode,
                                 l_float32  *pxvariance)
 {
-l_int32    i, n, imax;
+int32_t    i, n, imax;
 l_float32  sum, sumval, halfsum, moment, var, x, y, ymax;
 
     if (pxmean) *pxmean = 0.0;
@@ -1455,11 +1455,11 @@ l_ok
 numaMakeRankFromHistogram(l_float32  startx,
                           l_float32  deltax,
                           NUMA      *nasy,
-                          l_int32    npts,
+                          int32_t    npts,
                           NUMA     **pnax,
                           NUMA     **pnay)
 {
-l_int32    i, n;
+int32_t    i, n;
 l_float32  sum, fval;
 NUMA      *nan, *nar;
 
@@ -1522,7 +1522,7 @@ numaHistogramGetRankFromVal(NUMA       *na,
                             l_float32   rval,
                             l_float32  *prank)
 {
-l_int32    i, ibinval, n;
+int32_t    i, ibinval, n;
 l_float32  startval, binsize, binval, maxval, fractval, total, sum, val;
 
     if (!prank)
@@ -1541,7 +1541,7 @@ l_float32  startval, binsize, binval, maxval, fractval, total, sum, val;
     }
 
     binval = (rval - startval) / binsize;
-    ibinval = (l_int32)binval;
+    ibinval = (int32_t)binval;
     if (ibinval >= n) {
         *prank = 1.0;
         return 0;
@@ -1591,7 +1591,7 @@ numaHistogramGetValFromRank(NUMA       *na,
                             l_float32   rank,
                             l_float32  *prval)
 {
-l_int32    i, n;
+int32_t    i, n;
 l_float32  startval, binsize, rankcount, total, sum, fract, val;
 
     if (!prval)
@@ -1658,12 +1658,12 @@ l_float32  startval, binsize, rankcount, total, sum, fract, val;
  */
 l_ok
 numaDiscretizeSortedInBins(NUMA    *na,
-                           l_int32  nbins,
+                           int32_t  nbins,
                            NUMA   **pnabinval)
 {
 NUMA      *nabinval;  /* average gray value in the bins */
 NUMA      *naeach;
-l_int32    i, ntot, count, bincount, binindex, binsize;
+int32_t    i, ntot, count, bincount, binindex, binsize;
 l_float32  sum, val, ave;
 
     if (!pnabinval)
@@ -1733,14 +1733,14 @@ l_float32  sum, val, ave;
  */
 l_ok
 numaDiscretizeHistoInBins(NUMA    *na,
-                          l_int32  nbins,
+                          int32_t  nbins,
                           NUMA   **pnabinval,
                           NUMA   **pnarank)
 {
 NUMA      *nabinval;  /* average gray value in the bins */
 NUMA      *narank;  /* rank value as function of input value */
 NUMA      *naeach, *nan;
-l_int32    i, j, k, nxvals, occup, count, bincount, binindex, binsize;
+int32_t    i, j, k, nxvals, occup, count, bincount, binindex, binsize;
 l_float32  sum, ave, ntot;
 
     if (pnarank) *pnarank = NULL;
@@ -1822,11 +1822,11 @@ l_float32  sum, ave, ntot;
  */
 l_ok
 numaGetRankBinValues(NUMA    *na,
-                     l_int32  nbins,
+                     int32_t  nbins,
                      NUMA   **pnam)
 {
 NUMA      *na1;
-l_int32    maxbins, type;
+int32_t    maxbins, type;
 l_float32  maxval, delx;
 
     if (!pnam)
@@ -1860,7 +1860,7 @@ l_float32  maxval, delx;
          * be 1; maxbins refers to the number of entries in the histogram. */
     L_INFO("use a histogram: input size = %d\n", __func__, numaGetCount(na));
     numaGetMax(na, &maxval, NULL);
-    maxbins = L_MIN(100002, (l_int32)maxval + 2);
+    maxbins = L_MIN(100002, (int32_t)maxval + 2);
     na1 = numaMakeHistogram(na, maxbins, NULL, NULL);
 
         /* Warn if there is a scale change.  This shouldn't happen
@@ -1890,10 +1890,10 @@ l_float32  maxval, delx;
  * </pre>
  */
 NUMA *
-numaGetUniformBinSizes(l_int32  ntotal,
-                       l_int32  nbins)
+numaGetUniformBinSizes(int32_t  ntotal,
+                       int32_t  nbins)
 {
-l_int32  i, start, end;
+int32_t  i, start, end;
 NUMA    *naeach;
 
     if (ntotal <= 0)
@@ -1968,14 +1968,14 @@ NUMA    *naeach;
 l_ok
 numaSplitDistribution(NUMA       *na,
                       l_float32   scorefract,
-                      l_int32    *psplitindex,
+                      int32_t    *psplitindex,
                       l_float32  *pave1,
                       l_float32  *pave2,
                       l_float32  *pnum1,
                       l_float32  *pnum2,
                       NUMA      **pnascore)
 {
-l_int32    i, n, bestsplit, minrange, maxrange, maxindex;
+int32_t    i, n, bestsplit, minrange, maxrange, maxindex;
 l_float32  ave1, ave2, ave1prev, ave2prev;
 l_float32  num1, num2, num1prev, num2prev;
 l_float32  val, minval, sum, fract1;
@@ -2130,7 +2130,7 @@ grayHistogramsToEMD(NUMAA  *naa1,
                     NUMAA  *naa2,
                     NUMA  **pnad)
 {
-l_int32     i, n, nt;
+int32_t     i, n, nt;
 l_float32   dist;
 NUMA       *na1, *na2, *nad;
 
@@ -2194,7 +2194,7 @@ numaEarthMoverDistance(NUMA       *na1,
                        NUMA       *na2,
                        l_float32  *pdist)
 {
-l_int32     n, norm, i;
+int32_t     n, norm, i;
 l_float32   sum1, sum2, diff, total;
 l_float32  *array1, *array3;
 NUMA       *na3;
@@ -2280,13 +2280,13 @@ NUMA       *na3;
  */
 l_ok
 grayInterHistogramStats(NUMAA   *naa,
-                        l_int32  wc,
+                        int32_t  wc,
                         NUMA   **pnam,
                         NUMA   **pnams,
                         NUMA   **pnav,
                         NUMA   **pnarv)
 {
-l_int32      i, j, n, nn;
+int32_t      i, j, n, nn;
 l_float32  **arrays;
 l_float32    mean, var, rvar;
 NUMA        *na1, *na2, *na3, *na4;
@@ -2368,11 +2368,11 @@ NUMA        *na1, *na2, *na3, *na4;
  */
 NUMA *
 numaFindPeaks(NUMA      *nas,
-              l_int32    nmax,
+              int32_t    nmax,
               l_float32  fract1,
               l_float32  fract2)
 {
-l_int32    i, k, n, maxloc, lloc, rloc;
+int32_t    i, k, n, maxloc, lloc, rloc;
 l_float32  fmaxval, sum, total, newtotal, val, lastval;
 l_float32  peakfract;
 NUMA      *na, *napeak;
@@ -2487,7 +2487,7 @@ numaFindExtrema(NUMA      *nas,
                 l_float32  delta,
                 NUMA     **pnav)
 {
-l_int32    i, n, found, loc, direction;
+int32_t    i, n, found, loc, direction;
 l_float32  startval, val, maxval, minval;
 NUMA      *nav, *nad;
 
@@ -2590,11 +2590,11 @@ NUMA      *nav, *nad;
  */
 l_ok
 numaFindLocForThreshold(NUMA       *na,
-                        l_int32     skip,
-                        l_int32    *pthresh,
+                        int32_t     skip,
+                        int32_t    *pthresh,
                         l_float32  *pfract)
 {
-l_int32     i, n, start, index, minloc, found;
+int32_t     i, n, start, index, minloc, found;
 l_float32   val, pval, jval, minval, maxval, sum, partsum;
 l_float32  *fa;
 
@@ -2703,11 +2703,11 @@ l_float32  *fa;
 l_ok
 numaCountReversals(NUMA       *nas,
                    l_float32   minreversal,
-                   l_int32    *pnr,
+                   int32_t    *pnr,
                    l_float32  *prd)
 {
-l_int32    i, n, nr, ival, binvals;
-l_int32   *ia;
+int32_t    i, n, nr, ival, binvals;
+int32_t   *ia;
 l_float32  fval, delx, len;
 NUMA      *nat;
 
@@ -2800,8 +2800,8 @@ numaSelectCrossingThreshold(NUMA       *nax,
                             l_float32   estthresh,
                             l_float32  *pbestthresh)
 {
-l_int32    i, inrun, istart, iend, maxstart, maxend, runlen, maxrunlen;
-l_int32    val, maxval, nmax, count;
+int32_t    i, inrun, istart, iend, maxstart, maxend, runlen, maxrunlen;
+int32_t    val, maxval, nmax, count;
 l_float32  thresh, fmaxval, fmodeval;
 NUMA      *nat, *nac;
 
@@ -2827,7 +2827,7 @@ NUMA      *nat, *nac;
         /* Find the center of the plateau of max crossings, which
          * extends from thresh[istart] to thresh[iend]. */
     numaGetMax(nat, &fmaxval, NULL);
-    maxval = (l_int32)fmaxval;
+    maxval = (int32_t)fmaxval;
     nmax = 0;
     for (i = 0; i < 41; i++) {
         numaGetIValue(nat, i, &val);
@@ -2837,7 +2837,7 @@ NUMA      *nat, *nac;
     if (nmax < 3) {  /* likely accidental max; try the mode */
         numaGetMode(nat, &fmodeval, &count);
         if (count > nmax && fmodeval > 0.5 * fmaxval)
-            maxval = (l_int32)fmodeval;  /* use the mode */
+            maxval = (int32_t)fmodeval;  /* use the mode */
     }
 
     inrun = FALSE;
@@ -2908,7 +2908,7 @@ numaCrossingsByThreshold(NUMA      *nax,
                          NUMA      *nay,
                          l_float32  thresh)
 {
-l_int32    i, n;
+int32_t    i, n;
 l_float32  startx, delx;
 l_float32  xval1, xval2, yval1, yval2, delta1, delta2, crossval, fract;
 NUMA      *nad;
@@ -2972,7 +2972,7 @@ numaCrossingsByPeaks(NUMA      *nax,
                      NUMA      *nay,
                      l_float32  delta)
 {
-l_int32    i, j, n, np, previndex, curindex;
+int32_t    i, j, n, np, previndex, curindex;
 l_float32  startx, delx;
 l_float32  xval1, xval2, yval1, yval2, delta1, delta2;
 l_float32  prevval, curval, thresh, crossval, fract;
@@ -3079,15 +3079,15 @@ NUMA      *nap, *nad;
 l_ok
 numaEvalBestHaarParameters(NUMA       *nas,
                            l_float32   relweight,
-                           l_int32     nwidth,
-                           l_int32     nshift,
+                           int32_t     nwidth,
+                           int32_t     nshift,
                            l_float32   minwidth,
                            l_float32   maxwidth,
                            l_float32  *pbestwidth,
                            l_float32  *pbestshift,
                            l_float32  *pbestscore)
 {
-l_int32    i, j;
+int32_t    i, j;
 l_float32  delwidth, delshift, width, shift, score;
 l_float32  bestwidth, bestshift, bestscore;
 
@@ -3166,7 +3166,7 @@ numaEvalHaarSum(NUMA       *nas,
                 l_float32   relweight,
                 l_float32  *pscore)
 {
-l_int32    i, n, nsamp, index;
+int32_t    i, n, nsamp, index;
 l_float32  score, weight, val;
 
     if (!pscore)
@@ -3178,9 +3178,9 @@ l_float32  score, weight, val;
         return ERROR_INT("nas size too small", __func__, 1);
 
     score = 0.0;
-    nsamp = (l_int32)((n - shift) / width);
+    nsamp = (int32_t)((n - shift) / width);
     for (i = 0; i < nsamp; i++) {
-        index = (l_int32)(shift + i * width);
+        index = (int32_t)(shift + i * width);
         weight = (i % 2) ? 1.0 : -1.0 * relweight;
         numaGetFValue(nas, index, &val);
         score += weight * val;
@@ -3215,12 +3215,12 @@ l_float32  score, weight, val;
  * </pre>
  */
 NUMA *
-genConstrainedNumaInRange(l_int32  first,
-                          l_int32  last,
-                          l_int32  nmax,
-                          l_int32  use_pairs)
+genConstrainedNumaInRange(int32_t  first,
+                          int32_t  last,
+                          int32_t  nmax,
+                          int32_t  use_pairs)
 {
-l_int32    i, nsets, val;
+int32_t    i, nsets, val;
 l_float32  delta;
 NUMA      *na;
 
@@ -3248,7 +3248,7 @@ NUMA      *na;
 
     na = numaCreate(nsets);
     for (i = 0; i < nsets; i++) {
-        val = (l_int32)(first + i * delta + 0.5);
+        val = (int32_t)(first + i * delta + 0.5);
         numaAddNumber(na, val);
         if (use_pairs == 1)
             numaAddNumber(na, val + 1);

@@ -61,21 +61,21 @@
  *      read bmp files with extra data, and require that the size
  *      of the color table in bytes is
  *         offset - sizeof(BMP_FileHeader) - sizeof(BMP_InfoHeader)
- *  (3) Use arrays of l_uint8[] to make an endianness agnostic
+ *  (3) Use arrays of uint8_t[] to make an endianness agnostic
  *      access to the BMP_FileHeader easier.
  */
 struct BMP_FileHeader
 {
-    l_uint8        bfType[2];      /*!< file type; must be "BM"            */
-    l_uint8        bfSize[4];      /*!< length of the file;
+    uint8_t        bfType[2];      /*!< file type; must be "BM"            */
+    uint8_t        bfSize[4];      /*!< length of the file;
                                        sizeof(BMP_FileHeader) +
                                        sizeof(BMP_InfoHeader) +
                                        size of optional extra data +
                                        size of color table +
                                        size of DIB bits                    */
-    l_uint8        bfReserved1[2]; /*!< don't care (set to 0)              */
-    l_uint8        bfReserved2[2]; /*!< don't care (set to 0)              */
-    l_uint8        bfOffBits[4];   /*!< offset from beginning of file      */
+    uint8_t        bfReserved1[2]; /*!< don't care (set to 0)              */
+    uint8_t        bfReserved2[2]; /*!< don't care (set to 0)              */
+    uint8_t        bfOffBits[4];   /*!< offset from beginning of file      */
 };
 typedef struct BMP_FileHeader  BMP_FH;
 
@@ -90,17 +90,17 @@ typedef struct BMP_FileHeader  BMP_FH;
 /*! BMP info header */
 struct BMP_InfoHeader
 {
-    l_int32        biSize;          /*!< size of the BMP_InfoHeader struct   */
-    l_int32        biWidth;         /*!< bitmap width in pixels              */
-    l_int32        biHeight;        /*!< bitmap height in pixels             */
-    l_int16        biPlanes;        /*!< number of bitmap planes             */
-    l_int16        biBitCount;      /*!< number of bits per pixel            */
-    l_int32        biCompression;   /*!< compress format (0 == uncompressed) */
-    l_int32        biSizeImage;     /*!< size of image in bytes              */
-    l_int32        biXPelsPerMeter; /*!< pixels per meter in x direction     */
-    l_int32        biYPelsPerMeter; /*!< pixels per meter in y direction     */
-    l_int32        biClrUsed;       /*!< number of colors used               */
-    l_int32        biClrImportant;  /*!< number of important colors used     */
+    int32_t        biSize;          /*!< size of the BMP_InfoHeader struct   */
+    int32_t        biWidth;         /*!< bitmap width in pixels              */
+    int32_t        biHeight;        /*!< bitmap height in pixels             */
+    int16_t        biPlanes;        /*!< number of bitmap planes             */
+    int16_t        biBitCount;      /*!< number of bits per pixel            */
+    int32_t        biCompression;   /*!< compress format (0 == uncompressed) */
+    int32_t        biSizeImage;     /*!< size of image in bytes              */
+    int32_t        biXPelsPerMeter; /*!< pixels per meter in x direction     */
+    int32_t        biYPelsPerMeter; /*!< pixels per meter in y direction     */
+    int32_t        biClrUsed;       /*!< number of colors used               */
+    int32_t        biClrImportant;  /*!< number of important colors used     */
 };
 typedef struct BMP_InfoHeader  BMP_IH;
 

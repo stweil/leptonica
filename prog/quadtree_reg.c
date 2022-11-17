@@ -39,8 +39,8 @@
 int main(int    argc,
          char **argv)
 {
-l_uint8      *data;
-l_int32       i, j, w, h, error;
+uint8_t      *data;
+int32_t       i, j, w, h, error;
 l_float32     val1, val2;
 l_float32     val00, val10, val01, val11, valc00, valc10, valc01, valc11;
 size_t        size;

@@ -47,8 +47,8 @@ int main(int    argc,
          char **argv)
 {
 char          textstr[256];
-l_int32       i, k, w, h;
-l_uint32      srcval;
+int32_t       i, k, w, h;
+uint32_t      srcval;
 l_float32     scalefact, sat, fract;
 L_BMF        *bmf10;
 L_KERNEL     *kel;

@@ -67,7 +67,7 @@ int main(int    argc,
          char **argv)
 {
 char    *filein, *fileout;
-l_int32  thresh;
+int32_t  thresh;
 PIX     *pixs, *pixg, *pixb;
 PIX     *pixmask4, *pixseed4, *pixsf4, *pixd4, *pixd;
 

@@ -52,7 +52,7 @@ int main(int    argc,
          char **argv)
 {
 char    *filein;
-l_int32  d, sigbits, i, val;
+int32_t  d, sigbits, i, val;
 BOX     *box1;
 GPLOT   *gplot;
 NUMA    *na1, *na2;

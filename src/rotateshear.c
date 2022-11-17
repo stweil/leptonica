@@ -35,11 +35,11 @@
  *              PIX      *pixRotate3Shear()
  *
  *      Shear rotation in-place about arbitrary point using 3 shears
- *              l_int32   pixRotateShearIP()
+ *              int32_t   pixRotateShearIP()
  *
  *      Shear rotation around the image center
  *              PIX      *pixRotateShearCenter()    (2 or 3 shears)
- *              l_int32   pixRotateShearCenterIP()  (3 shears)
+ *              int32_t   pixRotateShearCenterIP()  (3 shears)
  *
  *  Rotation is measured in radians; clockwise rotations are positive.
  *
@@ -206,10 +206,10 @@ static const l_float32  MaxShearAngle = 0.50;       /* radians; ~29 deg   */
  */
 PIX *
 pixRotateShear(PIX       *pixs,
-               l_int32    xcen,
-               l_int32    ycen,
+               int32_t    xcen,
+               int32_t    ycen,
                l_float32  angle,
-               l_int32    incolor)
+               int32_t    incolor)
 {
     if (!pixs)
         return (PIX *)(PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -258,10 +258,10 @@ pixRotateShear(PIX       *pixs,
  */
 PIX *
 pixRotate2Shear(PIX       *pixs,
-                l_int32    xcen,
-                l_int32    ycen,
+                int32_t    xcen,
+                int32_t    ycen,
                 l_float32  angle,
-                l_int32    incolor)
+                int32_t    incolor)
 {
 PIX  *pix1, *pix2, *pixd;
 
@@ -333,10 +333,10 @@ PIX  *pix1, *pix2, *pixd;
  */
 PIX *
 pixRotate3Shear(PIX       *pixs,
-                l_int32    xcen,
-                l_int32    ycen,
+                int32_t    xcen,
+                int32_t    ycen,
                 l_float32  angle,
-                l_int32    incolor)
+                int32_t    incolor)
 {
 l_float32  hangle;
 PIX       *pix1, *pix2, *pixd;
@@ -412,10 +412,10 @@ PIX       *pix1, *pix2, *pixd;
  */
 l_ok
 pixRotateShearIP(PIX       *pixs,
-                 l_int32    xcen,
-                 l_int32    ycen,
+                 int32_t    xcen,
+                 int32_t    ycen,
                  l_float32  angle,
-                 l_int32    incolor)
+                 int32_t    incolor)
 {
 l_float32  hangle;
 
@@ -455,7 +455,7 @@ l_float32  hangle;
 PIX *
 pixRotateShearCenter(PIX       *pixs,
                      l_float32  angle,
-                     l_int32    incolor)
+                     int32_t    incolor)
 {
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -476,7 +476,7 @@ pixRotateShearCenter(PIX       *pixs,
 l_ok
 pixRotateShearCenterIP(PIX       *pixs,
                        l_float32  angle,
-                       l_int32    incolor)
+                       int32_t    incolor)
 {
     if (!pixs)
         return ERROR_INT("pixs not defined", __func__, 1);

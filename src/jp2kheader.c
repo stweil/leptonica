@@ -29,10 +29,10 @@
  * <pre>
  *
  *      Read header
- *          l_int32          readHeaderJp2k()
- *          l_int32          freadHeaderJp2k()
- *          l_int32          readHeaderMemJp2k()
- *          l_int32          fgetJp2kResolution()
+ *          int32_t          readHeaderJp2k()
+ *          int32_t          freadHeaderJp2k()
+ *          int32_t          readHeaderMemJp2k()
+ *          int32_t          fgetJp2kResolution()
  *
  *  Note: these function read image metadata from a jp2k file, without
  *  using any jp2k libraries.
@@ -59,8 +59,8 @@
 /* --------------------------------------------*/
 
     /* a sanity check on the size read from file */
-static const l_int32  MAX_JP2K_WIDTH = 100000;
-static const l_int32  MAX_JP2K_HEIGHT = 100000;
+static const int32_t  MAX_JP2K_WIDTH = 100000;
+static const int32_t  MAX_JP2K_HEIGHT = 100000;
 
 /*--------------------------------------------------------------------*
  *                          Stream interface                          *
@@ -78,13 +78,13 @@ static const l_int32  MAX_JP2K_HEIGHT = 100000;
  */
 l_ok
 readHeaderJp2k(const char *filename,
-               l_int32    *pw,
-               l_int32    *ph,
-               l_int32    *pbps,
-               l_int32    *pspp,
-               l_int32    *pcodec)
+               int32_t    *pw,
+               int32_t    *ph,
+               int32_t    *pbps,
+               int32_t    *pspp,
+               int32_t    *pcodec)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (!filename)
@@ -111,14 +111,14 @@ FILE    *fp;
  */
 l_ok
 freadHeaderJp2k(FILE     *fp,
-                l_int32  *pw,
-                l_int32  *ph,
-                l_int32  *pbps,
-                l_int32  *pspp,
-                l_int32  *pcodec)
+                int32_t  *pw,
+                int32_t  *ph,
+                int32_t  *pbps,
+                int32_t  *pspp,
+                int32_t  *pcodec)
 {
-l_uint8  buf[80];  /* just need the first 80 bytes */
-l_int32  nread, ret;
+uint8_t  buf[80];  /* just need the first 80 bytes */
+int32_t  nread, ret;
 
     if (!fp)
         return ERROR_INT("fp not defined", __func__, 1);
@@ -165,16 +165,16 @@ l_int32  nread, ret;
  * </pre>
  */
 l_ok
-readHeaderMemJp2k(const l_uint8  *data,
+readHeaderMemJp2k(const uint8_t  *data,
                   size_t          size,
-                  l_int32        *pw,
-                  l_int32        *ph,
-                  l_int32        *pbps,
-                  l_int32        *pspp,
-                  l_int32        *pcodec)
+                  int32_t        *pw,
+                  int32_t        *ph,
+                  int32_t        *pbps,
+                  int32_t        *pspp,
+                  int32_t        *pcodec)
 {
-l_int32  format, val, w, h, bps, spp, loc, found, windex, codec;
-l_uint8  ihdr[4] = {0x69, 0x68, 0x64, 0x72};  /* 'ihdr' */
+int32_t  format, val, w, h, bps, spp, loc, found, windex, codec;
+uint8_t  ihdr[4] = {0x69, 0x68, 0x64, 0x72};  /* 'ihdr' */
 
     if (pw) *pw = 0;
     if (ph) *ph = 0;
@@ -209,21 +209,21 @@ l_uint8  ihdr[4] = {0x69, 0x68, 0x64, 0x72};  /* 'ihdr' */
     if (codec == L_JP2_CODEC) {
         if (size < 4 * (windex + 3))
             return ERROR_INT("header size is too small", __func__, 1);
-        val = *((l_uint32 *)data + windex);
+        val = *((uint32_t *)data + windex);
         h = convertOnLittleEnd32(val);
-        val = *((l_uint32 *)data + windex + 1);
+        val = *((uint32_t *)data + windex + 1);
         w = convertOnLittleEnd32(val);
-        val = *((l_uint16 *)data + 2 * (windex + 2));
+        val = *((uint16_t *)data + 2 * (windex + 2));
         spp = convertOnLittleEnd16(val);
         bps = *(data + 4 * (windex + 2) + 2) + 1;
     } else {  /* codec == L_J2K_CODEC */
         if (size < 4 * (windex + 9))
             return ERROR_INT("header size is too small", __func__, 1);
-        val = *((l_uint32 *)data + windex);
+        val = *((uint32_t *)data + windex);
         w = convertOnLittleEnd32(val);
-        val = *((l_uint32 *)data + windex + 1);
+        val = *((uint32_t *)data + windex + 1);
         h = convertOnLittleEnd32(val);
-        val = *((l_uint16 *)data + 2 * (windex + 8));
+        val = *((uint16_t *)data + 2 * (windex + 8));
         spp = convertOnLittleEnd16(val);
         bps = *(data + 4 * (windex + 8) + 2) + 1;
     }
@@ -269,16 +269,16 @@ l_uint8  ihdr[4] = {0x69, 0x68, 0x64, 0x72};  /* 'ihdr' */
  *             yexp:    1 byte
  *             xexp:    1 byte
  */
-l_int32
+int32_t
 fgetJp2kResolution(FILE     *fp,
-                   l_int32  *pxres,
-                   l_int32  *pyres)
+                   int32_t  *pxres,
+                   int32_t  *pyres)
 {
-l_uint8    xexp, yexp;
-l_uint8   *data;
-l_uint16   xnum, ynum, xdenom, ydenom;  /* these jp2k fields are 2-byte */
-l_int32    loc, found;
-l_uint8    resc[4] = {0x72, 0x65, 0x73, 0x63};  /* 'resc' */
+uint8_t    xexp, yexp;
+uint8_t   *data;
+uint16_t   xnum, ynum, xdenom, ydenom;  /* these jp2k fields are 2-byte */
+int32_t    loc, found;
+uint8_t    resc[4] = {0x72, 0x65, 0x73, 0x63};  /* 'resc' */
 size_t     nbytes;
 l_float64  xres, yres, maxres;
 
@@ -335,8 +335,8 @@ l_float64  xres, yres, maxres;
     if (xres > maxres || yres > maxres) {
         L_WARNING("ridiculously large resolution\n", __func__);
     } else {
-        *pyres = (l_int32)(yres + 0.5);
-        *pxres = (l_int32)(xres + 0.5);
+        *pyres = (int32_t)(yres + 0.5);
+        *pxres = (int32_t)(xres + 0.5);
     }
 
     LEPT_FREE(data);

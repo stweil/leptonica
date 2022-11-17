@@ -50,21 +50,21 @@
 #include <math.h>
 #include "allheaders.h"
 
-static const l_int32 logging = FALSE;
+static const int32_t logging = FALSE;
 
-static const l_int32 ncopies = 2;
-static const l_int32 nlevels = 4;
-static const l_int32 ntimes = 30;
+static const int32_t ncopies = 2;
+static const int32_t nlevels = 4;
+static const int32_t ntimes = 30;
 
 
 PIXA *GenerateSetOfMargePix(void);
-void CopyStoreClean(PIXA *pixas, l_int32 nlevels, l_int32 ncopies);
+void CopyStoreClean(PIXA *pixas, int32_t nlevels, int32_t ncopies);
 
 
 int main(int    argc,
          char **argv)
 {
-l_int32  i;
+int32_t  i;
 BOXA    *boxa;
 NUMA    *nas, *nab;
 PIX     *pixs;
@@ -182,10 +182,10 @@ PIXA  *pixa;
 
 void
 CopyStoreClean(PIXA    *pixas,
-               l_int32  nlevels,
-               l_int32  ncopies)
+               int32_t  nlevels,
+               int32_t  ncopies)
 {
-l_int32  i, j;
+int32_t  i, j;
 PIX     *pix, *pixt;
 PIXA    *pixa;
 PIXAA   *paa;

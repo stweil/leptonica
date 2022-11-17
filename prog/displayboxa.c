@@ -51,7 +51,7 @@ int main(int    argc,
          char **argv)
 {
 char      *filein, *fileout;
-l_int32    w, h, width, sep, first, last;
+int32_t    w, h, width, sep, first, last;
 l_float32  scalefact;
 BOXA      *boxa1, *boxa2;
 PIX       *pixd;

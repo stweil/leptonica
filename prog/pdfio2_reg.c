@@ -35,16 +35,16 @@
 #include <string.h>
 #include "allheaders.h"
 
-static void GetImageMask(PIX *pixs, l_int32 res, BOXA **pboxa,
+static void GetImageMask(PIX *pixs, int32_t res, BOXA **pboxa,
                          L_REGPARAMS *rp, const char *debugfile);
-static PIX * QuantizeNonImageRegion(PIX *pixs, PIX *pixm, l_int32 levels);
+static PIX * QuantizeNonImageRegion(PIX *pixs, PIX *pixm, int32_t levels);
 
 
 int main(int    argc,
          char **argv)
 {
-l_uint8      *data;
-l_int32       w, h, same;
+uint8_t      *data;
+int32_t       w, h, same;
 size_t        nbytes;
 BOXA         *boxa1, *boxa2;
 L_BYTEA      *ba;
@@ -307,7 +307,7 @@ L_REGPARAMS  *rp;
 {
     char     buffer[512];
     char    *tempfile1, *tempfile2;
-    l_int32  ret;
+    int32_t  ret;
 
     lept_stderr("\n*** pdftk writes multipage pdfs from images\n");
     tempfile1 = genPathname("/tmp/lept/pdf2", "file*.pdf");
@@ -326,7 +326,7 @@ L_REGPARAMS  *rp;
 
 static void
 GetImageMask(PIX          *pixs,
-             l_int32       res,
+             int32_t       res,
              BOXA        **pboxa,
              L_REGPARAMS  *rp,
              const char   *debugfile)
@@ -362,7 +362,7 @@ PIXA  *pixa;
 static PIX *
 QuantizeNonImageRegion(PIX     *pixs,
                        PIX     *pixm,
-                       l_int32  levels)
+                       int32_t  levels)
 {
 PIX  *pix1, *pix2, *pixd;
 

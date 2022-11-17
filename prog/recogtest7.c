@@ -41,13 +41,13 @@
 
     /* All input templates are scaled to 20x30.  Here, we rescale the
      * height to 45 and let the width scale isotropically. */
-static const l_int32 scaledw = 0;
-static const l_int32 scaledh = 45;
+static const int32_t scaledw = 0;
+static const int32_t scaledh = 45;
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32   same;
+int32_t   same;
 PIX      *pix1, *pix2, *pix3;
 PIXA     *pixa1, *pixa2, *pixa3;
 L_RECOG  *recog1, *recog2;

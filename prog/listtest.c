@@ -43,7 +43,7 @@ int main(int    argc,
          char **argv)
 {
 char    *filein;
-l_int32  i, n, w, h, samecount, count;
+int32_t  i, n, w, h, samecount, count;
 BOX     *box, *boxc;
 BOXA    *boxa, *boxan;
 DLLIST  *head, *tail, *head2, *tail2, *elem, *nextelem;

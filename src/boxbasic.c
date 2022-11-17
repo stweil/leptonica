@@ -39,11 +39,11 @@
  *           void      boxDestroy()
  *
  *      Box accessors
- *           l_int32   boxGetGeometry()
- *           l_int32   boxSetGeometry()
- *           l_int32   boxGetSideLocations()
- *           l_int32   boxSetSideLocations()
- *           l_int32   boxIsValid()
+ *           int32_t   boxGetGeometry()
+ *           int32_t   boxSetGeometry()
+ *           int32_t   boxGetSideLocations()
+ *           int32_t   boxSetSideLocations()
+ *           int32_t   boxIsValid()
  *
  *      Boxa creation, copy, destruction
  *           BOXA     *boxaCreate()
@@ -51,27 +51,27 @@
  *           void      boxaDestroy()
  *
  *      Boxa array extension
- *           l_int32   boxaAddBox()
- *           l_int32   boxaExtendArray()
- *           l_int32   boxaExtendArrayToSize()
+ *           int32_t   boxaAddBox()
+ *           int32_t   boxaExtendArray()
+ *           int32_t   boxaExtendArrayToSize()
  *
  *      Boxa accessors
- *           l_int32   boxaGetCount()
- *           l_int32   boxaGetValidCount()
+ *           int32_t   boxaGetCount()
+ *           int32_t   boxaGetValidCount()
  *           BOX      *boxaGetBox()
  *           BOX      *boxaGetValidBox()
  *           NUMA     *boxaFindInvalidBoxes()
- *           l_int32   boxaGetBoxGeometry()
- *           l_int32   boxaIsFull()
+ *           int32_t   boxaGetBoxGeometry()
+ *           int32_t   boxaIsFull()
  *
  *      Boxa array modifiers
- *           l_int32   boxaReplaceBox()
- *           l_int32   boxaInsertBox()
- *           l_int32   boxaRemoveBox()
- *           l_int32   boxaRemoveBoxAndSave()
+ *           int32_t   boxaReplaceBox()
+ *           int32_t   boxaInsertBox()
+ *           int32_t   boxaRemoveBox()
+ *           int32_t   boxaRemoveBoxAndSave()
  *           BOXA     *boxaSaveValid()
- *           l_int32   boxaInitFull()
- *           l_int32   boxaClear()
+ *           int32_t   boxaInitFull()
+ *           int32_t   boxaClear()
  *
  *      Boxaa creation, copy, destruction
  *           BOXAA    *boxaaCreate()
@@ -79,45 +79,45 @@
  *           void      boxaaDestroy()
  *
  *      Boxaa array extension
- *           l_int32   boxaaAddBoxa()
- *           l_int32   boxaaExtendArray()
- *           l_int32   boxaaExtendArrayToSize()
+ *           int32_t   boxaaAddBoxa()
+ *           int32_t   boxaaExtendArray()
+ *           int32_t   boxaaExtendArrayToSize()
  *
  *      Boxaa accessors
- *           l_int32   boxaaGetCount()
- *           l_int32   boxaaGetBoxCount()
+ *           int32_t   boxaaGetCount()
+ *           int32_t   boxaaGetBoxCount()
  *           BOXA     *boxaaGetBoxa()
  *           BOX      *boxaaGetBox()
  *
  *      Boxaa array modifiers
- *           l_int32   boxaaInitFull()
- *           l_int32   boxaaExtendWithInit()
- *           l_int32   boxaaReplaceBoxa()
- *           l_int32   boxaaInsertBoxa()
- *           l_int32   boxaaRemoveBoxa()
- *           l_int32   boxaaAddBox()
+ *           int32_t   boxaaInitFull()
+ *           int32_t   boxaaExtendWithInit()
+ *           int32_t   boxaaReplaceBoxa()
+ *           int32_t   boxaaInsertBoxa()
+ *           int32_t   boxaaRemoveBoxa()
+ *           int32_t   boxaaAddBox()
  *
  *      Boxaa serialized I/O
  *           BOXAA    *boxaaReadFromFiles()
  *           BOXAA    *boxaaRead()
  *           BOXAA    *boxaaReadStream()
  *           BOXAA    *boxaaReadMem()
- *           l_int32   boxaaWrite()
- *           l_int32   boxaaWriteStream()
- *           l_int32   boxaaWriteMem()
+ *           int32_t   boxaaWrite()
+ *           int32_t   boxaaWriteStream()
+ *           int32_t   boxaaWriteMem()
  *
  *      Boxa serialized I/O
  *           BOXA     *boxaRead()
  *           BOXA     *boxaReadStream()
  *           BOXA     *boxaReadMem()
- *           l_int32   boxaWriteDebug()
- *           l_int32   boxaWrite()
- *           l_int32   boxaWriteStream()
- *           l_int32   boxaWriteStderr()
- *           l_int32   boxaWriteMem()
+ *           int32_t   boxaWriteDebug()
+ *           int32_t   boxaWrite()
+ *           int32_t   boxaWriteStream()
+ *           int32_t   boxaWriteStderr()
+ *           int32_t   boxaWriteMem()
  *
  *      Box print (for debug)
- *           l_int32   boxPrintStreamInfo()
+ *           int32_t   boxPrintStreamInfo()
  *
  *   Most functions use only valid boxes, which are boxes that have both
  *   width and height > 0.  However, a few functions, such as
@@ -168,10 +168,10 @@ static const size_t  InitialPtrArraySize = 20;      /*!< n'importe quoi */
  * </pre>
  */
 BOX *
-boxCreate(l_int32  x,
-          l_int32  y,
-          l_int32  w,
-          l_int32  h)
+boxCreate(int32_t  x,
+          int32_t  y,
+          int32_t  w,
+          int32_t  h)
 {
 BOX  *box;
 
@@ -209,10 +209,10 @@ BOX  *box;
  * </pre>
  */
 BOX *
-boxCreateValid(l_int32  x,
-               l_int32  y,
-               l_int32  w,
-               l_int32  h)
+boxCreateValid(int32_t  x,
+               int32_t  y,
+               int32_t  w,
+               int32_t  h)
 {
     if (w <= 0 || h <= 0)
         return (BOX *)ERROR_PTR("w and h not both > 0", __func__, NULL);
@@ -299,10 +299,10 @@ BOX  *box;
  */
 l_ok
 boxGetGeometry(const BOX *box,
-               l_int32   *px,
-               l_int32   *py,
-               l_int32   *pw,
-               l_int32   *ph)
+               int32_t   *px,
+               int32_t   *py,
+               int32_t   *pw,
+               int32_t   *ph)
 {
     if (px) *px = 0;
     if (py) *py = 0;
@@ -327,10 +327,10 @@ boxGetGeometry(const BOX *box,
  */
 l_ok
 boxSetGeometry(BOX     *box,
-               l_int32  x,
-               l_int32  y,
-               l_int32  w,
-               l_int32  h)
+               int32_t  x,
+               int32_t  y,
+               int32_t  w,
+               int32_t  h)
 {
     if (!box)
         return ERROR_INT("box not defined", __func__, 1);
@@ -356,12 +356,12 @@ boxSetGeometry(BOX     *box,
  */
 l_ok
 boxGetSideLocations(const BOX *box,
-                    l_int32   *pl,
-                    l_int32   *pr,
-                    l_int32   *pt,
-                    l_int32   *pb)
+                    int32_t   *pl,
+                    int32_t   *pr,
+                    int32_t   *pt,
+                    int32_t   *pb)
 {
-l_int32  x, y, w, h;
+int32_t  x, y, w, h;
 
     if (pl) *pl = 0;
     if (pr) *pr = 0;
@@ -388,12 +388,12 @@ l_int32  x, y, w, h;
  */
 l_ok
 boxSetSideLocations(BOX     *box,
-                    l_int32  l,
-                    l_int32  r,
-                    l_int32  t,
-                    l_int32  b)
+                    int32_t  l,
+                    int32_t  r,
+                    int32_t  t,
+                    int32_t  b)
 {
-l_int32  x, y, w, h;
+int32_t  x, y, w, h;
 
     if (!box)
         return ERROR_INT("box not defined", __func__, 1);
@@ -415,7 +415,7 @@ l_int32  x, y, w, h;
  */
 l_ok
 boxIsValid(BOX      *box,
-           l_int32  *pvalid)
+           int32_t  *pvalid)
 {
     if (!pvalid)
         return ERROR_INT("&valid not defined", __func__, 1);
@@ -439,7 +439,7 @@ boxIsValid(BOX      *box,
  * \return  boxa, or NULL on error
  */
 BOXA *
-boxaCreate(l_int32  n)
+boxaCreate(int32_t  n)
 {
 BOXA  *boxa;
 
@@ -473,9 +473,9 @@ BOXA  *boxa;
  */
 BOXA *
 boxaCopy(BOXA    *boxa,
-         l_int32  copyflag)
+         int32_t  copyflag)
 {
-l_int32  i;
+int32_t  i;
 BOX     *boxc;
 BOXA    *boxac;
 
@@ -518,7 +518,7 @@ BOXA    *boxac;
 void
 boxaDestroy(BOXA  **pboxa)
 {
-l_int32  i;
+int32_t  i;
 BOXA    *boxa;
 
     if (pboxa == NULL) {
@@ -552,9 +552,9 @@ BOXA    *boxa;
 l_ok
 boxaAddBox(BOXA    *boxa,
            BOX     *box,
-           l_int32  copyflag)
+           int32_t  copyflag)
 {
-l_int32  n;
+int32_t  n;
 BOX     *boxc;
 
     if (!boxa)
@@ -657,7 +657,7 @@ size_t  oldsize, newsize;
  * \param[in]    boxa
  * \return  count of all boxes; 0 if no boxes or on error
  */
-l_int32
+int32_t
 boxaGetCount(const BOXA  *boxa)
 {
     if (!boxa)
@@ -672,10 +672,10 @@ boxaGetCount(const BOXA  *boxa)
  * \param[in]    boxa
  * \return  count of valid boxes; 0 if no valid boxes or on error
  */
-l_int32
+int32_t
 boxaGetValidCount(BOXA  *boxa)
 {
-l_int32  n, i, w, h, count;
+int32_t  n, i, w, h, count;
 
     if (!boxa)
         return ERROR_INT("boxa not defined", __func__, 0);
@@ -700,8 +700,8 @@ l_int32  n, i, w, h, count;
  */
 BOX *
 boxaGetBox(BOXA    *boxa,
-           l_int32  index,
-           l_int32  accessflag)
+           int32_t  index,
+           int32_t  accessflag)
 {
     if (!boxa)
         return (BOX *)ERROR_PTR("boxa not defined", __func__, NULL);
@@ -737,10 +737,10 @@ boxaGetBox(BOXA    *boxa,
  */
 BOX *
 boxaGetValidBox(BOXA    *boxa,
-                l_int32  index,
-                l_int32  accessflag)
+                int32_t  index,
+                int32_t  accessflag)
 {
-l_int32  w, h;
+int32_t  w, h;
 BOX     *box;
 
     if (!boxa)
@@ -764,7 +764,7 @@ BOX     *box;
 NUMA *
 boxaFindInvalidBoxes(BOXA  *boxa)
 {
-l_int32  i, n, w, h;
+int32_t  i, n, w, h;
 NUMA    *na;
 
     if (!boxa)
@@ -794,11 +794,11 @@ NUMA    *na;
  */
 l_ok
 boxaGetBoxGeometry(BOXA     *boxa,
-                   l_int32   index,
-                   l_int32  *px,
-                   l_int32  *py,
-                   l_int32  *pw,
-                   l_int32  *ph)
+                   int32_t   index,
+                   int32_t  *px,
+                   int32_t  *py,
+                   int32_t  *pw,
+                   int32_t  *ph)
 {
 BOX  *box;
 
@@ -828,9 +828,9 @@ BOX  *box;
  */
 l_ok
 boxaIsFull(BOXA     *boxa,
-           l_int32  *pfull)
+           int32_t  *pfull)
 {
-l_int32  i, n, full;
+int32_t  i, n, full;
 BOX     *box;
 
     if (!pfull)
@@ -873,7 +873,7 @@ BOX     *box;
  */
 l_ok
 boxaReplaceBox(BOXA    *boxa,
-               l_int32  index,
+               int32_t  index,
                BOX     *box)
 {
     if (!boxa)
@@ -909,10 +909,10 @@ boxaReplaceBox(BOXA    *boxa,
  */
 l_ok
 boxaInsertBox(BOXA    *boxa,
-              l_int32  index,
+              int32_t  index,
               BOX     *box)
 {
-l_int32  i, n;
+int32_t  i, n;
 BOX    **array;
 
     if (!boxa)
@@ -955,7 +955,7 @@ BOX    **array;
  */
 l_ok
 boxaRemoveBox(BOXA    *boxa,
-              l_int32  index)
+              int32_t  index)
 {
     return boxaRemoveBoxAndSave(boxa, index, NULL);
 }
@@ -979,10 +979,10 @@ boxaRemoveBox(BOXA    *boxa,
  */
 l_ok
 boxaRemoveBoxAndSave(BOXA    *boxa,
-                     l_int32  index,
+                     int32_t  index,
                      BOX    **pbox)
 {
-l_int32  i, n;
+int32_t  i, n;
 BOX    **array;
 
     if (pbox) *pbox = NULL;
@@ -1021,9 +1021,9 @@ BOX    **array;
  */
 BOXA *
 boxaSaveValid(BOXA    *boxas,
-              l_int32  copyflag)
+              int32_t  copyflag)
 {
-l_int32  i, n;
+int32_t  i, n;
 BOX     *box;
 BOXA    *boxad;
 
@@ -1085,7 +1085,7 @@ l_ok
 boxaInitFull(BOXA  *boxa,
              BOX   *box)
 {
-l_int32  i, n;
+int32_t  i, n;
 BOX     *boxt;
 
     if (!boxa)
@@ -1119,7 +1119,7 @@ BOX     *boxt;
 l_ok
 boxaClear(BOXA  *boxa)
 {
-l_int32  i, n;
+int32_t  i, n;
 
     if (!boxa)
         return ERROR_INT("boxa not defined", __func__, 1);
@@ -1142,7 +1142,7 @@ l_int32  i, n;
  * \return  baa, or NULL on error
  */
 BOXAA *
-boxaaCreate(l_int32  n)
+boxaaCreate(int32_t  n)
 {
 BOXAA  *baa;
 
@@ -1176,9 +1176,9 @@ BOXAA  *baa;
  */
 BOXAA *
 boxaaCopy(BOXAA   *baas,
-          l_int32  copyflag)
+          int32_t  copyflag)
 {
-l_int32  i, n;
+int32_t  i, n;
 BOXA    *boxa;
 BOXAA   *baad;
 
@@ -1206,7 +1206,7 @@ BOXAA   *baad;
 void
 boxaaDestroy(BOXAA  **pbaa)
 {
-l_int32  i;
+int32_t  i;
 BOXAA   *baa;
 
     if (pbaa == NULL) {
@@ -1240,9 +1240,9 @@ BOXAA   *baa;
 l_ok
 boxaaAddBoxa(BOXAA   *baa,
              BOXA    *ba,
-             l_int32  copyflag)
+             int32_t  copyflag)
 {
-l_int32  n;
+int32_t  n;
 BOXA    *bac;
 
     if (!baa)
@@ -1305,7 +1305,7 @@ boxaaExtendArray(BOXAA  *baa)
  */
 l_ok
 boxaaExtendArrayToSize(BOXAA   *baa,
-                       l_int32  size)
+                       int32_t  size)
 {
 size_t  oldsize, newsize;
 
@@ -1339,7 +1339,7 @@ size_t  oldsize, newsize;
  * \param[in]    baa
  * \return  count number of boxa, or 0 if no boxa or on error
  */
-l_int32
+int32_t
 boxaaGetCount(BOXAA  *baa)
 {
     if (!baa)
@@ -1354,11 +1354,11 @@ boxaaGetCount(BOXAA  *baa)
  * \param[in]    baa
  * \return  count number of boxes, or 0 if no boxes or on error
  */
-l_int32
+int32_t
 boxaaGetBoxCount(BOXAA  *baa)
 {
 BOXA    *boxa;
-l_int32  n, sum, i;
+int32_t  n, sum, i;
 
     if (!baa)
         return ERROR_INT("baa not defined", __func__, 0);
@@ -1384,10 +1384,10 @@ l_int32  n, sum, i;
  */
 BOXA *
 boxaaGetBoxa(BOXAA   *baa,
-             l_int32  index,
-             l_int32  accessflag)
+             int32_t  index,
+             int32_t  accessflag)
 {
-l_int32  n;
+int32_t  n;
 
     if (!baa)
         return (BOXA *)ERROR_PTR("baa not defined", __func__, NULL);
@@ -1412,9 +1412,9 @@ l_int32  n;
  */
 BOX *
 boxaaGetBox(BOXAA   *baa,
-            l_int32  iboxa,
-            l_int32  ibox,
-            l_int32  accessflag)
+            int32_t  iboxa,
+            int32_t  ibox,
+            int32_t  accessflag)
 {
 BOX   *box;
 BOXA  *boxa;
@@ -1464,7 +1464,7 @@ l_ok
 boxaaInitFull(BOXAA  *baa,
               BOXA   *boxa)
 {
-l_int32  i, n;
+int32_t  i, n;
 BOXA    *boxat;
 
     if (!baa)
@@ -1500,10 +1500,10 @@ BOXA    *boxat;
  */
 l_ok
 boxaaExtendWithInit(BOXAA   *baa,
-                    l_int32  maxindex,
+                    int32_t  maxindex,
                     BOXA    *boxa)
 {
-l_int32  i, n;
+int32_t  i, n;
 
     if (!baa)
         return ERROR_INT("baa not defined", __func__, 1);
@@ -1540,10 +1540,10 @@ l_int32  i, n;
  */
 l_ok
 boxaaReplaceBoxa(BOXAA   *baa,
-                 l_int32  index,
+                 int32_t  index,
                  BOXA    *boxa)
 {
-l_int32  n;
+int32_t  n;
 
     if (!baa)
         return ERROR_INT("baa not defined", __func__, 1);
@@ -1580,10 +1580,10 @@ l_int32  n;
  */
 l_ok
 boxaaInsertBoxa(BOXAA   *baa,
-                l_int32  index,
+                int32_t  index,
                 BOXA    *boxa)
 {
-l_int32  i, n;
+int32_t  i, n;
 BOXA   **array;
 
     if (!baa)
@@ -1627,9 +1627,9 @@ BOXA   **array;
  */
 l_ok
 boxaaRemoveBoxa(BOXAA   *baa,
-                l_int32  index)
+                int32_t  index)
 {
-l_int32  i, n;
+int32_t  i, n;
 BOXA   **array;
 
     if (!baa)
@@ -1665,11 +1665,11 @@ BOXA   **array;
  */
 l_ok
 boxaaAddBox(BOXAA   *baa,
-            l_int32  index,
+            int32_t  index,
             BOX     *box,
-            l_int32  accessflag)
+            int32_t  accessflag)
 {
-l_int32  n;
+int32_t  n;
 BOXA    *boxa;
     if (!baa)
         return ERROR_INT("baa not defined", __func__, 1);
@@ -1712,11 +1712,11 @@ BOXA    *boxa;
 BOXAA *
 boxaaReadFromFiles(const char  *dirname,
                    const char  *substr,
-                   l_int32      first,
-                   l_int32      nfiles)
+                   int32_t      first,
+                   int32_t      nfiles)
 {
 char    *fname;
-l_int32  i, n;
+int32_t  i, n;
 BOXA    *boxa;
 BOXAA   *baa;
 SARRAY  *sa;
@@ -1784,8 +1784,8 @@ BOXAA  *baa;
 BOXAA *
 boxaaReadStream(FILE  *fp)
 {
-l_int32  n, i, x, y, w, h, version;
-l_int32  ignore;
+int32_t  n, i, x, y, w, h, version;
+int32_t  ignore;
 BOXA    *boxa;
 BOXAA   *baa;
 
@@ -1830,7 +1830,7 @@ BOXAA   *baa;
  * \return  baa, or NULL on error
  */
 BOXAA *
-boxaaReadMem(const l_uint8  *data,
+boxaaReadMem(const uint8_t  *data,
              size_t          size)
 {
 FILE   *fp;
@@ -1859,7 +1859,7 @@ l_ok
 boxaaWrite(const char  *filename,
            BOXAA       *baa)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (!filename)
@@ -1888,7 +1888,7 @@ l_ok
 boxaaWriteStream(FILE   *fp,
                  BOXAA  *baa)
 {
-l_int32  n, i, x, y, w, h;
+int32_t  n, i, x, y, w, h;
 BOX     *box;
 BOXA    *boxa;
 
@@ -1930,11 +1930,11 @@ BOXA    *boxa;
  * </pre>
  */
 l_ok
-boxaaWriteMem(l_uint8  **pdata,
+boxaaWriteMem(uint8_t  **pdata,
               size_t    *psize,
               BOXAA     *baa)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (pdata) *pdata = NULL;
@@ -2013,8 +2013,8 @@ BOXA  *boxa;
 BOXA *
 boxaReadStream(FILE  *fp)
 {
-l_int32  n, i, x, y, w, h, version;
-l_int32  ignore;
+int32_t  n, i, x, y, w, h, version;
+int32_t  ignore;
 BOX     *box;
 BOXA    *boxa;
 
@@ -2056,7 +2056,7 @@ BOXA    *boxa;
  * \return  boxa, or NULL on error
  */
 BOXA *
-boxaReadMem(const l_uint8  *data,
+boxaReadMem(const uint8_t  *data,
             size_t          size)
 {
 FILE  *fp;
@@ -2114,7 +2114,7 @@ l_ok
 boxaWrite(const char  *filename,
           BOXA        *boxa)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (!filename)
@@ -2144,7 +2144,7 @@ l_ok
 boxaWriteStream(FILE  *fp,
                 BOXA  *boxa)
 {
-l_int32  n, i;
+int32_t  n, i;
 BOX     *box;
 
     if (!boxa)
@@ -2175,7 +2175,7 @@ BOX     *box;
 l_ok
 boxaWriteStderr(BOXA  *boxa)
 {
-l_int32  n, i;
+int32_t  n, i;
 BOX     *box;
 
     if (!boxa)
@@ -2209,11 +2209,11 @@ BOX     *box;
  * </pre>
  */
 l_ok
-boxaWriteMem(l_uint8  **pdata,
+boxaWriteMem(uint8_t  **pdata,
              size_t    *psize,
              BOXA      *boxa)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (pdata) *pdata = NULL;

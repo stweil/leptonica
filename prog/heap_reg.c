@@ -38,12 +38,12 @@
 
 struct HeapElement {
     l_float32  distance;
-    l_int32    x;
-    l_int32    y;
+    int32_t    x;
+    int32_t    y;
 };
 typedef struct HeapElement  HEAPEL;
 
-static const l_int32  NELEM = 50;
+static const int32_t  NELEM = 50;
 
 NUMA *ExtractNumaFromHeap(L_HEAP  *lh);
 
@@ -51,8 +51,8 @@ NUMA *ExtractNumaFromHeap(L_HEAP  *lh);
 int main(int    argc,
          char **argv)
 {
-l_uint8      *data;
-l_int32       i;
+uint8_t      *data;
+int32_t       i;
 size_t        size;
 l_float32     frand, fval;
 HEAPEL       *item;
@@ -141,7 +141,7 @@ L_REGPARAMS  *rp;
 NUMA *
 ExtractNumaFromHeap(L_HEAP  *lh)
 {
-l_int32  i, n;
+int32_t  i, n;
 HEAPEL  *item;
 NUMA    *na;
 

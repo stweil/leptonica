@@ -37,16 +37,16 @@ LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
     boxDestroy(&box);
     pixDestroy(&pix1);
 
-    l_int32 ncolors;
+    int32_t ncolors;
     pixCountRGBColors(pixs, 1, &ncolors);
 
-    l_uint32  pval;
+    uint32_t  pval;
     pix1 = pixConvertTo8(pixs, FALSE);
     pixGetPixelAverage(pix1, NULL, 10, 10, 1, &pval);
     pixDestroy(&pix1);
 
     pix1 = pixConvertTo8(pixs, FALSE);
-    l_uint32  pval2;
+    uint32_t  pval2;
     pixGetPixelStats(pix1, 1, L_STANDARD_DEVIATION, &pval2);
     pixDestroy(&pix1);
 
@@ -77,9 +77,9 @@ LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
     numaDestroy(&na5);
     numaDestroy(&na6);
 
-    static const l_int32  nbins = 10;
-    l_int32     minval, maxval;
-    l_uint32    *gau32;
+    static const int32_t  nbins = 10;
+    int32_t     minval, maxval;
+    uint32_t    *gau32;
     pix1 = pixScaleBySampling(pixs, 0.2, 0.2);
     pixGetBinnedComponentRange(pix1, nbins, 2, L_SELECT_GREEN,
                                    &minval, &maxval, &gau32, 0);
@@ -99,7 +99,7 @@ LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
     pixaDestroy(&pixa);
     pixDestroy(&pix1);
 
-    l_int32 thresh, fgval, bgval;
+    int32_t thresh, fgval, bgval;
     pix1 = pixConvertTo8(pixs, 0);
     pixSplitDistributionFgBg(pix1, 1.5, 1, &thresh, &fgval, &bgval, &pix2);
     pixDestroy(&pix1);

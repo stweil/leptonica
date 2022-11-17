@@ -43,7 +43,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32       i, n, binsize, binstart, nbins;
+int32_t       i, n, binsize, binstart, nbins;
 l_float32     pi, val, angle, xval, yval, x0, y0, startval, fbinsize;
 l_float32     minval, maxval, meanval, median, variance, rankval, rank, rmsdev;
 GPLOT        *gplot;

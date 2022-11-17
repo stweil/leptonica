@@ -48,15 +48,15 @@
 
 #include "allheaders.h"
 
-void GeneralTest(PIX *pix1, BOX *box1, BOX *box2, l_int32 op, l_int32 niters);
-void InplaceTest(PIX *pix1, BOX *box1, BOX *box2, l_int32 op, l_int32 niters);
+void GeneralTest(PIX *pix1, BOX *box1, BOX *box2, int32_t op, int32_t niters);
+void InplaceTest(PIX *pix1, BOX *box1, BOX *box2, int32_t op, int32_t niters);
 
 int main(int    argc,
          char **argv)
 {
 BOX     *box1, *box2;
 PIX     *pix1;
-l_int32  niters, op, selectop;
+int32_t  niters, op, selectop;
 
     setLeptDebugOK(1);
 
@@ -90,10 +90,10 @@ l_int32  niters, op, selectop;
 }
 
 /* ------------------------------------------------------------------- */
-void GeneralTest(PIX *pix1, BOX *box1, BOX *box2, l_int32 op, l_int32 niters)
+void GeneralTest(PIX *pix1, BOX *box1, BOX *box2, int32_t op, int32_t niters)
 {
 PIX     *pix2, *pix3;
-l_int32  i, val1, val2, val3, val4, val5, val6;
+int32_t  i, val1, val2, val3, val4, val5, val6;
 
     startTimer();
     for (i = 0; i < niters; i++) {
@@ -117,10 +117,10 @@ l_int32  i, val1, val2, val3, val4, val5, val6;
 }
 
 /* ------------------------------------------------------------------- */
-void InplaceTest(PIX *pix1, BOX *box1, BOX *box2, l_int32 op, l_int32 niters)
+void InplaceTest(PIX *pix1, BOX *box1, BOX *box2, int32_t op, int32_t niters)
 {
 PIX     *pix2;
-l_int32  i, val1, val2, val3, val4, val5, val6;
+int32_t  i, val1, val2, val3, val4, val5, val6;
 
     startTimer();
     for (i = 0; i < niters; i++) {

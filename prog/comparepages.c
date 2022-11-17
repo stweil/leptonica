@@ -41,7 +41,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32  w, h, n, same;
+int32_t  w, h, n, same;
 BOXA    *boxa1, *boxa2;
 NUMA    *nai1, *nai2;
 NUMAA   *naa1, *naa2;

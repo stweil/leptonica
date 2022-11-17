@@ -34,29 +34,29 @@
 
 #include "allheaders.h"
 
-static void MakePtas(l_int32 i, PTA **pptas, PTA **pptad);
+static void MakePtas(int32_t i, PTA **pptas, PTA **pptad);
 
     /* Sample values.
      *    1: test with relatively large distortion
      *    2-3: invertability tests
      */
-static const l_int32  x1[] =  {  32,   32,   32};
-static const l_int32  y1[] =  { 150,  150,  150};
-static const l_int32  x2[] =  { 520,  520,  520};
-static const l_int32  y2[] =  { 150,  150,  150};
-static const l_int32  x3[] =  {  32,   32,   32};
-static const l_int32  y3[] =  { 612,  612,  612};
-static const l_int32  x4[] =  { 520,  520,  520};
-static const l_int32  y4[] =  { 612,  612,  612};
+static const int32_t  x1[] =  {  32,   32,   32};
+static const int32_t  y1[] =  { 150,  150,  150};
+static const int32_t  x2[] =  { 520,  520,  520};
+static const int32_t  y2[] =  { 150,  150,  150};
+static const int32_t  x3[] =  {  32,   32,   32};
+static const int32_t  y3[] =  { 612,  612,  612};
+static const int32_t  x4[] =  { 520,  520,  520};
+static const int32_t  y4[] =  { 612,  612,  612};
 
-static const l_int32  xp1[] = {  32,   32,   32};
-static const l_int32  yp1[] = { 150,  150,  150};
-static const l_int32  xp2[] = { 520,  520,  520};
-static const l_int32  yp2[] = {  44,  124,  140};
-static const l_int32  xp3[] = {  32,   32,   32};
-static const l_int32  yp3[] = { 612,  612,  612};
-static const l_int32  xp4[] = { 520,  520,  520};
-static const l_int32  yp4[] = { 694,  624,  622};
+static const int32_t  xp1[] = {  32,   32,   32};
+static const int32_t  yp1[] = { 150,  150,  150};
+static const int32_t  xp2[] = { 520,  520,  520};
+static const int32_t  yp2[] = {  44,  124,  140};
+static const int32_t  xp3[] = {  32,   32,   32};
+static const int32_t  yp3[] = { 612,  612,  612};
+static const int32_t  xp4[] = { 520,  520,  520};
+static const int32_t  yp4[] = { 694,  624,  622};
 
 #define  ALL                        1
 #define  ADDED_BORDER_PIXELS      250
@@ -64,7 +64,7 @@ static const l_int32  yp4[] = { 694,  624,  622};
 int main(int    argc,
          char **argv)
 {
-l_int32       i;
+int32_t       i;
 PIX          *pixs, *pix1, *pix2, *pix3, *pix4, *pixd;
 PIX          *pixb, *pixg, *pixc, *pixcs;
 PIXA         *pixa;
@@ -245,7 +245,7 @@ L_REGPARAMS  *rp;
 
 
 static void
-MakePtas(l_int32  i,
+MakePtas(int32_t  i,
          PTA    **pptas,
          PTA    **pptad)
 {

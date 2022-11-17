@@ -28,7 +28,7 @@
  *     Low-level fast hit-miss transform with auto-generated sels
  *
  *      Dispatcher:
---- *            l_int32   fhmtgen_low_*()
+--- *            int32_t   fhmtgen_low_*()
  *
  *      Static Low-level:
 --- *            void      fhmt_*_*()
@@ -49,14 +49,14 @@
  *
  *       a dispatcher to appropriate low-level code
  */
-l_int32
----   fhmtgen_low_*(l_uint32  *datad,
-              l_int32    w,
-              l_int32    h,
-              l_int32    wpld,
-              l_uint32  *datas,
-              l_int32    wpls,
-              l_int32    index)
+int32_t
+---   fhmtgen_low_*(uint32_t  *datad,
+              int32_t    w,
+              int32_t    h,
+              int32_t    wpld,
+              uint32_t  *datas,
+              int32_t    wpls,
+              int32_t    index)
 {
 
     switch (index)
@@ -79,18 +79,18 @@ l_int32
  *        start-of-image pointers up to the beginning of this
  *        interior rectangle.
  */
----   static void fhmt_*_*(l_uint32  *datad,
-         l_int32    w,
-         l_int32    h,
-         l_int32    wpld,
-         l_uint32  *datas,
-         l_int32    wpls)
+---   static void fhmt_*_*(uint32_t  *datad,
+         int32_t    w,
+         int32_t    h,
+         int32_t    wpld,
+         uint32_t  *datas,
+         int32_t    wpls)
 {
-l_int32    i;
-l_int32    j, pwpls;
-l_uint32  *sptr, *dptr;
+int32_t    i;
+int32_t    j, pwpls;
+uint32_t  *sptr, *dptr;
 ---     declare wplsN args as necessary ----------------------
-    pwpls = (l_uint32)(w + 31) / 32;  /* proper wpl of src */
+    pwpls = (uint32_t)(w + 31) / 32;  /* proper wpl of src */
 
     for (i = 0; i < h; i++) {
         sptr = datas + i * wpls;

@@ -29,7 +29,7 @@
  * <pre>
  *
  *      Top level page segmentation
- *          l_int32   pixGetRegionsBinary()
+ *          int32_t   pixGetRegionsBinary()
  *
  *      Halftone region extraction
  *          PIX      *pixGenHalftoneMask()    **Deprecated wrapper**
@@ -46,7 +46,7 @@
  *          PIX      *pixFindPageForeground()
  *
  *      Extraction of characters from image with only text
- *          l_int32   pixSplitIntoCharacters()
+ *          int32_t   pixSplitIntoCharacters()
  *          BOXA     *pixSplitComponentWithProfile()
  *
  *      Extraction of lines of text
@@ -54,22 +54,22 @@
  *          PIXA     *pixExtractRawTextlines()
  *
  *      How many text columns
- *          l_int32   pixCountTextColumns()
+ *          int32_t   pixCountTextColumns()
  *
  *      Decision: text vs photo
- *          l_int32   pixDecideIfText()
- *          l_int32   pixFindThreshFgExtent()
+ *          int32_t   pixDecideIfText()
+ *          int32_t   pixFindThreshFgExtent()
  *
  *      Decision: table vs text
- *          l_int32   pixDecideIfTable()
+ *          int32_t   pixDecideIfTable()
  *          Pix      *pixPrepare1bpp()
  *
  *      Estimate the grayscale background value
- *          l_int32   pixEstimateBackground()
+ *          int32_t   pixEstimateBackground()
  *
  *      Largest white or black rectangles in an image
- *          l_int32   pixFindLargeRectangles()
- *          l_int32   pixFindLargestRectangle()
+ *          int32_t   pixFindLargeRectangles()
+ *          int32_t   pixFindLargestRectangle()
  *
  *      Generate rectangle inside connected component
  *          BOX      *pixFindRectangleInCC()
@@ -88,8 +88,8 @@
 #include "pix_internal.h"
 
     /* These functions are not intended to work on very low-res images */
-static const l_int32  MinWidth = 100;
-static const l_int32  MinHeight = 100;
+static const int32_t  MinWidth = 100;
+static const int32_t  MinHeight = 100;
 
 /*------------------------------------------------------------------*
  *                     Top level page segmentation                  *
@@ -117,7 +117,7 @@ pixGetRegionsBinary(PIX   *pixs,
                     PIX  **ppixtb,
                     PIXA  *pixadb)
 {
-l_int32  w, h, htfound, tlfound;
+int32_t  w, h, htfound, tlfound;
 PIX     *pixr, *pix1, *pix2;
 PIX     *pixtext;  /* text pixels only */
 PIX     *pixhm2;   /* halftone mask; 2x reduction */
@@ -201,7 +201,7 @@ PIX     *pixtb;    /* textblock mask */
 
         /* Debug: display textline components with random colors */
     if (pixadb) {
-        l_int32  w, h;
+        int32_t  w, h;
         BOXA    *boxa;
         PIXA    *pixa;
         boxa = pixConnComp(pixtm, &pixa, 8);
@@ -279,8 +279,8 @@ PIX     *pixtb;    /* textblock mask */
 PIX *
 pixGenHalftoneMask(PIX      *pixs,
                    PIX     **ppixtext,
-                   l_int32  *phtfound,
-                   l_int32   debug)
+                   int32_t  *phtfound,
+                   int32_t   debug)
 {
     return pixGenerateHalftoneMask(pixs, ppixtext, phtfound, NULL);
 }
@@ -304,10 +304,10 @@ pixGenHalftoneMask(PIX      *pixs,
 PIX *
 pixGenerateHalftoneMask(PIX      *pixs,
                         PIX     **ppixtext,
-                        l_int32  *phtfound,
+                        int32_t  *phtfound,
                         PIXA     *pixadb)
 {
-l_int32  w, h, empty;
+int32_t  w, h, empty;
 PIX     *pix1, *pix2, *pixhs, *pixhm, *pixd;
 
     if (ppixtext) *ppixtext = NULL;
@@ -385,10 +385,10 @@ PIX     *pix1, *pix2, *pixhs, *pixhm, *pixd;
 PIX *
 pixGenTextlineMask(PIX      *pixs,
                    PIX     **ppixvws,
-                   l_int32  *ptlfound,
+                   int32_t  *ptlfound,
                    PIXA     *pixadb)
 {
-l_int32  w, h, empty;
+int32_t  w, h, empty;
 PIX     *pix1, *pix2, *pixvws, *pixd;
 
     if (ptlfound) *ptlfound = 0;
@@ -477,7 +477,7 @@ pixGenTextblockMask(PIX   *pixs,
                     PIX   *pixvws,
                     PIXA  *pixadb)
 {
-l_int32  w, h, empty;
+int32_t  w, h, empty;
 PIX     *pix1, *pix2, *pix3, *pixd;
 
     if (!pixs || pixGetDepth(pixs) != 1)
@@ -562,14 +562,14 @@ PIX     *pix1, *pix2, *pix3, *pixd;
  */
 BOX *
 pixFindPageForeground(PIX     *pixs,
-                      l_int32  threshold,
-                      l_int32  mindist,
-                      l_int32  erasedist,
-                      l_int32  showmorph,
+                      int32_t  threshold,
+                      int32_t  mindist,
+                      int32_t  erasedist,
+                      int32_t  showmorph,
                       PIXAC   *pixac)
 {
-l_int32  flag, nbox, intersects;
-l_int32  w, h, bx, by, bw, bh, left, right, top, bottom;
+int32_t  flag, nbox, intersects;
+int32_t  w, h, bx, by, bw, bh, left, right, top, bottom;
 PIX     *pixb, *pixb2, *pixseed, *pixsf, *pixm, *pix1, *pixg2;
 BOX     *box, *boxfg, *boxin, *boxd;
 BOXA    *ba1, *ba2;
@@ -690,13 +690,13 @@ BOXA    *ba1, *ba2;
  */
 l_ok
 pixSplitIntoCharacters(PIX     *pixs,
-                       l_int32  minw,
-                       l_int32  minh,
+                       int32_t  minw,
+                       int32_t  minh,
                        BOXA   **pboxa,
                        PIXA   **ppixa,
                        PIX    **ppixdebug)
 {
-l_int32  ncomp, i, xoff, yoff;
+int32_t  ncomp, i, xoff, yoff;
 BOXA   *boxa1, *boxa2, *boxat1, *boxat2, *boxad;
 BOXAA  *baa;
 PIX    *pix, *pix1, *pix2, *pixdb;
@@ -789,13 +789,13 @@ PIXA   *pixa1, *pixadb;
  */
 BOXA *
 pixSplitComponentWithProfile(PIX     *pixs,
-                             l_int32  delta,
-                             l_int32  mindel,
+                             int32_t  delta,
+                             int32_t  mindel,
                              PIX    **ppixdebug)
 {
-l_int32   w, h, n2, i, firstmin, xmin, xshift;
-l_int32   nmin, nleft, nright, nsplit, isplit, ncomp;
-l_int32  *array1, *array2;
+int32_t   w, h, n2, i, firstmin, xmin, xshift;
+int32_t   nmin, nleft, nright, nsplit, isplit, ncomp;
+int32_t  *array1, *array2;
 BOX      *box;
 BOXA     *boxad;
 NUMA     *na1, *na2, *nasplit;
@@ -943,16 +943,16 @@ PIX      *pix1, *pixdb;
  */
 PIXA *
 pixExtractTextlines(PIX     *pixs,
-                    l_int32  maxw,
-                    l_int32  maxh,
-                    l_int32  minw,
-                    l_int32  minh,
-                    l_int32  adjw,
-                    l_int32  adjh,
+                    int32_t  maxw,
+                    int32_t  maxh,
+                    int32_t  minw,
+                    int32_t  minh,
+                    int32_t  adjw,
+                    int32_t  adjh,
                     PIXA    *pixadb)
 {
 char     buf[64];
-l_int32  res, csize, empty;
+int32_t  res, csize, empty;
 BOXA    *boxa1, *boxa2, *boxa3;
 PIX     *pix1, *pix2, *pix3;
 PIXA    *pixa1, *pixa2, *pixa3;
@@ -1005,8 +1005,8 @@ PIXA    *pixa1, *pixa2, *pixa3;
     }
 
         /* Set minw, minh if default is requested */
-    minw = (minw != 0) ? minw : (l_int32)(0.12 * res);
-    minh = (minh != 0) ? minh : (l_int32)(0.07 * res);
+    minw = (minw != 0) ? minw : (int32_t)(0.12 * res);
+    minh = (minh != 0) ? minh : (int32_t)(0.07 * res);
 
         /* Remove line components that are too small */
     pixa2 = pixaSelectBySize(pixa1, minw, minh, L_SELECT_IF_BOTH,
@@ -1081,14 +1081,14 @@ PIXA    *pixa1, *pixa2, *pixa3;
  */
 PIXA *
 pixExtractRawTextlines(PIX     *pixs,
-                       l_int32  maxw,
-                       l_int32  maxh,
-                       l_int32  adjw,
-                       l_int32  adjh,
+                       int32_t  maxw,
+                       int32_t  maxh,
+                       int32_t  adjw,
+                       int32_t  adjh,
                        PIXA    *pixadb)
 {
 char     buf[64];
-l_int32  res, csize, empty;
+int32_t  res, csize, empty;
 BOXA    *boxa1, *boxa2, *boxa3;
 BOXAA   *baa1;
 PIX     *pix1, *pix2, *pix3;
@@ -1102,8 +1102,8 @@ PIXA    *pixa1, *pixa2;
         L_INFO("Resolution is not set: setting to 300 ppi\n", __func__);
         res = 300;
     }
-    maxw = (maxw != 0) ? maxw : (l_int32)(0.5 * res);
-    maxh = (maxh != 0) ? maxh : (l_int32)(0.5 * res);
+    maxw = (maxw != 0) ? maxw : (int32_t)(0.5 * res);
+    maxh = (maxh != 0) ? maxh : (int32_t)(0.5 * res);
 
         /* Binarize carefully, if necessary */
     if (pixGetDepth(pixs) > 1) {
@@ -1210,10 +1210,10 @@ pixCountTextColumns(PIX       *pixs,
                     l_float32  deltafract,
                     l_float32  peakfract,
                     l_float32  clipfract,
-                    l_int32   *pncols,
+                    int32_t   *pncols,
                     PIXA      *pixadb)
 {
-l_int32    w, h, res, i, n, npeak;
+int32_t    w, h, res, i, n, npeak;
 l_float32  scalefact, redfact, minval, maxval, val4, val5, fract;
 BOX       *box;
 NUMA      *na1, *na2, *na3, *na4, *na5;
@@ -1354,10 +1354,10 @@ PIX       *pix1, *pix2, *pix3, *pix4, *pix5;
 l_ok
 pixDecideIfText(PIX      *pixs,
                 BOX      *box,
-                l_int32  *pistext,
+                int32_t  *pistext,
                 PIXA     *pixadb)
 {
-l_int32    i, empty, maxw, w, h, n1, n2, n3, minlines, big_comp;
+int32_t    i, empty, maxw, w, h, n1, n2, n3, minlines, big_comp;
 l_float32  ratio1, ratio2;
 L_BMF     *bmf;
 BOXA      *boxa1, *boxa2, *boxa3, *boxa4, *boxa5;
@@ -1517,12 +1517,12 @@ SEL       *sel1;
  */
 l_ok
 pixFindThreshFgExtent(PIX      *pixs,
-                      l_int32   thresh,
-                      l_int32  *ptop,
-                      l_int32  *pbot)
+                      int32_t   thresh,
+                      int32_t  *ptop,
+                      int32_t  *pbot)
 {
-l_int32   i, n;
-l_int32  *array;
+int32_t   i, n;
+int32_t  *array;
 NUMA     *na;
 
     if (ptop) *ptop = 0;
@@ -1606,11 +1606,11 @@ NUMA     *na;
 l_ok
 pixDecideIfTable(PIX      *pixs,
                  BOX      *box,
-                 l_int32   orient,
-                 l_int32  *pscore,
+                 int32_t   orient,
+                 int32_t  *pscore,
                  PIXA     *pixadb)
 {
-l_int32  empty, nhb, nvb, nvw, score, htfound;
+int32_t  empty, nhb, nvb, nvw, score, htfound;
 PIX     *pix1, *pix2, *pix3, *pix4, *pix5, *pix6, *pix7, *pix8, *pix9;
 
     if (!pscore)
@@ -1755,9 +1755,9 @@ PIX *
 pixPrepare1bpp(PIX       *pixs,
                BOX       *box,
                l_float32  cropfract,
-               l_int32    outres)
+               int32_t    outres)
 {
-l_int32    w, h, res;
+int32_t    w, h, res;
 l_float32  factor;
 BOX       *box1;
 PIX       *pix1, *pix2, *pix3, *pix4, *pix5;
@@ -1772,9 +1772,9 @@ PIX       *pix1, *pix2, *pix3, *pix4, *pix5;
         pix1 = pixClipRectangle(pixs, box, NULL);
     } else {
         pixGetDimensions(pixs, &w, &h, NULL);
-        box1 = boxCreate((l_int32)(cropfract * w), (l_int32)(cropfract * h),
-                         (l_int32)((1.0 - 2 * cropfract) * w),
-                         (l_int32)((1.0 - 2 * cropfract) * h));
+        box1 = boxCreate((int32_t)(cropfract * w), (int32_t)(cropfract * h),
+                         (int32_t)((1.0 - 2 * cropfract) * w),
+                         (int32_t)((1.0 - 2 * cropfract) * h));
         pix1 = pixClipRectangle(pixs, box1, NULL);
         boxDestroy(&box1);
     }
@@ -1836,11 +1836,11 @@ PIX       *pix1, *pix2, *pix3, *pix4, *pix5;
  */
 l_ok
 pixEstimateBackground(PIX       *pixs,
-                      l_int32    darkthresh,
+                      int32_t    darkthresh,
                       l_float32  edgecrop,
-                      l_int32   *pbg)
+                      int32_t   *pbg)
 {
-l_int32    w, h, sampling;
+int32_t    w, h, sampling;
 l_float32  fbg;
 BOX       *box;
 PIX       *pix1, *pix2, *pixm;
@@ -1869,7 +1869,7 @@ PIX       *pix1, *pix2, *pixm;
     }
 
         /* We will use no more than 50K samples */
-    sampling = L_MAX(1, (l_int32)sqrt((l_float64)(w * h) / 50000. + 0.5));
+    sampling = L_MAX(1, (int32_t)sqrt((l_float64)(w * h) / 50000. + 0.5));
 
         /* Optionally make a mask over all pixels lighter than %darkthresh */
     pixm = NULL;
@@ -1879,7 +1879,7 @@ PIX       *pix1, *pix2, *pixm;
     }
 
     pixGetRankValueMasked(pix2, pixm, 0, 0, sampling, 0.5, &fbg, NULL);
-    *pbg = (l_int32)(fbg + 0.5);
+    *pbg = (int32_t)(fbg + 0.5);
     pixDestroy(&pix1);
     pixDestroy(&pix2);
     pixDestroy(&pixm);
@@ -1918,12 +1918,12 @@ PIX       *pix1, *pix2, *pixm;
  */
 l_ok
 pixFindLargeRectangles(PIX          *pixs,
-                       l_int32       polarity,
-                       l_int32       nrect,
+                       int32_t       polarity,
+                       int32_t       nrect,
                        BOXA        **pboxa,
                        PIX         **ppixdb)
 {
-l_int32  i, op, bx, by, bw, bh;
+int32_t  i, op, bx, by, bw, bh;
 BOX     *box;
 BOXA    *boxa;
 PIX     *pix;
@@ -2019,17 +2019,17 @@ PIX     *pix;
  */
 l_ok
 pixFindLargestRectangle(PIX         *pixs,
-                        l_int32      polarity,
+                        int32_t      polarity,
                         BOX        **pbox,
                         PIX        **ppixdb)
 {
-l_int32    i, j, w, h, d, wpls, val;
-l_int32    wp, hp, w1, w2, h1, h2, wmin, hmin, area1, area2;
-l_int32    xmax, ymax;  /* LR corner of the largest rectangle */
-l_int32    maxarea, wmax, hmax, vertdist, horizdist, prevfg;
-l_int32   *lowestfg;
-l_uint32  *datas, *lines;
-l_uint32 **linew, **lineh;
+int32_t    i, j, w, h, d, wpls, val;
+int32_t    wp, hp, w1, w2, h1, h2, wmin, hmin, area1, area2;
+int32_t    xmax, ymax;  /* LR corner of the largest rectangle */
+int32_t    maxarea, wmax, hmax, vertdist, horizdist, prevfg;
+int32_t   *lowestfg;
+uint32_t  *datas, *lines;
+uint32_t **linew, **lineh;
 BOX       *box;
 PIX       *pixw, *pixh;  /* keeps the width and height for the largest */
                          /* rectangles whose LR corner is located there. */
@@ -2047,7 +2047,7 @@ PIX       *pixw, *pixh;  /* keeps the width and height for the largest */
         return ERROR_INT("invalid polarity", __func__, 1);
 
         /* Initialize lowest "fg" seen so far for each column */
-    lowestfg = (l_int32 *)LEPT_CALLOC(w, sizeof(l_int32));
+    lowestfg = (int32_t *)LEPT_CALLOC(w, sizeof(int32_t));
     for (i = 0; i < w; i++)
         lowestfg[i] = -1;
 
@@ -2056,8 +2056,8 @@ PIX       *pixw, *pixh;  /* keeps the width and height for the largest */
          * we search in the bg (white). */
     pixw = pixCreate(w, h, 32);  /* stores width */
     pixh = pixCreate(w, h, 32);  /* stores height */
-    linew = (l_uint32 **)pixGetLinePtrs(pixw, NULL);
-    lineh = (l_uint32 **)pixGetLinePtrs(pixh, NULL);
+    linew = (uint32_t **)pixGetLinePtrs(pixw, NULL);
+    lineh = (uint32_t **)pixGetLinePtrs(pixh, NULL);
     datas = pixGetData(pixs);
     wpls = pixGetWpl(pixs);
     maxarea = xmax = ymax = wmax = hmax = 0;
@@ -2171,12 +2171,12 @@ BOX *
 pixFindRectangleInCC(PIX       *pixs,
                      BOX       *boxs,
                      l_float32  fract,
-                     l_int32    dir,
-                     l_int32    select,
-                     l_int32    debug)
+                     int32_t    dir,
+                     int32_t    select,
+                     int32_t    debug)
 {
-l_int32  x, y, i, w, h, w1, h1, w2, h2, found, res;
-l_int32  xfirst, xlast, xstart, yfirst, ylast, length;
+int32_t  x, y, i, w, h, w1, h1, w2, h2, found, res;
+int32_t  xfirst, xlast, xstart, yfirst, ylast, length;
 BOX     *box1, *box2, *box3, *box4, *box5;
 PIX     *pix1, *pix2, *pixdb1, *pixdb2;
 PIXA    *pixadb;
@@ -2221,7 +2221,7 @@ PIXA    *pixadb;
     found = FALSE;
     for (i = 0; i < h; i++) {
         pixFindMaxHorizontalRunOnLine(pix2, i, &xstart, &length);
-        if (length >= (l_int32)(fract * w + 0.5)) {
+        if (length >= (int32_t)(fract * w + 0.5)) {
             yfirst = i;
             xfirst = xstart;
             xlast = xfirst + length - 1;
@@ -2256,7 +2256,7 @@ PIXA    *pixadb;
          * That run goes from (xfirst, ylast) to (xlast, ylast).  */
     for (i = h - 1; i >= 0; i--) {
         pixFindMaxHorizontalRunOnLine(pix2, i, &xstart, &length);
-        if (length >= (l_int32)(fract * w + 0.5)) {
+        if (length >= (int32_t)(fract * w + 0.5)) {
             ylast = i;
             xfirst = xstart;
             xlast = xfirst + length - 1;
@@ -2356,11 +2356,11 @@ PIXA    *pixadb;
  */
 PIX *
 pixAutoPhotoinvert(PIX       *pixs,
-                   l_int32    thresh,
+                   int32_t    thresh,
                    PIX      **ppixm,
                    PIXA      *pixadb)
 {
-l_int32    i, n, empty, x, y, w, h;
+int32_t    i, n, empty, x, y, w, h;
 l_float32  fgfract;
 BOX       *box1;
 BOXA      *boxa1;

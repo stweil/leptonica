@@ -44,10 +44,10 @@
 #include "allheaders.h"
 
     /* Input variables */
-static const l_int32  MIN_WORD_WIDTH = 6;
-static const l_int32  MIN_WORD_HEIGHT = 4;
-static const l_int32  MAX_WORD_WIDTH = 500;
-static const l_int32  MAX_WORD_HEIGHT = 100;
+static const int32_t  MIN_WORD_WIDTH = 6;
+static const int32_t  MIN_WORD_HEIGHT = 4;
+static const int32_t  MAX_WORD_WIDTH = 500;
+static const int32_t  MAX_WORD_HEIGHT = 100;
 
 #define   BUF_SIZE                  512
 #define   RENDER_PAGES              1
@@ -57,8 +57,8 @@ int main(int    argc,
 {
 char      filename[BUF_SIZE];
 char     *dirin, *rootname, *fname;
-l_int32   i, j, w, h, firstpage, npages, nfiles, ncomp;
-l_int32   index, ival, rval, gval, bval;
+int32_t   i, j, w, h, firstpage, npages, nfiles, ncomp;
+int32_t   index, ival, rval, gval, bval;
 BOX      *box;
 BOXA     *boxa;
 BOXAA    *baa;

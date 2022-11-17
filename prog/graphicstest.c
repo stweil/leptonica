@@ -40,7 +40,7 @@ int main(int    argc,
          char **argv)
 {
 char    *filein, *fileout;
-l_int32  d;
+int32_t  d;
 BOX     *box1, *box2, *box3, *box4;
 BOXA    *boxa;
 PIX     *pixs, *pix1;

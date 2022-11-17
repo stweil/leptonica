@@ -50,10 +50,10 @@ static PIX *shearTest2(PIX *pixs, L_REGPARAMS *rp);
 
 static const l_float32  ANGLE1 = 3.14159265 / 12.;
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32       index;
+int32_t       index;
 PIX          *pixs, *pix1, *pixc, *pixd;
 PIXCMAP      *cmap;
 L_REGPARAMS  *rp;
@@ -157,7 +157,7 @@ static PIX *
 shearTest1(PIX       *pixs,
            l_float32  scale)
 {
-l_int32  w, h, d;
+int32_t  w, h, d;
 PIX     *pix1, *pix2, *pixd;
 PIXA    *pixa;
 
@@ -244,7 +244,7 @@ static PIX *
 shearTest2(PIX          *pixs,
            L_REGPARAMS  *rp)
 {
-l_int32  w, h;
+int32_t  w, h;
 PIX     *pix1, *pix2, *pixd;
 PIXA    *pixa;
 

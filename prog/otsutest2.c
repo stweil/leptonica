@@ -55,7 +55,7 @@ int main(int    argc,
          char **argv)
 {
 char       textstr[256];
-l_int32    i, thresh, fgval, bgval;
+int32_t    i, thresh, fgval, bgval;
 l_float32  scorefract;
 L_BMF     *bmf;
 PIX       *pixs, *pixb, *pixg, *pixp, *pix1, *pix2, *pix3;

@@ -30,9 +30,9 @@
  * <pre>
  *
  *    Main function calls:
- *       l_int32             fmorphautogen()
- *       l_int32             fmorphautogen1()
- *       l_int32             fmorphautogen2()
+ *       int32_t             fmorphautogen()
+ *       int32_t             fmorphautogen1()
+ *       int32_t             fmorphautogen2()
  *
  *    Static helpers:
  *       static SARRAY      *sarrayMakeWplsCode()
@@ -78,7 +78,7 @@
  *        for the example files in the library, using integer "1":
  *
  *            PIX   *pixMorphDwa_1(PIX *pixd, PIX, *pixs,
- *                                 l_int32 operation, char *selname);
+ *                                 int32_t operation, char *selname);
  *
  *        where the operation is one of {L_MORPH_DILATE, L_MORPH_ERODE.
  *        L_MORPH_OPEN, L_MORPH_CLOSE}, and the selname is one
@@ -107,77 +107,77 @@
 #define   TEMPLATE1       "morphtemplate1.txt"
 #define   TEMPLATE2       "morphtemplate2.txt"
 
-#define   PROTOARGS   "(l_uint32 *, l_int32, l_int32, l_int32, l_uint32 *, l_int32);"
+#define   PROTOARGS   "(uint32_t *, int32_t, int32_t, int32_t, uint32_t *, int32_t);"
 
 #define L_BUF_SIZE 512
 
-static char * makeBarrelshiftString(l_int32 delx, l_int32 dely);
-static SARRAY * sarrayMakeInnerLoopDWACode(SEL *sel, l_int32 index);
+static char * makeBarrelshiftString(int32_t delx, int32_t dely);
+static SARRAY * sarrayMakeInnerLoopDWACode(SEL *sel, int32_t index);
 static SARRAY * sarrayMakeWplsCode(SEL *sel);
 
 static char wpldecls[][53] = {
-            "l_int32             wpls2;",
-            "l_int32             wpls2, wpls3;",
-            "l_int32             wpls2, wpls3, wpls4;",
-            "l_int32             wpls5;",
-            "l_int32             wpls5, wpls6;",
-            "l_int32             wpls5, wpls6, wpls7;",
-            "l_int32             wpls5, wpls6, wpls7, wpls8;",
-            "l_int32             wpls9;",
-            "l_int32             wpls9, wpls10;",
-            "l_int32             wpls9, wpls10, wpls11;",
-            "l_int32             wpls9, wpls10, wpls11, wpls12;",
-            "l_int32             wpls13;",
-            "l_int32             wpls13, wpls14;",
-            "l_int32             wpls13, wpls14, wpls15;",
-            "l_int32             wpls13, wpls14, wpls15, wpls16;",
-            "l_int32             wpls17;",
-            "l_int32             wpls17, wpls18;",
-            "l_int32             wpls17, wpls18, wpls19;",
-            "l_int32             wpls17, wpls18, wpls19, wpls20;",
-            "l_int32             wpls21;",
-            "l_int32             wpls21, wpls22;",
-            "l_int32             wpls21, wpls22, wpls23;",
-            "l_int32             wpls21, wpls22, wpls23, wpls24;",
-            "l_int32             wpls25;",
-            "l_int32             wpls25, wpls26;",
-            "l_int32             wpls25, wpls26, wpls27;",
-            "l_int32             wpls25, wpls26, wpls27, wpls28;",
-            "l_int32             wpls29;",
-            "l_int32             wpls29, wpls30;",
-            "l_int32             wpls29, wpls30, wpls31;"};
+            "int32_t             wpls2;",
+            "int32_t             wpls2, wpls3;",
+            "int32_t             wpls2, wpls3, wpls4;",
+            "int32_t             wpls5;",
+            "int32_t             wpls5, wpls6;",
+            "int32_t             wpls5, wpls6, wpls7;",
+            "int32_t             wpls5, wpls6, wpls7, wpls8;",
+            "int32_t             wpls9;",
+            "int32_t             wpls9, wpls10;",
+            "int32_t             wpls9, wpls10, wpls11;",
+            "int32_t             wpls9, wpls10, wpls11, wpls12;",
+            "int32_t             wpls13;",
+            "int32_t             wpls13, wpls14;",
+            "int32_t             wpls13, wpls14, wpls15;",
+            "int32_t             wpls13, wpls14, wpls15, wpls16;",
+            "int32_t             wpls17;",
+            "int32_t             wpls17, wpls18;",
+            "int32_t             wpls17, wpls18, wpls19;",
+            "int32_t             wpls17, wpls18, wpls19, wpls20;",
+            "int32_t             wpls21;",
+            "int32_t             wpls21, wpls22;",
+            "int32_t             wpls21, wpls22, wpls23;",
+            "int32_t             wpls21, wpls22, wpls23, wpls24;",
+            "int32_t             wpls25;",
+            "int32_t             wpls25, wpls26;",
+            "int32_t             wpls25, wpls26, wpls27;",
+            "int32_t             wpls25, wpls26, wpls27, wpls28;",
+            "int32_t             wpls29;",
+            "int32_t             wpls29, wpls30;",
+            "int32_t             wpls29, wpls30, wpls31;"};
 
 static char wplgendecls[][30] = {
-            "l_int32             wpls2;",
-            "l_int32             wpls3;",
-            "l_int32             wpls4;",
-            "l_int32             wpls5;",
-            "l_int32             wpls6;",
-            "l_int32             wpls7;",
-            "l_int32             wpls8;",
-            "l_int32             wpls9;",
-            "l_int32             wpls10;",
-            "l_int32             wpls11;",
-            "l_int32             wpls12;",
-            "l_int32             wpls13;",
-            "l_int32             wpls14;",
-            "l_int32             wpls15;",
-            "l_int32             wpls16;",
-            "l_int32             wpls17;",
-            "l_int32             wpls18;",
-            "l_int32             wpls19;",
-            "l_int32             wpls20;",
-            "l_int32             wpls21;",
-            "l_int32             wpls22;",
-            "l_int32             wpls23;",
-            "l_int32             wpls24;",
-            "l_int32             wpls25;",
-            "l_int32             wpls26;",
-            "l_int32             wpls27;",
-            "l_int32             wpls28;",
-            "l_int32             wpls29;",
-            "l_int32             wpls30;",
-            "l_int32             wpls31;"};
+            "int32_t             wpls2;",
+            "int32_t             wpls3;",
+            "int32_t             wpls4;",
+            "int32_t             wpls5;",
+            "int32_t             wpls6;",
+            "int32_t             wpls7;",
+            "int32_t             wpls8;",
+            "int32_t             wpls9;",
+            "int32_t             wpls10;",
+            "int32_t             wpls11;",
+            "int32_t             wpls12;",
+            "int32_t             wpls13;",
+            "int32_t             wpls14;",
+            "int32_t             wpls15;",
+            "int32_t             wpls16;",
+            "int32_t             wpls17;",
+            "int32_t             wpls18;",
+            "int32_t             wpls19;",
+            "int32_t             wpls20;",
+            "int32_t             wpls21;",
+            "int32_t             wpls22;",
+            "int32_t             wpls23;",
+            "int32_t             wpls24;",
+            "int32_t             wpls25;",
+            "int32_t             wpls26;",
+            "int32_t             wpls27;",
+            "int32_t             wpls28;",
+            "int32_t             wpls29;",
+            "int32_t             wpls30;",
+            "int32_t             wpls31;"};
 
 static char wpldefs[][25] = {
             "    wpls2 = 2 * wpls;",
@@ -247,10 +247,10 @@ static char wplstrm[][10] = {"- wpls", "- wpls2", "- wpls3", "- wpls4",
  */
 l_ok
 fmorphautogen(SELA        *sela,
-              l_int32      fileindex,
+              int32_t      fileindex,
               const char  *filename)
 {
-l_int32  ret1, ret2;
+int32_t  ret1, ret2;
 
     if (!sela)
         return ERROR_INT("sela not defined", __func__, 1);
@@ -285,7 +285,7 @@ l_int32  ret1, ret2;
  */
 l_ok
 fmorphautogen1(SELA        *sela,
-               l_int32      fileindex,
+               int32_t      fileindex,
                const char  *filename)
 {
 char    *filestr;
@@ -295,7 +295,7 @@ char    *str_def1, *str_def2, *str_proc1, *str_proc2;
 char    *str_dwa1, *str_low_dt, *str_low_ds, *str_low_ts;
 char    *str_low_tsp1, *str_low_dtp1;
 char     bigbuf[L_BUF_SIZE];
-l_int32  i, nsels, nbytes, actstart, end, newstart;
+int32_t  i, nsels, nbytes, actstart, end, newstart;
 size_t   size;
 SARRAY  *sa1, *sa2, *sa3;
 
@@ -319,15 +319,15 @@ SARRAY  *sa1, *sa2, *sa3;
 
         /* Make strings containing function call names */
     sprintf(bigbuf, "PIX *pixMorphDwa_%d(PIX *pixd, PIX *pixs, "
-                    "l_int32 operation, char *selname);", fileindex);
+                    "int32_t operation, char *selname);", fileindex);
     str_proto1 = stringNew(bigbuf);
     sprintf(bigbuf, "PIX *pixFMorphopGen_%d(PIX *pixd, PIX *pixs, "
-                    "l_int32 operation, char *selname);", fileindex);
+                    "int32_t operation, char *selname);", fileindex);
     str_proto2 = stringNew(bigbuf);
-    sprintf(bigbuf, "l_int32 fmorphopgen_low_%d(l_uint32 *datad, l_int32 w,\n"
-        "                          l_int32 h, l_int32 wpld,\n"
-        "                          l_uint32 *datas, l_int32 wpls,\n"
-        "                          l_int32 index);", fileindex);
+    sprintf(bigbuf, "int32_t fmorphopgen_low_%d(uint32_t *datad, int32_t w,\n"
+        "                          int32_t h, int32_t wpld,\n"
+        "                          uint32_t *datas, int32_t wpls,\n"
+        "                          int32_t index);", fileindex);
     str_proto3 = stringNew(bigbuf);
     sprintf(bigbuf, " *             PIX     *pixMorphDwa_%d()", fileindex);
     str_doc1 = stringNew(bigbuf);
@@ -391,7 +391,7 @@ SARRAY  *sa1, *sa2, *sa3;
     sarrayAddString(sa3, str_proto3, L_INSERT);
 
         /* Add static globals */
-    sprintf(bigbuf, "\nstatic l_int32   NUM_SELS_GENERATED = %d;", nsels);
+    sprintf(bigbuf, "\nstatic int32_t   NUM_SELS_GENERATED = %d;", nsels);
     sarrayAddString(sa3, bigbuf, L_COPY);
     sprintf(bigbuf, "static char  SEL_NAMES[][80] = {");
     sarrayAddString(sa3, bigbuf, L_COPY);
@@ -488,9 +488,9 @@ SARRAY  *sa1, *sa2, *sa3;
  *          where [n] is equal to the 'fileindex' parameter.
  *      (4) If filename != NULL, the output file is [filename]low.[n].c.
  */
-l_int32
+int32_t
 fmorphautogen2(SELA        *sela,
-               l_int32      fileindex,
+               int32_t      fileindex,
                const char  *filename)
 {
 char    *filestr, *linestr, *fname;
@@ -498,8 +498,8 @@ char    *str_doc1, *str_doc2, *str_doc3, *str_doc4, *str_def1;
 char     bigbuf[L_BUF_SIZE];
 char     breakstring[] = "        break;";
 char     staticstring[] = "static void";
-l_int32  i, nsels, nbytes, actstart, end, newstart;
-l_int32  argstart, argend, loopstart, loopend, finalstart, finalend;
+int32_t  i, nsels, nbytes, actstart, end, newstart;
+int32_t  argstart, argend, loopstart, loopend, finalstart, finalend;
 size_t   size;
 SARRAY  *sa1, *sa2, *sa3, *sa4, *sa5, *sa6;
 SEL     *sel;
@@ -540,7 +540,7 @@ SEL     *sel;
     }
 
         /* Make strings containing function names */
-    sprintf(bigbuf, " *             l_int32    fmorphopgen_low_%d()",
+    sprintf(bigbuf, " *             int32_t    fmorphopgen_low_%d()",
             fileindex);
     str_doc1 = stringNew(bigbuf);
     sprintf(bigbuf, " *             void       fdilate_%d_*()", fileindex);
@@ -579,7 +579,7 @@ SEL     *sel;
         /* More strings with function names */
     sprintf(bigbuf, " *  fmorphopgen_low_%d()", fileindex);
     str_doc4 = stringNew(bigbuf);
-    sprintf(bigbuf, "fmorphopgen_low_%d(l_uint32  *datad,", fileindex);
+    sprintf(bigbuf, "fmorphopgen_low_%d(uint32_t  *datad,", fileindex);
     str_def1 = stringNew(bigbuf);
 
         /* Insert function header */
@@ -620,7 +620,7 @@ SEL     *sel;
             /* Generate the function header and add the common args */
         sarrayAddString(sa4, staticstring, L_COPY);
         fname = sarrayGetString(sa2, i, L_NOCOPY);
-        sprintf(bigbuf, "%s(l_uint32  *datad,", fname);
+        sprintf(bigbuf, "%s(uint32_t  *datad,", fname);
         sarrayAddString(sa4, bigbuf, L_COPY);
         sarrayAppendRange(sa4, sa1, argstart, argend);
 
@@ -675,8 +675,8 @@ static SARRAY *
 sarrayMakeWplsCode(SEL  *sel)
 {
 char     emptystring[] = "";
-l_int32  i, j, ymax, dely, allvshifts;
-l_int32  vshift[32];
+int32_t  i, j, ymax, dely, allvshifts;
+int32_t  vshift[32];
 SARRAY  *sa;
 
     if (!sel)
@@ -753,13 +753,13 @@ SARRAY  *sa;
  */
 static SARRAY *
 sarrayMakeInnerLoopDWACode(SEL     *sel,
-                           l_int32  index)
+                           int32_t  index)
 {
 char    *tstr, *string;
 char     logicalor[] = "|";
 char     logicaland[] = "&";
 char     bigbuf[L_BUF_SIZE];
-l_int32  i, j, optype, count, nfound, delx, dely;
+int32_t  i, j, optype, count, nfound, delx, dely;
 SARRAY  *sa;
 
     if (!sel)
@@ -825,10 +825,10 @@ SARRAY  *sa;
  * \brief   makeBarrelshiftString()
  */
 static char *
-makeBarrelshiftString(l_int32  delx,    /* j - cx */
-                      l_int32  dely)    /* i - cy */
+makeBarrelshiftString(int32_t  delx,    /* j - cx */
+                      int32_t  dely)    /* i - cy */
 {
-l_int32  absx, absy;
+int32_t  absx, absy;
 char     bigbuf[L_BUF_SIZE];
 
     if (delx < -31 || delx > 31)

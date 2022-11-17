@@ -66,7 +66,7 @@ int main(int    argc,
          char **argv)
 {
 char      *filein;
-l_int32    ret;
+int32_t    ret;
 l_float32  deg2rad;
 l_float32  angle, conf, score, endscore;
 PIX       *pix, *pixs, *pixd;

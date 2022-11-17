@@ -44,11 +44,11 @@
  *         static COLOREL      *colorelCreate()
  *         static void          pixColorFillFromSeed()
  *         static void          pixGetVisitedNeighbors()
- *         static l_int32       findNextUnvisited()
- *         static l_int32       colorsAreSimilarForFill()
+ *         static int32_t       findNextUnvisited()
+ *         static int32_t       colorsAreSimilarForFill()
  *         static void          pixelColorIsValid()
- *         static l_int32       pixelIsOnColorBoundary()
- *         static l_int32       evalColorfillData()
+ *         static int32_t       pixelIsOnColorBoundary()
+ *         static int32_t       evalColorfillData()
  *
  *  See colorcontent.c for location-independent measures of the amount
  *  of color in an image.
@@ -62,29 +62,29 @@
 #include "allheaders.h"
 
 struct ColorEl {
-    l_int32   x;
-    l_int32   y;
-    l_uint32  color;
+    int32_t   x;
+    int32_t   y;
+    uint32_t  color;
 };
 typedef struct ColorEl  COLOREL;
 
     /* Ignore pixels with smaller max component */
-static l_int32 DefaultMinMax = 70;
+static int32_t DefaultMinMax = 70;
 
     /* Static helpers */
-static COLOREL *colorelCreate(l_int32 x, l_int32 y, l_uint32 color);
+static COLOREL *colorelCreate(int32_t x, int32_t y, uint32_t color);
 static void pixColorFillFromSeed(PIX *pixs, PIX *pixv, PTA **ppta,
-                                 l_int32 x, l_int32 y, L_QUEUE *lq,
-                                 l_int32 maxdiff, l_int32 minarea,
-                                 l_int32 debug);
-static void pixGetVisitedNeighbors(PIX *pixs, l_int32 x, l_int32 y,
-                                   l_uint32 *visited);
-static l_int32 findNextUnvisited(PIX *pixv, l_int32 *px, l_int32 *py);
-static l_int32 colorsAreSimilarForFill(l_uint32 val1, l_uint32 val2,
-                                       l_int32 maxdiff);
-static l_int32 pixelColorIsValid(l_uint32 val, l_int32 minmax);
-static l_int32 pixelIsOnColorBoundary(PIX *pixs, l_int32 x, l_int32 y);
-static l_int32 evalColorfillData(L_COLORFILL *cf, l_int32 debug);
+                                 int32_t x, int32_t y, L_QUEUE *lq,
+                                 int32_t maxdiff, int32_t minarea,
+                                 int32_t debug);
+static void pixGetVisitedNeighbors(PIX *pixs, int32_t x, int32_t y,
+                                   uint32_t *visited);
+static int32_t findNextUnvisited(PIX *pixv, int32_t *px, int32_t *py);
+static int32_t colorsAreSimilarForFill(uint32_t val1, uint32_t val2,
+                                       int32_t maxdiff);
+static int32_t pixelColorIsValid(uint32_t val, int32_t minmax);
+static int32_t pixelIsOnColorBoundary(PIX *pixs, int32_t x, int32_t y);
+static int32_t evalColorfillData(L_COLORFILL *cf, int32_t debug);
 
 
 /*---------------------------------------------------------------------*
@@ -105,10 +105,10 @@ static l_int32 evalColorfillData(L_COLORFILL *cf, l_int32 debug);
  */
 L_COLORFILL *
 l_colorfillCreate(PIX     *pixs,
-                  l_int32  nx,
-                  l_int32  ny)
+                  int32_t  nx,
+                  int32_t  ny)
 {
-l_int32       i, j, w, h, tw, th, ntiles;
+int32_t       i, j, w, h, tw, th, ntiles;
 BOX          *box;
 BOXA         *boxas;
 L_COLORFILL  *cf;
@@ -220,16 +220,16 @@ L_COLORFILL  *cf;
  */
 l_ok
 pixColorContentByLocation(L_COLORFILL  *cf,
-                          l_int32       rref,
-                          l_int32       gref,
-                          l_int32       bref,
-                          l_int32       minmax,
-                          l_int32       maxdiff,
-                          l_int32       minarea,
-                          l_int32       smooth,
-                          l_int32       debug)
+                          int32_t       rref,
+                          int32_t       gref,
+                          int32_t       bref,
+                          int32_t       minmax,
+                          int32_t       maxdiff,
+                          int32_t       minarea,
+                          int32_t       smooth,
+                          int32_t       debug)
 {
-l_int32    i, n;
+int32_t    i, n;
 PIX       *pix1, *pix2, *pix3;
 PIXA      *pixas, *pixam;
 
@@ -291,14 +291,14 @@ PIXA      *pixas, *pixam;
  */
 PIX *
 pixColorFill(PIX     *pixs,
-             l_int32  minmax,
-             l_int32  maxdiff,
-             l_int32  smooth,
-             l_int32  minarea,
-             l_int32  debug)
+             int32_t  minmax,
+             int32_t  maxdiff,
+             int32_t  smooth,
+             int32_t  minarea,
+             int32_t  debug)
 {
-l_int32    x, y, w, h, empty;
-l_uint32   val;
+int32_t    x, y, w, h, empty;
+uint32_t   val;
 L_KERNEL  *kel;
 PIX       *pixm, *pixm1, *pixv, *pixnc, *pixncd, *pixss, *pixf;
 PTA       *pta1;
@@ -401,13 +401,13 @@ L_QUEUE   *lq;
  * </pre>
  */
 PIXA *
-makeColorfillTestData(l_int32  w,
-                      l_int32  h,
-                      l_int32  nseeds,
-                      l_int32  range)
+makeColorfillTestData(int32_t  w,
+                      int32_t  h,
+                      int32_t  nseeds,
+                      int32_t  range)
 {
-l_int32    i, j, x, y, rval, gval, bval, start, end;
-l_uint32   color;
+int32_t    i, j, x, y, rval, gval, bval, start, end;
+uint32_t   color;
 l_float64  dval;
 L_DNA     *da;
 PIX       *pix1, *pix2, *pix3, *pix4;
@@ -488,9 +488,9 @@ PIXCMAP   *cmap;
  *                             Static helpers                              *
  * ----------------------------------------------------------------------- */
 static COLOREL *
-colorelCreate(l_int32   x,
-              l_int32   y,
-              l_uint32  color)
+colorelCreate(int32_t   x,
+              int32_t   y,
+              uint32_t  color)
 {
 COLOREL *el;
 
@@ -529,16 +529,16 @@ static void
 pixColorFillFromSeed(PIX      *pixs,
                      PIX      *pixv,
                      PTA     **ppta,
-                     l_int32   x,
-                     l_int32   y,
+                     int32_t   x,
+                     int32_t   y,
                      L_QUEUE  *lq,
-                     l_int32   maxdiff,
-                     l_int32   minarea,
-                     l_int32   debug)
+                     int32_t   maxdiff,
+                     int32_t   minarea,
+                     int32_t   debug)
 {
-l_int32   w, h, np;
-l_uint32  visited[8];  /* W, N, E, S, NW, NE, SW, SE */
-l_uint32  color, val;
+int32_t   w, h, np;
+uint32_t  visited[8];  /* W, N, E, S, NW, NE, SW, SE */
+uint32_t  color, val;
 COLOREL  *el;
 PTA      *pta;
 
@@ -677,9 +677,9 @@ PTA      *pta;
  */
 static void
 pixGetVisitedNeighbors(PIX       *pixs,
-                       l_int32    x,
-                       l_int32    y,
-                       l_uint32  *visited)
+                       int32_t    x,
+                       int32_t    y,
+                       uint32_t  *visited)
 {
     pixGetPixel(pixs, x - 1, y, visited);  /* W */
     pixGetPixel(pixs, x, y - 1, visited + 1);  /* N */
@@ -706,12 +706,12 @@ pixGetVisitedNeighbors(PIX       *pixs,
  *          for the pixel that ended the previous search.
  * </pre>
  */
-static l_int32
+static int32_t
 findNextUnvisited(PIX      *pixv,
-                  l_int32  *px,
-                  l_int32  *py)
+                  int32_t  *px,
+                  int32_t  *py)
 {
-l_int32  ret;
+int32_t  ret;
 PIX     *pix1;
 
     pix1 = pixCopy(NULL, pixv);
@@ -746,13 +746,13 @@ PIX     *pix1;
  *          The max of these is 15, which is then compared with %maxdiff
  * </pre>
  */
-static l_int32
-colorsAreSimilarForFill(l_uint32 val1,
-                        l_uint32 val2,
-                        l_int32  maxdiff)
+static int32_t
+colorsAreSimilarForFill(uint32_t val1,
+                        uint32_t val2,
+                        int32_t  maxdiff)
 {
-l_int32  rdiff, gdiff, bdiff, maxindex, del1, del2, del3, maxdel;
-l_int32  v1[3], v2[3];
+int32_t  rdiff, gdiff, bdiff, maxindex, del1, del2, del3, maxdel;
+int32_t  v1[3], v2[3];
 
     extractRGBValues(val1, v1, v1 + 1, v1 + 2);
     extractRGBValues(val2, v2, v2 + 1, v2 + 2);
@@ -779,11 +779,11 @@ l_int32  v1[3], v2[3];
  * \param[in]       minmax    max component must be < %minmax to be valid
  * \return  0 if max component < %minmax; 1 otherwise
  */
-static l_int32
-pixelColorIsValid(l_uint32  val,
-                  l_int32   minmax)
+static int32_t
+pixelColorIsValid(uint32_t  val,
+                  int32_t   minmax)
 {
-l_int32  rval, gval, bval;
+int32_t  rval, gval, bval;
 
     extractRGBValues(val, &rval, &gval, &bval);
     if (rval < minmax && gval < minmax && bval < minmax)
@@ -801,13 +801,13 @@ l_int32  rval, gval, bval;
  * \return  1 if at least one neighboring pixel had a different color;
  *          0 otherwise.
  */
-static l_int32
+static int32_t
 pixelIsOnColorBoundary(PIX     *pixs,
-                       l_int32  x,
-                       l_int32  y)
+                       int32_t  x,
+                       int32_t  y)
 {
-l_int32   w, h;
-l_uint32  val, neigh;
+int32_t   w, h;
+uint32_t  val, neigh;
 
     pixGetDimensions(pixs, &w, &h, NULL);
     pixGetPixel(pixs, x, y, &val);
@@ -838,14 +838,14 @@ l_uint32  val, neigh;
  * \param[in]       debug    show segmented regions with their median color
  * \return  0 if OK, 1 on error
  */
-static l_int32
+static int32_t
 evalColorfillData(L_COLORFILL  *cf,
-                  l_int32       debug)
+                  int32_t       debug)
 {
-l_int32    i, j, n, nc, w, h, x, y, count;
+int32_t    i, j, n, nc, w, h, x, y, count;
 l_float32  rval, gval, bval;
-l_uint32   pixel;
-l_int32   *tab;
+uint32_t   pixel;
+int32_t   *tab;
 BOX       *box1;
 BOXA      *boxa1;
 L_DNA     *da;

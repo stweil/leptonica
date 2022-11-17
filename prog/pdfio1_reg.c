@@ -46,8 +46,8 @@
 int main(int    argc,
          char **argv)
 {
-l_uint8      *data8;
-l_int32       i, j, seq;
+uint8_t      *data8;
+int32_t       i, j, seq;
 size_t        nbytes;
 const char   *title;
 BOX          *box;

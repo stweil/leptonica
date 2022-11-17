@@ -28,21 +28,21 @@
  * \file rop.c
  * <pre>
  *      General rasterop
- *           l_int32    pixRasterop()
+ *           int32_t    pixRasterop()
  *
  *      In-place full band translation
- *           l_int32    pixRasteropVip()
- *           l_int32    pixRasteropHip()
+ *           int32_t    pixRasteropVip()
+ *           int32_t    pixRasteropHip()
  *
  *      Full image translation (general and in-place)
- *           l_int32    pixTranslate()
- *           l_int32    pixRasteropIP()
+ *           int32_t    pixTranslate()
+ *           int32_t    pixRasteropIP()
  *
  *      Full image rasterop with no translation
- *           l_int32    pixRasteropFullImage()
+ *           int32_t    pixRasteropFullImage()
  *
  *      Checking for invalid crop box
- *           static l_int32   checkRasteropCrop()
+ *           static int32_t   checkRasteropCrop()
  * </pre>
  */
 
@@ -53,8 +53,8 @@
 #include <string.h>
 #include "allheaders.h"
 
-static l_int32 checkRasteropCrop(l_int32 pixw, l_int32 pixh, l_int32 dx,
-                                 l_int32 dy, l_int32 dw, l_int32 dh);
+static int32_t checkRasteropCrop(int32_t pixw, int32_t pixh, int32_t dx,
+                                 int32_t dy, int32_t dw, int32_t dh);
 
 
 /*--------------------------------------------------------------------*
@@ -202,16 +202,16 @@ static l_int32 checkRasteropCrop(l_int32 pixw, l_int32 pixh, l_int32 dx,
  */
 l_ok
 pixRasterop(PIX     *pixd,
-            l_int32  dx,
-            l_int32  dy,
-            l_int32  dw,
-            l_int32  dh,
-            l_int32  op,
+            int32_t  dx,
+            int32_t  dy,
+            int32_t  dw,
+            int32_t  dh,
+            int32_t  op,
             PIX     *pixs,
-            l_int32  sx,
-            l_int32  sy)
+            int32_t  sx,
+            int32_t  sy)
 {
-l_int32  dpw, dph, dpd, spw, sph, spd;
+int32_t  dpw, dph, dpd, spw, sph, spd;
 
     if (!pixd)
         return ERROR_INT("pixd not defined", __func__, 1);
@@ -279,12 +279,12 @@ l_int32  dpw, dph, dpd, spw, sph, spd;
  */
 l_ok
 pixRasteropVip(PIX     *pixd,
-               l_int32  bx,
-               l_int32  bw,
-               l_int32  vshift,
-               l_int32  incolor)
+               int32_t  bx,
+               int32_t  bw,
+               int32_t  vshift,
+               int32_t  incolor)
 {
-l_int32   w, h, d, index, op;
+int32_t   w, h, d, index, op;
 PIX      *pixt;
 PIXCMAP  *cmap;
 
@@ -355,12 +355,12 @@ PIXCMAP  *cmap;
  */
 l_ok
 pixRasteropHip(PIX     *pixd,
-               l_int32  by,
-               l_int32  bh,
-               l_int32  hshift,
-               l_int32  incolor)
+               int32_t  by,
+               int32_t  bh,
+               int32_t  hshift,
+               int32_t  incolor)
 {
-l_int32   w, h, d, index, op;
+int32_t   w, h, d, index, op;
 PIX      *pixt;
 PIXCMAP  *cmap;
 
@@ -438,9 +438,9 @@ PIXCMAP  *cmap;
 PIX *
 pixTranslate(PIX     *pixd,
              PIX     *pixs,
-             l_int32  hshift,
-             l_int32  vshift,
-             l_int32  incolor)
+             int32_t  hshift,
+             int32_t  vshift,
+             int32_t  incolor)
 {
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -465,11 +465,11 @@ pixTranslate(PIX     *pixd,
  */
 l_ok
 pixRasteropIP(PIX     *pixd,
-              l_int32  hshift,
-              l_int32  vshift,
-              l_int32  incolor)
+              int32_t  hshift,
+              int32_t  vshift,
+              int32_t  incolor)
 {
-l_int32  w, h;
+int32_t  w, h;
 
     if (!pixd)
         return ERROR_INT("pixd not defined", __func__, 1);
@@ -505,7 +505,7 @@ l_int32  w, h;
 l_ok
 pixRasteropFullImage(PIX     *pixd,
                      PIX     *pixs,
-                     l_int32  op)
+                     int32_t  op)
 {
     if (!pixd)
         return ERROR_INT("pixd not defined", __func__, 1);
@@ -537,13 +537,13 @@ pixRasteropFullImage(PIX     *pixd,
  *          It is not needed for pre-filtering in pixRasterop().
  * </pre>
  */
-static l_int32
-checkRasteropCrop(l_int32 pixw,
-                  l_int32 pixh,
-                  l_int32 x,
-                  l_int32 y,
-                  l_int32 w,
-                  l_int32 h)
+static int32_t
+checkRasteropCrop(int32_t pixw,
+                  int32_t pixh,
+                  int32_t x,
+                  int32_t y,
+                  int32_t w,
+                  int32_t h)
 {
     if (pixw < 1 || pixh < 1 || w < 1 || h < 1)
         return ERROR_INT("dimension is <= 0", __func__, 1);

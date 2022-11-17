@@ -48,8 +48,8 @@
 #include "allheaders.h"
 
     /* Eliminate very large "words" */
-static const l_int32  MAX_WORD_WIDTH = 500;
-static const l_int32  MAX_WORD_HEIGHT = 200;
+static const int32_t  MAX_WORD_WIDTH = 500;
+static const int32_t  MAX_WORD_HEIGHT = 200;
 
 #define   BUF_SIZE                  512
 
@@ -63,7 +63,7 @@ int main(int    argc,
 {
 char        filename[BUF_SIZE];
 char       *dirin, *rootname;
-l_int32     reduction, i, firstpage, npages;
+int32_t     reduction, i, firstpage, npages;
 l_float32   thresh, weight;
 JBDATA     *data;
 JBCLASSER  *classer;

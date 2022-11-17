@@ -42,7 +42,7 @@ int main(int    argc,
          char **argv)
 {
 PIX     *pixs, *pixd;
-l_int32  level1, level2, level3, level4;
+int32_t  level1, level2, level3, level4;
 char    *filein, *fileout;
 
     if (argc != 7)

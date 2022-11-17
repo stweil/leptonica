@@ -38,19 +38,19 @@
  *
  *
  *    Masked operations
- *           l_int32     pixSetMasked()
- *           l_int32     pixSetMaskedGeneral()
- *           l_int32     pixCombineMasked()
- *           l_int32     pixCombineMaskedGeneral()
- *           l_int32     pixPaintThroughMask()
- *           l_int32     pixCopyWithBoxa()  -- this is boxa-directed
+ *           int32_t     pixSetMasked()
+ *           int32_t     pixSetMaskedGeneral()
+ *           int32_t     pixCombineMasked()
+ *           int32_t     pixCombineMaskedGeneral()
+ *           int32_t     pixPaintThroughMask()
+ *           int32_t     pixCopyWithBoxa()  -- this is boxa-directed
  *           PIX        *pixPaintSelfThroughMask()
  *           PIX        *pixMakeMaskFromVal()
  *           PIX        *pixMakeMaskFromLUT()
  *           PIX        *pixMakeArbMaskFromRGB()
  *           PIX        *pixSetUnderTransparency()
  *           PIX        *pixMakeAlphaFromMask()
- *           l_int32     pixGetColorNearMaskBoundary()
+ *           int32_t     pixGetColorNearMaskBoundary()
  *           PIX        *pixDisplaySelectedPixels()  -- for debugging
  *
  *    One and two-image boolean operations on arbitrary depth images
@@ -61,48 +61,48 @@
  *           PIX        *pixSubtract()
  *
  *    Foreground pixel counting in 1 bpp images
- *           l_int32     pixZero()
- *           l_int32     pixForegroundFraction()
+ *           int32_t     pixZero()
+ *           int32_t     pixForegroundFraction()
  *           NUMA       *pixaCountPixels()
- *           l_int32     pixCountPixels()
- *           l_int32     pixCountPixelsInRect()
+ *           int32_t     pixCountPixels()
+ *           int32_t     pixCountPixelsInRect()
  *           NUMA       *pixCountByRow()
  *           NUMA       *pixCountByColumn()
  *           NUMA       *pixCountPixelsByRow()
  *           NUMA       *pixCountPixelsByColumn()
- *           l_int32     pixCountPixelsInRow()
+ *           int32_t     pixCountPixelsInRow()
  *           NUMA       *pixGetMomentByColumn()
- *           l_int32     pixThresholdPixelSum()
- *           l_int32    *makePixelSumTab8()
- *           l_int32    *makePixelCentroidTab8()
+ *           int32_t     pixThresholdPixelSum()
+ *           int32_t    *makePixelSumTab8()
+ *           int32_t    *makePixelCentroidTab8()
  *
  *    Average of pixel values in gray images
  *           NUMA       *pixAverageByRow()
  *           NUMA       *pixAverageByColumn()
- *           l_int32     pixAverageInRect()
+ *           int32_t     pixAverageInRect()
  *
  *    Average of pixel values in RGB images
- *           l_int32     pixAverageInRectRGB()
+ *           int32_t     pixAverageInRectRGB()
  *
  *    Variance of pixel values in gray images
  *           NUMA       *pixVarianceByRow()
  *           NUMA       *pixVarianceByColumn()
- *           l_int32     pixVarianceInRect()
+ *           int32_t     pixVarianceInRect()
  *
  *    Average of absolute value of pixel differences in gray images
  *           NUMA       *pixAbsDiffByRow()
  *           NUMA       *pixAbsDiffByColumn()
- *           l_int32     pixAbsDiffInRect()
- *           l_int32     pixAbsDiffOnLine()
+ *           int32_t     pixAbsDiffInRect()
+ *           int32_t     pixAbsDiffOnLine()
  *
  *    Count of pixels with specific value
- *           l_int32     pixCountArbInRect()
+ *           int32_t     pixCountArbInRect()
  *
  *    Mirrored tiling
  *           PIX        *pixMirroredTiling()
  *
  *    Representative tile near but outside region
- *           l_int32     pixFindRepCloseTile()
+ *           int32_t     pixFindRepCloseTile()
  *
  *    Static helper function
  *           static BOXA    *findTileRegionsForSearch()
@@ -117,9 +117,9 @@
 #include <math.h>
 #include "allheaders.h"
 
-static BOXA *findTileRegionsForSearch(BOX *box, l_int32 w, l_int32 h,
-                                      l_int32 searchdir, l_int32 mindist,
-                                      l_int32 tsize, l_int32 ntiles);
+static BOXA *findTileRegionsForSearch(BOX *box, int32_t w, int32_t h,
+                                      int32_t searchdir, int32_t mindist,
+                                      int32_t tsize, int32_t ntiles);
 
 #ifndef  NO_CONSOLE_IO
 #define   EQUAL_SIZE_WARNING      0
@@ -162,11 +162,11 @@ static BOXA *findTileRegionsForSearch(BOX *box, l_int32 w, l_int32 h,
 l_ok
 pixSetMasked(PIX      *pixd,
              PIX      *pixm,
-             l_uint32  val)
+             uint32_t  val)
 {
-l_int32    wd, hd, wm, hm, w, h, d, wpld, wplm;
-l_int32    i, j, rval, gval, bval;
-l_uint32  *datad, *datam, *lined, *linem;
+int32_t    wd, hd, wm, hm, w, h, d, wpld, wplm;
+int32_t    i, j, rval, gval, bval;
+uint32_t  *datad, *datam, *lined, *linem;
 
     if (!pixd)
         return ERROR_INT("pixd not defined", __func__, 1);
@@ -299,11 +299,11 @@ l_uint32  *datad, *datam, *lined, *linem;
 l_ok
 pixSetMaskedGeneral(PIX      *pixd,
                     PIX      *pixm,
-                    l_uint32  val,
-                    l_int32   x,
-                    l_int32   y)
+                    uint32_t  val,
+                    int32_t   x,
+                    int32_t   y)
 {
-l_int32    wm, hm, d;
+int32_t    wm, hm, d;
 PIX       *pixmu, *pixc;
 
     if (!pixd)
@@ -379,9 +379,9 @@ pixCombineMasked(PIX  *pixd,
                  PIX  *pixs,
                  PIX  *pixm)
 {
-l_int32    w, h, d, ws, hs, ds, wm, hm, dm, wmin, hmin;
-l_int32    wpl, wpls, wplm, i, j, val;
-l_uint32  *data, *datas, *datam, *line, *lines, *linem;
+int32_t    w, h, d, ws, hs, ds, wm, hm, dm, wmin, hmin;
+int32_t    wpl, wpls, wplm, i, j, val;
+uint32_t  *data, *datas, *datam, *line, *lines, *linem;
 PIX       *pixt;
 
     if (!pixm)  /* nothing to do */
@@ -495,12 +495,12 @@ l_ok
 pixCombineMaskedGeneral(PIX      *pixd,
                         PIX      *pixs,
                         PIX      *pixm,
-                        l_int32   x,
-                        l_int32   y)
+                        int32_t   x,
+                        int32_t   y)
 {
-l_int32    d, w, h, ws, hs, ds, wm, hm, dm, wmin, hmin;
-l_int32    wpl, wpls, wplm, i, j, val;
-l_uint32  *data, *datas, *datam, *line, *lines, *linem;
+int32_t    d, w, h, ws, hs, ds, wm, hm, dm, wmin, hmin;
+int32_t    wpl, wpls, wplm, i, j, val;
+uint32_t  *data, *datas, *datam, *line, *lines, *linem;
 PIX       *pixt;
 
     if (!pixm)  /* nothing to do */
@@ -617,12 +617,12 @@ PIX       *pixt;
 l_ok
 pixPaintThroughMask(PIX      *pixd,
                     PIX      *pixm,
-                    l_int32   x,
-                    l_int32   y,
-                    l_uint32  val)
+                    int32_t   x,
+                    int32_t   y,
+                    uint32_t  val)
 {
-l_int32    d, w, h, wm, hm, wpl, wplm, i, j, rval, gval, bval;
-l_uint32  *data, *datam, *line, *linem;
+int32_t    d, w, h, wm, hm, wpl, wplm, i, j, rval, gval, bval;
+uint32_t  *data, *datam, *line, *linem;
 
     if (!pixm)  /* nothing to do */
         return 0;
@@ -748,9 +748,9 @@ l_uint32  *data, *datam, *line, *linem;
 PIX *
 pixCopyWithBoxa(PIX     *pixs,
                 BOXA    *boxa,
-                l_int32  background)
+                int32_t  background)
 {
-l_int32  i, n, x, y, w, h;
+int32_t  i, n, x, y, w, h;
 PIX     *pixd;
 
     if (!pixs)
@@ -835,16 +835,16 @@ PIX     *pixd;
 l_ok
 pixPaintSelfThroughMask(PIX      *pixd,
                         PIX      *pixm,
-                        l_int32   x,
-                        l_int32   y,
-                        l_int32   searchdir,
-                        l_int32   mindist,
-                        l_int32   tilesize,
-                        l_int32   ntiles,
-                        l_int32   distblend)
+                        int32_t   x,
+                        int32_t   y,
+                        int32_t   searchdir,
+                        int32_t   mindist,
+                        int32_t   tilesize,
+                        int32_t   ntiles,
+                        int32_t   distblend)
 {
-l_int32   w, h, d, wm, hm, dm, i, n, bx, by, bw, bh, edgeblend, retval, minside;
-l_uint32  pixval;
+int32_t   w, h, d, wm, hm, dm, i, n, bx, by, bw, bh, edgeblend, retval, minside;
+uint32_t  pixval;
 BOX      *box, *boxv, *boxh;
 BOXA     *boxa;
 PIX      *pixf, *pixv, *pixh, *pix1, *pix2, *pix3, *pix4, *pix5;
@@ -989,10 +989,10 @@ PIXA     *pixa;
  */
 PIX *
 pixMakeMaskFromVal(PIX     *pixs,
-                   l_int32  val)
+                   int32_t  val)
 {
-l_int32    w, h, d, i, j, sval, wpls, wpld;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    w, h, d, i, j, sval, wpls, wpld;
+uint32_t  *datas, *datad, *lines, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -1044,10 +1044,10 @@ PIX       *pixd;
  */
 PIX *
 pixMakeMaskFromLUT(PIX      *pixs,
-                   l_int32  *tab)
+                   int32_t  *tab)
 {
-l_int32    w, h, d, i, j, val, wpls, wpld;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    w, h, d, i, j, val, wpls, wpld;
+uint32_t  *datas, *datad, *lines, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -1186,8 +1186,8 @@ PIX  *pix1, *pix2;
  */
 PIX *
 pixSetUnderTransparency(PIX      *pixs,
-                        l_uint32  val,
-                        l_int32   debug)
+                        uint32_t  val,
+                        int32_t   debug)
 {
 PIX  *pixg, *pixm, *pixt, *pixd;
 
@@ -1203,7 +1203,7 @@ PIX  *pixg, *pixm, *pixt, *pixd;
         /* Make a mask from the alpha component with ON pixels
          * wherever the alpha component is fully transparent (0).
          * The hard way:
-         *     l_int32 *lut = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
+         *     int32_t *lut = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
          *     lut[0] = 1;
          *     pixg = pixGetRGBComponent(pixs, L_ALPHA_CHANNEL);
          *     pixm = pixMakeMaskFromLUT(pixg, lut);
@@ -1260,10 +1260,10 @@ PIX  *pixg, *pixm, *pixt, *pixd;
  */
 PIX *
 pixMakeAlphaFromMask(PIX     *pixs,
-                     l_int32  dist,
+                     int32_t  dist,
                      BOX    **pbox)
 {
-l_int32  w, h;
+int32_t  w, h;
 BOX     *box1, *box2;
 PIX     *pix1, *pixd;
 
@@ -1329,12 +1329,12 @@ l_ok
 pixGetColorNearMaskBoundary(PIX       *pixs,
                             PIX       *pixm,
                             BOX       *box,
-                            l_int32    dist,
-                            l_uint32  *pval,
-                            l_int32    debug)
+                            int32_t    dist,
+                            uint32_t  *pval,
+                            int32_t    debug)
 {
 char       op[64];
-l_int32    empty, bx, by;
+int32_t    empty, bx, by;
 l_float32  rval, gval, bval;
 BOX       *box1, *box2;
 PIX       *pix1, *pix2, *pix3;
@@ -1376,8 +1376,8 @@ PIX       *pix1, *pix2, *pix3;
         boxGetGeometry(box2, &bx, &by, NULL, NULL);
         pixGetAverageMaskedRGB(pixs, pix3, bx, by, 1, L_MEAN_ABSVAL,
                                &rval, &gval, &bval);
-        composeRGBPixel((l_int32)(rval + 0.5), (l_int32)(gval + 0.5),
-                        (l_int32)(bval + 0.5), pval);
+        composeRGBPixel((int32_t)(rval + 0.5), (int32_t)(gval + 0.5),
+                        (int32_t)(bval + 0.5), pval);
     } else {
         L_WARNING("no pixels found\n", __func__);
     }
@@ -1427,9 +1427,9 @@ PIX *
 pixDisplaySelectedPixels(PIX      *pixs,
                          PIX      *pixm,
                          SEL      *sel,
-                         l_uint32  val)
+                         uint32_t  val)
 {
-l_int32  w, h;
+int32_t  w, h;
 PIX     *pix1, *pix2;
 
     if (!pixm || pixGetDepth(pixm) != 1)
@@ -1718,7 +1718,7 @@ pixSubtract(PIX  *pixd,
             PIX  *pixs1,
             PIX  *pixs2)
 {
-l_int32  w, h;
+int32_t  w, h;
 
     if (!pixs1)
         return (PIX *)ERROR_PTR("pixs1 not defined", __func__, pixd);
@@ -1775,11 +1775,11 @@ l_int32  w, h;
  */
 l_ok
 pixZero(PIX      *pix,
-        l_int32  *pempty)
+        int32_t  *pempty)
 {
-l_int32    w, h, wpl, i, j, fullwords, endbits;
-l_uint32   endmask;
-l_uint32  *data, *line;
+int32_t    w, h, wpl, i, j, fullwords, endbits;
+uint32_t   endmask;
+uint32_t  *data, *line;
 
     if (!pempty)
         return ERROR_INT("&empty not defined", __func__, 1);
@@ -1825,7 +1825,7 @@ l_ok
 pixForegroundFraction(PIX        *pix,
                       l_float32  *pfract)
 {
-l_int32  w, h, count;
+int32_t  w, h, count;
 
     if (!pfract)
         return ERROR_INT("&fract not defined", __func__, 1);
@@ -1849,8 +1849,8 @@ l_int32  w, h, count;
 NUMA *
 pixaCountPixels(PIXA  *pixa)
 {
-l_int32   d, i, n, count;
-l_int32  *tab;
+int32_t   d, i, n, count;
+int32_t  *tab;
 NUMA     *na;
 PIX      *pix;
 
@@ -1891,14 +1891,14 @@ PIX      *pix;
  */
 l_ok
 pixCountPixels(PIX      *pixs,
-               l_int32  *pcount,
-               l_int32  *tab8)
+               int32_t  *pcount,
+               int32_t  *tab8)
 {
-l_uint32   endmask;
-l_int32    w, h, wpl, i, j;
-l_int32    fullwords, endbits, sum;
-l_int32   *tab;
-l_uint32  *data;
+uint32_t   endmask;
+int32_t    w, h, wpl, i, j;
+int32_t    fullwords, endbits, sum;
+int32_t   *tab;
+uint32_t  *data;
 
     if (!pcount)
         return ERROR_INT("&count not defined", __func__, 1);
@@ -1917,7 +1917,7 @@ l_uint32  *data;
     sum = 0;
     for (i = 0; i < h; i++, data += wpl) {
         for (j = 0; j < fullwords; j++) {
-            l_uint32 word = data[j];
+            uint32_t word = data[j];
             if (word) {
                 sum += tab[word & 0xff] +
                        tab[(word >> 8) & 0xff] +
@@ -1926,7 +1926,7 @@ l_uint32  *data;
             }
         }
         if (endbits) {
-            l_uint32 word = data[j] & endmask;
+            uint32_t word = data[j] & endmask;
             if (word) {
                 sum += tab[word & 0xff] +
                        tab[(word >> 8) & 0xff] +
@@ -1954,10 +1954,10 @@ l_uint32  *data;
 l_ok
 pixCountPixelsInRect(PIX      *pixs,
                      BOX      *box,
-                     l_int32  *pcount,
-                     l_int32  *tab8)
+                     int32_t  *pcount,
+                     int32_t  *tab8)
 {
-l_int32  w, h, bx, by, bw, bh;
+int32_t  w, h, bx, by, bw, bh;
 BOX     *box1;
 PIX     *pix1;
 
@@ -2002,8 +2002,8 @@ NUMA *
 pixCountByRow(PIX      *pix,
               BOX      *box)
 {
-l_int32    i, j, w, h, wpl, count, xstart, xend, ystart, yend, bw, bh;
-l_uint32  *line, *data;
+int32_t    i, j, w, h, wpl, count, xstart, xend, ystart, yend, bw, bh;
+uint32_t  *line, *data;
 NUMA      *na;
 
     if (!pix || pixGetDepth(pix) != 1)
@@ -2052,8 +2052,8 @@ NUMA *
 pixCountByColumn(PIX      *pix,
                  BOX      *box)
 {
-l_int32    i, j, w, h, wpl, count, xstart, xend, ystart, yend, bw, bh;
-l_uint32  *line, *data;
+int32_t    i, j, w, h, wpl, count, xstart, xend, ystart, yend, bw, bh;
+uint32_t  *line, *data;
 NUMA      *na;
 
     if (!pix || pixGetDepth(pix) != 1)
@@ -2094,10 +2094,10 @@ NUMA      *na;
  */
 NUMA *
 pixCountPixelsByRow(PIX      *pix,
-                    l_int32  *tab8)
+                    int32_t  *tab8)
 {
-l_int32   h, i, count;
-l_int32  *tab;
+int32_t   h, i, count;
+int32_t  *tab;
 NUMA     *na;
 
     if (!pix || pixGetDepth(pix) != 1)
@@ -2127,8 +2127,8 @@ NUMA     *na;
 NUMA *
 pixCountPixelsByColumn(PIX  *pix)
 {
-l_int32     i, j, w, h, wpl;
-l_uint32   *line, *data;
+int32_t     i, j, w, h, wpl;
+uint32_t   *line, *data;
 l_float32  *array;
 NUMA       *na;
 
@@ -2165,15 +2165,15 @@ NUMA       *na;
  */
 l_ok
 pixCountPixelsInRow(PIX      *pix,
-                    l_int32   row,
-                    l_int32  *pcount,
-                    l_int32  *tab8)
+                    int32_t   row,
+                    int32_t  *pcount,
+                    int32_t  *tab8)
 {
-l_uint32   word, endmask;
-l_int32    j, w, h, wpl;
-l_int32    fullwords, endbits, sum;
-l_int32   *tab;
-l_uint32  *line;
+uint32_t   word, endmask;
+int32_t    j, w, h, wpl;
+int32_t    fullwords, endbits, sum;
+int32_t   *tab;
+uint32_t  *line;
 
     if (!pcount)
         return ERROR_INT("&count not defined", __func__, 1);
@@ -2226,10 +2226,10 @@ l_uint32  *line;
  */
 NUMA *
 pixGetMomentByColumn(PIX     *pix,
-                     l_int32  order)
+                     int32_t  order)
 {
-l_int32     i, j, w, h, wpl;
-l_uint32   *line, *data;
+int32_t     i, j, w, h, wpl;
+uint32_t   *line, *data;
 l_float32  *array;
 NUMA       *na;
 
@@ -2282,15 +2282,15 @@ NUMA       *na;
  */
 l_ok
 pixThresholdPixelSum(PIX      *pix,
-                     l_int32   thresh,
-                     l_int32  *pabove,
-                     l_int32  *tab8)
+                     int32_t   thresh,
+                     int32_t  *pabove,
+                     int32_t  *tab8)
 {
-l_uint32   word, endmask;
-l_int32   *tab;
-l_int32    w, h, wpl, i, j;
-l_int32    fullwords, endbits, sum;
-l_uint32  *line, *data;
+uint32_t   word, endmask;
+int32_t   *tab;
+int32_t    w, h, wpl, i, j;
+int32_t    fullwords, endbits, sum;
+uint32_t  *line, *data;
 
     if (!pabove)
         return ERROR_INT("&above not defined", __func__, 1);
@@ -2342,7 +2342,7 @@ l_uint32  *line, *data;
 /*!
  * \brief   makePixelSumTab8()
  *
- * \return  table of 256 l_int32.
+ * \return  table of 256 int32_t.
  *
  * <pre>
  * Notes:
@@ -2350,16 +2350,16 @@ l_uint32  *line, *data;
  *          in the 8 bit index.
  * </pre>
  */
-l_int32 *
+int32_t *
 makePixelSumTab8(void)
 {
-l_uint8   byte;
-l_int32   i;
-l_int32  *tab;
+uint8_t   byte;
+int32_t   i;
+int32_t  *tab;
 
-    tab = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
+    tab = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
     for (i = 0; i < 256; i++) {
-        byte = (l_uint8)i;
+        byte = (uint8_t)i;
         tab[i] = (byte & 0x1) +
                  ((byte >> 1) & 0x1) +
                  ((byte >> 2) & 0x1) +
@@ -2376,7 +2376,7 @@ l_int32  *tab;
 /*!
  * \brief   makePixelCentroidTab8()
  *
- * \return  table of 256 l_int32.
+ * \return  table of 256 int32_t.
  *
  * <pre>
  * Notes:
@@ -2390,13 +2390,13 @@ l_int32  *tab;
  *          to have position 7.
  * </pre>
  */
-l_int32 *
+int32_t *
 makePixelCentroidTab8(void)
 {
-l_int32   i;
-l_int32  *tab;
+int32_t   i;
+int32_t  *tab;
 
-    tab = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
+    tab = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
     tab[0] = 0;
     tab[1] = 7;
     for (i = 2; i < 4; i++) {
@@ -2446,10 +2446,10 @@ l_int32  *tab;
 NUMA *
 pixAverageByRow(PIX     *pix,
                 BOX     *box,
-                l_int32  type)
+                int32_t  type)
 {
-l_int32    i, j, w, h, d, wpl, xstart, xend, ystart, yend, bw, bh;
-l_uint32  *line, *data;
+int32_t    i, j, w, h, d, wpl, xstart, xend, ystart, yend, bw, bh;
+uint32_t  *line, *data;
 l_float64  norm, sum;
 NUMA      *na;
 
@@ -2513,10 +2513,10 @@ NUMA      *na;
 NUMA *
 pixAverageByColumn(PIX     *pix,
                    BOX     *box,
-                   l_int32  type)
+                   int32_t  type)
 {
-l_int32     i, j, w, h, d, wpl, xstart, xend, ystart, yend, bw, bh;
-l_uint32   *line, *data;
+int32_t     i, j, w, h, d, wpl, xstart, xend, ystart, yend, bw, bh;
+uint32_t   *line, *data;
 l_float32   norm, sum;
 NUMA       *na;
 
@@ -2599,14 +2599,14 @@ l_ok
 pixAverageInRect(PIX        *pixs,
                  PIX        *pixm,
                  BOX        *box,
-                 l_int32     minval,
-                 l_int32     maxval,
-                 l_int32     subsamp,
+                 int32_t     minval,
+                 int32_t     maxval,
+                 int32_t     subsamp,
                  l_float32  *pave)
 {
-l_int32    w, h, d, wpls, wm, hm, dm, wplm, val, count;
-l_int32    i, j, xstart, xend, ystart, yend;
-l_uint32  *datas, *datam, *lines, *linem;
+int32_t    w, h, d, wpls, wm, hm, dm, wplm, val, count;
+int32_t    i, j, xstart, xend, ystart, yend;
+uint32_t  *datas, *datam, *lines, *linem;
 l_float64  sum;
 
     if (!pave)
@@ -2704,13 +2704,13 @@ l_ok
 pixAverageInRectRGB(PIX       *pixs,
                     PIX       *pixm,
                     BOX       *box,
-                    l_int32    subsamp,
-                    l_uint32  *pave)
+                    int32_t    subsamp,
+                    uint32_t  *pave)
 {
-l_int32    w, h, wpls, wm, hm, dm, wplm, i, j, xstart, xend, ystart, yend;
-l_int32    rval, gval, bval, rave, gave, bave, count;
-l_uint32  *datas, *datam, *lines, *linem;
-l_uint32   pixel;
+int32_t    w, h, wpls, wm, hm, dm, wplm, i, j, xstart, xend, ystart, yend;
+int32_t    rval, gval, bval, rave, gave, bave, count;
+uint32_t  *datas, *datam, *lines, *linem;
+uint32_t   pixel;
 l_float64  rsum, gsum, bsum;
 
     if (!pave)
@@ -2759,9 +2759,9 @@ l_float64  rsum, gsum, bsum;
 
     if (count == 0)
         return 2;  /* not an error */
-    rave = (l_uint32)(rsum / (l_float64)count);
-    gave = (l_uint32)(gsum / (l_float64)count);
-    bave = (l_uint32)(bsum / (l_float64)count);
+    rave = (uint32_t)(rsum / (l_float64)count);
+    gave = (uint32_t)(gsum / (l_float64)count);
+    bave = (uint32_t)(bsum / (l_float64)count);
     composeRGBPixel(rave, gave, bave, pave);
     return 0;
 }
@@ -2789,8 +2789,8 @@ NUMA *
 pixVarianceByRow(PIX     *pix,
                  BOX     *box)
 {
-l_int32     i, j, w, h, d, wpl, xstart, xend, ystart, yend, bw, bh, val;
-l_uint32   *line, *data;
+int32_t     i, j, w, h, d, wpl, xstart, xend, ystart, yend, bw, bh, val;
+uint32_t   *line, *data;
 l_float64   sum1, sum2, norm, ave, var, rootvar;
 NUMA       *na;
 
@@ -2852,8 +2852,8 @@ NUMA *
 pixVarianceByColumn(PIX     *pix,
                     BOX     *box)
 {
-l_int32     i, j, w, h, d, wpl, xstart, xend, ystart, yend, bw, bh, val;
-l_uint32   *line, *data;
+int32_t     i, j, w, h, d, wpl, xstart, xend, ystart, yend, bw, bh, val;
+uint32_t   *line, *data;
 l_float64   sum1, sum2, norm, ave, var, rootvar;
 NUMA       *na;
 
@@ -2909,8 +2909,8 @@ pixVarianceInRect(PIX        *pix,
                   BOX        *box,
                   l_float32  *prootvar)
 {
-l_int32    w, h, d, wpl, i, j, xstart, xend, ystart, yend, bw, bh, val;
-l_uint32  *data, *line;
+int32_t    w, h, d, wpl, i, j, xstart, xend, ystart, yend, bw, bh, val;
+uint32_t  *data, *line;
 l_float64  sum1, sum2, norm, ave, var;
 
     if (!prootvar)
@@ -2983,8 +2983,8 @@ NUMA *
 pixAbsDiffByRow(PIX  *pix,
                 BOX  *box)
 {
-l_int32    i, j, w, h, wpl, xstart, xend, ystart, yend, bw, bh, val0, val1;
-l_uint32  *line, *data;
+int32_t    i, j, w, h, wpl, xstart, xend, ystart, yend, bw, bh, val0, val1;
+uint32_t  *line, *data;
 l_float64  norm, sum;
 NUMA      *na;
 
@@ -3042,8 +3042,8 @@ NUMA *
 pixAbsDiffByColumn(PIX  *pix,
                    BOX  *box)
 {
-l_int32    i, j, w, h, wpl, xstart, xend, ystart, yend, bw, bh, val0, val1;
-l_uint32  *line, *data;
+int32_t    i, j, w, h, wpl, xstart, xend, ystart, yend, bw, bh, val0, val1;
+uint32_t  *line, *data;
 l_float64  norm, sum;
 NUMA      *na;
 
@@ -3102,11 +3102,11 @@ NUMA      *na;
 l_ok
 pixAbsDiffInRect(PIX        *pix,
                  BOX        *box,
-                 l_int32     dir,
+                 int32_t     dir,
                  l_float32  *pabsdiff)
 {
-l_int32    w, h, wpl, i, j, xstart, xend, ystart, yend, bw, bh, val0, val1;
-l_uint32  *data, *line;
+int32_t    w, h, wpl, i, j, xstart, xend, ystart, yend, bw, bh, val0, val1;
+uint32_t  *data, *line;
 l_float64  norm, sum;
 
     if (!pabsdiff)
@@ -3176,14 +3176,14 @@ l_float64  norm, sum;
  */
 l_ok
 pixAbsDiffOnLine(PIX        *pix,
-                 l_int32     x1,
-                 l_int32     y1,
-                 l_int32     x2,
-                 l_int32     y2,
+                 int32_t     x1,
+                 int32_t     y1,
+                 int32_t     x2,
+                 int32_t     y2,
                  l_float32  *pabsdiff)
 {
-l_int32    w, h, i, j, dir, size, sum;
-l_uint32   val0, val1;
+int32_t    w, h, i, j, dir, size, sum;
+uint32_t   val0, val1;
 
     if (!pabsdiff)
         return ERROR_INT("&absdiff not defined", __func__, 1);
@@ -3211,7 +3211,7 @@ l_uint32   val0, val1;
         pixGetPixel(pix, x1, y1, &val0);
         for (j = x1 + 1; j <= x2; j++) {
             pixGetPixel(pix, j, y1, &val1);
-            sum += L_ABS((l_int32)val1 - (l_int32)val0);
+            sum += L_ABS((int32_t)val1 - (int32_t)val0);
             val0 = val1;
         }
     } else {  /* vertical */
@@ -3223,7 +3223,7 @@ l_uint32   val0, val1;
         pixGetPixel(pix, x1, y1, &val0);
         for (i = y1 + 1; i <= y2; i++) {
             pixGetPixel(pix, x1, i, &val1);
-            sum += L_ABS((l_int32)val1 - (l_int32)val0);
+            sum += L_ABS((int32_t)val1 - (int32_t)val0);
             val0 = val1;
         }
     }
@@ -3254,15 +3254,15 @@ l_uint32   val0, val1;
  *          If %factor > 1, multiply the count by %factor * %factor.
  * </pre>
  */
-l_int32
+int32_t
 pixCountArbInRect(PIX      *pixs,
                   BOX      *box,
-                  l_int32   val,
-                  l_int32   factor,
-                  l_int32  *pcount)
+                  int32_t   val,
+                  int32_t   factor,
+                  int32_t  *pcount)
 {
-l_int32    i, j, bx, by, bw, bh, w, h, d, wpl, pixval;
-l_uint32  *data, *line;
+int32_t    i, j, bx, by, bw, bh, w, h, d, wpl, pixval;
+uint32_t  *data, *line;
 
     if (!pcount)
         return ERROR_INT("&count not defined", __func__, 1);
@@ -3353,10 +3353,10 @@ l_uint32  *data, *line;
  */
 PIX *
 pixMirroredTiling(PIX     *pixs,
-                  l_int32  w,
-                  l_int32  h)
+                  int32_t  w,
+                  int32_t  h)
 {
-l_int32   wt, ht, d, i, j, nx, ny;
+int32_t   wt, ht, d, i, j, nx, ny;
 PIX      *pixd, *pixsfx, *pixsfy, *pixsfxy, *pix;
 
     if (!pixs)
@@ -3427,14 +3427,14 @@ PIX      *pixd, *pixsfx, *pixsfy, *pixsfxy, *pix;
 l_ok
 pixFindRepCloseTile(PIX     *pixs,
                     BOX     *box,
-                    l_int32  searchdir,
-                    l_int32  mindist,
-                    l_int32  tsize,
-                    l_int32  ntiles,
+                    int32_t  searchdir,
+                    int32_t  mindist,
+                    int32_t  tsize,
+                    int32_t  ntiles,
                     BOX    **pboxtile,
-                    l_int32  debug)
+                    int32_t  debug)
 {
-l_int32    w, h, i, n, bestindex;
+int32_t    w, h, i, n, bestindex;
 l_float32  var_of_mean, median_of_mean, median_of_stdev, mean_val, stdev_val;
 l_float32  mindels, bestdelm, delm, dels, mean, stdev;
 BOXA      *boxa;
@@ -3559,15 +3559,15 @@ PIXA      *pixa;
  */
 static BOXA *
 findTileRegionsForSearch(BOX     *box,
-                         l_int32  w,
-                         l_int32  h,
-                         l_int32  searchdir,
-                         l_int32  mindist,
-                         l_int32  tsize,
-                         l_int32  ntiles)
+                         int32_t  w,
+                         int32_t  h,
+                         int32_t  searchdir,
+                         int32_t  mindist,
+                         int32_t  tsize,
+                         int32_t  ntiles)
 {
-l_int32  bx, by, bw, bh, left, right, top, bot, i, j, nrows, ncols;
-l_int32  x0, y0, x, y, w_avail, w_needed, h_avail, h_needed, t_avail;
+int32_t  bx, by, bw, bh, left, right, top, bot, i, j, nrows, ncols;
+int32_t  x0, y0, x, y, w_avail, w_needed, h_avail, h_needed, t_avail;
 BOX     *box1;
 BOXA    *boxa;
 

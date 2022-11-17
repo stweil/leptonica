@@ -39,46 +39,46 @@
  *           NUMA       *pixGetGrayHistogramMasked()
  *           NUMA       *pixGetGrayHistogramInRect()
  *           NUMAA      *pixGetGrayHistogramTiled()
- *           l_int32     pixGetColorHistogram()
- *           l_int32     pixGetColorHistogramMasked()
+ *           int32_t     pixGetColorHistogram()
+ *           int32_t     pixGetColorHistogramMasked()
  *           NUMA       *pixGetCmapHistogram()
  *           NUMA       *pixGetCmapHistogramMasked()
  *           NUMA       *pixGetCmapHistogramInRect()
- *           l_int32     pixCountRGBColorsByHash()
- *           l_int32     pixCountRGBColors()
+ *           int32_t     pixCountRGBColorsByHash()
+ *           int32_t     pixCountRGBColors()
  *           L_AMAP     *pixGetColorAmapHistogram()
- *           l_int32     amapGetCountForColor()
- *           l_int32     pixGetRankValue()
- *           l_int32     pixGetRankValueMaskedRGB()
- *           l_int32     pixGetRankValueMasked()
- *           l_int32     pixGetPixelAverage()
- *           l_int32     pixGetPixelStats()
- *           l_int32     pixGetAverageMaskedRGB()
- *           l_int32     pixGetAverageMasked()
- *           l_int32     pixGetAverageTiledRGB()
+ *           int32_t     amapGetCountForColor()
+ *           int32_t     pixGetRankValue()
+ *           int32_t     pixGetRankValueMaskedRGB()
+ *           int32_t     pixGetRankValueMasked()
+ *           int32_t     pixGetPixelAverage()
+ *           int32_t     pixGetPixelStats()
+ *           int32_t     pixGetAverageMaskedRGB()
+ *           int32_t     pixGetAverageMasked()
+ *           int32_t     pixGetAverageTiledRGB()
  *           PIX        *pixGetAverageTiled()
  *           NUMA       *pixRowStats()
  *           NUMA       *pixColumnStats()
- *           l_int32     pixGetRangeValues()
- *           l_int32     pixGetExtremeValue()
- *           l_int32     pixGetMaxValueInRect()
- *           l_int32     pixGetMaxColorIndex()
- *           l_int32     pixGetBinnedComponentRange()
- *           l_int32     pixGetRankColorArray()
- *           l_int32     pixGetBinnedColor()
+ *           int32_t     pixGetRangeValues()
+ *           int32_t     pixGetExtremeValue()
+ *           int32_t     pixGetMaxValueInRect()
+ *           int32_t     pixGetMaxColorIndex()
+ *           int32_t     pixGetBinnedComponentRange()
+ *           int32_t     pixGetRankColorArray()
+ *           int32_t     pixGetBinnedColor()
  *           PIX        *pixDisplayColorArray()
  *           PIX        *pixRankBinByStrip()
  *
  *    Pixelwise aligned statistics
  *           PIX        *pixaGetAlignedStats()
- *           l_int32     pixaExtractColumnFromEachPix()
- *           l_int32     pixGetRowStats()
- *           l_int32     pixGetColumnStats()
- *           l_int32     pixSetPixelColumn()
+ *           int32_t     pixaExtractColumnFromEachPix()
+ *           int32_t     pixGetRowStats()
+ *           int32_t     pixGetColumnStats()
+ *           int32_t     pixSetPixelColumn()
  *
  *    Foreground/background estimation
- *           l_int32     pixThresholdForFgBg()
- *           l_int32     pixSplitDistributionFgBg()
+ *           int32_t     pixThresholdForFgBg()
+ *           int32_t     pixSplitDistributionFgBg()
  * </pre>
  */
 
@@ -113,10 +113,10 @@
  */
 NUMA *
 pixGetGrayHistogram(PIX     *pixs,
-                    l_int32  factor)
+                    int32_t  factor)
 {
-l_int32     i, j, w, h, d, wpl, val, size, count;
-l_uint32   *data, *line;
+int32_t     i, j, w, h, d, wpl, val, size, count;
+uint32_t   *data, *line;
 l_float32  *array;
 NUMA       *na;
 PIX        *pixg;
@@ -208,12 +208,12 @@ PIX        *pixg;
 NUMA *
 pixGetGrayHistogramMasked(PIX        *pixs,
                           PIX        *pixm,
-                          l_int32     x,
-                          l_int32     y,
-                          l_int32     factor)
+                          int32_t     x,
+                          int32_t     y,
+                          int32_t     factor)
 {
-l_int32     i, j, w, h, wm, hm, dm, wplg, wplm, val;
-l_uint32   *datag, *datam, *lineg, *linem;
+int32_t     i, j, w, h, wm, hm, dm, wplg, wplm, val;
+uint32_t   *datag, *datam, *lineg, *linem;
 l_float32  *array;
 NUMA       *na;
 PIX        *pixg;
@@ -286,10 +286,10 @@ PIX        *pixg;
 NUMA *
 pixGetGrayHistogramInRect(PIX     *pixs,
                           BOX     *box,
-                          l_int32  factor)
+                          int32_t  factor)
 {
-l_int32     i, j, bx, by, bw, bh, w, h, wplg, val;
-l_uint32   *datag, *lineg;
+int32_t     i, j, bx, by, bw, bh, w, h, wplg, val;
+uint32_t   *datag, *lineg;
 l_float32  *array;
 NUMA       *na;
 PIX        *pixg;
@@ -351,11 +351,11 @@ PIX        *pixg;
  */
 NUMAA *
 pixGetGrayHistogramTiled(PIX     *pixs,
-                         l_int32  factor,
-                         l_int32  nx,
-                         l_int32  ny)
+                         int32_t  factor,
+                         int32_t  nx,
+                         int32_t  ny)
 {
-l_int32  i, n;
+int32_t  i, n;
 NUMA    *na;
 NUMAA   *naa;
 PIX     *pix1, *pix2;
@@ -406,13 +406,13 @@ PIXA    *pixa;
  */
 l_ok
 pixGetColorHistogram(PIX     *pixs,
-                     l_int32  factor,
+                     int32_t  factor,
                      NUMA   **pnar,
                      NUMA   **pnag,
                      NUMA   **pnab)
 {
-l_int32     i, j, w, h, d, wpl, index, rval, gval, bval;
-l_uint32   *data, *line;
+int32_t     i, j, w, h, d, wpl, index, rval, gval, bval;
+uint32_t   *data, *line;
 l_float32  *rarray, *garray, *barray;
 NUMA       *nar, *nag, *nab;
 PIXCMAP    *cmap;
@@ -507,15 +507,15 @@ PIXCMAP    *cmap;
 l_ok
 pixGetColorHistogramMasked(PIX        *pixs,
                            PIX        *pixm,
-                           l_int32     x,
-                           l_int32     y,
-                           l_int32     factor,
+                           int32_t     x,
+                           int32_t     y,
+                           int32_t     factor,
                            NUMA      **pnar,
                            NUMA      **pnag,
                            NUMA      **pnab)
 {
-l_int32     i, j, w, h, d, wm, hm, dm, wpls, wplm, index, rval, gval, bval;
-l_uint32   *datas, *datam, *lines, *linem;
+int32_t     i, j, w, h, d, wm, hm, dm, wpls, wplm, index, rval, gval, bval;
+uint32_t   *datas, *datam, *lines, *linem;
 l_float32  *rarray, *garray, *barray;
 NUMA       *nar, *nag, *nab;
 PIXCMAP    *cmap;
@@ -619,10 +619,10 @@ PIXCMAP    *cmap;
  */
 NUMA *
 pixGetCmapHistogram(PIX     *pixs,
-                    l_int32  factor)
+                    int32_t  factor)
 {
-l_int32     i, j, w, h, d, wpl, val, size;
-l_uint32   *data, *line;
+int32_t     i, j, w, h, d, wpl, val, size;
+uint32_t   *data, *line;
 l_float32  *array;
 NUMA       *na;
 
@@ -683,12 +683,12 @@ NUMA       *na;
 NUMA *
 pixGetCmapHistogramMasked(PIX     *pixs,
                           PIX     *pixm,
-                          l_int32  x,
-                          l_int32  y,
-                          l_int32  factor)
+                          int32_t  x,
+                          int32_t  y,
+                          int32_t  factor)
 {
-l_int32     i, j, w, h, d, wm, hm, dm, wpls, wplm, val, size;
-l_uint32   *datas, *datam, *lines, *linem;
+int32_t     i, j, w, h, d, wm, hm, dm, wpls, wplm, val, size;
+uint32_t   *datas, *datam, *lines, *linem;
 l_float32  *array;
 NUMA       *na;
 
@@ -761,10 +761,10 @@ NUMA       *na;
 NUMA *
 pixGetCmapHistogramInRect(PIX     *pixs,
                           BOX     *box,
-                          l_int32  factor)
+                          int32_t  factor)
 {
-l_int32     i, j, bx, by, bw, bh, w, h, d, wpls, val, size;
-l_uint32   *datas, *lines;
+int32_t     i, j, bx, by, bw, bh, w, h, d, wpls, val, size;
+uint32_t   *datas, *lines;
 l_float32  *array;
 NUMA       *na;
 
@@ -824,7 +824,7 @@ NUMA       *na;
  */
 l_ok
 pixCountRGBColorsByHash(PIX      *pixs,
-                        l_int32  *pncolors)
+                        int32_t  *pncolors)
 {
 L_DNA  *da1, *da2;
 
@@ -858,8 +858,8 @@ L_DNA  *da1, *da2;
  */
 l_ok
 pixCountRGBColors(PIX      *pixs,
-                  l_int32   factor,
-                  l_int32  *pncolors)
+                  int32_t   factor,
+                  int32_t  *pncolors)
 {
 L_AMAP  *amap;
 
@@ -892,10 +892,10 @@ L_AMAP  *amap;
  */
 L_AMAP  *
 pixGetColorAmapHistogram(PIX     *pixs,
-                         l_int32  factor)
+                         int32_t  factor)
 {
-l_int32    i, j, w, h, wpl;
-l_uint32  *data, *line;
+int32_t    i, j, w, h, wpl;
+uint32_t  *data, *line;
 L_AMAP    *amap;
 RB_TYPE    key, value;
 RB_TYPE   *pval;
@@ -939,9 +939,9 @@ RB_TYPE   *pval;
  *      (1) The ordered map is made by pixGetColorAmapHistogram().
  * </pre>
  */
-l_int32
+int32_t
 amapGetCountForColor(L_AMAP   *amap,
-                     l_uint32  val)
+                     uint32_t  val)
 {
 RB_TYPE   key;
 RB_TYPE  *pval;
@@ -978,11 +978,11 @@ RB_TYPE  *pval;
  */
 l_ok
 pixGetRankValue(PIX       *pixs,
-                l_int32    factor,
+                int32_t    factor,
                 l_float32  rank,
-                l_uint32  *pvalue)
+                uint32_t  *pvalue)
 {
-l_int32    d;
+int32_t    d;
 l_float32  val, rval, gval, bval;
 PIX       *pixt;
 PIXCMAP   *cmap;
@@ -1047,9 +1047,9 @@ PIXCMAP   *cmap;
 l_ok
 pixGetRankValueMaskedRGB(PIX        *pixs,
                          PIX        *pixm,
-                         l_int32     x,
-                         l_int32     y,
-                         l_int32     factor,
+                         int32_t     x,
+                         int32_t     y,
+                         int32_t     factor,
                          l_float32   rank,
                          l_float32  *prval,
                          l_float32  *pgval,
@@ -1137,9 +1137,9 @@ PIX       *pixmt, *pixt;
 l_ok
 pixGetRankValueMasked(PIX        *pixs,
                       PIX        *pixm,
-                      l_int32     x,
-                      l_int32     y,
-                      l_int32     factor,
+                      int32_t     x,
+                      int32_t     y,
+                      int32_t     factor,
                       l_float32   rank,
                       l_float32  *pval,
                       NUMA      **pna)
@@ -1206,13 +1206,13 @@ NUMA  *na;
 l_ok
 pixGetPixelAverage(PIX       *pixs,
                    PIX       *pixm,
-                   l_int32    x,
-                   l_int32    y,
-                   l_int32    factor,
-                   l_uint32  *pval)
+                   int32_t    x,
+                   int32_t    y,
+                   int32_t    factor,
+                   uint32_t  *pval)
 {
-l_int32    i, j, w, h, d, wm, hm, wpl1, wplm, val, rval, gval, bval, count;
-l_uint32  *data1, *datam, *line1, *linem;
+int32_t    i, j, w, h, d, wm, hm, wpl1, wplm, val, rval, gval, bval, count;
+uint32_t  *data1, *datam, *line1, *linem;
 l_float64  sum, rsum, gsum, bsum;
 PIX       *pix1;
 
@@ -1289,11 +1289,11 @@ PIX       *pix1;
     if (count == 0)
         return ERROR_INT("no pixels sampled", __func__, 1);
     if (d == 8) {
-        *pval = (l_uint32)(sum / (l_float64)count);
+        *pval = (uint32_t)(sum / (l_float64)count);
     } else {  /* d == 32 */
-        rval = (l_uint32)(rsum / (l_float64)count);
-        gval = (l_uint32)(gsum / (l_float64)count);
-        bval = (l_uint32)(bsum / (l_float64)count);
+        rval = (uint32_t)(rsum / (l_float64)count);
+        gval = (uint32_t)(gsum / (l_float64)count);
+        bval = (uint32_t)(bsum / (l_float64)count);
         composeRGBPixel(rval, gval, bval, pval);
     }
 
@@ -1321,11 +1321,11 @@ PIX       *pix1;
  */
 l_ok
 pixGetPixelStats(PIX       *pixs,
-                 l_int32    factor,
-                 l_int32    type,
-                 l_uint32  *pvalue)
+                 int32_t    factor,
+                 int32_t    type,
+                 uint32_t  *pvalue)
 {
-l_int32    d;
+int32_t    d;
 l_float32  val, rval, gval, bval;
 PIX       *pixt;
 PIXCMAP   *cmap;
@@ -1387,15 +1387,15 @@ PIXCMAP   *cmap;
 l_ok
 pixGetAverageMaskedRGB(PIX        *pixs,
                        PIX        *pixm,
-                       l_int32     x,
-                       l_int32     y,
-                       l_int32     factor,
-                       l_int32     type,
+                       int32_t     x,
+                       int32_t     y,
+                       int32_t     factor,
+                       int32_t     type,
                        l_float32  *prval,
                        l_float32  *pgval,
                        l_float32  *pbval)
 {
-l_int32   empty;
+int32_t   empty;
 PIX      *pixt;
 PIXCMAP  *cmap;
 
@@ -1487,14 +1487,14 @@ PIXCMAP  *cmap;
 l_ok
 pixGetAverageMasked(PIX        *pixs,
                     PIX        *pixm,
-                    l_int32     x,
-                    l_int32     y,
-                    l_int32     factor,
-                    l_int32     type,
+                    int32_t     x,
+                    int32_t     y,
+                    int32_t     factor,
+                    int32_t     type,
                     l_float32  *pval)
 {
-l_int32    i, j, w, h, d, wm, hm, wplg, wplm, val, count, empty;
-l_uint32  *datag, *datam, *lineg, *linem;
+int32_t    i, j, w, h, d, wm, hm, wplg, wplm, val, count, empty;
+uint32_t  *datag, *datam, *lineg, *linem;
 l_float64  sumave, summs, ave, meansq, var;
 PIX       *pixg;
 
@@ -1608,9 +1608,9 @@ PIX       *pixg;
  */
 l_ok
 pixGetAverageTiledRGB(PIX     *pixs,
-                      l_int32  sx,
-                      l_int32  sy,
-                      l_int32  type,
+                      int32_t  sx,
+                      int32_t  sy,
+                      int32_t  type,
                       PIX    **ppixr,
                       PIX    **ppixg,
                       PIX    **ppixb)
@@ -1683,12 +1683,12 @@ PIXCMAP  *cmap;
  */
 PIX *
 pixGetAverageTiled(PIX     *pixs,
-                   l_int32  sx,
-                   l_int32  sy,
-                   l_int32  type)
+                   int32_t  sx,
+                   int32_t  sy,
+                   int32_t  type)
 {
-l_int32    i, j, k, m, w, h, wd, hd, d, pos, wplt, wpld, valt;
-l_uint32  *datat, *datad, *linet, *lined, *startt;
+int32_t    i, j, k, m, w, h, wd, hd, d, pos, wplt, wpld, valt;
+uint32_t  *datat, *datad, *linet, *lined, *startt;
 l_float64  sumave, summs, ave, meansq, normfact;
 PIX       *pixt, *pixd;
 
@@ -1743,11 +1743,11 @@ PIX       *pixt, *pixd;
                 meansq = normfact * summs;
             }
             if (type == L_MEAN_ABSVAL)
-                valt = (l_int32)(ave + 0.5);
+                valt = (int32_t)(ave + 0.5);
             else if (type == L_ROOT_MEAN_SQUARE)
-                valt = (l_int32)(sqrt(meansq) + 0.5);
+                valt = (int32_t)(sqrt(meansq) + 0.5);
             else  /* type == L_STANDARD_DEVIATION */
-                valt = (l_int32)(sqrt(meansq - ave * ave) + 0.5);
+                valt = (int32_t)(sqrt(meansq - ave * ave) + 0.5);
             SET_DATA_BYTE(lined, j, valt);
         }
     }
@@ -1782,7 +1782,7 @@ PIX       *pixt, *pixd;
  *             pixGetRowStats()
  * </pre>
  */
-l_int32
+int32_t
 pixRowStats(PIX    *pixs,
             BOX    *box,
             NUMA  **pnamean,
@@ -1792,10 +1792,10 @@ pixRowStats(PIX    *pixs,
             NUMA  **pnavar,
             NUMA  **pnarootvar)
 {
-l_int32     i, j, k, w, h, val, wpls, sum, sumsq, target, max, modeval;
-l_int32     xstart, xend, ystart, yend, bw, bh;
-l_int32    *histo;
-l_uint32   *lines, *datas;
+int32_t     i, j, k, w, h, val, wpls, sum, sumsq, target, max, modeval;
+int32_t     xstart, xend, ystart, yend, bw, bh;
+int32_t    *histo;
+uint32_t   *lines, *datas;
 l_float32   norm;
 l_float32  *famean, *fameansq, *favar, *farootvar;
 l_float32  *famedian, *famode, *famodecount;
@@ -1859,7 +1859,7 @@ l_float32  *famedian, *famode, *famodecount;
 
         /* We need a histogram to find the median and/or mode values */
     if (pnamedian || pnamode || pnamodecount) {
-        histo = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
+        histo = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
         if (pnamedian) {
             *pnamedian = numaMakeConstant(0, bh);
             famedian = numaGetFArray(*pnamedian, L_NOCOPY);
@@ -1940,7 +1940,7 @@ l_float32  *famedian, *famode, *famodecount;
  *             pixGetColumnStats()
  * </pre>
  */
-l_int32
+int32_t
 pixColumnStats(PIX    *pixs,
                BOX    *box,
                NUMA  **pnamean,
@@ -1950,10 +1950,10 @@ pixColumnStats(PIX    *pixs,
                NUMA  **pnavar,
                NUMA  **pnarootvar)
 {
-l_int32     i, j, k, w, h, val, wpls, sum, sumsq, target, max, modeval;
-l_int32     xstart, xend, ystart, yend, bw, bh;
-l_int32    *histo;
-l_uint32   *lines, *datas;
+int32_t     i, j, k, w, h, val, wpls, sum, sumsq, target, max, modeval;
+int32_t     xstart, xend, ystart, yend, bw, bh;
+int32_t    *histo;
+uint32_t   *lines, *datas;
 l_float32   norm;
 l_float32  *famean, *fameansq, *favar, *farootvar;
 l_float32  *famedian, *famode, *famodecount;
@@ -2016,7 +2016,7 @@ l_float32  *famedian, *famode, *famodecount;
 
         /* We need a histogram to find the median and/or mode values */
     if (pnamedian || pnamode || pnamodecount) {
-        histo = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
+        histo = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
         if (pnamedian) {
             *pnamedian = numaMakeConstant(0, bw);
             famedian = numaGetFArray(*pnamedian, L_NOCOPY);
@@ -2087,12 +2087,12 @@ l_float32  *famedian, *famode, *famodecount;
  */
 l_ok
 pixGetRangeValues(PIX      *pixs,
-                  l_int32   factor,
-                  l_int32   color,
-                  l_int32  *pminval,
-                  l_int32  *pmaxval)
+                  int32_t   factor,
+                  int32_t   color,
+                  int32_t  *pminval,
+                  int32_t  *pmaxval)
 {
-l_int32   d;
+int32_t   d;
 PIXCMAP  *cmap;
 
     if (pminval) *pminval = 0;
@@ -2163,17 +2163,17 @@ PIXCMAP  *cmap;
  */
 l_ok
 pixGetExtremeValue(PIX      *pixs,
-                   l_int32   factor,
-                   l_int32   type,
-                   l_int32  *prval,
-                   l_int32  *pgval,
-                   l_int32  *pbval,
-                   l_int32  *pgrayval)
+                   int32_t   factor,
+                   int32_t   type,
+                   int32_t  *prval,
+                   int32_t  *pgval,
+                   int32_t  *pbval,
+                   int32_t  *pgrayval)
 {
-l_int32    i, j, w, h, d, wpl;
-l_int32    val, extval, rval, gval, bval, extrval, extgval, extbval;
-l_uint32   pixel;
-l_uint32  *data, *line;
+int32_t    i, j, w, h, d, wpl;
+int32_t    val, extval, rval, gval, bval, extrval, extgval, extbval;
+uint32_t   pixel;
+uint32_t  *data, *line;
 PIXCMAP   *cmap;
 
     if (prval) *prval = -1;
@@ -2299,14 +2299,14 @@ PIXCMAP   *cmap;
 l_ok
 pixGetMaxValueInRect(PIX       *pixs,
                      BOX       *box,
-                     l_uint32  *pmaxval,
-                     l_int32   *pxmax,
-                     l_int32   *pymax)
+                     uint32_t  *pmaxval,
+                     int32_t   *pxmax,
+                     int32_t   *pymax)
 {
-l_int32    i, j, w, h, d, wpl, bw, bh;
-l_int32    xstart, ystart, xend, yend, xmax, ymax;
-l_uint32   val, maxval;
-l_uint32  *data, *line;
+int32_t    i, j, w, h, d, wpl, bw, bh;
+int32_t    xstart, ystart, xend, yend, xmax, ymax;
+uint32_t   val, maxval;
+uint32_t  *data, *line;
 
     if (pmaxval) *pmaxval = 0;
     if (pxmax) *pxmax = 0;
@@ -2371,10 +2371,10 @@ l_uint32  *data, *line;
  */
 l_ok
 pixGetMaxColorIndex(PIX      *pixs,
-                    l_int32  *pmaxindex)
+                    int32_t  *pmaxindex)
 {
-l_int32    i, j, w, h, d, wpl, val, max, maxval, empty;
-l_uint32  *data, *line;
+int32_t    i, j, w, h, d, wpl, val, max, maxval, empty;
+uint32_t  *data, *line;
 
     if (!pmaxindex)
         return ERROR_INT("&maxindex not defined", __func__, 1);
@@ -2443,16 +2443,16 @@ l_uint32  *data, *line;
  */
 l_ok
 pixGetBinnedComponentRange(PIX        *pixs,
-                           l_int32     nbins,
-                           l_int32     factor,
-                           l_int32     color,
-                           l_int32    *pminval,
-                           l_int32    *pmaxval,
-                           l_uint32  **pcarray,
-                           l_int32     fontsize)
+                           int32_t     nbins,
+                           int32_t     factor,
+                           int32_t     color,
+                           int32_t    *pminval,
+                           int32_t    *pmaxval,
+                           uint32_t  **pcarray,
+                           int32_t     fontsize)
 {
-l_int32    i, minval, maxval, rval, gval, bval;
-l_uint32  *carray;
+int32_t    i, minval, maxval, rval, gval, bval;
+uint32_t  *carray;
 PIX       *pixt;
 
     if (pminval) *pminval = 0;
@@ -2533,22 +2533,22 @@ PIX       *pixt;
  *          computation.  Typically you want at least 10,000 pixels
  *          for reasonable statistics.  Must be at least 10 samples/bin.
  *      (4) A crude "rank color" as a function of rank can be found from
- *             rankint = (l_int32)(rank * (nbins - 1) + 0.5);
+ *             rankint = (int32_t)(rank * (nbins - 1) + 0.5);
  *             extractRGBValues(array[rankint], &rval, &gval, &bval);
  *          where the rank is in [0.0 ... 1.0].
  * </pre>
  */
 l_ok
 pixGetRankColorArray(PIX        *pixs,
-                     l_int32     nbins,
-                     l_int32     type,
-                     l_int32     factor,
-                     l_uint32  **pcarray,
+                     int32_t     nbins,
+                     int32_t     type,
+                     int32_t     factor,
+                     uint32_t  **pcarray,
                      PIXA       *pixadb,
-                     l_int32     fontsize)
+                     int32_t     fontsize)
 {
-l_int32    ret, w, h, samplesperbin;
-l_uint32  *array;
+int32_t    ret, w, h, samplesperbin;
+uint32_t  *array;
 PIX       *pix1, *pixc, *pixg, *pixd;
 PIXCMAP   *cmap;
 
@@ -2633,7 +2633,7 @@ PIXCMAP   *cmap;
  *          of requested bins.  The pixels are ordered by the corresponding
  *          gray value and an equal number of pixels are put in each bin.
  *          The average color for each bin is returned as an array
- *          of l_uint32 colors in our standard RGBA ordering.  We require
+ *          of uint32_t colors in our standard RGBA ordering.  We require
  *          at least 5 pixels in each bin.
  *      (2) This is used by pixGetRankColorArray(), which generates the
  *          grayscale image %pixg from the color image %pixs.
@@ -2644,15 +2644,15 @@ PIXCMAP   *cmap;
 l_ok
 pixGetBinnedColor(PIX        *pixs,
                   PIX        *pixg,
-                  l_int32     factor,
-                  l_int32     nbins,
-                  l_uint32  **pcarray,
+                  int32_t     factor,
+                  int32_t     nbins,
+                  uint32_t  **pcarray,
                   PIXA       *pixadb)
 {
-l_int32     i, j, k, w, h, wpls, wplg;
-l_int32     count, bincount, binindex, binsize, npts, avepts, ntot;
-l_int32     rval, gval, bval, grayval, rave, gave, bave;
-l_uint32   *datas, *datag, *lines, *lineg, *carray;
+int32_t     i, j, k, w, h, wpls, wplg;
+int32_t     count, bincount, binindex, binsize, npts, avepts, ntot;
+int32_t     rval, gval, bval, grayval, rave, gave, bave;
+uint32_t   *datas, *datag, *lines, *lineg, *carray;
 l_float64   val64, rsum, gsum, bsum;
 L_DNAA     *daa;
 NUMA       *naeach;
@@ -2729,7 +2729,7 @@ PIX        *pix1;
 
         /* Get the average color in each bin.  This algorithm is
          * esssentially the same as in numaDiscretizeHistoInBins() */
-    carray = (l_uint32 *)LEPT_CALLOC(nbins, sizeof(l_uint32));
+    carray = (uint32_t *)LEPT_CALLOC(nbins, sizeof(uint32_t));
     rsum = gsum = bsum = 0.0;
     bincount = 0;
     binindex = 0;
@@ -2741,14 +2741,14 @@ PIX        *pix1;
             k++;
             bincount++;
             l_dnaaGetValue(daa, i, j, &val64);
-            extractRGBValues((l_uint32)val64, &rval, &gval, &bval);
+            extractRGBValues((uint32_t)val64, &rval, &gval, &bval);
             rsum += rval;
             gsum += gval;
             bsum += bval;
             if (bincount == binsize) {  /* add bin entry */
-                rave = (l_int32)(rsum / binsize + 0.5);
-                gave = (l_int32)(gsum / binsize + 0.5);
-                bave = (l_int32)(bsum / binsize + 0.5);
+                rave = (int32_t)(rsum / binsize + 0.5);
+                gave = (int32_t)(gsum / binsize + 0.5);
+                bave = (int32_t)(bsum / binsize + 0.5);
                 composeRGBPixel(rave, gave, bave, carray + binindex);
                 rsum = gsum = bsum = 0.0;
                 bincount = 0;
@@ -2812,14 +2812,14 @@ PIX        *pix1;
  * </pre>
  */
 PIX *
-pixDisplayColorArray(l_uint32  *carray,
-                     l_int32    ncolors,
-                     l_int32    side,
-                     l_int32    ncols,
-                     l_int32    fontsize)
+pixDisplayColorArray(uint32_t  *carray,
+                     int32_t    ncolors,
+                     int32_t    side,
+                     int32_t    ncols,
+                     int32_t    fontsize)
 {
 char     textstr[256];
-l_int32  i, rval, gval, bval;
+int32_t  i, rval, gval, bval;
 L_BMF   *bmf;
 PIX     *pix1, *pix2, *pix3, *pix4;
 PIXA    *pixa;
@@ -2887,13 +2887,13 @@ PIXA    *pixa;
  */
 PIX *
 pixRankBinByStrip(PIX     *pixs,
-                  l_int32  direction,
-                  l_int32  size,
-                  l_int32  nbins,
-                  l_int32  type)
+                  int32_t  direction,
+                  int32_t  size,
+                  int32_t  nbins,
+                  int32_t  type)
 {
-l_int32    i, j, w, h, mindim, nstrips;
-l_uint32  *array;
+int32_t    i, j, w, h, mindim, nstrips;
+uint32_t  *array;
 BOXA      *boxa;
 PIX       *pix1, *pix2, *pixd;
 PIXA      *pixa;
@@ -2992,11 +2992,11 @@ PIXCMAP   *cmap;
  */
 PIX *
 pixaGetAlignedStats(PIXA     *pixa,
-                    l_int32   type,
-                    l_int32   nbins,
-                    l_int32   thresh)
+                    int32_t   type,
+                    int32_t   nbins,
+                    int32_t   thresh)
 {
-l_int32     j, n, w, h, d;
+int32_t     j, n, w, h, d;
 l_float32  *colvect;
 PIX        *pixt, *pixd;
 
@@ -3037,11 +3037,11 @@ PIX        *pixt, *pixd;
  */
 l_ok
 pixaExtractColumnFromEachPix(PIXA    *pixa,
-                             l_int32  col,
+                             int32_t  col,
                              PIX     *pixd)
 {
-l_int32    i, k, n, w, h, ht, val, wplt, wpld;
-l_uint32  *datad, *datat;
+int32_t    i, k, n, w, h, ht, val, wplt, wpld;
+uint32_t  *datad, *datat;
 PIX       *pixt;
 
     if (!pixa)
@@ -3110,14 +3110,14 @@ PIX       *pixt;
  */
 l_ok
 pixGetRowStats(PIX        *pixs,
-               l_int32     type,
-               l_int32     nbins,
-               l_int32     thresh,
+               int32_t     type,
+               int32_t     nbins,
+               int32_t     thresh,
                l_float32  *colvect)
 {
-l_int32    i, j, k, w, h, val, wpls, sum, target, max, modeval;
-l_int32   *histo, *gray2bin, *bin2gray;
-l_uint32  *lines, *datas;
+int32_t    i, j, k, w, h, val, wpls, sum, target, max, modeval;
+int32_t   *histo, *gray2bin, *bin2gray;
+uint32_t  *lines, *datas;
 
     if (!pixs || pixGetDepth(pixs) != 8)
         return ERROR_INT("pixs not defined or not 8 bpp", __func__, 1);
@@ -3144,9 +3144,9 @@ l_uint32  *lines, *datas;
     }
 
         /* We need a histogram; binwidth ~ 256 / nbins */
-    histo = (l_int32 *)LEPT_CALLOC(nbins, sizeof(l_int32));
-    gray2bin = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
-    bin2gray = (l_int32 *)LEPT_CALLOC(nbins, sizeof(l_int32));
+    histo = (int32_t *)LEPT_CALLOC(nbins, sizeof(int32_t));
+    gray2bin = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
+    bin2gray = (int32_t *)LEPT_CALLOC(nbins, sizeof(int32_t));
     for (i = 0; i < 256; i++)  /* gray value --> histo bin */
         gray2bin[i] = (i * nbins) / 256;
     for (i = 0; i < nbins; i++)  /* histo bin --> gray value */
@@ -3230,14 +3230,14 @@ l_uint32  *lines, *datas;
  */
 l_ok
 pixGetColumnStats(PIX        *pixs,
-                  l_int32     type,
-                  l_int32     nbins,
-                  l_int32     thresh,
+                  int32_t     type,
+                  int32_t     nbins,
+                  int32_t     thresh,
                   l_float32  *rowvect)
 {
-l_int32    i, j, k, w, h, val, wpls, sum, target, max, modeval;
-l_int32   *histo, *gray2bin, *bin2gray;
-l_uint32  *datas;
+int32_t    i, j, k, w, h, val, wpls, sum, target, max, modeval;
+int32_t   *histo, *gray2bin, *bin2gray;
+uint32_t  *datas;
 
     if (!pixs || pixGetDepth(pixs) != 8)
         return ERROR_INT("pixs not defined or not 8 bpp", __func__, 1);
@@ -3263,9 +3263,9 @@ l_uint32  *datas;
     }
 
         /* We need a histogram; binwidth ~ 256 / nbins */
-    histo = (l_int32 *)LEPT_CALLOC(nbins, sizeof(l_int32));
-    gray2bin = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
-    bin2gray = (l_int32 *)LEPT_CALLOC(nbins, sizeof(l_int32));
+    histo = (int32_t *)LEPT_CALLOC(nbins, sizeof(int32_t));
+    gray2bin = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
+    bin2gray = (int32_t *)LEPT_CALLOC(nbins, sizeof(int32_t));
     for (i = 0; i < 256; i++)  /* gray value --> histo bin */
         gray2bin[i] = (i * nbins) / 256;
     for (i = 0; i < nbins; i++)  /* histo bin --> gray value */
@@ -3329,11 +3329,11 @@ l_uint32  *datas;
  */
 l_ok
 pixSetPixelColumn(PIX        *pix,
-                  l_int32     col,
+                  int32_t     col,
                   l_float32  *colvect)
 {
-l_int32    i, w, h, wpl;
-l_uint32  *data;
+int32_t    i, w, h, wpl;
+uint32_t  *data;
 
     if (!pix || pixGetDepth(pix) != 8)
         return ERROR_INT("pix not defined or not 8 bpp", __func__, 1);
@@ -3346,7 +3346,7 @@ l_uint32  *data;
     data = pixGetData(pix);
     wpl = pixGetWpl(pix);
     for (i = 0; i < h; i++)
-        SET_DATA_BYTE(data + i * wpl, col, (l_int32)colvect[i]);
+        SET_DATA_BYTE(data + i * wpl, col, (int32_t)colvect[i]);
 
     return 0;
 }
@@ -3367,10 +3367,10 @@ l_uint32  *data;
  */
 l_ok
 pixThresholdForFgBg(PIX      *pixs,
-                    l_int32   factor,
-                    l_int32   thresh,
-                    l_int32  *pfgval,
-                    l_int32  *pbgval)
+                    int32_t   factor,
+                    int32_t   thresh,
+                    int32_t  *pfgval,
+                    int32_t  *pbgval)
 {
 l_float32  fval;
 PIX       *pixg, *pixm;
@@ -3388,13 +3388,13 @@ PIX       *pixg, *pixm;
 
     if (pfgval) {
         pixGetAverageMasked(pixg, pixm, 0, 0, 1, L_MEAN_ABSVAL, &fval);
-        *pfgval = (l_int32)(fval + 0.5);
+        *pfgval = (int32_t)(fval + 0.5);
     }
 
     if (pbgval) {
         pixInvert(pixm, pixm);
         pixGetAverageMasked(pixg, pixm, 0, 0, 1, L_MEAN_ABSVAL, &fval);
-        *pbgval = (l_int32)(fval + 0.5);
+        *pbgval = (int32_t)(fval + 0.5);
     }
 
     pixDestroy(&pixg);
@@ -3425,14 +3425,14 @@ PIX       *pixg, *pixm;
 l_ok
 pixSplitDistributionFgBg(PIX       *pixs,
                          l_float32  scorefract,
-                         l_int32    factor,
-                         l_int32   *pthresh,
-                         l_int32   *pfgval,
-                         l_int32   *pbgval,
+                         int32_t    factor,
+                         int32_t   *pthresh,
+                         int32_t   *pfgval,
+                         int32_t   *pbgval,
                          PIX      **ppixdb)
 {
 char       buf[256];
-l_int32    thresh;
+int32_t    thresh;
 l_float32  avefg, avebg, maxnum;
 GPLOT     *gplot;
 NUMA      *na, *nascore, *nax, *nay;
@@ -3462,8 +3462,8 @@ PIX       *pixg;
     }
 
     if (pthresh) *pthresh = thresh;
-    if (pfgval) *pfgval = (l_int32)(avefg + 0.5);
-    if (pbgval) *pbgval = (l_int32)(avebg + 0.5);
+    if (pfgval) *pfgval = (int32_t)(avefg + 0.5);
+    if (pbgval) *pbgval = (int32_t)(avebg + 0.5);
 
     if (ppixdb) {
         lept_mkdir("lept/redout");
@@ -3473,7 +3473,7 @@ PIX       *pixg;
         nax = numaMakeConstant(thresh, 2);
         numaGetMax(na, &maxnum, NULL);
         nay = numaMakeConstant(0, 2);
-        numaReplaceNumber(nay, 1, (l_int32)(0.5 * maxnum));
+        numaReplaceNumber(nay, 1, (int32_t)(0.5 * maxnum));
         snprintf(buf, sizeof(buf), "score fract = %3.1f", scorefract);
         gplotAddPlot(gplot, nax, nay, GPLOT_LINES, buf);
         *ppixdb = gplotMakeOutputPix(gplot);

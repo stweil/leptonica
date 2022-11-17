@@ -70,11 +70,11 @@
  */
 PIXA *
 pixaThinConnected(PIXA    *pixas,
-                  l_int32  type,
-                  l_int32  connectivity,
-                  l_int32  maxiters)
+                  int32_t  type,
+                  int32_t  connectivity,
+                  int32_t  maxiters)
 {
-l_int32  i, n, d, same;
+int32_t  i, n, d, same;
 PIX     *pix1, *pix2;
 PIXA    *pixad;
 SELA    *sela;
@@ -158,9 +158,9 @@ SELA    *sela;
  */
 PIX *
 pixThinConnected(PIX     *pixs,
-                 l_int32  type,
-                 l_int32  connectivity,
-                 l_int32  maxiters)
+                 int32_t  type,
+                 int32_t  connectivity,
+                 int32_t  maxiters)
 {
 PIX   *pixd;
 SELA  *sela;
@@ -218,11 +218,11 @@ SELA  *sela;
  */
 PIX *
 pixThinConnectedBySet(PIX     *pixs,
-                      l_int32  type,
+                      int32_t  type,
                       SELA    *sela,
-                      l_int32  maxiters)
+                      int32_t  maxiters)
 {
-l_int32  i, j, r, nsels, same;
+int32_t  i, j, r, nsels, same;
 PIXA    *pixahmt;
 PIX    **pixhmt;  /* array owned by pixahmt; do not destroy! */
 PIX     *pix1, *pix2, *pixd;
@@ -336,8 +336,8 @@ SEL     *sel, *selr;
  * </pre>
  */
 SELA *
-selaMakeThinSets(l_int32  index,
-                 l_int32  debug)
+selaMakeThinSets(int32_t  index,
+                 int32_t  debug)
 {
 SEL   *sel;
 SELA  *sela1, *sela2, *sela3;

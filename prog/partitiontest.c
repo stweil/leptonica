@@ -59,7 +59,7 @@ int main(int    argc,
          char **argv)
 {
 char      *filename;
-l_int32    w, h, type, maxboxes;
+int32_t    w, h, type, maxboxes;
 l_float32  ovlap;
 BOX       *box;
 BOXA      *boxa, *boxat, *boxad;

@@ -9,7 +9,7 @@ LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
 	PIX *pixs_payload = pixReadMemSpix(data, size);
 	if(pixs_payload == NULL) return 0;
 
-	l_int32 i, nsels;
+	int32_t i, nsels;
 	char *selname;
 	SEL *sel;
 	SELA *sela;

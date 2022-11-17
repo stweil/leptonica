@@ -43,14 +43,14 @@
 /* --------------------------------------------*/
 
 l_ok convertFilesToPS(const char *dirin, const char *substr,
-                      l_int32 res, const char *fileout)
+                      int32_t res, const char *fileout)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_ok sarrayConvertFilesToPS(SARRAY *sa, l_int32 res, const char *fileout)
+l_ok sarrayConvertFilesToPS(SARRAY *sa, int32_t res, const char *fileout)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
@@ -75,7 +75,7 @@ l_ok sarrayConvertFilesFittedToPS(SARRAY *sa, l_float32 xpts,
 /* ----------------------------------------------------------------------*/
 
 l_ok writeImageCompressedToPSFile(const char *filein, const char *fileout,
-                                  l_int32 res, l_int32 *pindex)
+                                  int32_t res, int32_t *pindex)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
@@ -83,11 +83,11 @@ l_ok writeImageCompressedToPSFile(const char *filein, const char *fileout,
 /* ----------------------------------------------------------------------*/
 
 l_ok convertSegmentedPagesToPS(const char *pagedir, const char *pagestr,
-                               l_int32 page_numpre, const char *maskdir,
-                               const char *maskstr, l_int32 mask_numpre,
-                               l_int32 numpost, l_int32 maxnum,
+                               int32_t page_numpre, const char *maskdir,
+                               const char *maskstr, int32_t mask_numpre,
+                               int32_t numpost, int32_t maxnum,
                                l_float32 textscale, l_float32 imagescale,
-                               l_int32 threshold, const char *fileout)
+                               int32_t threshold, const char *fileout)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
@@ -95,8 +95,8 @@ l_ok convertSegmentedPagesToPS(const char *pagedir, const char *pagestr,
 /* ----------------------------------------------------------------------*/
 
 l_ok pixWriteSegmentedPageToPS(PIX *pixs, PIX *pixm, l_float32 textscale,
-                               l_float32 imagescale, l_int32 threshold,
-                               l_int32 pageno, const char *fileout)
+                               l_float32 imagescale, int32_t threshold,
+                               int32_t pageno, const char *fileout)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
@@ -104,14 +104,14 @@ l_ok pixWriteSegmentedPageToPS(PIX *pixs, PIX *pixm, l_float32 textscale,
 /* ----------------------------------------------------------------------*/
 
 l_ok pixWriteMixedToPS(PIX *pixb, PIX *pixc, l_float32 scale,
-                       l_int32 pageno, const char *fileout)
+                       int32_t pageno, const char *fileout)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_ok convertToPSEmbed(const char *filein, const char *fileout, l_int32 level)
+l_ok convertToPSEmbed(const char *filein, const char *fileout, int32_t level)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
@@ -119,15 +119,15 @@ l_ok convertToPSEmbed(const char *filein, const char *fileout, l_int32 level)
 /* ----------------------------------------------------------------------*/
 
 l_ok pixaWriteCompressedToPS(PIXA *pixa, const char *fileout,
-                             l_int32 res, l_int32 level)
+                             int32_t res, int32_t level)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_ok pixWriteCompressedToPS(PIX *pix, const char *fileout, l_int32 res,
-                            l_int32 level, l_int32 *pindex)
+l_ok pixWriteCompressedToPS(PIX *pix, const char *fileout, int32_t res,
+                            int32_t level, int32_t *pindex)
 {
     return ERROR_INT("function not present", __func__, 1);
 }

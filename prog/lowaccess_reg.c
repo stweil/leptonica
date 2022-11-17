@@ -35,11 +35,11 @@
  *        ('forbids' may be too strong: it issues a warning)
  *
  *    For this reason, the l_getData*() and l_setData*() accessors
- *    now take a (void *)lineptr, but internally cast to (l_uint32 *)
+ *    now take a (void *)lineptr, but internally cast to (uint32_t *)
  *    so that the addressing arithmetic works properly.
  *
  *    By the same token, the GET_DATA_*() and SET_DATA_*() macro
- *    accessors now cast the input ptr to (l_uint32 *) for 1, 2 and 4 bpp.
+ *    accessors now cast the input ptr to (uint32_t *) for 1, 2 and 4 bpp.
  *    This allows them to take a (void *)lineptr.
  *
  *    In this test, we reconstruct pixs in different ways, pretending
@@ -55,16 +55,16 @@
 #include "allheaders.h"
 
 static void CompareResults(PIX *pixs, PIX *pix1, PIX *pix2,
-                           l_int32 count1, l_int32 count2,
+                           int32_t count1, int32_t count2,
                            const char *descr, L_REGPARAMS *rp);
 
 int main(int    argc,
          char **argv)
 {
-l_int32       i, j, k, w, h, w2, w4, w8, w16, w32, wpl;
-l_int32       count1, count2, count3;
-l_uint32      val32, val1, val2;
-l_uint32     *data1, *line1, *data2, *line2;
+int32_t       i, j, k, w, h, w2, w4, w8, w16, w32, wpl;
+int32_t       count1, count2, count3;
+uint32_t      val32, val1, val2;
+uint32_t     *data1, *line1, *data2, *line2;
 void        **lines1, **linet1, **linet2;
 PIX          *pixs, *pix1, *pix2;
 L_REGPARAMS  *rp;
@@ -289,8 +289,8 @@ static void
 CompareResults(PIX          *pixs,
                PIX          *pix1,
                PIX          *pix2,
-               l_int32       count1,
-               l_int32       count2,
+               int32_t       count1,
+               int32_t       count2,
                const char   *descr,
                L_REGPARAMS  *rp)
 {

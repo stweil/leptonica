@@ -41,7 +41,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32       i;
+int32_t       i;
 BOX          *box;
 PIX          *pixs, *pix1, *pix2;
 PIXA         *pixa1, *pixa2, *pixa3, *pixa4, *pixa5;

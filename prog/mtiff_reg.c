@@ -47,11 +47,11 @@ static const char *weasel_orig = "/tmp/lept/tiff/weasel_orig.tif";
 int main(int    argc,
          char **argv)
 {
-l_uint8      *data;
+uint8_t      *data;
 char         *fname, *filename;
 const char   *str;
 char          buf[512];
-l_int32       i, n, npages, equal, success;
+int32_t       i, n, npages, equal, success;
 size_t        offset, size;
 FILE         *fp;
 PIX          *pix1, *pix2;
@@ -350,15 +350,15 @@ L_REGPARAMS  *rp;
          * to scale the dynamic range */
     numaAddNumber(naflags, 281);  /* MAXSAMPLEVALUE */
     sarrayAddString(savals, "4", L_COPY);
-    sarrayAddString(satypes, "l_uint16", L_COPY);
+    sarrayAddString(satypes, "uint16_t", L_COPY);
         /* note that date is required to be a 20 byte string */
     numaAddNumber(naflags, 306);  /* DATETIME */
     sarrayAddString(savals, "2004:10:11 09:35:15", L_COPY);
     sarrayAddString(satypes, "const char*", L_COPY);
-        /* note that page number requires 2 l_uint16 input */
+        /* note that page number requires 2 uint16_t input */
     numaAddNumber(naflags, 297);  /* PAGENUMBER */
     sarrayAddString(savals, "1-412", L_COPY);
-    sarrayAddString(satypes, "l_uint16-l_uint16", L_COPY);
+    sarrayAddString(satypes, "uint16_t-uint16_t", L_COPY);
     pixWriteTiffCustom("/tmp/lept/tiff/tags.tif", pix1, IFF_TIFF_G4, "w", naflags,
                        savals, satypes, nasizes);
     fprintTiffInfo(stderr, "/tmp/lept/tiff/tags.tif");

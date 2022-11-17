@@ -72,8 +72,8 @@
 
     /* Linear brick sel sizes, including all those that are required
      * for decomposable sels up to size 63. */
-static const l_int32  num_linear = 25;
-static const l_int32  basic_linear[] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+static const int32_t  num_linear = 25;
+static const int32_t  basic_linear[] = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
        12, 13, 14, 15, 20, 21, 25, 30, 31, 35, 40, 41, 45, 50, 51};
 
 
@@ -99,7 +99,7 @@ SELA *
 selaAddBasic(SELA  *sela)
 {
 char     name[L_BUF_SIZE];
-l_int32  i, size;
+int32_t  i, size;
 SEL     *sel;
 
     if (!sela) {
@@ -322,7 +322,7 @@ SELA *
 selaAddDwaLinear(SELA  *sela)
 {
 char     name[L_BUF_SIZE];
-l_int32  i;
+int32_t  i;
 SEL     *sel;
 
     if (!sela) {
@@ -362,7 +362,7 @@ SELA *
 selaAddDwaCombs(SELA  *sela)
 {
 char     name[L_BUF_SIZE];
-l_int32  i, f1, f2, prevsize, size;
+int32_t  i, f1, f2, prevsize, size;
 SEL     *selh, *selv;
 
     if (!sela) {
@@ -430,11 +430,11 @@ SELA *
 selaAddCrossJunctions(SELA      *sela,
                       l_float32  hlsize,
                       l_float32  mdist,
-                      l_int32    norient,
-                      l_int32    debugflag)
+                      int32_t    norient,
+                      int32_t    debugflag)
 {
 char       name[L_BUF_SIZE];
-l_int32    i, j, w, xc, yc;
+int32_t    i, j, w, xc, yc;
 l_float64  pi, halfpi, radincr, radang;
 l_float64  angle;
 PIX       *pixc, *pixm, *pixt;
@@ -455,7 +455,7 @@ SEL       *sel;
     pi = 3.1415926535;
     halfpi = 3.1415926535 / 2.0;
     radincr = halfpi / (l_float64)norient;
-    w = (l_int32)(2.2 * (L_MAX(hlsize, mdist) + 0.5));
+    w = (int32_t)(2.2 * (L_MAX(hlsize, mdist) + 0.5));
     if (w % 2 == 0)
         w++;
     xc = w / 2;
@@ -488,8 +488,8 @@ SEL       *sel;
             /* Add red misses between the lines */
         for (j = 0; j < 4; j++) {
             angle = radang + (j - 0.5) * halfpi;
-            pixSetPixel(pixc, xc + (l_int32)(mdist * cos(angle)),
-                        yc + (l_int32)(mdist * sin(angle)), 0xff000000);
+            pixSetPixel(pixc, xc + (int32_t)(mdist * cos(angle)),
+                        yc + (int32_t)(mdist * sin(angle)), 0xff000000);
         }
 
             /* Add dark green for origin */
@@ -509,7 +509,7 @@ SEL       *sel;
     }
 
     if (debugflag) {
-        l_int32  w;
+        int32_t  w;
         lept_mkdir("lept/sel");
         pixaGetPixDimensions(pixa, 0, &w, NULL, NULL);
         pixt = pixaDisplayTiledAndScaled(pixa, 32, w, 1, 0, 10, 2);
@@ -553,11 +553,11 @@ SELA *
 selaAddTJunctions(SELA      *sela,
                   l_float32  hlsize,
                   l_float32  mdist,
-                  l_int32    norient,
-                  l_int32    debugflag)
+                  int32_t    norient,
+                  int32_t    debugflag)
 {
 char       name[L_BUF_SIZE];
-l_int32    i, j, k, w, xc, yc;
+int32_t    i, j, k, w, xc, yc;
 l_float64  pi, halfpi, radincr, jang, radang;
 l_float64  angle[3], dist[3];
 PIX       *pixc, *pixm, *pixt;
@@ -578,7 +578,7 @@ SEL       *sel;
     pi = 3.1415926535;
     halfpi = 3.1415926535 / 2.0;
     radincr = halfpi / (l_float32)norient;
-    w = (l_int32)(2.4 * (L_MAX(hlsize, mdist) + 0.5));
+    w = (int32_t)(2.4 * (L_MAX(hlsize, mdist) + 0.5));
     if (w % 2 == 0)
         w++;
     xc = w / 2;
@@ -616,8 +616,8 @@ SEL       *sel;
             dist[0] = 0.8 * mdist;
             dist[1] = dist[2] = mdist;
             for (k = 0; k < 3; k++) {
-                pixSetPixel(pixc, xc + (l_int32)(dist[k] * cos(angle[k])),
-                            yc + (l_int32)(dist[k] * sin(angle[k])),
+                pixSetPixel(pixc, xc + (int32_t)(dist[k] * cos(angle[k])),
+                            yc + (int32_t)(dist[k] * sin(angle[k])),
                             0xff000000);
             }
 
@@ -639,7 +639,7 @@ SEL       *sel;
     }
 
     if (debugflag) {
-        l_int32  w;
+        int32_t  w;
         lept_mkdir("lept/sel");
         pixaGetPixDimensions(pixa, 0, &w, NULL, NULL);
         pixt = pixaDisplayTiledAndScaled(pixa, 32, w, 4, 0, 10, 2);
@@ -863,8 +863,8 @@ SEL  *sel;
  * </pre>
  */
 SEL *
-selMakePlusSign(l_int32  size,
-                l_int32  linewidth)
+selMakePlusSign(int32_t  size,
+                int32_t  linewidth)
 {
 PIX  *pix;
 SEL  *sel;

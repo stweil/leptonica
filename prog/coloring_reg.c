@@ -43,13 +43,13 @@ static const char *bgcolors[] = {"255 255 235",
                                  "235 245 255"};
 
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
 char          buf[512];
-l_int32       i, n, index;
-l_int32       rval[4], gval[4], bval[4];
-l_uint32      scolor, dcolor;
+int32_t       i, n, index;
+int32_t       rval[4], gval[4], bval[4];
+uint32_t      scolor, dcolor;
 L_BMF        *bmf;
 PIX          *pix0, *pix1, *pix2, *pix3, *pix4, *pix5;
 PIXA         *pixa;

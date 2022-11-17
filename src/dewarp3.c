@@ -31,18 +31,18 @@
  *    Applying and stripping the page disparity model
  *
  *      Apply disparity array to pix
- *          l_int32            dewarpaApplyDisparity()
- *          static l_int32     dewarpaApplyInit()
+ *          int32_t            dewarpaApplyDisparity()
+ *          static int32_t     dewarpaApplyInit()
  *          static PIX        *pixApplyVertDisparity()
  *          static PIX        *pixApplyHorizDisparity()
  *
  *      Apply disparity array to boxa
- *          l_int32            dewarpaApplyDisparityBoxa()
+ *          int32_t            dewarpaApplyDisparityBoxa()
  *          static BOXA       *boxaApplyDisparity()
  *
  *      Stripping out data and populating full res disparity
- *          l_int32            dewarpMinimize()
- *          l_int32            dewarpPopulateFullRes()
+ *          int32_t            dewarpMinimize()
+ *          int32_t            dewarpPopulateFullRes()
  *
  *      Static functions not presently in use
  *          static FPIX       *fpixSampledDisparity()
@@ -58,13 +58,13 @@
 #include <math.h>
 #include "allheaders.h"
 
-static l_int32 dewarpaApplyInit(L_DEWARPA *dewa, l_int32 pageno, PIX *pixs,
-                                l_int32 x, l_int32 y, L_DEWARP **pdew,
+static int32_t dewarpaApplyInit(L_DEWARPA *dewa, int32_t pageno, PIX *pixs,
+                                int32_t x, int32_t y, L_DEWARP **pdew,
                                 const char *debugfile);
-static PIX *pixApplyVertDisparity(L_DEWARP *dew, PIX *pixs, l_int32 grayin);
-static PIX * pixApplyHorizDisparity(L_DEWARP *dew, PIX *pixs, l_int32 grayin);
-static BOXA *boxaApplyDisparity(L_DEWARP *dew, BOXA *boxa, l_int32 direction,
-                                l_int32 mapdir);
+static PIX *pixApplyVertDisparity(L_DEWARP *dew, PIX *pixs, int32_t grayin);
+static PIX * pixApplyHorizDisparity(L_DEWARP *dew, PIX *pixs, int32_t grayin);
+static BOXA *boxaApplyDisparity(L_DEWARP *dew, BOXA *boxa, int32_t direction,
+                                int32_t mapdir);
 
 /*----------------------------------------------------------------------*
  *                 Apply warping disparity array to pixa                *
@@ -114,11 +114,11 @@ static BOXA *boxaApplyDisparity(L_DEWARP *dew, BOXA *boxa, l_int32 direction,
  */
 l_ok
 dewarpaApplyDisparity(L_DEWARPA   *dewa,
-                      l_int32      pageno,
+                      int32_t      pageno,
                       PIX         *pixs,
-                      l_int32      grayin,
-                      l_int32      x,
-                      l_int32      y,
+                      int32_t      grayin,
+                      int32_t      x,
+                      int32_t      y,
                       PIX        **ppixd,
                       const char  *debugfile)
 {
@@ -210,16 +210,16 @@ PIX       *pixv, *pixh;
  *          the 'skip_horiz' field in the %dew for this page.
  * </pre>
  */
-static l_int32
+static int32_t
 dewarpaApplyInit(L_DEWARPA   *dewa,
-                 l_int32      pageno,
+                 int32_t      pageno,
                  PIX         *pixs,
-                 l_int32      x,
-                 l_int32      y,
+                 int32_t      x,
+                 int32_t      y,
                  L_DEWARP   **pdew,
                  const char  *debugfile)
 {
-l_int32    ncols, debug;
+int32_t    ncols, debug;
 L_DEWARP  *dew1, *dew2;
 PIX       *pix1;
 
@@ -305,10 +305,10 @@ PIX       *pix1;
 static PIX *
 pixApplyVertDisparity(L_DEWARP  *dew,
                       PIX       *pixs,
-                      l_int32    grayin)
+                      int32_t    grayin)
 {
-l_int32     i, j, w, h, d, fw, fh, wpld, wplf, isrc, val8;
-l_uint32   *datad, *lined;
+int32_t     i, j, w, h, d, fw, fh, wpld, wplf, isrc, val8;
+uint32_t   *datad, *lined;
 l_float32  *dataf, *linef;
 void      **lineptrs;
 FPIX       *fpix;
@@ -344,7 +344,7 @@ PIX        *pixd;
             lined = datad + i * wpld;
             linef = dataf + i * wplf;
             for (j = 0; j < w; j++) {
-                isrc = (l_int32)(i - linef[j] + 0.5);
+                isrc = (int32_t)(i - linef[j] + 0.5);
                 if (grayin < 0)  /* use value at boundary if outside */
                     isrc = L_MIN(L_MAX(isrc, 0), h - 1);
                 if (isrc >= 0 && isrc < h) {  /* remains gray if outside */
@@ -359,7 +359,7 @@ PIX        *pixd;
             lined = datad + i * wpld;
             linef = dataf + i * wplf;
             for (j = 0; j < w; j++) {
-                isrc = (l_int32)(i - linef[j] + 0.5);
+                isrc = (int32_t)(i - linef[j] + 0.5);
                 if (grayin < 0)
                     isrc = L_MIN(L_MAX(isrc, 0), h - 1);
                 if (isrc >= 0 && isrc < h) {
@@ -374,7 +374,7 @@ PIX        *pixd;
             lined = datad + i * wpld;
             linef = dataf + i * wplf;
             for (j = 0; j < w; j++) {
-                isrc = (l_int32)(i - linef[j] + 0.5);
+                isrc = (int32_t)(i - linef[j] + 0.5);
                 if (grayin < 0)
                     isrc = L_MIN(L_MAX(isrc, 0), h - 1);
                 if (isrc >= 0 && isrc < h)
@@ -413,10 +413,10 @@ PIX        *pixd;
 static PIX *
 pixApplyHorizDisparity(L_DEWARP  *dew,
                        PIX       *pixs,
-                       l_int32    grayin)
+                       int32_t    grayin)
 {
-l_int32     i, j, w, h, d, fw, fh, wpls, wpld, wplf, jsrc, val8;
-l_uint32   *datas, *lines, *datad, *lined;
+int32_t     i, j, w, h, d, fw, fh, wpls, wpld, wplf, jsrc, val8;
+uint32_t   *datas, *lines, *datad, *lined;
 l_float32  *dataf, *linef;
 FPIX       *fpix;
 PIX        *pixd;
@@ -453,7 +453,7 @@ PIX        *pixd;
             lined = datad + i * wpld;
             linef = dataf + i * wplf;
             for (j = 0; j < w; j++) {
-                jsrc = (l_int32)(j - linef[j] + 0.5);
+                jsrc = (int32_t)(j - linef[j] + 0.5);
                 if (grayin < 0)  /* use value at boundary if outside */
                     jsrc = L_MIN(L_MAX(jsrc, 0), w - 1);
                 if (jsrc >= 0 && jsrc < w) {  /* remains gray if outside */
@@ -468,7 +468,7 @@ PIX        *pixd;
             lined = datad + i * wpld;
             linef = dataf + i * wplf;
             for (j = 0; j < w; j++) {
-                jsrc = (l_int32)(j - linef[j] + 0.5);
+                jsrc = (int32_t)(j - linef[j] + 0.5);
                 if (grayin < 0)
                     jsrc = L_MIN(L_MAX(jsrc, 0), w - 1);
                 if (jsrc >= 0 && jsrc < w) {
@@ -483,7 +483,7 @@ PIX        *pixd;
             lined = datad + i * wpld;
             linef = dataf + i * wplf;
             for (j = 0; j < w; j++) {
-                jsrc = (l_int32)(j - linef[j] + 0.5);
+                jsrc = (int32_t)(j - linef[j] + 0.5);
                 if (grayin < 0)
                     jsrc = L_MIN(L_MAX(jsrc, 0), w - 1);
                 if (jsrc >= 0 && jsrc < w)
@@ -529,16 +529,16 @@ PIX        *pixd;
  */
 l_ok
 dewarpaApplyDisparityBoxa(L_DEWARPA   *dewa,
-                          l_int32      pageno,
+                          int32_t      pageno,
                           PIX         *pixs,
                           BOXA        *boxas,
-                          l_int32      mapdir,
-                          l_int32      x,
-                          l_int32      y,
+                          int32_t      mapdir,
+                          int32_t      x,
+                          int32_t      y,
                           BOXA       **pboxad,
                           const char  *debugfile)
 {
-l_int32    debug_out;
+int32_t    debug_out;
 L_DEWARP  *dew1, *dew;
 BOXA      *boxav, *boxah;
 PIX       *pixv, *pixh;
@@ -634,10 +634,10 @@ PIX       *pixv, *pixh;
 static BOXA *
 boxaApplyDisparity(L_DEWARP  *dew,
                    BOXA      *boxa,
-                   l_int32    direction,
-                   l_int32    mapdir)
+                   int32_t    direction,
+                   int32_t    mapdir)
 {
-l_int32     x, y, w, h, ib, ip, nbox, wpl;
+int32_t     x, y, w, h, ib, ip, nbox, wpl;
 l_float32   xn, yn;
 l_float32  *data, *line;
 BOX        *boxs, *boxd;
@@ -772,10 +772,10 @@ L_DEWARP  *dewt;
 l_ok
 dewarpPopulateFullRes(L_DEWARP  *dew,
                       PIX       *pix,
-                      l_int32    x,
-                      l_int32    y)
+                      int32_t    x,
+                      int32_t    y)
 {
-l_int32     width, height, fw, fh, deltaw, deltah, redfactor;
+int32_t     width, height, fw, fh, deltaw, deltah, redfactor;
 FPIX       *fpixt1, *fpixt2;
 
     if (!dew)
@@ -883,9 +883,9 @@ FPIX       *fpixt1, *fpixt2;
  */
 static FPIX *
 fpixSampledDisparity(FPIX    *fpixs,
-                     l_int32  sampling)
+                     int32_t  sampling)
 {
-l_int32    w, h, wd, hd, i, j, is, js;
+int32_t    w, h, wd, hd, i, j, is, js;
 l_float32  val;
 FPIX      *fpixd;
 
@@ -933,7 +933,7 @@ static const l_float32  DefaultSlopeFactor = 0.1;  /* just a guess; fix it */
  *          horizontal disparity determined by the left and right
  *          ends of textlines.
  *      (2) Usage:
- *            l_int32 xwid = [extra width to be added to fpix and image]
+ *            int32_t xwid = [extra width to be added to fpix and image]
  *            FPix *fpix = fpixExtraHorizDisparity(dew->fullvdispar, 0, &xwid);
  *            fpixLinearCombination(dew->fullhdispar, dew->fullhdispar,
  *                                  fpix, 1.0, 1.0);
@@ -942,9 +942,9 @@ static const l_float32  DefaultSlopeFactor = 0.1;  /* just a guess; fix it */
 static FPIX *
 fpixExtraHorizDisparity(FPIX      *fpixv,
                         l_float32  factor,
-                        l_int32   *pxwid)
+                        int32_t   *pxwid)
 {
-l_int32     w, h, i, j, fw, wpl, maxloc;
+int32_t     w, h, i, j, fw, wpl, maxloc;
 l_float32   val1, val2, vdisp, vdisp0, maxval;
 l_float32  *data, *line, *fadiff;
 NUMA       *nadiff;
@@ -973,7 +973,7 @@ FPIX       *fpixh;
         numaAddNumber(nadiff, vdisp);
     }
     numaGetMax(nadiff, &maxval, &maxloc);
-    *pxwid = (l_int32)(maxval + 0.5);
+    *pxwid = (int32_t)(maxval + 0.5);
 
     fw = w + *pxwid;
     fpixh = fpixCreate(fw, h);

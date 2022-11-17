@@ -47,9 +47,9 @@
 int main(int    argc,
          char **argv)
 {
-l_uint8      *data;
+uint8_t      *data;
 char         *fname;
-l_int32       i, n, w, h, istable, score;
+int32_t       i, n, w, h, istable, score;
 size_t        size;
 BOX          *box;
 BOXA         *boxa;

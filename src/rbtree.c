@@ -63,11 +63,11 @@
  *           L_RBTREE_NODE  *l_rbtreeGetNext()
  *           L_RBTREE_NODE  *l_rbtreeGetLast()
  *           L_RBTREE_NODE  *l_rbtreeGetPrev()
- *           l_int32         l_rbtreeGetCount()
+ *           int32_t         l_rbtreeGetCount()
  *           void            l_rbtreePrint()
  *
  *  General comparison function
- *           static l_int32  compareKeys()
+ *           static int32_t  compareKeys()
  * </pre>
  */
 
@@ -88,17 +88,17 @@ typedef L_RBTREE_NODE node;
 
     /* Lots of static helper functions */
 static void destroy_helper(node *n);
-static void count_helper(node *n, l_int32 *pcount);
-static void print_tree_helper(FILE *fp, node *n, l_int32 keytype,
-                              l_int32 indent);
+static void count_helper(node *n, int32_t *pcount);
+static void print_tree_helper(FILE *fp, node *n, int32_t keytype,
+                              int32_t indent);
 
-static l_int32 compareKeys(l_int32 keytype, RB_TYPE left, RB_TYPE right);
+static int32_t compareKeys(int32_t keytype, RB_TYPE left, RB_TYPE right);
 
 static node *grandparent(node *n);
 static node *sibling(node *n);
 static node *uncle(node *n);
-static l_int32 node_color(node *n);
-static node *new_node(RB_TYPE key, RB_TYPE value, l_int32 node_color,
+static int32_t node_color(node *n);
+static node *new_node(RB_TYPE key, RB_TYPE value, int32_t node_color,
                       node *left, node *right);
 static node *lookup_node(L_RBTREE *t, RB_TYPE key);
 static void rotate_left(L_RBTREE *t, node *n);
@@ -132,7 +132,7 @@ static void verify_properties(L_RBTREE *t);
  * \return      rbtree    container with empty ptr to the root
  */
 L_RBTREE *
-l_rbtreeCreate(l_int32  keytype)
+l_rbtreeCreate(int32_t  keytype)
 {
 L_RBTREE  *t;
 
@@ -439,10 +439,10 @@ l_rbtreeGetPrev(L_RBTREE_NODE  *n)
  * \param[in]  t      rbtree
  * \return     count  the number of nodes in the tree, or 0 on error
  */
-l_int32
+int32_t
 l_rbtreeGetCount(L_RBTREE  *t)
 {
-l_int32  count = 0;
+int32_t  count = 0;
 node    *n;
 
     if (!t) return 0;
@@ -453,7 +453,7 @@ node    *n;
 
     /* preorder DFS */
 static void
-count_helper(node  *n, l_int32  *pcount)
+count_helper(node  *n, int32_t  *pcount)
 {
     if (n)
         (*pcount)++;
@@ -494,10 +494,10 @@ l_rbtreePrint(FILE      *fp,
 static void
 print_tree_helper(FILE    *fp,
                   node    *n,
-                  l_int32  keytype,
-                  l_int32  indent)
+                  int32_t  keytype,
+                  int32_t  indent)
 {
-l_int32  i;
+int32_t  i;
 
     if (n == NULL) {
         fprintf(fp, "<empty tree>");
@@ -532,8 +532,8 @@ l_int32  i;
 /* ------------------------------------------------------------- *
  *                Static key comparison function                 *
  * ------------------------------------------------------------- */
-static l_int32
-compareKeys(l_int32  keytype,
+static int32_t
+compareKeys(int32_t  keytype,
             RB_TYPE  left,
             RB_TYPE  right)
 {
@@ -598,12 +598,12 @@ static node *uncle(node *n) {
     return sibling(n->parent);
 }
 
-static l_int32 node_color(node *n) {
+static int32_t node_color(node *n) {
     return n == NULL ? L_BLACK_NODE : n->color;
 }
 
 
-static node *new_node(RB_TYPE key, RB_TYPE value, l_int32 node_color,
+static node *new_node(RB_TYPE key, RB_TYPE value, int32_t node_color,
                       node *left, node *right) {
     node *result = (node *)LEPT_CALLOC(1, sizeof(node));
     result->key = key;

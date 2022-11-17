@@ -39,12 +39,12 @@
 
 #include "allheaders.h"
 
-static const l_uint32   LEPTONICA_YELLOW = 0xffffe400;
+static const uint32_t   LEPTONICA_YELLOW = 0xffffe400;
 
 int main(int    argc,
          char **argv)
 {
-l_uint32      val32;
+uint32_t      val32;
 PIX          *pixs, *pix1, *pix2;
 PIXA         *pixa;
 L_REGPARAMS  *rp;

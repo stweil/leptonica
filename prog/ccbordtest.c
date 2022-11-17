@@ -41,7 +41,7 @@ int main(int    argc,
          char **argv)
 {
 char     *filein;
-l_int32   count;
+int32_t   count;
 CCBORDA  *ccba, *ccba2;
 PIX      *pixs, *pixd, *pixd2, *pixd3;
 PIX      *pixt, *pixc, *pixc2;
@@ -113,8 +113,8 @@ PIX      *pixt, *pixc, *pixc2;
     if (count == 0)
         lept_stderr("   perfect direct recon\n");
     else {
-        l_int32  w, h, i, j;
-        l_uint32 val;
+        int32_t  w, h, i, j;
+        uint32_t val;
         lept_stderr("   %d pixels in error in recon\n", count);
 #if 1
         w = pixGetWidth(pixc);
@@ -182,8 +182,8 @@ PIX      *pixt, *pixc, *pixc2;
     if (count == 0)
         lept_stderr("   perfect image recon\n");
     else {
-        l_int32  w, h, i, j;
-        l_uint32 val;
+        int32_t  w, h, i, j;
+        uint32_t val;
         lept_stderr("   %d pixels in error in image recon\n", count);
 #if 1
         w = pixGetWidth(pixc2);

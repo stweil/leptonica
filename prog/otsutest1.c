@@ -35,22 +35,22 @@
 #include <math.h>
 #include "allheaders.h"
 
-static const l_int32 NTests = 5;
-static const l_int32 gaussmean1[5] = {20, 40, 60, 80, 60};
-static const l_int32 gaussstdev1[5] = {10, 20, 20, 20, 30};
-static const l_int32 gaussmean2[5] = {220, 200, 140, 180, 150};
-static const l_int32 gaussstdev2[5] = {15, 20, 40, 20, 30};
+static const int32_t NTests = 5;
+static const int32_t gaussmean1[5] = {20, 40, 60, 80, 60};
+static const int32_t gaussstdev1[5] = {10, 20, 20, 20, 30};
+static const int32_t gaussmean2[5] = {220, 200, 140, 180, 150};
+static const int32_t gaussstdev2[5] = {15, 20, 40, 20, 30};
 static const l_float32 gaussfract1[5] = {0.2f, 0.3f, 0.1f, 0.5f, 0.3f};
 static char  buf[256];
 
-static l_int32  GenerateSplitPlot(l_int32 i);
-static NUMA *MakeGaussian(l_int32 mean, l_int32 stdev, l_float32 fract);
+static int32_t  GenerateSplitPlot(int32_t i);
+static NUMA *MakeGaussian(int32_t mean, int32_t stdev, l_float32 fract);
 
 
 int main(int    argc,
          char **argv)
 {
-l_int32  i;
+int32_t  i;
 PIX     *pix;
 PIXA    *pixa;
 
@@ -80,11 +80,11 @@ PIXA    *pixa;
 }
 
 
-static l_int32
-GenerateSplitPlot(l_int32  i)
+static int32_t
+GenerateSplitPlot(int32_t  i)
 {
 char       title[256];
-l_int32    split;
+int32_t    split;
 l_float32  ave1, ave2, num1, num2, maxnum, maxscore;
 GPLOT     *gplot;
 NUMA      *na1, *na2, *nascore, *nax, *nay;
@@ -104,7 +104,7 @@ NUMA      *na1, *na2, *nascore, *nax, *nay;
     nax = numaMakeConstant(split, 2);
     numaGetMax(na1, &maxnum, NULL);
     nay = numaMakeConstant(0, 2);
-    numaReplaceNumber(nay, 1, (l_int32)(0.5 * maxnum));
+    numaReplaceNumber(nay, 1, (int32_t)(0.5 * maxnum));
 
         /* Plot the input histogram with the split location */
     snprintf(buf, sizeof(buf), "/tmp/lept/otsu/plot.%d", i);
@@ -139,9 +139,9 @@ NUMA      *na1, *na2, *nascore, *nax, *nay;
 
 
 static NUMA *
-MakeGaussian(l_int32 mean, l_int32 stdev, l_float32 fract)
+MakeGaussian(int32_t mean, int32_t stdev, l_float32 fract)
 {
-l_int32    i, total;
+int32_t    i, total;
 l_float32  norm, val;
 NUMA      *na;
 
@@ -151,7 +151,7 @@ NUMA      *na;
     for (i = 0; i < 256; i++) {
         val = norm * 1000000. * exp(-(l_float32)((i - mean) * (i - mean)) /
                                       (l_float32)(2 * stdev * stdev));
-        total += (l_int32)val;
+        total += (int32_t)val;
         numaSetValue(na, i, val);
     }
     lept_stderr("Total = %d\n", total);

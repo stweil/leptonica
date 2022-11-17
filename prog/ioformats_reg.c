@@ -82,13 +82,13 @@
 #define   FILE_GRAY_ALPHA_TIF  "gray-alpha.tif"
 #define   FILE_RGB16_TIF       "rgb16.tif"
 
-static l_int32 testcomp(const char *filename, PIX *pix, l_int32 comptype);
-static l_int32 testcomp_mem(PIX *pixs, PIX **ppixt, l_int32 index,
-                            l_int32 format);
-static l_int32 test_writemem(PIX *pixs, l_int32 format, char *psfile);
+static int32_t testcomp(const char *filename, PIX *pix, int32_t comptype);
+static int32_t testcomp_mem(PIX *pixs, PIX **ppixt, int32_t index,
+                            int32_t format);
+static int32_t test_writemem(PIX *pixs, int32_t format, char *psfile);
 static PIX *make_24_bpp_pix(PIX *pixs);
-static l_int32 get_header_data(const char *filename, l_int32 true_format);
-static const char *get_tiff_compression_name(l_int32 format);
+static int32_t get_header_data(const char *filename, int32_t true_format);
+static const char *get_tiff_compression_name(int32_t format);
 
 LEPT_DLL extern const char *ImageFileFormatExtensions[];
 
@@ -97,9 +97,9 @@ int main(int    argc,
 {
 char          psname[256];
 char         *tempname;
-l_uint8      *data;
-l_int32       i, d, n, success, failure, same;
-l_int32       w, h, bps, spp, iscmap, res;
+uint8_t      *data;
+int32_t       i, d, n, success, failure, same;
+int32_t       w, h, bps, spp, iscmap, res;
 size_t        size, nbytes;
 PIX          *pix1, *pix2, *pix3, *pix4, *pix8, *pix16, *pix32;
 PIX          *pix, *pixt, *pixd;
@@ -649,12 +649,12 @@ finish:
 
 
     /* Returns 1 on error */
-static l_int32
+static int32_t
 testcomp(const char  *filename,
          PIX         *pix,
-         l_int32      comptype)
+         int32_t      comptype)
 {
-l_int32  format, sameformat, sameimage;
+int32_t  format, sameformat, sameimage;
 FILE    *fp;
 PIX     *pixt;
 
@@ -678,13 +678,13 @@ PIX     *pixt;
 
 
     /* Returns 1 on error */
-static l_int32
+static int32_t
 testcomp_mem(PIX     *pixs,
              PIX    **ppixt,  /* input; nulled on return */
-             l_int32  index,
-             l_int32  format)
+             int32_t  index,
+             int32_t  format)
 {
-l_int32  sameimage;
+int32_t  sameimage;
 PIX     *pixt;
 
     pixt = *ppixt;
@@ -699,14 +699,14 @@ PIX     *pixt;
 
 
     /* Returns 1 on error */
-static l_int32
+static int32_t
 test_writemem(PIX      *pixs,
-              l_int32   format,
+              int32_t   format,
               char     *psfile)
 {
-l_uint8   *data = NULL;
-l_int32    same = TRUE;
-l_int32    ds, dd;
+uint8_t   *data = NULL;
+int32_t    same = TRUE;
+int32_t    ds, dd;
 l_float32  diff;
 size_t     size = 0;
 PIX       *pixd = NULL;
@@ -794,8 +794,8 @@ PIX       *pixd = NULL;
 static PIX *
 make_24_bpp_pix(PIX  *pixs)
 {
-l_int32    i, j, w, h, wpls, wpld, rval, gval, bval;
-l_uint32  *lines, *lined, *datas, *datad;
+int32_t    i, j, w, h, wpls, wpld, rval, gval, bval;
+uint32_t  *lines, *lined, *datas, *datad;
 PIX       *pixd;
 
     pixGetDimensions(pixs, &w, &h, NULL);
@@ -809,9 +809,9 @@ PIX       *pixd;
         lined = datad + i * wpld;
         for (j = 0; j < w; j++) {
             extractRGBValues(lines[j], &rval, &gval, &bval);
-            *((l_uint8 *)lined + 3 * j) = rval;
-            *((l_uint8 *)lined + 3 * j + 1) = gval;
-            *((l_uint8 *)lined + 3 * j + 2) = bval;
+            *((uint8_t *)lined + 3 * j) = rval;
+            *((uint8_t *)lined + 3 * j + 1) = gval;
+            *((uint8_t *)lined + 3 * j + 2) = bval;
         }
     }
 
@@ -820,14 +820,14 @@ PIX       *pixd;
 
 
     /* Retrieve header data from file */
-static l_int32
+static int32_t
 get_header_data(const char  *filename,
-                l_int32      true_format)
+                int32_t      true_format)
 {
 const char *tiff_compression_name = "undefined";
-l_uint8    *data;
-l_int32     ret1, ret2, format1, format2;
-l_int32     w1, w2, h1, h2, d1, d2, bps1, bps2, spp1, spp2, iscmap1, iscmap2;
+uint8_t    *data;
+int32_t     ret1, ret2, format1, format2;
+int32_t     w1, w2, h1, h2, d1, d2, bps1, bps2, spp1, spp2, iscmap1, iscmap2;
 size_t      size1, size2;
 
     /* Fail silently if library is not available */
@@ -897,7 +897,7 @@ size_t      size1, size2;
 
 
 static const char *
-get_tiff_compression_name(l_int32  format)
+get_tiff_compression_name(int32_t  format)
 {
     const char *tiff_compression_name = "unknown";
     if (format == IFF_TIFF_G4)

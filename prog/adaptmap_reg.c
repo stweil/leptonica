@@ -37,24 +37,24 @@
 #include "allheaders.h"
 
    /* Location of image region in wet-day.jpg */
-static const l_int32  XS = 151;
-static const l_int32  YS = 225;
-static const l_int32  WS = 913;
-static const l_int32  HS = 1285;
+static const int32_t  XS = 151;
+static const int32_t  YS = 225;
+static const int32_t  WS = 913;
+static const int32_t  HS = 1285;
 
-static const l_int32  SIZE_X = 10;
-static const l_int32  SIZE_Y = 30;
-static const l_int32  BINTHRESH = 50;
-static const l_int32  MINCOUNT = 30;
+static const int32_t  SIZE_X = 10;
+static const int32_t  SIZE_Y = 30;
+static const int32_t  BINTHRESH = 50;
+static const int32_t  MINCOUNT = 30;
 
-static const l_int32  BGVAL = 200;
-static const l_int32  SMOOTH_X = 2;
-static const l_int32  SMOOTH_Y = 1;
+static const int32_t  BGVAL = 200;
+static const int32_t  SMOOTH_X = 2;
+static const int32_t  SMOOTH_Y = 1;
 
 int main(int    argc,
          char **argv)
 {
-l_int32       w, h;
+int32_t       w, h;
 PIX          *pixs, *pixg, *pixim, *pixgm, *pixmi, *pix1, *pix2;
 PIX          *pixmr, *pixmg, *pixmb, *pixmri, *pixmgi, *pixmbi;
 PIXA         *pixa;

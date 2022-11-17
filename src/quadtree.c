@@ -29,20 +29,20 @@
  * <pre>
  *
  *      Top level quadtree linear statistics
- *          l_int32   pixQuadtreeMean()
- *          l_int32   pixQuadtreeVariance()
+ *          int32_t   pixQuadtreeMean()
+ *          int32_t   pixQuadtreeVariance()
  *
  *      Statistics in an arbitrary rectangle
- *          l_int32   pixMeanInRectangle()
- *          l_int32   pixVarianceInRectangle()
+ *          int32_t   pixMeanInRectangle()
+ *          int32_t   pixVarianceInRectangle()
  *
  *      Quadtree regions
  *          BOXAA    *boxaaQuadtreeRegions()
  *
  *      Quadtree access
- *          l_int32   quadtreeGetParent()
- *          l_int32   quadtreeGetChildren()
- *          l_int32   quadtreeMaxLevels()
+ *          int32_t   quadtreeGetParent()
+ *          int32_t   quadtreeGetChildren()
+ *          int32_t   quadtreeMaxLevels()
  *
  *      Display quadtree
  *          PIX      *fpixaDisplayQuadtree()
@@ -94,11 +94,11 @@
  */
 l_ok
 pixQuadtreeMean(PIX     *pixs,
-                l_int32  nlevels,
+                int32_t  nlevels,
                 PIX     *pix_ma,
                 FPIXA  **pfpixa)
 {
-l_int32    i, j, w, h, size, n;
+int32_t    i, j, w, h, size, n;
 l_float32  val;
 BOX       *box;
 BOXA      *boxa;
@@ -169,13 +169,13 @@ PIX       *pix_mac;
  */
 l_ok
 pixQuadtreeVariance(PIX     *pixs,
-                    l_int32  nlevels,
+                    int32_t  nlevels,
                     PIX     *pix_ma,
                     DPIX    *dpix_msa,
                     FPIXA  **pfpixa_v,
                     FPIXA  **pfpixa_rv)
 {
-l_int32    i, j, w, h, size, n;
+int32_t    i, j, w, h, size, n;
 l_float32  var, rvar;
 BOX       *box;
 BOXA      *boxa;
@@ -267,8 +267,8 @@ pixMeanInRectangle(PIX        *pixs,
                    PIX        *pixma,
                    l_float32  *pval)
 {
-l_int32    w, h, bx, by, bw, bh;
-l_uint32   val00, val01, val10, val11;
+int32_t    w, h, bx, by, bw, bh;
+uint32_t   val00, val01, val10, val11;
 l_float32  norm;
 BOX       *boxc;
 
@@ -343,8 +343,8 @@ pixVarianceInRectangle(PIX        *pixs,
                        l_float32  *pvar,
                        l_float32  *prvar)
 {
-l_int32    w, h, bx, by, bw, bh;
-l_uint32   val00, val01, val10, val11;
+int32_t    w, h, bx, by, bw, bh;
+uint32_t   val00, val01, val10, val11;
 l_float64  dval00, dval01, dval10, dval11, mval, msval, var, norm;
 BOX       *boxc;
 
@@ -442,12 +442,12 @@ BOX       *boxc;
  * </pre>
  */
 BOXAA *
-boxaaQuadtreeRegions(l_int32  w,
-                     l_int32  h,
-                     l_int32  nlevels)
+boxaaQuadtreeRegions(int32_t  w,
+                     int32_t  h,
+                     int32_t  nlevels)
 {
-l_int32   i, j, k, maxpts, nside, nbox, bw, bh;
-l_int32  *xstart, *xend, *ystart, *yend;
+int32_t   i, j, k, maxpts, nside, nbox, bw, bh;
+int32_t  *xstart, *xend, *ystart, *yend;
 BOX      *box;
 BOXA     *boxa;
 BOXAA    *baa;
@@ -461,10 +461,10 @@ BOXAA    *baa;
 
     baa = boxaaCreate(nlevels);
     maxpts = 1 << (nlevels - 1);
-    xstart = (l_int32 *)LEPT_CALLOC(maxpts, sizeof(l_int32));
-    xend = (l_int32 *)LEPT_CALLOC(maxpts, sizeof(l_int32));
-    ystart = (l_int32 *)LEPT_CALLOC(maxpts, sizeof(l_int32));
-    yend = (l_int32 *)LEPT_CALLOC(maxpts, sizeof(l_int32));
+    xstart = (int32_t *)LEPT_CALLOC(maxpts, sizeof(int32_t));
+    xend = (int32_t *)LEPT_CALLOC(maxpts, sizeof(int32_t));
+    ystart = (int32_t *)LEPT_CALLOC(maxpts, sizeof(int32_t));
+    yend = (int32_t *)LEPT_CALLOC(maxpts, sizeof(int32_t));
     for (k = 0; k < nlevels; k++) {
         nside = 1 << k;  /* number of boxes in each direction */
         for (i = 0; i < nside; i++) {
@@ -522,12 +522,12 @@ BOXAA    *baa;
  */
 l_ok
 quadtreeGetParent(FPIXA      *fpixa,
-                  l_int32     level,
-                  l_int32     x,
-                  l_int32     y,
+                  int32_t     level,
+                  int32_t     x,
+                  int32_t     y,
                   l_float32  *pval)
 {
-l_int32  n;
+int32_t  n;
 
     if (!pval)
         return ERROR_INT("&val not defined", __func__, 1);
@@ -563,15 +563,15 @@ l_int32  n;
  */
 l_ok
 quadtreeGetChildren(FPIXA      *fpixa,
-                    l_int32     level,
-                    l_int32     x,
-                    l_int32     y,
+                    int32_t     level,
+                    int32_t     x,
+                    int32_t     y,
                     l_float32  *pval00,
                     l_float32  *pval10,
                     l_float32  *pval01,
                     l_float32  *pval11)
 {
-l_int32  n;
+int32_t  n;
 
     if (!pval00 || !pval01 || !pval10 || !pval11)
         return ERROR_INT("&val* not all defined", __func__, 1);
@@ -605,11 +605,11 @@ l_int32  n;
  *          having zero dimension due to integer truncation.
  * </pre>
  */
-l_int32
-quadtreeMaxLevels(l_int32  w,
-                  l_int32  h)
+int32_t
+quadtreeMaxLevels(int32_t  w,
+                  int32_t  h)
 {
-l_int32  i, minside;
+int32_t  i, minside;
 
     minside = L_MIN(w, h);
     for (i = 0; i < 20; i++) {  /* 2^10 = one million */
@@ -642,11 +642,11 @@ l_int32  i, minside;
  */
 PIX *
 fpixaDisplayQuadtree(FPIXA   *fpixa,
-                     l_int32  factor,
-                     l_int32  fontsize)
+                     int32_t  factor,
+                     int32_t  fontsize)
 {
 char       buf[256];
-l_int32    nlevels, i, mag, w;
+int32_t    nlevels, i, mag, w;
 L_BMF     *bmf;
 FPIX      *fpix;
 PIX       *pixt1, *pixt2, *pixt3, *pixt4, *pixd;

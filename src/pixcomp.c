@@ -36,11 +36,11 @@
  *           PIXC     *pixcompCopy()
 
  *      Pixcomp accessors
- *           l_int32   pixcompGetDimensions()
- *           l_int32   pixcompGetParameters()
+ *           int32_t   pixcompGetDimensions()
+ *           int32_t   pixcompGetParameters()
  *
  *      Pixcomp compression selection
- *           l_int32   pixcompDetermineFormat()
+ *           int32_t   pixcompDetermineFormat()
  *
  *      Pixcomp conversion to Pix
  *           PIX      *pixCreateFromPixcomp()
@@ -54,51 +54,51 @@
  *           void      pixacompDestroy()
  *
  *      Pixacomp addition/replacement
- *           l_int32   pixacompAddPix()
- *           l_int32   pixacompAddPixcomp()
- *           static l_int32  pixacompExtendArray()
- *           l_int32   pixacompReplacePix()
- *           l_int32   pixacompReplacePixcomp()
- *           l_int32   pixacompAddBox()
+ *           int32_t   pixacompAddPix()
+ *           int32_t   pixacompAddPixcomp()
+ *           static int32_t  pixacompExtendArray()
+ *           int32_t   pixacompReplacePix()
+ *           int32_t   pixacompReplacePixcomp()
+ *           int32_t   pixacompAddBox()
  *
  *      Pixacomp accessors
- *           l_int32   pixacompGetCount()
+ *           int32_t   pixacompGetCount()
  *           PIXC     *pixacompGetPixcomp()
  *           PIX      *pixacompGetPix()
- *           l_int32   pixacompGetPixDimensions()
+ *           int32_t   pixacompGetPixDimensions()
  *           BOXA     *pixacompGetBoxa()
- *           l_int32   pixacompGetBoxaCount()
+ *           int32_t   pixacompGetBoxaCount()
  *           BOX      *pixacompGetBox()
- *           l_int32   pixacompGetBoxGeometry()
- *           l_int32   pixacompGetOffset()
- *           l_int32   pixacompSetOffset()
+ *           int32_t   pixacompGetBoxGeometry()
+ *           int32_t   pixacompGetOffset()
+ *           int32_t   pixacompSetOffset()
  *
  *      Pixacomp conversion to Pixa
  *           PIXA     *pixaCreateFromPixacomp()
  *
  *      Combining pixacomp
- *           l_int32   pixacompJoin()
+ *           int32_t   pixacompJoin()
  *           PIXAC    *pixacompInterleave()
  *
  *      Pixacomp serialized I/O
  *           PIXAC    *pixacompRead()
  *           PIXAC    *pixacompReadStream()
  *           PIXAC    *pixacompReadMem()
- *           l_int32   pixacompWrite()
- *           l_int32   pixacompWriteStream()
- *           l_int32   pixacompWriteMem()
+ *           int32_t   pixacompWrite()
+ *           int32_t   pixacompWriteStream()
+ *           int32_t   pixacompWriteMem()
  *
  *      Conversion to pdf
- *           l_int32   pixacompConvertToPdf()
- *           l_int32   pixacompConvertToPdfData()
- *           l_int32   pixacompFastConvertToPdfData()
+ *           int32_t   pixacompConvertToPdf()
+ *           int32_t   pixacompConvertToPdfData()
+ *           int32_t   pixacompFastConvertToPdfData()
  *
  *      Output for debugging
- *           l_int32   pixacompWriteStreamInfo()
- *           l_int32   pixcompWriteStreamInfo()
+ *           int32_t   pixacompWriteStreamInfo()
+ *           int32_t   pixcompWriteStreamInfo()
  *           PIX      *pixacompDisplayTiledAndScaled()
- *           l_int32   pixacompWriteFiles()
- *           l_int32   pixcompWriteFile()
+ *           int32_t   pixacompWriteFiles()
+ *           int32_t   pixcompWriteFile()
  *
  *   The Pixacomp is an array of Pixcomp, where each Pixcomp is a compressed
  *   string of the image.  We don't use reference counting here.
@@ -157,20 +157,20 @@
 #include "pix_internal.h"
 
     /* Bounds on pixacomp array size */
-static const l_uint32  MaxPtrArraySize = 1000000;
-static const l_int32  InitialPtrArraySize = 20;      /*!< n'importe quoi */
+static const uint32_t  MaxPtrArraySize = 1000000;
+static const int32_t  InitialPtrArraySize = 20;      /*!< n'importe quoi */
 
     /* Bound on size for a compressed data string */
 static const size_t  MaxDataSize = 1000000000;   /* 1 GB */
 
     /* These two globals are defined in writefile.c */
-extern l_int32  NumImageFileFormatExtensions;
+extern int32_t  NumImageFileFormatExtensions;
 extern const char  *ImageFileFormatExtensions[];
 
     /* Static functions */
-static l_int32 pixacompExtendArray(PIXAC *pixac);
-static l_int32 pixcompFastConvertToPdfData(PIXC *pixc, const char *title,
-                                           l_uint8 **pdata, size_t *pnbytes);
+static int32_t pixacompExtendArray(PIXAC *pixac);
+static int32_t pixcompFastConvertToPdfData(PIXC *pixc, const char *title,
+                                           uint8_t **pdata, size_t *pnbytes);
 
 
 /*---------------------------------------------------------------------*
@@ -193,12 +193,12 @@ static l_int32 pixcompFastConvertToPdfData(PIXC *pixc, const char *title,
  */
 PIXC *
 pixcompCreateFromPix(PIX     *pix,
-                     l_int32  comptype)
+                     int32_t  comptype)
 {
 size_t    size;
 char     *text;
-l_int32   ret, format;
-l_uint8  *data;
+int32_t   ret, format;
+uint8_t  *data;
 PIXC     *pixc;
 
     if (!pix)
@@ -246,11 +246,11 @@ PIXC     *pixc;
  * </pre>
  */
 PIXC *
-pixcompCreateFromString(l_uint8  *data,
+pixcompCreateFromString(uint8_t  *data,
                         size_t    size,
-                        l_int32   copyflag)
+                        int32_t   copyflag)
 {
-l_int32  format, w, h, d, bps, spp, iscmap;
+int32_t  format, w, h, d, bps, spp, iscmap;
 PIXC    *pixc;
 
     if (!data)
@@ -293,11 +293,11 @@ PIXC    *pixc;
  */
 PIXC *
 pixcompCreateFromFile(const char  *filename,
-                      l_int32      comptype)
+                      int32_t      comptype)
 {
-l_int32   format;
+int32_t   format;
 size_t    nbytes;
-l_uint8  *data;
+uint8_t  *data;
 PIX      *pix;
 PIXC     *pixc;
 
@@ -388,7 +388,7 @@ PIXC *
 pixcompCopy(PIXC  *pixcs)
 {
 size_t    size;
-l_uint8  *datas, *datad;
+uint8_t  *datas, *datad;
 PIXC     *pixcd;
 
     if (!pixcs)
@@ -410,7 +410,7 @@ PIXC     *pixcd;
 
         /* Copy image data */
     datas = pixcs->data;
-    if ((datad = (l_uint8 *)LEPT_CALLOC(size, sizeof(l_int8))) == NULL) {
+    if ((datad = (uint8_t *)LEPT_CALLOC(size, sizeof(int8_t))) == NULL) {
         pixcompDestroy(&pixcd);
         return (PIXC *)ERROR_PTR("pixcd not made", __func__, NULL);
     }
@@ -433,9 +433,9 @@ PIXC     *pixcd;
  */
 l_ok
 pixcompGetDimensions(PIXC     *pixc,
-                     l_int32  *pw,
-                     l_int32  *ph,
-                     l_int32  *pd)
+                     int32_t  *pw,
+                     int32_t  *ph,
+                     int32_t  *pd)
 {
     if (!pixc)
         return ERROR_INT("pixc not defined", __func__, 1);
@@ -455,10 +455,10 @@ pixcompGetDimensions(PIXC     *pixc,
  */
 l_ok
 pixcompGetParameters(PIXC     *pixc,
-                     l_int32  *pxres,
-                     l_int32  *pyres,
-                     l_int32  *pcomptype,
-                     l_int32  *pcmapflag)
+                     int32_t  *pxres,
+                     int32_t  *pyres,
+                     int32_t  *pcomptype,
+                     int32_t  *pcmapflag)
 {
     if (!pixc)
         return ERROR_INT("pixc not defined", __func__, 1);
@@ -498,10 +498,10 @@ pixcompGetParameters(PIXC     *pixc,
  * </pre>
  */
 l_ok
-pixcompDetermineFormat(l_int32   comptype,
-                       l_int32   d,
-                       l_int32   cmapflag,
-                       l_int32  *pformat)
+pixcompDetermineFormat(int32_t   comptype,
+                       int32_t   d,
+                       int32_t   cmapflag,
+                       int32_t  *pformat)
 {
 
     if (!pformat)
@@ -540,7 +540,7 @@ pixcompDetermineFormat(l_int32   comptype,
 PIX *
 pixCreateFromPixcomp(PIXC  *pixc)
 {
-l_int32  w, h, d, cmapinpix, format;
+int32_t  w, h, d, cmapinpix, format;
 PIX     *pix;
 
     if (!pixc)
@@ -589,7 +589,7 @@ PIX     *pix;
  * \return  pixac, or NULL on error
  */
 PIXAC *
-pixacompCreate(l_int32  n)
+pixacompCreate(int32_t  n)
 {
 PIXAC  *pixac;
 
@@ -652,12 +652,12 @@ PIXAC  *pixac;
  * </pre>
  */
 PIXAC *
-pixacompCreateWithInit(l_int32  n,
-                       l_int32  offset,
+pixacompCreateWithInit(int32_t  n,
+                       int32_t  offset,
                        PIX     *pix,
-                       l_int32  comptype)
+                       int32_t  comptype)
 {
-l_int32  i;
+int32_t  i;
 PIX     *pixt;
 PIXC    *pixc;
 PIXAC   *pixac;
@@ -715,10 +715,10 @@ PIXAC   *pixac;
  */
 PIXAC *
 pixacompCreateFromPixa(PIXA    *pixa,
-                       l_int32  comptype,
-                       l_int32  accesstype)
+                       int32_t  comptype,
+                       int32_t  accesstype)
 {
-l_int32  i, n;
+int32_t  i, n;
 BOXA    *boxa;
 PIX     *pix;
 PIXAC   *pixac;
@@ -773,7 +773,7 @@ PIXAC   *pixac;
 PIXAC *
 pixacompCreateFromFiles(const char  *dirname,
                         const char  *substr,
-                        l_int32      comptype)
+                        int32_t      comptype)
 {
 PIXAC    *pixac;
 SARRAY   *sa;
@@ -809,10 +809,10 @@ SARRAY   *sa;
  */
 PIXAC *
 pixacompCreateFromSA(SARRAY  *sa,
-                     l_int32  comptype)
+                     int32_t  comptype)
 {
 char    *str;
-l_int32  i, n;
+int32_t  i, n;
 PIXC    *pixc;
 PIXAC   *pixac;
 
@@ -850,7 +850,7 @@ PIXAC   *pixac;
 void
 pixacompDestroy(PIXAC  **ppixac)
 {
-l_int32  i;
+int32_t  i;
 PIXAC   *pixac;
 
     if (ppixac == NULL) {
@@ -893,9 +893,9 @@ PIXAC   *pixac;
 l_ok
 pixacompAddPix(PIXAC   *pixac,
                PIX     *pix,
-               l_int32  comptype)
+               int32_t  comptype)
 {
-l_int32  cmapflag, format;
+int32_t  cmapflag, format;
 PIXC    *pixc;
 
     if (!pixac)
@@ -933,9 +933,9 @@ PIXC    *pixc;
 l_ok
 pixacompAddPixcomp(PIXAC   *pixac,
                    PIXC    *pixc,
-                   l_int32  copyflag)
+                   int32_t  copyflag)
 {
-l_int32  n;
+int32_t  n;
 
     if (!pixac)
         return ERROR_INT("pixac not defined", __func__, 1);
@@ -975,7 +975,7 @@ l_int32  n;
  *      (2) The max number of pixcomp ptrs is 1M.
  * </pre>
  */
-static l_int32
+static int32_t
 pixacompExtendArray(PIXAC  *pixac)
 {
 size_t  oldsize, newsize;
@@ -1017,11 +1017,11 @@ size_t  oldsize, newsize;
  */
 l_ok
 pixacompReplacePix(PIXAC   *pixac,
-                   l_int32  index,
+                   int32_t  index,
                    PIX     *pix,
-                   l_int32  comptype)
+                   int32_t  comptype)
 {
-l_int32  n, aindex;
+int32_t  n, aindex;
 PIXC    *pixc;
 
     if (!pixac)
@@ -1060,10 +1060,10 @@ PIXC    *pixc;
  */
 l_ok
 pixacompReplacePixcomp(PIXAC   *pixac,
-                       l_int32  index,
+                       int32_t  index,
                        PIXC    *pixc)
 {
-l_int32  n, aindex;
+int32_t  n, aindex;
 PIXC    *pixct;
 
     if (!pixac)
@@ -1094,7 +1094,7 @@ PIXC    *pixct;
 l_ok
 pixacompAddBox(PIXAC   *pixac,
                BOX     *box,
-               l_int32  copyflag)
+               int32_t  copyflag)
 {
     if (!pixac)
         return ERROR_INT("pixac not defined", __func__, 1);
@@ -1117,7 +1117,7 @@ pixacompAddBox(PIXAC   *pixac,
  * \param[in]    pixac
  * \return  count, or 0 if no pixa
  */
-l_int32
+int32_t
 pixacompGetCount(PIXAC  *pixac)
 {
     if (!pixac)
@@ -1145,10 +1145,10 @@ pixacompGetCount(PIXAC  *pixac)
  */
 PIXC *
 pixacompGetPixcomp(PIXAC   *pixac,
-                   l_int32  index,
-                   l_int32  copyflag)
+                   int32_t  index,
+                   int32_t  copyflag)
 {
-l_int32  aindex;
+int32_t  aindex;
 
     if (!pixac)
         return (PIXC *)ERROR_PTR("pixac not defined", __func__, NULL);
@@ -1180,9 +1180,9 @@ l_int32  aindex;
  */
 PIX *
 pixacompGetPix(PIXAC   *pixac,
-               l_int32  index)
+               int32_t  index)
 {
-l_int32  aindex;
+int32_t  aindex;
 PIXC    *pixc;
 
     if (!pixac)
@@ -1213,12 +1213,12 @@ PIXC    *pixc;
  */
 l_ok
 pixacompGetPixDimensions(PIXAC    *pixac,
-                         l_int32   index,
-                         l_int32  *pw,
-                         l_int32  *ph,
-                         l_int32  *pd)
+                         int32_t   index,
+                         int32_t  *pw,
+                         int32_t  *ph,
+                         int32_t  *pd)
 {
-l_int32  aindex;
+int32_t  aindex;
 PIXC    *pixc;
 
     if (!pixac)
@@ -1243,7 +1243,7 @@ PIXC    *pixc;
  */
 BOXA *
 pixacompGetBoxa(PIXAC   *pixac,
-                l_int32  accesstype)
+                int32_t  accesstype)
 {
     if (!pixac)
         return (BOXA *)ERROR_PTR("pixac not defined", __func__, NULL);
@@ -1263,7 +1263,7 @@ pixacompGetBoxa(PIXAC   *pixac,
  * \param[in]    pixac
  * \return  count, or 0 on error
  */
-l_int32
+int32_t
 pixacompGetBoxaCount(PIXAC  *pixac)
 {
     if (!pixac)
@@ -1298,10 +1298,10 @@ pixacompGetBoxaCount(PIXAC  *pixac)
  */
 BOX *
 pixacompGetBox(PIXAC    *pixac,
-               l_int32   index,
-               l_int32   accesstype)
+               int32_t   index,
+               int32_t   accesstype)
 {
-l_int32  aindex;
+int32_t  aindex;
 BOX     *box;
 
     if (!pixac)
@@ -1343,13 +1343,13 @@ BOX     *box;
  */
 l_ok
 pixacompGetBoxGeometry(PIXAC    *pixac,
-                       l_int32   index,
-                       l_int32  *px,
-                       l_int32  *py,
-                       l_int32  *pw,
-                       l_int32  *ph)
+                       int32_t   index,
+                       int32_t  *px,
+                       int32_t  *py,
+                       int32_t  *pw,
+                       int32_t  *ph)
 {
-l_int32  aindex;
+int32_t  aindex;
 BOX     *box;
 
     if (!pixac)
@@ -1379,7 +1379,7 @@ BOX     *box;
  *          By default it is 0.
  * </pre>
  */
-l_int32
+int32_t
 pixacompGetOffset(PIXAC   *pixac)
 {
     if (!pixac)
@@ -1404,7 +1404,7 @@ pixacompGetOffset(PIXAC   *pixac)
  */
 l_ok
 pixacompSetOffset(PIXAC   *pixac,
-                  l_int32  offset)
+                  int32_t  offset)
 {
     if (!pixac)
         return ERROR_INT("pixac not defined", __func__, 1);
@@ -1432,9 +1432,9 @@ pixacompSetOffset(PIXAC   *pixac,
  */
 PIXA *
 pixaCreateFromPixacomp(PIXAC   *pixac,
-                       l_int32  accesstype)
+                       int32_t  accesstype)
 {
-l_int32  i, n, offset;
+int32_t  i, n, offset;
 PIX     *pix;
 PIXA    *pixa;
 
@@ -1489,10 +1489,10 @@ PIXA    *pixa;
 l_ok
 pixacompJoin(PIXAC   *pixacd,
              PIXAC   *pixacs,
-             l_int32  istart,
-             l_int32  iend)
+             int32_t  istart,
+             int32_t  iend)
 {
-l_int32  i, n, nb;
+int32_t  i, n, nb;
 BOXA    *boxas, *boxad;
 PIXC    *pixc;
 
@@ -1541,7 +1541,7 @@ PIXAC *
 pixacompInterleave(PIXAC   *pixac1,
                    PIXAC   *pixac2)
 {
-l_int32  i, n1, n2, n, nb1, nb2;
+int32_t  i, n1, n2, n, nb1, nb2;
 BOX     *box;
 PIXC    *pixc1, *pixc2;
 PIXAC   *pixacd;
@@ -1631,9 +1631,9 @@ PIXAC *
 pixacompReadStream(FILE  *fp)
 {
 char      buf[256];
-l_uint8  *data;
-l_int32   n, offset, i, w, h, d, ignore;
-l_int32   comptype, cmapflag, version, xres, yres;
+uint8_t  *data;
+int32_t   n, offset, i, w, h, d, ignore;
+int32_t   comptype, cmapflag, version, xres, yres;
 size_t    size;
 BOXA     *boxa;
 PIXC     *pixc;
@@ -1696,7 +1696,7 @@ PIXAC    *pixac;
             pixacompDestroy(&pixac);
             return (PIXAC *)ERROR_PTR("read fail for res", __func__, NULL);
         }
-        if ((data = (l_uint8 *)LEPT_CALLOC(1, size)) == NULL) {
+        if ((data = (uint8_t *)LEPT_CALLOC(1, size)) == NULL) {
             pixacompDestroy(&pixac);
             return (PIXAC *)ERROR_PTR("calloc fail for data", __func__, NULL);
         }
@@ -1735,7 +1735,7 @@ PIXAC    *pixac;
  * </pre>
  */
 PIXAC *
-pixacompReadMem(const l_uint8  *data,
+pixacompReadMem(const uint8_t  *data,
                 size_t          size)
 {
 FILE   *fp;
@@ -1771,7 +1771,7 @@ l_ok
 pixacompWrite(const char  *filename,
               PIXAC       *pixac)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (!filename)
@@ -1800,7 +1800,7 @@ l_ok
 pixacompWriteStream(FILE   *fp,
                     PIXAC  *pixac)
 {
-l_int32  n, i;
+int32_t  n, i;
 PIXC    *pixc;
 
     if (!fp)
@@ -1843,11 +1843,11 @@ PIXC    *pixc;
  * </pre>
  */
 l_ok
-pixacompWriteMem(l_uint8  **pdata,
+pixacompWriteMem(uint8_t  **pdata,
                  size_t    *psize,
                  PIXAC     *pixac)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (pdata) *pdata = NULL;
@@ -1921,15 +1921,15 @@ FILE    *fp;
  */
 l_ok
 pixacompConvertToPdf(PIXAC       *pixac,
-                     l_int32      res,
+                     int32_t      res,
                      l_float32    scalefactor,
-                     l_int32      type,
-                     l_int32      quality,
+                     int32_t      type,
+                     int32_t      quality,
                      const char  *title,
                      const char  *fileout)
 {
-l_uint8  *data;
-l_int32   ret;
+uint8_t  *data;
+int32_t   ret;
 size_t    nbytes;
 
     if (!pixac)
@@ -1972,16 +1972,16 @@ size_t    nbytes;
  */
 l_ok
 pixacompConvertToPdfData(PIXAC       *pixac,
-                         l_int32      res,
+                         int32_t      res,
                          l_float32    scalefactor,
-                         l_int32      type,
-                         l_int32      quality,
+                         int32_t      type,
+                         int32_t      quality,
                          const char  *title,
-                         l_uint8    **pdata,
+                         uint8_t    **pdata,
                          size_t      *pnbytes)
 {
-l_uint8  *imdata;
-l_int32   i, n, ret, scaledres, pagetype;
+uint8_t  *imdata;
+int32_t   i, n, ret, scaledres, pagetype;
 size_t    imbytes;
 L_BYTEA  *ba;
 PIX      *pixs, *pix;
@@ -2023,7 +2023,7 @@ L_PTRA   *pa_data;
         else
             pix = pixClone(pixs);
         pixDestroy(&pixs);
-        scaledres = (l_int32)(res * scalefactor);
+        scaledres = (int32_t)(res * scalefactor);
 
             /* Select the encoding type */
         if (type != L_DEFAULT_ENCODE) {
@@ -2087,11 +2087,11 @@ L_PTRA   *pa_data;
 l_ok
 pixacompFastConvertToPdfData(PIXAC       *pixac,
                              const char  *title,
-                             l_uint8    **pdata,
+                             uint8_t    **pdata,
                              size_t      *pnbytes)
 {
-l_uint8  *imdata;
-l_int32   i, n, ret, comptype;
+uint8_t  *imdata;
+int32_t   i, n, ret, comptype;
 size_t    imbytes;
 L_BYTEA  *ba;
 PIXC     *pixc;
@@ -2167,13 +2167,13 @@ L_PTRA   *pa_data;
  *          via the cid.)
  * </pre>
  */
-static l_int32
+static int32_t
 pixcompFastConvertToPdfData(PIXC        *pixc,
                             const char  *title,
-                            l_uint8    **pdata,
+                            uint8_t    **pdata,
                             size_t      *pnbytes)
 {
-l_uint8      *data;
+uint8_t      *data;
 L_COMP_DATA  *cid;
 
     if (!pdata)
@@ -2210,7 +2210,7 @@ pixacompWriteStreamInfo(FILE        *fp,
                         PIXAC       *pixac,
                         const char  *text)
 {
-l_int32  i, n, nboxes;
+int32_t  i, n, nboxes;
 PIXC    *pixc;
 
     if (!fp)
@@ -2303,12 +2303,12 @@ pixcompWriteStreamInfo(FILE        *fp,
  */
 PIX *
 pixacompDisplayTiledAndScaled(PIXAC   *pixac,
-                              l_int32  outdepth,
-                              l_int32  tilewidth,
-                              l_int32  ncols,
-                              l_int32  background,
-                              l_int32  spacing,
-                              l_int32  border)
+                              int32_t  outdepth,
+                              int32_t  tilewidth,
+                              int32_t  ncols,
+                              int32_t  background,
+                              int32_t  spacing,
+                              int32_t  border)
 {
 PIX   *pixd;
 PIXA  *pixa;
@@ -2338,7 +2338,7 @@ pixacompWriteFiles(PIXAC       *pixac,
                    const char  *subdir)
 {
 char     buf[128];
-l_int32  i, n;
+int32_t  i, n;
 PIXC    *pixc;
 
     if (!pixac)

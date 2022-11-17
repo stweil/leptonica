@@ -48,11 +48,11 @@ struct L_Colorfill
 {
     struct Pix     *pixs;        /*!< clone of source pix                    */
     struct Pix     *pixst;       /*!< source pix, after optional transform   */
-    l_int32         nx;          /*!< number of tiles in each tile row       */
-    l_int32         ny;          /*!< number of tiles in each tile column    */
-    l_int32         tw;          /*!< width of each tile                     */
-    l_int32         th;          /*!< height of each tile                    */
-    l_int32         minarea;     /*!< min number of pixels in a color region */
+    int32_t         nx;          /*!< number of tiles in each tile row       */
+    int32_t         ny;          /*!< number of tiles in each tile column    */
+    int32_t         tw;          /*!< width of each tile                     */
+    int32_t         th;          /*!< height of each tile                    */
+    int32_t         minarea;     /*!< min number of pixels in a color region */
     struct Boxa    *boxas;       /*!< tile locations                         */
     struct Pixa    *pixas;       /*!< tiles from source pix                  */
     struct Pixa    *pixam;       /*!< mask tiles with components covering    */

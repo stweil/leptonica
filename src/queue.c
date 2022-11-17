@@ -33,15 +33,15 @@
  *          void           *lqueueDestroy()
  *
  *      Operations to add/remove to/from a L_Queue
- *          l_int32         lqueueAdd()
- *          static l_int32  lqueueExtendArray()
+ *          int32_t         lqueueAdd()
+ *          static int32_t  lqueueExtendArray()
  *          void           *lqueueRemove()
  *
  *      Accessors
- *          l_int32         lqueueGetCount()
+ *          int32_t         lqueueGetCount()
  *
  *      Debug output
- *          l_int32         lqueuePrint()
+ *          int32_t         lqueuePrint()
  *
  *    The lqueue is a fifo that implements a queue of void* pointers.
  *    It can be used to hold a queue of any type of struct.
@@ -69,11 +69,11 @@
 #include <string.h>
 #include "allheaders.h"
 
-static const l_int32  MIN_BUFFER_SIZE = 20;             /* n'importe quoi */
-static const l_int32  INITIAL_BUFFER_ARRAYSIZE = 1024;  /* n'importe quoi */
+static const int32_t  MIN_BUFFER_SIZE = 20;             /* n'importe quoi */
+static const int32_t  INITIAL_BUFFER_ARRAYSIZE = 1024;  /* n'importe quoi */
 
     /* Static function */
-static l_int32 lqueueExtendArray(L_QUEUE *lq);
+static int32_t lqueueExtendArray(L_QUEUE *lq);
 
 /*--------------------------------------------------------------------------*
  *                         L_Queue create/destroy                           *
@@ -90,7 +90,7 @@ static l_int32 lqueueExtendArray(L_QUEUE *lq);
  * </pre>
  */
 L_QUEUE *
-lqueueCreate(l_int32  nalloc)
+lqueueCreate(int32_t  nalloc)
 {
 L_QUEUE  *lq;
 
@@ -130,7 +130,7 @@ L_QUEUE  *lq;
  */
 void
 lqueueDestroy(L_QUEUE  **plq,
-              l_int32    freeflag)
+              int32_t    freeflag)
 {
 void     *item;
 L_QUEUE  *lq;
@@ -216,7 +216,7 @@ lqueueAdd(L_QUEUE  *lq,
  * \param[in]    lq    lqueue
  * \return  0 if OK, 1 on error
  */
-static l_int32
+static int32_t
 lqueueExtendArray(L_QUEUE  *lq)
 {
     if (!lq)
@@ -272,7 +272,7 @@ void  *item;
  * \param[in]    lq   lqueue
  * \return  count, or 0 on error
  */
-l_int32
+int32_t
 lqueueGetCount(L_QUEUE  *lq)
 {
     if (!lq)
@@ -296,7 +296,7 @@ l_ok
 lqueuePrint(FILE     *fp,
             L_QUEUE  *lq)
 {
-l_int32  i;
+int32_t  i;
 
     if (!fp)
         return ERROR_INT("stream not defined", __func__, 1);

@@ -48,20 +48,20 @@
 #include "pix_internal.h"
 
     /* for pixGenerateSelWithRuns() */
-static const l_int32  NumHorLines = 11;
-static const l_int32  NumVertLines = 8;
-static const l_int32  MinRunlength = 1;
+static const int32_t  NumHorLines = 11;
+static const int32_t  NumVertLines = 8;
+static const int32_t  MinRunlength = 1;
 
     /* for pixDisplayHitMissSel() */
-static const l_uint32  HitColor = 0xff880000;
-static const l_uint32  MissColor = 0x00ff8800;
+static const uint32_t  HitColor = 0xff880000;
+static const uint32_t  MissColor = 0x00ff8800;
 
 
 int main(int    argc,
          char **argv)
 {
 char     *filein, *fileout, *patternfile;
-l_int32   w, h, i, n;
+int32_t   w, h, i, n;
 BOX      *box, *boxe;
 BOXA     *boxa1, *boxa2;
 PIX      *pixs, *pixp, *pixpe, *pix1, *pix2, *pix3, *pix4, *pixhmt;

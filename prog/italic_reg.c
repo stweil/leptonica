@@ -42,7 +42,7 @@ int main(int    argc,
          char **argv)
 {
 char          opstring[32];
-l_int32       size;
+int32_t       size;
 BOXA         *boxa1, *boxa2, *boxa3, *boxa4;
 PIX          *pixs, *pixm, *pix1;
 PIXA         *pixadb;

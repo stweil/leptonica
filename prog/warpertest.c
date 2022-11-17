@@ -53,7 +53,7 @@ int main(int    argc,
          char **argv)
 {
 char       buf[256];
-l_int32    w, h, i, j, k, index, op, dir, stretch;
+int32_t    w, h, i, j, k, index, op, dir, stretch;
 l_float32  del, angle, angledeg;
 BOX       *box;
 L_BMF     *bmf;

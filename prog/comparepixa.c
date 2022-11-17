@@ -67,7 +67,7 @@ int main(int    argc,
          char **argv)
 {
 char    *fileout;
-l_int32  nx, ny, tw, spacing, border, fontsize;
+int32_t  nx, ny, tw, spacing, border, fontsize;
 PIXA    *pixa1, *pixa2;
 
     if (argc != 10) {

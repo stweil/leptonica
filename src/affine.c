@@ -48,17 +48,17 @@
  *           PIX        *pixAffinePtaWithAlpha()
  *
  *      Affine coordinate transformation
- *           l_int32     getAffineXformCoeffs()
- *           l_int32     affineInvertXform()
- *           l_int32     affineXformSampledPt()
- *           l_int32     affineXformPt()
+ *           int32_t     getAffineXformCoeffs()
+ *           int32_t     affineInvertXform()
+ *           int32_t     affineXformSampledPt()
+ *           int32_t     affineXformPt()
  *
  *      Interpolation helper functions
- *           l_int32     linearInterpolatePixelGray()
- *           l_int32     linearInterpolatePixelColor()
+ *           int32_t     linearInterpolatePixelGray()
+ *           int32_t     linearInterpolatePixelColor()
  *
  *      Gauss-jordan linear equation solver
- *           l_int32     gaussjordan()
+ *           int32_t     gaussjordan()
  *
  *      Affine image transformation using a sequence of
  *      shear/scale/translation operations
@@ -282,7 +282,7 @@ PIX *
 pixAffineSampledPta(PIX     *pixs,
                     PTA     *ptad,
                     PTA     *ptas,
-                    l_int32  incolor)
+                    int32_t  incolor)
 {
 l_float32  *vc;
 PIX        *pixd;
@@ -329,11 +329,11 @@ PIX        *pixd;
 PIX *
 pixAffineSampled(PIX        *pixs,
                  l_float32  *vc,
-                 l_int32     incolor)
+                 int32_t     incolor)
 {
-l_int32     i, j, w, h, d, x, y, wpls, wpld, color, cmapindex;
-l_uint32    val;
-l_uint32   *datas, *datad, *lines, *lined;
+int32_t     i, j, w, h, d, x, y, wpls, wpld, color, cmapindex;
+uint32_t    val;
+uint32_t   *datas, *datad, *lines, *lined;
 PIX        *pixd;
 PIXCMAP    *cmap;
 
@@ -421,10 +421,10 @@ PIX *
 pixAffinePta(PIX     *pixs,
              PTA     *ptad,
              PTA     *ptas,
-             l_int32  incolor)
+             int32_t  incolor)
 {
-l_int32   d;
-l_uint32  colorval;
+int32_t   d;
+uint32_t  colorval;
 PIX      *pixt1, *pixt2, *pixd;
 
     if (!pixs)
@@ -488,10 +488,10 @@ PIX      *pixt1, *pixt2, *pixd;
 PIX *
 pixAffine(PIX        *pixs,
           l_float32  *vc,
-          l_int32     incolor)
+          int32_t     incolor)
 {
-l_int32   d;
-l_uint32  colorval;
+int32_t   d;
+uint32_t  colorval;
 PIX      *pixt1, *pixt2, *pixd;
 
     if (!pixs)
@@ -543,7 +543,7 @@ PIX *
 pixAffinePtaColor(PIX      *pixs,
                   PTA      *ptad,
                   PTA      *ptas,
-                  l_uint32  colorval)
+                  uint32_t  colorval)
 {
 l_float32  *vc;
 PIX        *pixd;
@@ -581,11 +581,11 @@ PIX        *pixd;
 PIX *
 pixAffineColor(PIX        *pixs,
                l_float32  *vc,
-               l_uint32    colorval)
+               uint32_t    colorval)
 {
-l_int32    i, j, w, h, d, wpls, wpld;
-l_uint32   val;
-l_uint32  *datas, *datad, *lined;
+int32_t    i, j, w, h, d, wpls, wpld;
+uint32_t   val;
+uint32_t  *datas, *datad, *lined;
 l_float32  x, y;
 PIX       *pix1, *pix2, *pixd;
 
@@ -642,7 +642,7 @@ PIX *
 pixAffinePtaGray(PIX     *pixs,
                  PTA     *ptad,
                  PTA     *ptas,
-                 l_uint8  grayval)
+                 uint8_t  grayval)
 {
 l_float32  *vc;
 PIX        *pixd;
@@ -681,10 +681,10 @@ PIX        *pixd;
 PIX *
 pixAffineGray(PIX        *pixs,
               l_float32  *vc,
-              l_uint8     grayval)
+              uint8_t     grayval)
 {
-l_int32    i, j, w, h, wpls, wpld, val;
-l_uint32  *datas, *datad, *lined;
+int32_t    i, j, w, h, wpls, wpld, val;
+uint32_t  *datas, *datad, *lined;
 l_float32  x, y;
 PIX       *pixd;
 
@@ -770,9 +770,9 @@ pixAffinePtaWithAlpha(PIX       *pixs,
                       PTA       *ptas,
                       PIX       *pixg,
                       l_float32  fract,
-                      l_int32    border)
+                      int32_t    border)
 {
-l_int32  ws, hs, d;
+int32_t  ws, hs, d;
 PIX     *pixd, *pixb1, *pixb2, *pixg2, *pixga;
 PTA     *ptad2, *ptas2;
 
@@ -811,15 +811,15 @@ PTA     *ptad2, *ptas2;
         if (fract == 1.0)
             pixSetAll(pixg2);
         else
-            pixSetAllArbitrary(pixg2, (l_int32)(255.0 * fract));
+            pixSetAllArbitrary(pixg2, (int32_t)(255.0 * fract));
     } else {
         pixg2 = pixResizeToMatch(pixg, NULL, ws, hs);
     }
     if (ws > 10 && hs > 10) {  /* see note 7 */
         pixSetBorderRingVal(pixg2, 1,
-                            (l_int32)(255.0 * fract * AlphaMaskBorderVals[0]));
+                            (int32_t)(255.0 * fract * AlphaMaskBorderVals[0]));
         pixSetBorderRingVal(pixg2, 2,
-                            (l_int32)(255.0 * fract * AlphaMaskBorderVals[1]));
+                            (int32_t)(255.0 * fract * AlphaMaskBorderVals[1]));
 
     }
     pixb2 = pixAddBorder(pixg2, border, 0);  /* must be black border */
@@ -916,7 +916,7 @@ getAffineXformCoeffs(PTA         *ptas,
                      PTA         *ptad,
                      l_float32  **pvc)
 {
-l_int32     i;
+int32_t     i;
 l_float32   x1, y1, x2, y2, x3, y3;
 l_float32  *b;   /* rhs vector of primed coords X'; coeffs returned in *pvc */
 l_float32  *a[6];  /* 6x6 matrix A  */
@@ -1003,7 +1003,7 @@ l_ok
 affineInvertXform(l_float32   *vc,
                   l_float32  **pvci)
 {
-l_int32     i;
+int32_t     i;
 l_float32  *vci;
 l_float32  *a[3];
 l_float32   b[3] = {1.0, 1.0, 1.0};   /* anything; results ignored */
@@ -1082,16 +1082,16 @@ l_float32   b[3] = {1.0, 1.0, 1.0};   /* anything; results ignored */
  */
 l_ok
 affineXformSampledPt(l_float32  *vc,
-                     l_int32     x,
-                     l_int32     y,
-                     l_int32    *pxp,
-                     l_int32    *pyp)
+                     int32_t     x,
+                     int32_t     y,
+                     int32_t    *pxp,
+                     int32_t    *pyp)
 {
     if (!vc)
         return ERROR_INT("vc not defined", __func__, 1);
 
-    *pxp = (l_int32)(vc[0] * x + vc[1] * y + vc[2] + 0.5);
-    *pyp = (l_int32)(vc[3] * x + vc[4] * y + vc[5] + 0.5);
+    *pxp = (int32_t)(vc[0] * x + vc[1] * y + vc[2] + 0.5);
+    *pyp = (int32_t)(vc[3] * x + vc[4] * y + vc[5] + 0.5);
     return 0;
 }
 
@@ -1112,8 +1112,8 @@ affineXformSampledPt(l_float32  *vc,
  */
 l_ok
 affineXformPt(l_float32  *vc,
-              l_int32     x,
-              l_int32     y,
+              int32_t     x,
+              int32_t     y,
               l_float32  *pxp,
               l_float32  *pyp)
 {
@@ -1150,19 +1150,19 @@ affineXformPt(l_float32  *vc,
  * </pre>
  */
 l_ok
-linearInterpolatePixelColor(l_uint32  *datas,
-                            l_int32    wpls,
-                            l_int32    w,
-                            l_int32    h,
+linearInterpolatePixelColor(uint32_t  *datas,
+                            int32_t    wpls,
+                            int32_t    w,
+                            int32_t    h,
                             l_float32  x,
                             l_float32  y,
-                            l_uint32   colorval,
-                            l_uint32  *pval)
+                            uint32_t   colorval,
+                            uint32_t  *pval)
 {
-l_int32    valid, xpm, ypm, xp, xp2, yp, xf, yf;
-l_int32    rval, gval, bval;
-l_uint32   word00, word01, word10, word11;
-l_uint32  *lines;
+int32_t    valid, xpm, ypm, xp, xp2, yp, xf, yf;
+int32_t    rval, gval, bval;
+uint32_t   word00, word01, word10, word11;
+uint32_t  *lines;
 
     if (!pval)
         return ERROR_INT("&val not defined", __func__, 1);
@@ -1177,8 +1177,8 @@ l_uint32  *lines;
     valid = (x >= 0.0 && y >= 0.0 && x < w && y < h);
     if (!valid) return 0;
 
-    xpm = (l_int32)(16.0 * x);
-    ypm = (l_int32)(16.0 * y);
+    xpm = (int32_t)(16.0 * x);
+    ypm = (int32_t)(16.0 * y);
     xp = xpm >> 4;
     xp2 = xp + 1 < w ? xp + 1 : xp;
     yp = ypm >> 4;
@@ -1234,17 +1234,17 @@ l_uint32  *lines;
  * </pre>
  */
 l_ok
-linearInterpolatePixelGray(l_uint32  *datas,
-                           l_int32    wpls,
-                           l_int32    w,
-                           l_int32    h,
+linearInterpolatePixelGray(uint32_t  *datas,
+                           int32_t    wpls,
+                           int32_t    w,
+                           int32_t    h,
                            l_float32  x,
                            l_float32  y,
-                           l_int32    grayval,
-                           l_int32   *pval)
+                           int32_t    grayval,
+                           int32_t   *pval)
 {
-l_int32    valid, xpm, ypm, xp, xp2, yp, xf, yf, v00, v10, v01, v11;
-l_uint32  *lines;
+int32_t    valid, xpm, ypm, xp, xp2, yp, xf, yf, v00, v10, v01, v11;
+uint32_t  *lines;
 
     if (!pval)
         return ERROR_INT("&val not defined", __func__, 1);
@@ -1259,8 +1259,8 @@ l_uint32  *lines;
     valid = (x >= 0.0 && y >= 0.0 && x < w && y < h);
     if (!valid) return 0;
 
-    xpm = (l_int32)(16.0 * x);
-    ypm = (l_int32)(16.0 * y);
+    xpm = (int32_t)(16.0 * x);
+    ypm = (int32_t)(16.0 * y);
     xp = xpm >> 4;
     xp2 = xp + 1 < w ? xp + 1 : xp;
     yp = ypm >> 4;
@@ -1310,13 +1310,13 @@ l_uint32  *lines;
  *          pp. 36-41 (gauss-jordan elimination)
  * </pre>
  */
-l_int32
+int32_t
 gaussjordan(l_float32  **a,
             l_float32   *b,
-            l_int32      n)
+            int32_t      n)
 {
-l_int32    i, icol, irow, j, k, col, row, success;
-l_int32   *indexc, *indexr, *ipiv;
+int32_t    i, icol, irow, j, k, col, row, success;
+int32_t   *indexc, *indexr, *ipiv;
 l_float32  maxval, val, pivinv, temp;
 
     if (!a)
@@ -1325,9 +1325,9 @@ l_float32  maxval, val, pivinv, temp;
         return ERROR_INT("b not defined", __func__, 1);
 
     success = TRUE;
-    indexc = (l_int32 *)LEPT_CALLOC(n, sizeof(l_int32));
-    indexr = (l_int32 *)LEPT_CALLOC(n, sizeof(l_int32));
-    ipiv = (l_int32 *)LEPT_CALLOC(n, sizeof(l_int32));
+    indexc = (int32_t *)LEPT_CALLOC(n, sizeof(int32_t));
+    indexr = (int32_t *)LEPT_CALLOC(n, sizeof(int32_t));
+    ipiv = (int32_t *)LEPT_CALLOC(n, sizeof(int32_t));
     if (!indexc || !indexr || !ipiv) {
         L_ERROR("array not made\n", __func__);
         success = FALSE;
@@ -1436,12 +1436,12 @@ PIX *
 pixAffineSequential(PIX     *pixs,
                     PTA     *ptad,
                     PTA     *ptas,
-                    l_int32  bw,
-                    l_int32  bh)
+                    int32_t  bw,
+                    int32_t  bh)
 {
-l_int32    x1, y1, x2, y2, x3, y3;    /* ptas */
-l_int32    x1p, y1p, x2p, y2p, x3p, y3p;   /* ptad */
-l_int32    x1sc, y1sc;  /* scaled origin */
+int32_t    x1, y1, x2, y2, x3, y3;    /* ptas */
+int32_t    x1p, y1p, x2p, y2p, x3p, y3p;   /* ptad */
+int32_t    x1sc, y1sc;  /* scaled origin */
 l_float32  x2s, x2sp, scalex, scaley;
 l_float32  th3, th3p, ph2, ph2p;
 #if  DEBUG
@@ -1564,8 +1564,8 @@ PIX       *pix1, *pix2, *pixd;
         axes, and take the shears in reverse order as well.
      *-------------------------------------------------------------*/
         /* Shift image to match dest origin. */
-    x1sc = (l_int32)(scalex * x1 + 0.5);   /* x comp of origin after scaling */
-    y1sc = (l_int32)(scaley * y1 + 0.5);   /* y comp of origin after scaling */
+    x1sc = (int32_t)(scalex * x1 + 0.5);   /* x comp of origin after scaling */
+    y1sc = (int32_t)(scaley * y1 + 0.5);   /* y comp of origin after scaling */
     pixRasteropIP(pix2, x1p - x1sc, y1p - y1sc, L_BRING_IN_WHITE);
 
         /* Shear image to take points 2 and 3 off the axis and

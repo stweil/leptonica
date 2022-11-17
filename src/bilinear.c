@@ -47,9 +47,9 @@
  *           PIX      *pixBilinearPtaWithAlpha()
  *
  *      Bilinear coordinate transformation
- *           l_int32   getBilinearXformCoeffs()
- *           l_int32   bilinearXformSampledPt()
- *           l_int32   bilinearXformPt()
+ *           int32_t   getBilinearXformCoeffs()
+ *           int32_t   bilinearXformSampledPt()
+ *           int32_t   bilinearXformPt()
  *
  *      A bilinear transform can be specified as a specific functional
  *      mapping between 4 points in the source and 4 points in the dest.
@@ -145,7 +145,7 @@ PIX *
 pixBilinearSampledPta(PIX     *pixs,
                       PTA     *ptad,
                       PTA     *ptas,
-                      l_int32  incolor)
+                      int32_t  incolor)
 {
 l_float32  *vc;
 PIX        *pixd;
@@ -192,11 +192,11 @@ PIX        *pixd;
 PIX *
 pixBilinearSampled(PIX        *pixs,
                    l_float32  *vc,
-                   l_int32     incolor)
+                   int32_t     incolor)
 {
-l_int32     i, j, w, h, d, x, y, wpls, wpld, color, cmapindex;
-l_uint32    val;
-l_uint32   *datas, *datad, *lines, *lined;
+int32_t     i, j, w, h, d, x, y, wpls, wpld, color, cmapindex;
+uint32_t    val;
+uint32_t   *datas, *datad, *lines, *lined;
 PIX        *pixd;
 PIXCMAP    *cmap;
 
@@ -284,10 +284,10 @@ PIX *
 pixBilinearPta(PIX     *pixs,
                PTA     *ptad,
                PTA     *ptas,
-               l_int32  incolor)
+               int32_t  incolor)
 {
-l_int32   d;
-l_uint32  colorval;
+int32_t   d;
+uint32_t  colorval;
 PIX      *pixt1, *pixt2, *pixd;
 
     if (!pixs)
@@ -351,10 +351,10 @@ PIX      *pixt1, *pixt2, *pixd;
 PIX *
 pixBilinear(PIX        *pixs,
             l_float32  *vc,
-            l_int32     incolor)
+            int32_t     incolor)
 {
-l_int32   d;
-l_uint32  colorval;
+int32_t   d;
+uint32_t  colorval;
 PIX      *pixt1, *pixt2, *pixd;
 
     if (!pixs)
@@ -406,7 +406,7 @@ PIX *
 pixBilinearPtaColor(PIX      *pixs,
                     PTA      *ptad,
                     PTA      *ptas,
-                    l_uint32  colorval)
+                    uint32_t  colorval)
 {
 l_float32  *vc;
 PIX        *pixd;
@@ -444,11 +444,11 @@ PIX        *pixd;
 PIX *
 pixBilinearColor(PIX        *pixs,
                  l_float32  *vc,
-                 l_uint32    colorval)
+                 uint32_t    colorval)
 {
-l_int32    i, j, w, h, d, wpls, wpld;
-l_uint32   val;
-l_uint32  *datas, *datad, *lined;
+int32_t    i, j, w, h, d, wpls, wpld;
+uint32_t   val;
+uint32_t  *datas, *datad, *lined;
 l_float32  x, y;
 PIX       *pix1, *pix2, *pixd;
 
@@ -505,7 +505,7 @@ PIX *
 pixBilinearPtaGray(PIX     *pixs,
                    PTA     *ptad,
                    PTA     *ptas,
-                   l_uint8  grayval)
+                   uint8_t  grayval)
 {
 l_float32  *vc;
 PIX        *pixd;
@@ -543,10 +543,10 @@ PIX        *pixd;
 PIX *
 pixBilinearGray(PIX        *pixs,
                 l_float32  *vc,
-                l_uint8     grayval)
+                uint8_t     grayval)
 {
-l_int32    i, j, w, h, wpls, wpld, val;
-l_uint32  *datas, *datad, *lined;
+int32_t    i, j, w, h, wpls, wpld, val;
+uint32_t  *datas, *datad, *lined;
 l_float32  x, y;
 PIX       *pixd;
 
@@ -632,9 +632,9 @@ pixBilinearPtaWithAlpha(PIX       *pixs,
                         PTA       *ptas,
                         PIX       *pixg,
                         l_float32  fract,
-                        l_int32    border)
+                        int32_t    border)
 {
-l_int32  ws, hs, d;
+int32_t  ws, hs, d;
 PIX     *pixd, *pixb1, *pixb2, *pixg2, *pixga;
 PTA     *ptad2, *ptas2;
 
@@ -673,15 +673,15 @@ PTA     *ptad2, *ptas2;
         if (fract == 1.0)
             pixSetAll(pixg2);
         else
-            pixSetAllArbitrary(pixg2, (l_int32)(255.0 * fract));
+            pixSetAllArbitrary(pixg2, (int32_t)(255.0 * fract));
     } else {
         pixg2 = pixResizeToMatch(pixg, NULL, ws, hs);
     }
     if (ws > 10 && hs > 10) {  /* see note 7 */
         pixSetBorderRingVal(pixg2, 1,
-                            (l_int32)(255.0 * fract * AlphaMaskBorderVals[0]));
+                            (int32_t)(255.0 * fract * AlphaMaskBorderVals[0]));
         pixSetBorderRingVal(pixg2, 2,
-                            (l_int32)(255.0 * fract * AlphaMaskBorderVals[1]));
+                            (int32_t)(255.0 * fract * AlphaMaskBorderVals[1]));
 
     }
     pixb2 = pixAddBorder(pixg2, border, 0);  /* must be black border */
@@ -761,7 +761,7 @@ getBilinearXformCoeffs(PTA         *ptas,
                        PTA         *ptad,
                        l_float32  **pvc)
 {
-l_int32     i;
+int32_t     i;
 l_float32   x1, y1, x2, y2, x3, y3, x4, y4;
 l_float32  *b;   /* rhs vector of primed coords X'; coeffs returned in *pvc */
 l_float32  *a[8];  /* 8x8 matrix A  */
@@ -843,17 +843,17 @@ l_float32  *a[8];  /* 8x8 matrix A  */
  */
 l_ok
 bilinearXformSampledPt(l_float32  *vc,
-                       l_int32     x,
-                       l_int32     y,
-                       l_int32    *pxp,
-                       l_int32    *pyp)
+                       int32_t     x,
+                       int32_t     y,
+                       int32_t    *pxp,
+                       int32_t    *pyp)
 {
 
     if (!vc)
         return ERROR_INT("vc not defined", __func__, 1);
 
-    *pxp = (l_int32)(vc[0] * x + vc[1] * y + vc[2] * x * y + vc[3] + 0.5);
-    *pyp = (l_int32)(vc[4] * x + vc[5] * y + vc[6] * x * y + vc[7] + 0.5);
+    *pxp = (int32_t)(vc[0] * x + vc[1] * y + vc[2] * x * y + vc[3] + 0.5);
+    *pyp = (int32_t)(vc[4] * x + vc[5] * y + vc[6] * x * y + vc[7] + 0.5);
     return 0;
 }
 
@@ -874,8 +874,8 @@ bilinearXformSampledPt(l_float32  *vc,
  */
 l_ok
 bilinearXformPt(l_float32  *vc,
-                l_int32     x,
-                l_int32     y,
+                int32_t     x,
+                int32_t     y,
                 l_float32  *pxp,
                 l_float32  *pyp)
 {

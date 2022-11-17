@@ -49,10 +49,10 @@
 /*! Expandable byte buffer for memory read/write operations */
 struct L_ByteBuffer
 {
-    l_int32      nalloc;       /*!< size of allocated byte array            */
-    l_int32      n;            /*!< number of bytes read into to the array  */
-    l_int32      nwritten;     /*!< number of bytes written from the array  */
-    l_uint8     *array;        /*!< byte array                              */
+    int32_t      nalloc;       /*!< size of allocated byte array            */
+    int32_t      n;            /*!< number of bytes read into to the array  */
+    int32_t      nwritten;     /*!< number of bytes written from the array  */
+    uint8_t     *array;        /*!< byte array                              */
 };
 typedef struct L_ByteBuffer L_BBUFFER;
 

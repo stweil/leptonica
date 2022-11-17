@@ -60,8 +60,8 @@ enum {
      * </pre>
      */
 union Rb_Type {
-    l_int64    itype;
-    l_uint64   utype;
+    int64_t    itype;
+    uint64_t   utype;
     l_float64  ftype;
     void      *ptype;
 };
@@ -69,7 +69,7 @@ typedef union Rb_Type RB_TYPE;
 
 struct L_Rbtree {
     struct L_Rbtree_Node  *root;
-    l_int32                keytype;
+    int32_t                keytype;
 };
 typedef struct L_Rbtree L_RBTREE;
 typedef struct L_Rbtree L_AMAP;  /* hide underlying implementation for map */
@@ -81,7 +81,7 @@ struct L_Rbtree_Node {
     struct L_Rbtree_Node  *left;
     struct L_Rbtree_Node  *right;
     struct L_Rbtree_Node  *parent;
-    l_int32                color;
+    int32_t                color;
 };
 typedef struct L_Rbtree_Node L_RBTREE_NODE;
 typedef struct L_Rbtree_Node L_AMAP_NODE;  /* hide tree implementation */

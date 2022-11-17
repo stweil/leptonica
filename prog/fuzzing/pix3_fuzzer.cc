@@ -13,8 +13,8 @@ LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
 	PIX *pix_pointer_payload, *return_pix, *pix2;
 	NUMA *return_numa;
 	l_float32 l_f;
-	l_int32 l_i;
-	l_uint32 l_ui;
+	int32_t l_i;
+	uint32_t l_ui;
 	BOXA *boxa1;
 
 	box1 = boxCreate(150, 130, 1500, 355);

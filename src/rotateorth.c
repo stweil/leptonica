@@ -44,9 +44,9 @@
  *            PIX             *pixFlipTB()
  *
  *      Byte reverse tables
- *            static l_uint8  *makeReverseByteTab1()
- *            static l_uint8  *makeReverseByteTab2()
- *            static l_uint8  *makeReverseByteTab4()
+ *            static uint8_t  *makeReverseByteTab1()
+ *            static uint8_t  *makeReverseByteTab2()
+ *            static uint8_t  *makeReverseByteTab4()
  * </pre>
  */
 
@@ -57,9 +57,9 @@
 #include <string.h>
 #include "allheaders.h"
 
-static l_uint8 *makeReverseByteTab1(void);
-static l_uint8 *makeReverseByteTab2(void);
-static l_uint8 *makeReverseByteTab4(void);
+static uint8_t *makeReverseByteTab1(void);
+static uint8_t *makeReverseByteTab2(void);
+static uint8_t *makeReverseByteTab4(void);
 
 /*------------------------------------------------------------------*
  *           Top-level rotation by multiples of 90 degrees          *
@@ -73,7 +73,7 @@ static l_uint8 *makeReverseByteTab4(void);
  */
 PIX *
 pixRotateOrth(PIX     *pixs,
-              l_int32  quads)
+              int32_t  quads)
 {
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -122,7 +122,7 @@ PIX *
 pixRotate180(PIX  *pixd,
              PIX  *pixs)
 {
-l_int32  d;
+int32_t  d;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -160,12 +160,12 @@ l_int32  d;
  */
 PIX *
 pixRotate90(PIX     *pixs,
-            l_int32  direction)
+            int32_t  direction)
 {
-l_int32    wd, hd, d, wpls, wpld;
-l_int32    i, j, k, m, iend, nswords;
-l_uint32   val, word;
-l_uint32  *lines, *datas, *lined, *datad;
+int32_t    wd, hd, d, wpls, wpld;
+int32_t    i, j, k, m, iend, nswords;
+uint32_t   val, word;
+uint32_t  *lines, *datas, *lined, *datad;
 PIX       *pixd;
 
     if (!pixs)
@@ -421,11 +421,11 @@ PIX *
 pixFlipLR(PIX  *pixd,
           PIX  *pixs)
 {
-l_uint8   *tab;
-l_int32    w, h, d, wpl;
-l_int32    extra, shift, databpl, bpl, i, j;
-l_uint32   val;
-l_uint32  *line, *data, *buffer;
+uint8_t   *tab;
+int32_t    w, h, d, wpl;
+int32_t    extra, shift, databpl, bpl, i, j;
+uint32_t   val;
+uint32_t  *line, *data, *buffer;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -457,7 +457,7 @@ l_uint32  *line, *data, *buffer;
     }
 
         /* Possibly inplace assigning return val, so on failure return pixd */
-    if ((buffer = (l_uint32 *)LEPT_CALLOC(wpl, sizeof(l_uint32))) == NULL) {
+    if ((buffer = (uint32_t *)LEPT_CALLOC(wpl, sizeof(uint32_t))) == NULL) {
         if (tab) LEPT_FREE(tab);
         return (PIX *)ERROR_PTR("buffer not made", __func__, pixd);
     }
@@ -597,9 +597,9 @@ PIX *
 pixFlipTB(PIX  *pixd,
           PIX  *pixs)
 {
-l_int32    h, d, wpl, i, k, h2, bpl;
-l_uint32  *linet, *lineb;
-l_uint32  *data, *buffer;
+int32_t    h, d, wpl, i, k, h2, bpl;
+uint32_t  *linet, *lineb;
+uint32_t  *data, *buffer;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -614,7 +614,7 @@ l_uint32  *data, *buffer;
 
     data = pixGetData(pixd);
     wpl = pixGetWpl(pixd);
-    if ((buffer = (l_uint32 *)LEPT_CALLOC(wpl, sizeof(l_uint32))) == NULL)
+    if ((buffer = (uint32_t *)LEPT_CALLOC(wpl, sizeof(uint32_t))) == NULL)
         return (PIX *)ERROR_PTR("buffer not made", __func__, pixd);
 
     h2 = h / 2;
@@ -642,13 +642,13 @@ l_uint32  *data, *buffer;
  *      (1) This generates an 8 bit lookup table for reversing
  *          the order of eight 1-bit pixels.
  */
-static l_uint8 *
+static uint8_t *
 makeReverseByteTab1(void)
 {
-l_int32   i;
-l_uint8  *tab;
+int32_t   i;
+uint8_t  *tab;
 
-    tab = (l_uint8 *)LEPT_CALLOC(256, sizeof(l_uint8));
+    tab = (uint8_t *)LEPT_CALLOC(256, sizeof(uint8_t));
     for (i = 0; i < 256; i++)
         tab[i] = ((0x80 & i) >> 7) |
                  ((0x40 & i) >> 5) |
@@ -669,13 +669,13 @@ l_uint8  *tab;
  *      (1) This generates an 8 bit lookup table for reversing
  *          the order of four 2-bit pixels.
  */
-static l_uint8 *
+static uint8_t *
 makeReverseByteTab2(void)
 {
-l_int32   i;
-l_uint8  *tab;
+int32_t   i;
+uint8_t  *tab;
 
-    tab = (l_uint8 *)LEPT_CALLOC(256, sizeof(l_uint8));
+    tab = (uint8_t *)LEPT_CALLOC(256, sizeof(uint8_t));
     for (i = 0; i < 256; i++)
         tab[i] = ((0xc0 & i) >> 6) |
                  ((0x30 & i) >> 2) |
@@ -692,13 +692,13 @@ l_uint8  *tab;
  *      (1) This generates an 8 bit lookup table for reversing
  *          the order of two 4-bit pixels.
  */
-static l_uint8 *
+static uint8_t *
 makeReverseByteTab4(void)
 {
-l_int32   i;
-l_uint8  *tab;
+int32_t   i;
+uint8_t  *tab;
 
-    tab = (l_uint8 *)LEPT_CALLOC(256, sizeof(l_uint8));
+    tab = (uint8_t *)LEPT_CALLOC(256, sizeof(uint8_t));
     for (i = 0; i < 256; i++)
         tab[i] = ((0xf0 & i) >> 4) | ((0x0f & i) << 4);
     return tab;

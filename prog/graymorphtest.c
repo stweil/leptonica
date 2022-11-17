@@ -40,7 +40,7 @@ int main(int    argc,
          char **argv)
 {
 char    *filein, *fileout;
-l_int32  wsize, hsize, w, h, d;
+int32_t  wsize, hsize, w, h, d;
 PIX     *pixs, *pixd;
 
     if (argc != 5)

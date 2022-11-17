@@ -44,7 +44,7 @@ int main(int    argc,
 {
 size_t        nbytes1, nbytes2, nbytes3, nbytes4, nbytes5, nbytes6, fbytes;
 char         *a85a, *a85c, *a85c2;
-l_uint8      *bina, *bina2, *bin85c, *bin85c2;
+uint8_t      *bina, *bina2, *bin85c, *bin85c2;
 PIX          *pix1;
 L_REGPARAMS  *rp;
 
@@ -73,9 +73,9 @@ L_REGPARAMS  *rp;
     pixDestroy(&pix1);
 
         /* Test with compression, starting with ascii data */
-    a85c = encodeAscii85WithComp((l_uint8 *)a85a, nbytes1, &nbytes3);
+    a85c = encodeAscii85WithComp((uint8_t *)a85a, nbytes1, &nbytes3);
     bin85c = decodeAscii85WithComp(a85c, nbytes3, &nbytes4);
-    regTestCompareStrings(rp, (l_uint8 *)a85a, nbytes1,
+    regTestCompareStrings(rp, (uint8_t *)a85a, nbytes1,
                           bin85c, nbytes4);  /* 2 */
 
         /* Test with compression, starting with binary data */

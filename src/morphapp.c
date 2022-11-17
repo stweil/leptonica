@@ -79,7 +79,7 @@
  *
  *      Centroid of component
  *            PTA       *pixaCentroids()
- *            l_int32    pixCentroid()
+ *            int32_t    pixCentroid()
  * </pre>
  */
 
@@ -110,7 +110,7 @@
  */
 PIX *
 pixExtractBoundary(PIX     *pixs,
-                   l_int32  type)
+                   int32_t  type)
 {
 PIX  *pixd;
 
@@ -150,7 +150,7 @@ PIX *
 pixMorphSequenceMasked(PIX         *pixs,
                        PIX         *pixm,
                        const char  *sequence,
-                       l_int32      dispsep)
+                       int32_t      dispsep)
 {
 PIX  *pixd;
 
@@ -194,12 +194,12 @@ PIX  *pixd;
 PIX *
 pixMorphSequenceByComponent(PIX         *pixs,
                             const char  *sequence,
-                            l_int32      connectivity,
-                            l_int32      minw,
-                            l_int32      minh,
+                            int32_t      connectivity,
+                            int32_t      minw,
+                            int32_t      minh,
                             BOXA       **pboxa)
 {
-l_int32  n, i, x, y, w, h;
+int32_t  n, i, x, y, w, h;
 BOXA    *boxa;
 PIX     *pix, *pixd;
 PIXA    *pixas, *pixad;
@@ -262,10 +262,10 @@ PIXA    *pixas, *pixad;
 PIXA *
 pixaMorphSequenceByComponent(PIXA        *pixas,
                              const char  *sequence,
-                             l_int32      minw,
-                             l_int32      minh)
+                             int32_t      minw,
+                             int32_t      minh)
 {
-l_int32  n, i, w, h, d;
+int32_t  n, i, w, h, d;
 BOX     *box;
 PIX     *pix1, *pix2;
 PIXA    *pixad;
@@ -344,12 +344,12 @@ PIX *
 pixMorphSequenceByRegion(PIX         *pixs,
                          PIX         *pixm,
                          const char  *sequence,
-                         l_int32      connectivity,
-                         l_int32      minw,
-                         l_int32      minh,
+                         int32_t      connectivity,
+                         int32_t      minw,
+                         int32_t      minh,
                          BOXA       **pboxa)
 {
-l_int32  n, i, x, y, w, h;
+int32_t  n, i, x, y, w, h;
 BOXA    *boxa;
 PIX     *pix, *pixd;
 PIXA    *pixam, *pixad;
@@ -421,10 +421,10 @@ PIXA *
 pixaMorphSequenceByRegion(PIX         *pixs,
                           PIXA        *pixam,
                           const char  *sequence,
-                          l_int32      minw,
-                          l_int32      minh)
+                          int32_t      minw,
+                          int32_t      minh)
 {
-l_int32  n, i, w, h, same, maxd, fullpa, fullba;
+int32_t  n, i, w, h, same, maxd, fullpa, fullba;
 BOX     *box;
 PIX     *pix1, *pix2, *pix3;
 PIXA    *pixad;
@@ -493,9 +493,9 @@ PIXA    *pixad;
 PIX *
 pixUnionOfMorphOps(PIX     *pixs,
                    SELA    *sela,
-                   l_int32  type)
+                   int32_t  type)
 {
-l_int32  n, i;
+int32_t  n, i;
 PIX     *pixt, *pixd;
 SEL     *sel;
 
@@ -544,9 +544,9 @@ SEL     *sel;
 PIX *
 pixIntersectionOfMorphOps(PIX     *pixs,
                           SELA    *sela,
-                          l_int32  type)
+                          int32_t  type)
 {
-l_int32  n, i;
+int32_t  n, i;
 PIX     *pixt, *pixd;
 SEL     *sel;
 
@@ -599,11 +599,11 @@ SEL     *sel;
  */
 PIX *
 pixSelectiveConnCompFill(PIX     *pixs,
-                         l_int32  connectivity,
-                         l_int32  minw,
-                         l_int32  minh)
+                         int32_t  connectivity,
+                         int32_t  minw,
+                         int32_t  minh)
 {
-l_int32  n, i, x, y, w, h;
+int32_t  n, i, x, y, w, h;
 BOXA    *boxa;
 PIX     *pix1, *pix2, *pixd;
 PIXA    *pixa;
@@ -670,11 +670,11 @@ l_ok
 pixRemoveMatchedPattern(PIX     *pixs,
                         PIX     *pixp,
                         PIX     *pixe,
-                        l_int32  x0,
-                        l_int32  y0,
-                        l_int32  dsize)
+                        int32_t  x0,
+                        int32_t  y0,
+                        int32_t  dsize)
 {
-l_int32  i, nc, x, y, w, h, xb, yb;
+int32_t  i, nc, x, y, w, h, xb, yb;
 BOXA    *boxa;
 PIX     *pix1, *pix2;
 PIXA    *pixa;
@@ -773,13 +773,13 @@ PIX *
 pixDisplayMatchedPattern(PIX       *pixs,
                          PIX       *pixp,
                          PIX       *pixe,
-                         l_int32    x0,
-                         l_int32    y0,
-                         l_uint32   color,
+                         int32_t    x0,
+                         int32_t    y0,
+                         uint32_t   color,
                          l_float32  scale,
-                         l_int32    nlevels)
+                         int32_t    nlevels)
 {
-l_int32   i, nc, xb, yb, x, y, xi, yi, rval, gval, bval;
+int32_t   i, nc, xb, yb, x, y, xi, yi, rval, gval, bval;
 BOXA     *boxa;
 PIX      *pixd, *pixt, *pixps;
 PIXA     *pixa;
@@ -839,8 +839,8 @@ PIXCMAP  *cmap;
         for (i = 0; i < nc; i++) {
             ptaGetIPt(pta, i, &x, &y);
             boxaGetBoxGeometry(boxa, i, &xb, &yb, NULL, NULL);
-            xi = (l_int32)(scale * (xb + x - x0));
-            yi = (l_int32)(scale * (yb + y - y0));
+            xi = (int32_t)(scale * (xb + x - x0));
+            yi = (int32_t)(scale * (yb + y - y0));
             pixSetMaskedCmap(pixd, pixps, xi, yi, rval, gval, bval);
         }
         pixDestroy(&pixt);
@@ -881,12 +881,12 @@ PIXCMAP  *cmap;
  */
 PIXA *
 pixaExtendByMorph(PIXA    *pixas,
-                  l_int32  type,
-                  l_int32  niters,
+                  int32_t  type,
+                  int32_t  niters,
                   SEL     *sel,
-                  l_int32  include)
+                  int32_t  include)
 {
-l_int32  maxdepth, i, j, n;
+int32_t  maxdepth, i, j, n;
 PIX     *pix0, *pix1, *pix2;
 SEL     *selt;
 PIXA    *pixad;
@@ -952,10 +952,10 @@ PIXA    *pixad;
 PIXA *
 pixaExtendByScaling(PIXA    *pixas,
                     NUMA    *nasc,
-                    l_int32  type,
-                    l_int32  include)
+                    int32_t  type,
+                    int32_t  include)
 {
-l_int32    i, j, n, nsc, w, h, scalew, scaleh;
+int32_t    i, j, n, nsc, w, h, scalew, scaleh;
 l_float32  scalefact;
 PIX       *pix1, *pix2;
 PIXA      *pixad;
@@ -1018,10 +1018,10 @@ PIXA      *pixad;
 PIX *
 pixSeedfillMorph(PIX     *pixs,
                  PIX     *pixm,
-                 l_int32  maxiters,
-                 l_int32  connectivity)
+                 int32_t  maxiters,
+                 int32_t  connectivity)
 {
-l_int32  same, i;
+int32_t  same, i;
 PIX     *pixt, *pixd, *temp;
 SEL     *sel_3;
 
@@ -1077,11 +1077,11 @@ SEL     *sel_3;
  */
 NUMA *
 pixRunHistogramMorph(PIX     *pixs,
-                     l_int32  runtype,
-                     l_int32  direction,
-                     l_int32  maxsize)
+                     int32_t  runtype,
+                     int32_t  direction,
+                     int32_t  maxsize)
 {
-l_int32    count, i, size;
+int32_t    count, i, size;
 l_float32  val;
 NUMA      *na, *nah;
 PIX       *pix1, *pix2, *pix3;
@@ -1175,9 +1175,9 @@ SEL       *sel_2a;
  */
 PIX *
 pixTophat(PIX     *pixs,
-          l_int32  hsize,
-          l_int32  vsize,
-          l_int32  type)
+          int32_t  hsize,
+          int32_t  vsize,
+          int32_t  type)
 {
 PIX  *pixt, *pixd;
 
@@ -1273,8 +1273,8 @@ PIX  *pixt, *pixd;
  */
 PIX *
 pixHDome(PIX     *pixs,
-         l_int32  height,
-         l_int32  connectivity)
+         int32_t  height,
+         int32_t  connectivity)
 {
 PIX  *pixsd, *pixd;
 
@@ -1327,9 +1327,9 @@ PIX  *pixsd, *pixd;
  */
 PIX *
 pixFastTophat(PIX     *pixs,
-              l_int32  xsize,
-              l_int32  ysize,
-              l_int32  type)
+              int32_t  xsize,
+              int32_t  ysize,
+              int32_t  type)
 {
 PIX  *pix1, *pix2, *pix3, *pixd;
 
@@ -1387,9 +1387,9 @@ PIX  *pix1, *pix2, *pix3, *pixd;
  */
 PIX *
 pixMorphGradient(PIX     *pixs,
-                 l_int32  hsize,
-                 l_int32  vsize,
-                 l_int32  smoothing)
+                 int32_t  hsize,
+                 int32_t  vsize,
+                 int32_t  smoothing)
 {
 PIX  *pixg, *pixd;
 
@@ -1440,9 +1440,9 @@ PIX  *pixg, *pixd;
 PTA *
 pixaCentroids(PIXA  *pixa)
 {
-l_int32    i, n;
-l_int32   *centtab = NULL;
-l_int32   *sumtab = NULL;
+int32_t    i, n;
+int32_t   *centtab = NULL;
+int32_t   *sumtab = NULL;
 l_float32  x, y;
 PIX       *pix;
 PTA       *pta;
@@ -1492,17 +1492,17 @@ PTA       *pta;
  */
 l_ok
 pixCentroid(PIX        *pix,
-            l_int32    *centtab,
-            l_int32    *sumtab,
+            int32_t    *centtab,
+            int32_t    *sumtab,
             l_float32  *pxave,
             l_float32  *pyave)
 {
-l_int32    w, h, d, i, j, wpl, pixsum, rowsum, val;
+int32_t    w, h, d, i, j, wpl, pixsum, rowsum, val;
 l_float32  xsum, ysum;
-l_uint32  *data, *line;
-l_uint32   word;
-l_uint8    byte;
-l_int32   *ctab, *stab;
+uint32_t  *data, *line;
+uint32_t   word;
+uint8_t    byte;
+int32_t   *ctab, *stab;
 
     if (!pxave || !pyave)
         return ERROR_INT("&pxave and &pyave not defined", __func__, 1);

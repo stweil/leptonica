@@ -44,11 +44,11 @@
 static PIX *GetBigComponent(PIX *pixs);
 
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32   i, item;
-l_int32   example[6] = {17, 20, 21, 22, 23, 24};  /* for decoding */
+int32_t   i, item;
+int32_t   example[6] = {17, 20, 21, 22, 23, 24};  /* for decoding */
 PIX      *pix1, *pix2, *pix3;
 PIXA     *pixa1, *pixa2, *pixa3;
 L_RECOG  *recog;

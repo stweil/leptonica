@@ -41,7 +41,7 @@ int main(int    argc,
          char **argv)
 {
 char    *filein;
-l_int32  w, h;
+int32_t  w, h;
 PIX     *pixs, *pix1, *pix2, *pix3, *pix4, *pix5;
 
     if (argc != 2)

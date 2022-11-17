@@ -37,10 +37,10 @@
 
 #include "allheaders.h"
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32       ret, i, n, similar, x1, y1, val1, val2, val3, val4;
+int32_t       ret, i, n, similar, x1, y1, val1, val2, val3, val4;
 l_float32     minave, minave2, maxave, fract;
 NUMA         *na1, *na2, *na3, *na4, *na5, *na6;
 NUMAA        *naa;
@@ -68,11 +68,11 @@ L_REGPARAMS  *rp;
         ret = pixMinMaxNearLine(pix1, 20, y1, 400, y1, 5, L_SCAN_BOTH,
                                 NULL, NULL, &minave, &maxave);
         if (!ret) {
-            numaAddNumber(na1, (l_int32)minave);
-            numaAddNumber(na3, (l_int32)maxave);
+            numaAddNumber(na1, (int32_t)minave);
+            numaAddNumber(na3, (int32_t)maxave);
             if (rp->display)
                 lept_stderr("y = %d: minave = %d, maxave = %d\n",
-                            y1, (l_int32)minave, (l_int32)maxave);
+                            y1, (int32_t)minave, (int32_t)maxave);
         }
     }
 
@@ -91,12 +91,12 @@ L_REGPARAMS  *rp;
         pixMinMaxNearLine(pix2, x1, 20, x1, 400, 5, L_SCAN_NEGATIVE,
                           NULL, NULL, &minave2, NULL);
         if (!ret) {
-            numaAddNumber(na2, (l_int32)minave);
-            numaAddNumber(na4, (l_int32)maxave);
-            numaAddNumber(na5, (l_int32)minave2);
+            numaAddNumber(na2, (int32_t)minave);
+            numaAddNumber(na4, (int32_t)maxave);
+            numaAddNumber(na5, (int32_t)minave2);
             if (rp->display)
                 lept_stderr("x = %d: minave = %d, minave2 = %d, maxave = %d\n",
-                        x1, (l_int32)minave, (l_int32)minave2, (l_int32)maxave);
+                        x1, (int32_t)minave, (int32_t)minave2, (int32_t)maxave);
         }
     }
     lept_stderr("******************************************************\n");

@@ -31,23 +31,23 @@
  *      Sort
  *          SARRAY     *sarraySort()
  *          SARRAY     *sarraySortByIndex()
- *          l_int32     stringCompareLexical()
+ *          int32_t     stringCompareLexical()
  *
  *      Set operations using aset (rbtree)
  *          L_ASET     *l_asetCreateFromSarray()
- *          l_int32     sarrayRemoveDupsByAset()
- *          l_int32     sarrayUnionByAset()
- *          l_int32     sarrayIntersectionByAset()
+ *          int32_t     sarrayRemoveDupsByAset()
+ *          int32_t     sarrayUnionByAset()
+ *          int32_t     sarrayIntersectionByAset()
  *
  *      Hashmap operations
  *          L_HASHMAP  *l_hmapCreateFromSarray()
- *          l_int32     sarrayRemoveDupsByHmap()
- *          l_int32     sarrayUnionByHmap()
- *          l_int32     sarrayIntersectionByHmap()
+ *          int32_t     sarrayRemoveDupsByHmap()
+ *          int32_t     sarrayUnionByHmap()
+ *          int32_t     sarrayIntersectionByHmap()
  *
  *      Miscellaneous operations
  *          SARRAY     *sarrayGenerateIntegers()
- *          l_int32     sarrayLookupCSKV()
+ *          int32_t     sarrayLookupCSKV()
  *
  *
  * We have two implementations of set operations on an array of strings:
@@ -97,11 +97,11 @@
 SARRAY *
 sarraySort(SARRAY  *saout,
            SARRAY  *sain,
-           l_int32  sortorder)
+           int32_t  sortorder)
 {
 char   **array;
 char    *tmp;
-l_int32  n, i, j, gap;
+int32_t  n, i, j, gap;
 
     if (!sain)
         return (SARRAY *)ERROR_PTR("sain not defined", __func__, NULL);
@@ -147,7 +147,7 @@ sarraySortByIndex(SARRAY  *sain,
                   NUMA    *naindex)
 {
 char    *str;
-l_int32  i, n, index;
+int32_t  i, n, index;
 SARRAY  *saout;
 
     if (!sain)
@@ -180,11 +180,11 @@ SARRAY  *saout;
  *          indicate that no swapping is required to sort the strings.
  * </pre>
  */
-l_int32
+int32_t
 stringCompareLexical(const char *str1,
                      const char *str2)
 {
-l_int32  i, len1, len2, len;
+int32_t  i, len1, len2, len;
 
     if (!str1)
         return ERROR_INT("str1 not defined", __func__, 1);
@@ -224,8 +224,8 @@ L_ASET *
 l_asetCreateFromSarray(SARRAY  *sa)
 {
 char     *str;
-l_int32   i, n;
-l_uint64  hash;
+int32_t   i, n;
+uint64_t  hash;
 L_ASET   *set;
 RB_TYPE   key;
 
@@ -267,8 +267,8 @@ sarrayRemoveDupsByAset(SARRAY   *sas,
                        SARRAY  **psad)
 {
 char     *str;
-l_int32   i, n;
-l_uint64  hash;
+int32_t   i, n;
+uint64_t  hash;
 L_ASET   *set;
 RB_TYPE   key;
 SARRAY   *sad;
@@ -371,8 +371,8 @@ sarrayIntersectionByAset(SARRAY   *sa1,
                          SARRAY  **psad)
 {
 char     *str;
-l_int32   n1, n2, i, n;
-l_uint64  hash;
+int32_t   n1, n2, i, n;
+uint64_t  hash;
 L_ASET   *set1, *set2;
 RB_TYPE   key;
 SARRAY   *sa_small, *sa_big, *sad;
@@ -425,8 +425,8 @@ SARRAY   *sa_small, *sa_big, *sad;
 L_HASHMAP *
 l_hmapCreateFromSarray(SARRAY  *sa)
 {
-l_int32      i, n;
-l_uint64     key;
+int32_t      i, n;
+uint64_t     key;
 char        *str;
 L_HASHITEM  *hitem;
 L_HASHMAP   *hmap;
@@ -459,8 +459,8 @@ sarrayRemoveDupsByHmap(SARRAY      *sas,
                        SARRAY     **psad,
                        L_HASHMAP  **phmap)
 {
-l_int32      i, tabsize;
-l_uint64     key;
+int32_t      i, tabsize;
+uint64_t     key;
 char        *str;
 SARRAY      *sad;
 L_HASHITEM  *hitem;
@@ -543,8 +543,8 @@ sarrayIntersectionByHmap(SARRAY   *sa1,
                          SARRAY   *sa2,
                          SARRAY  **psad)
 {
-l_int32      i, n1, n2, n;
-l_uint64     key;
+int32_t      i, n1, n2, n;
+uint64_t     key;
 char        *str;
 SARRAY      *sa_small, *sa_big, *sa3, *sad;
 L_HASHITEM  *hitem;
@@ -601,10 +601,10 @@ L_HASHMAP   *hmap;
  * \return  sa  of printed numbers, 1 - n, or NULL on error
  */
 SARRAY *
-sarrayGenerateIntegers(l_int32  n)
+sarrayGenerateIntegers(int32_t  n)
 {
 char     buf[32];
-l_int32  i;
+int32_t  i;
 SARRAY  *sa;
 
     if ((sa = sarrayCreate(n)) == NULL)
@@ -645,7 +645,7 @@ sarrayLookupCSKV(SARRAY      *sa,
                  char       **pvalstring)
 {
 char    *key, *val, *str;
-l_int32  i, n;
+int32_t  i, n;
 SARRAY  *sa1;
 
     if (!pvalstring)

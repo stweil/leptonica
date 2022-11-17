@@ -38,7 +38,7 @@
  *  ===================================================================
  *
  *      Adaptive Otsu-based thresholding
- *          l_int32       pixOtsuAdaptiveThreshold()       8 bpp
+ *          int32_t       pixOtsuAdaptiveThreshold()       8 bpp
  *
  *      Otsu thresholding on adaptive background normalization
  *          PIX          *pixOtsuThreshOnBackgroundNorm()  8 bpp
@@ -47,8 +47,8 @@
  *          PIX          *pixMaskedThreshOnBackgroundNorm()  8 bpp
  *
  *      Sauvola local thresholding
- *          l_int32       pixSauvolaBinarizeTiled()
- *          l_int32       pixSauvolaBinarize()
+ *          int32_t       pixSauvolaBinarizeTiled()
+ *          int32_t       pixSauvolaBinarize()
  *          static PIX   *pixSauvolaGetThreshold()
  *          static PIX   *pixApplyLocalThreshold();
  *
@@ -155,16 +155,16 @@ static PIX *pixApplyLocalThreshold(PIX *pixs, PIX *pixth);
  */
 l_ok
 pixOtsuAdaptiveThreshold(PIX       *pixs,
-                         l_int32    sx,
-                         l_int32    sy,
-                         l_int32    smoothx,
-                         l_int32    smoothy,
+                         int32_t    sx,
+                         int32_t    sy,
+                         int32_t    smoothx,
+                         int32_t    smoothy,
                          l_float32  scorefract,
                          PIX      **ppixth,
                          PIX      **ppixd)
 {
-l_int32     w, h, nx, ny, i, j, thresh;
-l_uint32    val;
+int32_t     w, h, nx, ny, i, j, thresh;
+uint32_t    val;
 PIX        *pixt, *pixb, *pixthresh, *pixth, *pixd;
 PIXTILING  *pt;
 
@@ -270,18 +270,18 @@ PIXTILING  *pt;
 PIX *
 pixOtsuThreshOnBackgroundNorm(PIX       *pixs,
                               PIX       *pixim,
-                              l_int32    sx,
-                              l_int32    sy,
-                              l_int32    thresh,
-                              l_int32    mincount,
-                              l_int32    bgval,
-                              l_int32    smoothx,
-                              l_int32    smoothy,
+                              int32_t    sx,
+                              int32_t    sy,
+                              int32_t    thresh,
+                              int32_t    mincount,
+                              int32_t    bgval,
+                              int32_t    smoothx,
+                              int32_t    smoothy,
                               l_float32  scorefract,
-                              l_int32   *pthresh)
+                              int32_t   *pthresh)
 {
-l_int32   w, h;
-l_uint32  val;
+int32_t   w, h;
+uint32_t  val;
 PIX      *pixn, *pixt, *pixd;
 
     if (pthresh) *pthresh = 0;
@@ -366,17 +366,17 @@ PIX      *pixn, *pixt, *pixd;
 PIX *
 pixMaskedThreshOnBackgroundNorm(PIX       *pixs,
                                 PIX       *pixim,
-                                l_int32    sx,
-                                l_int32    sy,
-                                l_int32    thresh,
-                                l_int32    mincount,
-                                l_int32    smoothx,
-                                l_int32    smoothy,
+                                int32_t    sx,
+                                int32_t    sy,
+                                int32_t    thresh,
+                                int32_t    mincount,
+                                int32_t    smoothx,
+                                int32_t    smoothy,
                                 l_float32  scorefract,
-                                l_int32   *pthresh)
+                                int32_t   *pthresh)
 {
-l_int32   w, h, highthresh;
-l_uint32  val;
+int32_t   w, h, highthresh;
+uint32_t  val;
 PIX      *pixn, *pixm, *pixd, *pix1, *pix2, *pix3, *pix4;
 
     if (pthresh) *pthresh = 0;
@@ -476,14 +476,14 @@ PIX      *pixn, *pixm, *pixd, *pix1, *pix2, *pix3, *pix4;
  */
 l_ok
 pixSauvolaBinarizeTiled(PIX       *pixs,
-                        l_int32    whsize,
+                        int32_t    whsize,
                         l_float32  factor,
-                        l_int32    nx,
-                        l_int32    ny,
+                        int32_t    nx,
+                        int32_t    ny,
                         PIX      **ppixth,
                         PIX      **ppixd)
 {
-l_int32     i, j, w, h, xrat, yrat;
+int32_t     i, j, w, h, xrat, yrat;
 PIX        *pixth, *pixd, *tileth, *tiled, *pixt;
 PIX       **ptileth, **ptiled;
 PIXTILING  *pt;
@@ -601,15 +601,15 @@ PIXTILING  *pt;
  */
 l_ok
 pixSauvolaBinarize(PIX       *pixs,
-                   l_int32    whsize,
+                   int32_t    whsize,
                    l_float32  factor,
-                   l_int32    addborder,
+                   int32_t    addborder,
                    PIX      **ppixm,
                    PIX      **ppixsd,
                    PIX      **ppixth,
                    PIX      **ppixd)
 {
-l_int32  w, h;
+int32_t  w, h;
 PIX     *pixg, *pixsc, *pixm, *pixms, *pixth, *pixd;
 
     if (ppixm) *ppixm = NULL;
@@ -713,10 +713,10 @@ pixSauvolaGetThreshold(PIX       *pixm,
                        l_float32  factor,
                        PIX      **ppixsd)
 {
-l_int32     i, j, w, h, tabsize, wplm, wplms, wplsd, wpld, usetab;
-l_int32     mv, ms, var, thresh;
-l_uint32   *datam, *datams, *datasd, *datad;
-l_uint32   *linem, *linems, *linesd, *lined;
+int32_t     i, j, w, h, tabsize, wplm, wplms, wplsd, wpld, usetab;
+int32_t     mv, ms, var, thresh;
+uint32_t   *datam, *datams, *datasd, *datad;
+uint32_t   *linem, *linems, *linesd, *lined;
 l_float32   sd;
 l_float32  *tab;  /* of 2^16 square roots */
 PIX        *pixsd, *pixd;
@@ -769,8 +769,8 @@ PIX        *pixsd, *pixd;
                 sd = tab[var];
             else
                 sd = sqrtf((l_float32)var);
-            if (ppixsd) SET_DATA_BYTE(linesd, j, (l_int32)sd);
-            thresh = (l_int32)(mv * (1.0 - factor * (1.0 - sd / 128.)));
+            if (ppixsd) SET_DATA_BYTE(linesd, j, (int32_t)sd);
+            thresh = (int32_t)(mv * (1.0 - factor * (1.0 - sd / 128.)));
             SET_DATA_BYTE(lined, j, thresh);
         }
     }
@@ -791,8 +791,8 @@ static PIX *
 pixApplyLocalThreshold(PIX     *pixs,
                        PIX     *pixth)
 {
-l_int32    i, j, w, h, wpls, wplt, wpld, vals, valt;
-l_uint32  *datas, *datat, *datad, *lines, *linet, *lined;
+int32_t    i, j, w, h, wpls, wplt, wpld, vals, valt;
+uint32_t  *datas, *datat, *datad, *lines, *linet, *lined;
 PIX       *pixd;
 
     if (!pixs || pixGetDepth(pixs) != 8)
@@ -848,11 +848,11 @@ PIX       *pixd;
  */
 PIX  *
 pixSauvolaOnContrastNorm(PIX     *pixs,
-                         l_int32  mindiff,
+                         int32_t  mindiff,
                          PIX    **ppixn,
                          PIX    **ppixth)
 {
-l_int32  w, h, d, nx, ny;
+int32_t  w, h, d, nx, ny;
 PIX     *pixg, *pix1, *pixd;
 
     if (ppixn) *ppixn = NULL;
@@ -902,10 +902,10 @@ PIX     *pixg, *pix1, *pixd;
  */
 PIX  *
 pixThreshOnDoubleNorm(PIX     *pixs,
-                      l_int32  mindiff)
+                      int32_t  mindiff)
 {
-l_int32    d, ival;
-l_uint32   val;
+int32_t    d, ival;
+uint32_t   val;
 PIX       *pixg, *pix1, *pixd;
 
     if (!pixs || (d = pixGetDepth(pixs)) < 8)
@@ -918,7 +918,7 @@ PIX       *pixg, *pix1, *pixd;
         /* Use the entire image for the estimate; pix1 is 1x1 */
     pixOtsuAdaptiveThreshold(pixg, 5000, 5000, 0, 0, 0.1, &pix1, NULL);
     pixGetPixel(pix1, 0, 0, &val);
-    ival = (l_int32)val;
+    ival = (int32_t)val;
     ival = L_MIN(ival, 110);
     pixDestroy(&pix1);
 
@@ -994,16 +994,16 @@ PIX       *pixg, *pix1, *pixd;
 l_ok
 pixThresholdByConnComp(PIX       *pixs,
                        PIX       *pixm,
-                       l_int32    start,
-                       l_int32    end,
-                       l_int32    incr,
+                       int32_t    start,
+                       int32_t    end,
+                       int32_t    incr,
                        l_float32  thresh48,
                        l_float32  threshdiff,
-                       l_int32   *pglobthresh,
+                       int32_t   *pglobthresh,
                        PIX      **ppixd,
-                       l_int32    debugflag)
+                       int32_t    debugflag)
 {
-l_int32    i, thresh, n, n4, n8, mincounts, found, globthresh;
+int32_t    i, thresh, n, n4, n8, mincounts, found, globthresh;
 l_float32  count4, count8, firstcount4, prevcount4, diff48, diff4;
 GPLOT     *gplot;
 NUMA      *na4, *na8;
@@ -1149,10 +1149,10 @@ PIX       *pix1, *pix2, *pix3;
  */
 l_ok
 pixThresholdByHisto(PIX       *pixs,
-                    l_int32    factor,
-                    l_int32    halfw,
-                    l_int32    skip,
-                    l_int32   *pthresh,
+                    int32_t    factor,
+                    int32_t    halfw,
+                    int32_t    skip,
+                    int32_t   *pthresh,
                     PIX      **ppixd,
                     NUMA     **pnahisto,
                     PIX      **ppixhisto)

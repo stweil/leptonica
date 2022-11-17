@@ -42,7 +42,7 @@ int main(int    argc,
          char **argv)
 {
 char    *filein;
-l_int32  i, n, ns;
+int32_t  i, n, ns;
 BOXA    *boxa;
 PIX     *pixs, *pixt;
 PIXA    *pixa, *pixas, *pixas2;

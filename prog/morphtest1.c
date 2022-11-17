@@ -46,7 +46,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32    i, index;
+int32_t    i, index;
 l_float32  cputime, epo;
 char      *filein, *fileout;
 PIX       *pixs, *pixd;

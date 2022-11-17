@@ -46,18 +46,18 @@ enum {
 struct L_Bmf
 {
     struct Pixa  *pixa;        /*!< pixa of bitmaps for 93 characters        */
-    l_int32       size;        /*!< font size (in points at 300 ppi)         */
+    int32_t       size;        /*!< font size (in points at 300 ppi)         */
     char         *directory;   /*!< directory containing font bitmaps        */
-    l_int32       baseline1;   /*!< baseline offset for ascii 33 - 57        */
-    l_int32       baseline2;   /*!< baseline offset for ascii 58 - 91        */
-    l_int32       baseline3;   /*!< baseline offset for ascii 93 - 126       */
-    l_int32       lineheight;  /*!< max height of line of chars              */
-    l_int32       kernwidth;   /*!< pixel dist between char bitmaps          */
-    l_int32       spacewidth;  /*!< pixel dist between word bitmaps          */
-    l_int32       vertlinesep; /*!< extra vertical space between text lines  */
-    l_int32      *fonttab;     /*!< table mapping ascii --> font index       */
-    l_int32      *baselinetab; /*!< table mapping ascii --> baseline offset  */
-    l_int32      *widthtab;    /*!< table mapping ascii --> char width       */
+    int32_t       baseline1;   /*!< baseline offset for ascii 33 - 57        */
+    int32_t       baseline2;   /*!< baseline offset for ascii 58 - 91        */
+    int32_t       baseline3;   /*!< baseline offset for ascii 93 - 126       */
+    int32_t       lineheight;  /*!< max height of line of chars              */
+    int32_t       kernwidth;   /*!< pixel dist between char bitmaps          */
+    int32_t       spacewidth;  /*!< pixel dist between word bitmaps          */
+    int32_t       vertlinesep; /*!< extra vertical space between text lines  */
+    int32_t      *fonttab;     /*!< table mapping ascii --> font index       */
+    int32_t      *baselinetab; /*!< table mapping ascii --> baseline offset  */
+    int32_t      *widthtab;    /*!< table mapping ascii --> char width       */
 };
 typedef struct L_Bmf L_BMF;
 

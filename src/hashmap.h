@@ -99,23 +99,23 @@
 /*! General hash map */
 struct L_Hashmap
 {
-    l_int32              nitems;    /*!< number of stored items              */
-    l_int32              ntogo;     /*!< number of items to be stored        */
+    int32_t              nitems;    /*!< number of stored items              */
+    int32_t              ntogo;     /*!< number of items to be stored        */
                                     /*!< before resizing the hashmap         */
-    l_int32              maxocc;    /*!< max average occupancy allowed       */
+    int32_t              maxocc;    /*!< max average occupancy allowed       */
     struct L_Hashitem  **hashtab;   /*!< array of hash item ptrs             */
-    l_int32              tabsize;   /*!< size of array of hash item ptrs     */
+    int32_t              tabsize;   /*!< size of array of hash item ptrs     */
 };
 typedef struct L_Hashmap  L_HASHMAP;
 
 /*! Hash item, containing storage for the key, value and count.  The key
-    is a l_uint64, which is hashed by the mod function to find the index
+    is a uint64_t, which is hashed by the mod function to find the index
     into the hashtab. */
 struct L_Hashitem
 {
-    l_uint64            key;    /*!< key is hashed into index into hashtab   */
-    l_uint64            val;    /*!< number stored associated with the key   */
-    l_int32             count;  /*!< number of elements seen with this key   */
+    uint64_t            key;    /*!< key is hashed into index into hashtab   */
+    uint64_t            val;    /*!< number stored associated with the key   */
+    int32_t             count;  /*!< number of elements seen with this key   */
     struct L_Hashitem  *next;   /*!< ptr to the next in the list             */
 };
 typedef struct L_Hashitem  L_HASHITEM;

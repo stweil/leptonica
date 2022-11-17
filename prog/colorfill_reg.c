@@ -36,7 +36,7 @@
 
 #include "allheaders.h"
 
-static PIX *makeSmallTestPix(l_uint32 c1, l_uint32 c2);
+static PIX *makeSmallTestPix(uint32_t c1, uint32_t c2);
 
 
 int main(int    argc,
@@ -146,9 +146,9 @@ L_REGPARAMS  *rp;
     return regTestCleanup(rp);
 }
 
-static PIX *makeSmallTestPix(l_uint32 c1, l_uint32 c2)
+static PIX *makeSmallTestPix(uint32_t c1, uint32_t c2)
 {
-l_int32  i, j;
+int32_t  i, j;
 PIX     *pix1;
 
     pix1 = pixCreate(17, 17, 32);

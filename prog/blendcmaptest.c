@@ -35,14 +35,14 @@
 
 #include "allheaders.h"
 
-static const l_int32  NX = 4;
-static const l_int32  NY = 5;
+static const int32_t  NX = 4;
+static const int32_t  NY = 5;
 static const l_float32  FADE_FRACTION = 0.75;
 
 int main(int    argc,
          char **argv)
 {
-l_int32   i, j, sindex, wb, hb, ws, hs, delx, dely, x, y, y0;
+int32_t   i, j, sindex, wb, hb, ws, hs, delx, dely, x, y, y0;
 PIX      *pixs, *pixb, *pix1, *pix2;
 PIXA     *pixa;
 PIXCMAP  *cmap;

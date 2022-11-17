@@ -51,23 +51,23 @@
  *     using gs (ps2pdf).
  *
  *     Convert specified files to PS
- *          l_int32          convertFilesToPS()
- *          l_int32          sarrayConvertFilesToPS()
- *          l_int32          convertFilesFittedToPS()
- *          l_int32          sarrayConvertFilesFittedToPS()
- *          l_int32          writeImageCompressedToPSFile()
+ *          int32_t          convertFilesToPS()
+ *          int32_t          sarrayConvertFilesToPS()
+ *          int32_t          convertFilesFittedToPS()
+ *          int32_t          sarrayConvertFilesFittedToPS()
+ *          int32_t          writeImageCompressedToPSFile()
  *
  *     Convert mixed text/image files to PS
- *          l_int32          convertSegmentedPagesToPS()
- *          l_int32          pixWriteSegmentedPageToPS()
- *          l_int32          pixWriteMixedToPS()
+ *          int32_t          convertSegmentedPagesToPS()
+ *          int32_t          pixWriteSegmentedPageToPS()
+ *          int32_t          pixWriteMixedToPS()
  *
  *     Convert any image file to PS for embedding
- *          l_int32          convertToPSEmbed()
+ *          int32_t          convertToPSEmbed()
  *
  *     Write all images in a pixa out to PS
- *          l_int32          pixaWriteCompressedToPS()
- *          l_int32          pixWriteCompressedToPS()
+ *          int32_t          pixaWriteCompressedToPS()
+ *          int32_t          pixWriteCompressedToPS()
  *
  *  These PostScript converters are used in three different ways.
  *
@@ -162,7 +162,7 @@
 l_ok
 convertFilesToPS(const char  *dirin,
                  const char  *substr,
-                 l_int32      res,
+                 int32_t      res,
                  const char  *fileout)
 {
 SARRAY  *sa;
@@ -206,11 +206,11 @@ SARRAY  *sa;
  */
 l_ok
 sarrayConvertFilesToPS(SARRAY      *sa,
-                       l_int32      res,
+                       int32_t      res,
                        const char  *fileout)
 {
 char    *fname;
-l_int32  i, nfiles, index, ret, format;
+int32_t  i, nfiles, index, ret, format;
 
     if (!sa)
         return ERROR_INT("sa not defined", __func__, 1);
@@ -326,7 +326,7 @@ sarrayConvertFilesFittedToPS(SARRAY      *sa,
                              const char  *fileout)
 {
 char    *fname;
-l_int32  ret, i, w, h, nfiles, index, format, res;
+int32_t  ret, i, w, h, nfiles, index, format, res;
 
     if (!sa)
         return ERROR_INT("sa not defined", __func__, 1);
@@ -353,9 +353,9 @@ l_int32  ret, i, w, h, nfiles, index, format, res;
 
             /* Be sure the entire image is wrapped */
         if (xpts * h < ypts * w)
-            res = (l_int32)((l_float32)w * 72.0 / xpts);
+            res = (int32_t)((l_float32)w * 72.0 / xpts);
         else
-            res = (l_int32)((l_float32)h * 72.0 / ypts);
+            res = (int32_t)((l_float32)h * 72.0 / ypts);
 
         writeImageCompressedToPSFile(fname, fileout, res, &index);
     }
@@ -388,11 +388,11 @@ l_int32  ret, i, w, h, nfiles, index, format, res;
 l_ok
 writeImageCompressedToPSFile(const char  *filein,
                              const char  *fileout,
-                             l_int32      res,
-                             l_int32     *pindex)
+                             int32_t      res,
+                             int32_t     *pindex)
 {
 const char  *op;
-l_int32      format, retval;
+int32_t      format, retval;
 
     if (!pindex)
         return ERROR_INT("&index not defined", __func__, 1);
@@ -481,18 +481,18 @@ l_int32      format, retval;
 l_ok
 convertSegmentedPagesToPS(const char  *pagedir,
                           const char  *pagestr,
-                          l_int32      page_numpre,
+                          int32_t      page_numpre,
                           const char  *maskdir,
                           const char  *maskstr,
-                          l_int32      mask_numpre,
-                          l_int32      numpost,
-                          l_int32      maxnum,
+                          int32_t      mask_numpre,
+                          int32_t      numpost,
+                          int32_t      maxnum,
                           l_float32    textscale,
                           l_float32    imagescale,
-                          l_int32      threshold,
+                          int32_t      threshold,
                           const char  *fileout)
 {
-l_int32  pageno, i, npages;
+int32_t  pageno, i, npages;
 PIX     *pixs, *pixm;
 SARRAY  *sapage, *samask;
 
@@ -579,12 +579,12 @@ pixWriteSegmentedPageToPS(PIX         *pixs,
                           PIX         *pixm,
                           l_float32    textscale,
                           l_float32    imagescale,
-                          l_int32      threshold,
-                          l_int32      pageno,
+                          int32_t      threshold,
+                          int32_t      pageno,
                           const char  *fileout)
 {
-l_int32    alltext, notext, d, ret;
-l_uint32   val;
+int32_t    alltext, notext, d, ret;
+uint32_t   val;
 l_float32  scaleratio;
 PIX       *pixmi, *pixmis, *pixt, *pixg, *pixsc, *pixb, *pixc;
 
@@ -727,12 +727,12 @@ l_ok
 pixWriteMixedToPS(PIX         *pixb,
                   PIX         *pixc,
                   l_float32    scale,
-                  l_int32      pageno,
+                  int32_t      pageno,
                   const char  *fileout)
 {
 char        *tname;
 const char  *op;
-l_int32      resb, resc, endpage, maskop, ret;
+int32_t      resb, resc, endpage, maskop, ret;
 
     if (!pixb && !pixc)
         return ERROR_INT("pixb and pixc both undefined", __func__, 1);
@@ -745,7 +745,7 @@ l_int32      resb, resc, endpage, maskop, ret;
     } else {
        resc = getResLetterPage(pixGetWidth(pixc), pixGetHeight(pixc), 0);
        if (pixb)
-           resb = (l_int32)(scale * resc);
+           resb = (int32_t)(scale * resc);
     }
 
         /* Write the jpeg image first */
@@ -811,10 +811,10 @@ l_int32      resb, resc, endpage, maskop, ret;
 l_ok
 convertToPSEmbed(const char  *filein,
                  const char  *fileout,
-                 l_int32      level)
+                 int32_t      level)
 {
 char    *tname;
-l_int32  d, format;
+int32_t  d, format;
 PIX     *pix, *pixs;
 
     if (!filein)
@@ -913,10 +913,10 @@ PIX     *pix, *pixs;
 l_ok
 pixaWriteCompressedToPS(PIXA        *pixa,
                         const char  *fileout,
-                        l_int32      res,
-                        l_int32      level)
+                        int32_t      res,
+                        int32_t      level)
 {
-l_int32  i, n, index, ret;
+int32_t  i, n, index, ret;
 PIX     *pix;
 
     if (!pixa)
@@ -985,12 +985,12 @@ PIX     *pix;
 l_ok
 pixWriteCompressedToPS(PIX         *pix,
                        const char  *fileout,
-                       l_int32      res,
-                       l_int32      level,
-                       l_int32     *pindex)
+                       int32_t      res,
+                       int32_t      level,
+                       int32_t     *pindex)
 {
 char     *tname;
-l_int32   writeout, d;
+int32_t   writeout, d;
 PIX      *pixt;
 PIXCMAP  *cmap;
 

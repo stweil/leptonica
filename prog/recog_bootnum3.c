@@ -47,11 +47,11 @@
 
 #include "allheaders.h"
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
 char        buf[64];
-l_int32     i;
+int32_t     i;
 PIX        *pix1, *pix2;
 PIXA       *pixa1, *pixa2;
 L_STRCODE  *strc;

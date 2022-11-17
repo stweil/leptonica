@@ -69,7 +69,7 @@
 #define    WIDTH            21    /* brick sel width */
 #define    HEIGHT           15    /* brick sel height */
 
-void TestAll(L_REGPARAMS *rp, PIX *pix, l_int32 symmetric);
+void TestAll(L_REGPARAMS *rp, PIX *pix, int32_t symmetric);
 
 int main(int    argc,
          char **argv)
@@ -92,9 +92,9 @@ L_REGPARAMS  *rp;
 void
 TestAll(L_REGPARAMS  *rp,
         PIX          *pixs,
-        l_int32       symmetric)
+        int32_t       symmetric)
 {
-l_int32  ok, same;
+int32_t  ok, same;
 char     sequence[512];
 PIX     *pixref;
 PIX     *pix1, *pix2, *pix3, *pix4, *pix5, *pix6;

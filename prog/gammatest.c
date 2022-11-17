@@ -43,7 +43,7 @@ int main(int    argc,
 {
 char      *filein, *fileout;
 char       buf[512];
-l_int32    iplot, same;
+int32_t    iplot, same;
 l_float32  gam;
 l_float64  gamma[] = {.5, 1.0, 1.5, 2.0, 2.5, -1.0};
 GPLOT     *gplot;

@@ -29,8 +29,8 @@
  * <pre>
  *
  *      Rearrangements
- *          l_int32     *l_dnaJoin()
- *          l_int32     *l_dnaaFlattenToDna()
+ *          int32_t     *l_dnaJoin()
+ *          int32_t     *l_dnaaFlattenToDna()
  *          L_DNA       *l_dnaSelectRange()
  *
  *      Conversion between numa and dna
@@ -48,10 +48,10 @@
  *
  *      Hashmap operations
  *          L_HASHMAP   *l_hmapCreateFromDna()
- *          l_int32      l_dnaRemoveDupsByHmap()
- *          l_int32      l_dnaUnionByHmap()
- *          l_int32      l_dnaIntersectionByHmap()
- *          l_int32      l_dnaMakeHistoByHmap()
+ *          int32_t      l_dnaRemoveDupsByHmap()
+ *          int32_t      l_dnaUnionByHmap()
+ *          int32_t      l_dnaIntersectionByHmap()
+ *          int32_t      l_dnaMakeHistoByHmap()
  *
  *      Miscellaneous operations
  *          L_DNA       *l_dnaDiffAdjValues()
@@ -104,10 +104,10 @@
 l_ok
 l_dnaJoin(L_DNA   *dad,
           L_DNA   *das,
-          l_int32  istart,
-          l_int32  iend)
+          int32_t  istart,
+          int32_t  iend)
 {
-l_int32    n, i;
+int32_t    n, i;
 l_float64  val;
 
     if (!dad)
@@ -151,7 +151,7 @@ l_float64  val;
 L_DNA *
 l_dnaaFlattenToDna(L_DNAA  *daa)
 {
-l_int32  i, nalloc;
+int32_t  i, nalloc;
 L_DNA   *da, *dad;
 L_DNA  **array;
 
@@ -181,10 +181,10 @@ L_DNA  **array;
  */
 L_DNA *
 l_dnaSelectRange(L_DNA   *das,
-                 l_int32  first,
-                 l_int32  last)
+                 int32_t  first,
+                 int32_t  last)
 {
-l_int32    n, i;
+int32_t    n, i;
 l_float64  dval;
 L_DNA     *dad;
 
@@ -227,7 +227,7 @@ L_DNA     *dad;
 NUMA *
 l_dnaConvertToNuma(L_DNA  *da)
 {
-l_int32    i, n;
+int32_t    i, n;
 l_float64  val;
 NUMA      *na;
 
@@ -253,7 +253,7 @@ NUMA      *na;
 L_DNA *
 numaConvertToDna(NUMA  *na)
 {
-l_int32    i, n;
+int32_t    i, n;
 l_float32  val;
 L_DNA     *da;
 
@@ -287,8 +287,8 @@ L_DNA     *da;
 L_DNA *
 pixConvertDataToDna(PIX  *pix)
 {
-l_int32    i, j, w, h, wpl;
-l_uint32  *data, *line;
+int32_t    i, j, w, h, wpl;
+uint32_t  *data, *line;
 L_DNA     *da;
 
     if (!pix)
@@ -321,7 +321,7 @@ L_DNA     *da;
 L_ASET *
 l_asetCreateFromDna(L_DNA  *da)
 {
-l_int32    i, n;
+int32_t    i, n;
 l_float64  val;
 L_ASET    *set;
 RB_TYPE    key;
@@ -352,7 +352,7 @@ l_ok
 l_dnaRemoveDupsByAset(L_DNA   *das,
                       L_DNA  **pdad)
 {
-l_int32    i, n;
+int32_t    i, n;
 l_float64  val;
 L_DNA     *dad;
 L_ASET    *set;
@@ -447,7 +447,7 @@ l_dnaIntersectionByAset(L_DNA   *da1,
                         L_DNA   *da2,
                         L_DNA  **pdad)
 {
-l_int32    n1, n2, i, n;
+int32_t    n1, n2, i, n;
 l_float64  val;
 L_ASET    *set1, *set2;
 RB_TYPE    key;
@@ -507,8 +507,8 @@ L_DNA     *da_small, *da_big, *dad;
 L_HASHMAP *
 l_hmapCreateFromDna(L_DNA  *da)
 {
-l_int32      i, n;
-l_uint64     key;
+int32_t      i, n;
+uint64_t     key;
 l_float64    dval;
 L_HASHITEM  *hitem;
 L_HASHMAP   *hmap;
@@ -546,8 +546,8 @@ l_dnaRemoveDupsByHmap(L_DNA       *das,
                       L_DNA      **pdad,
                       L_HASHMAP  **phmap)
 {
-l_int32      i, tabsize;
-l_uint64     key;
+int32_t      i, tabsize;
+uint64_t     key;
 l_float64    dval;
 L_DNA       *dad;
 L_HASHITEM  *hitem;
@@ -641,8 +641,8 @@ l_dnaIntersectionByHmap(L_DNA   *da1,
                         L_DNA   *da2,
                         L_DNA  **pdad)
 {
-l_int32      i, n1, n2, n;
-l_uint64     key;
+int32_t      i, n1, n2, n;
+uint64_t     key;
 l_float64    dval;
 L_DNA       *da_small, *da_big, *dad;
 L_HASHITEM  *hitem;
@@ -705,7 +705,7 @@ l_dnaMakeHistoByHmap(L_DNA   *das,
                      L_DNA  **pdav,
                      L_DNA  **pdac)
 {
-l_int32      i, tabsize;
+int32_t      i, tabsize;
 l_float64    dval;
 L_DNA       *dac, *dav;
 L_HASHITEM  *hitem;
@@ -756,7 +756,7 @@ L_HASHMAP   *hmap;
 L_DNA *
 l_dnaDiffAdjValues(L_DNA  *das)
 {
-l_int32  i, n, prev, cur;
+int32_t  i, n, prev, cur;
 L_DNA   *dad;
 
     if (!das)

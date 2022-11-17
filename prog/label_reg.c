@@ -42,7 +42,7 @@
 void FindEMD(PIX *pix1, PIX *pix2, l_float32 *pdistr, l_float32 *pdistg,
              l_float32 *pdistb);
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
 l_float32     dist, distr, distg, distb;

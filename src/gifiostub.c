@@ -49,7 +49,7 @@ PIX * pixReadStreamGif(FILE *fp)
 
 /* ----------------------------------------------------------------------*/
 
-PIX * pixReadMemGif(const l_uint8 *cdata, size_t size)
+PIX * pixReadMemGif(const uint8_t *cdata, size_t size)
 {
     return (PIX *)ERROR_PTR("function not present", __func__, NULL);
 }
@@ -63,7 +63,7 @@ l_ok pixWriteStreamGif(FILE *fp, PIX *pix)
 
 /* ----------------------------------------------------------------------*/
 
-l_ok pixWriteMemGif(l_uint8 **pdata, size_t *psize, PIX *pix)
+l_ok pixWriteMemGif(uint8_t **pdata, size_t *psize, PIX *pix)
 {
     return ERROR_INT("function not present", __func__, 1);
 }

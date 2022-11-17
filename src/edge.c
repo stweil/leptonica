@@ -35,10 +35,10 @@
  *          PIX      *pixTwoSidedEdgeFilter()
  *
  *      Measurement of edge smoothness
- *          l_int32   pixMeasureEdgeSmoothness()
+ *          int32_t   pixMeasureEdgeSmoothness()
  *          NUMA     *pixGetEdgeProfile()
- *          l_int32   pixGetLastOffPixelInRun()
- *          l_int32   pixGetLastOnPixelInRun()
+ *          int32_t   pixGetLastOffPixelInRun()
+ *          int32_t   pixGetLastOnPixelInRun()
  *
  *
  *  The Sobel edge detector uses these two simple gradient filters.
@@ -92,11 +92,11 @@
  */
 PIX *
 pixSobelEdgeFilter(PIX     *pixs,
-                   l_int32  orientflag)
+                   int32_t  orientflag)
 {
-l_int32    w, h, d, i, j, wplt, wpld, gx, gy, vald;
-l_int32    val1, val2, val3, val4, val5, val6, val7, val8, val9;
-l_uint32  *datat, *linet, *datad, *lined;
+int32_t    w, h, d, i, j, wplt, wpld, gx, gy, vald;
+int32_t    val1, val2, val3, val4, val5, val6, val7, val8, val9;
+uint32_t  *datat, *linet, *datad, *lined;
 PIX       *pixt, *pixd;
 
     if (!pixs)
@@ -198,11 +198,11 @@ PIX       *pixt, *pixd;
  */
 PIX *
 pixTwoSidedEdgeFilter(PIX     *pixs,
-                      l_int32  orientflag)
+                      int32_t  orientflag)
 {
-l_int32    w, h, d, i, j, wpls, wpld;
-l_int32    cval, rval, bval, val, lgrad, rgrad, tgrad, bgrad;
-l_uint32  *datas, *lines, *datad, *lined;
+int32_t    w, h, d, i, j, wpls, wpld;
+int32_t    cval, rval, bval, val, lgrad, rgrad, tgrad, bgrad;
+uint32_t  *datas, *lines, *datad, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -306,15 +306,15 @@ PIX       *pixd;
  */
 l_ok
 pixMeasureEdgeSmoothness(PIX         *pixs,
-                         l_int32      side,
-                         l_int32      minjump,
-                         l_int32      minreversal,
+                         int32_t      side,
+                         int32_t      minjump,
+                         int32_t      minreversal,
                          l_float32   *pjpl,
                          l_float32   *pjspl,
                          l_float32   *prpl,
                          const char  *debugfile)
 {
-l_int32  i, n, val, nval, diff, njumps, jumpsum, nreversal;
+int32_t  i, n, val, nval, diff, njumps, jumpsum, nreversal;
 NUMA    *na, *nae;
 
     if (pjpl) *pjpl = 0.0;
@@ -381,11 +381,11 @@ NUMA    *na, *nae;
  */
 NUMA *
 pixGetEdgeProfile(PIX         *pixs,
-                  l_int32      side,
+                  int32_t      side,
                   const char  *debugfile)
 {
-l_int32   x, y, w, h, loc, index, ival;
-l_uint32  val;
+int32_t   x, y, w, h, loc, index, ival;
+uint32_t  val;
 NUMA     *na;
 PIX      *pixt;
 PIXCMAP  *cmap;
@@ -510,13 +510,13 @@ PIXCMAP  *cmap;
  */
 l_ok
 pixGetLastOffPixelInRun(PIX      *pixs,
-                        l_int32   x,
-                        l_int32   y,
-                        l_int32   direction,
-                        l_int32  *ploc)
+                        int32_t   x,
+                        int32_t   y,
+                        int32_t   direction,
+                        int32_t  *ploc)
 {
-l_int32   loc, w, h;
-l_uint32  val;
+int32_t   loc, w, h;
+uint32_t  val;
 
     if (!ploc)
         return ERROR_INT("&loc not defined", __func__, 1);
@@ -580,15 +580,15 @@ l_uint32  val;
  *          pixel in the current run that is ON.
  * </pre>
  */
-l_int32
+int32_t
 pixGetLastOnPixelInRun(PIX      *pixs,
-                       l_int32   x,
-                       l_int32   y,
-                       l_int32   direction,
-                       l_int32  *ploc)
+                       int32_t   x,
+                       int32_t   y,
+                       int32_t   direction,
+                       int32_t  *ploc)
 {
-l_int32   loc, w, h;
-l_uint32  val;
+int32_t   loc, w, h;
+uint32_t  val;
 
     if (!ploc)
         return ERROR_INT("&loc not defined", __func__, 1);

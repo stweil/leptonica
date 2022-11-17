@@ -57,14 +57,14 @@
 #include <windows.h>   /* for CreateDirectory() */
 #endif
 
-static const l_int32  DEFAULT_THUMB_WIDTH = 120;
-static const l_int32  DEFAULT_VIEW_WIDTH = 800;
-static const l_int32  MIN_THUMB_WIDTH = 50;
-static const l_int32  MIN_VIEW_WIDTH = 300;
+static const int32_t  DEFAULT_THUMB_WIDTH = 120;
+static const int32_t  DEFAULT_VIEW_WIDTH = 800;
+static const int32_t  MIN_THUMB_WIDTH = 50;
+static const int32_t  MIN_VIEW_WIDTH = 300;
 
-static l_int32 pixHtmlViewer(const char *dirin, const char *dirout,
-                             const char  *rootname, l_int32 thumbwidth,
-                             l_int32 viewwidth);
+static int32_t pixHtmlViewer(const char *dirin, const char *dirout,
+                             const char  *rootname, int32_t thumbwidth,
+                             int32_t viewwidth);
 static void WriteFormattedPix(const char *fname, PIX *pix);
 
 
@@ -72,7 +72,7 @@ int main(int    argc,
          char **argv)
 {
 char    *dirin, *dirout, *rootname;
-l_int32  thumbwidth, viewwidth;
+int32_t  thumbwidth, viewwidth;
 
     if (argc != 6)
         return ERROR_INT(
@@ -117,12 +117,12 @@ l_int32  thumbwidth, viewwidth;
  *          and placed in the same output directory.
  * </pre>
  */
-static l_int32
+static int32_t
 pixHtmlViewer(const char  *dirin,
               const char  *dirout,
               const char  *rootname,
-              l_int32      thumbwidth,
-              l_int32      viewwidth)
+              int32_t      thumbwidth,
+              int32_t      viewwidth)
 {
 char      *fname, *fullname, *outname;
 char      *mainname, *linkname, *linknameshort;
@@ -131,7 +131,7 @@ char      *shtml, *slink;
 char       buf[512];
 char       htmlstring[] = "<html>";
 char       framestring[] = "</frameset></html>";
-l_int32    i, nfiles, index, w, d, nimages, ret;
+int32_t    i, nfiles, index, w, d, nimages, ret;
 l_float32  factor;
 PIX       *pix, *pixthumb, *pixview;
 SARRAY    *safiles, *sathumbs, *saviews, *sahtml, *salink;
@@ -271,7 +271,7 @@ static void
 WriteFormattedPix(const char *fname,
                   PIX        *pix)
 {
-l_int32  d;
+int32_t  d;
 
     d = pixGetDepth(pix);
     if (d == 1 || pixGetColormap(pix))

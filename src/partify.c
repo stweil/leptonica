@@ -29,12 +29,12 @@
  * <pre>
  *
  *     Top level
- *         l_int32          partifyFiles()
- *         l_int32          partifyPixac()
+ *         int32_t          partifyFiles()
+ *         int32_t          partifyPixac()
  *
  *     Helpers
  *         static BOXA     *pixLocateStaveSets()
- *         static l_int32   boxaRemoveVGaps()
+ *         static int32_t   boxaRemoveVGaps()
  * </pre>
  */
 
@@ -45,7 +45,7 @@
 #include "allheaders.h"
 
     /* Static helplers */
-static BOXA *pixLocateStaveSets(PIX *pixs, l_int32 pageno, PIXA *pixadb);
+static BOXA *pixLocateStaveSets(PIX *pixs, int32_t pageno, PIXA *pixadb);
 static l_ok boxaRemoveVGaps(BOXA *boxa);
 
 /*---------------------------------------------------------------------*
@@ -74,7 +74,7 @@ static l_ok boxaRemoveVGaps(BOXA *boxa);
 l_ok
 partifyFiles(const char  *dirname,
              const char  *substr,
-             l_int32      nparts,
+             int32_t      nparts,
              const char  *outroot,
              const char  *debugfile)
 {
@@ -119,12 +119,12 @@ PIXAC  *pixac;
  */
 l_ok
 partifyPixac(PIXAC       *pixac,
-             l_int32      nparts,
+             int32_t      nparts,
              const char  *outroot,
              PIXA        *pixadb)
 {
 char       buf[512];
-l_int32    i, j, pageno, res, npage, nbox, icount, line;
+int32_t    i, j, pageno, res, npage, nbox, icount, line;
 l_float32  factor;
 L_BMF     *bmf;
 BOX       *box1, *box2;
@@ -247,7 +247,7 @@ PIXAC    **pixaca;
  */
 static BOXA *
 pixLocateStaveSets(PIX     *pixs,
-                   l_int32  pageno,
+                   int32_t  pageno,
                    PIXA    *pixadb)
 {
 BOXA  *boxa1, *boxa2, *boxa3, *boxa4;
@@ -296,7 +296,7 @@ PIX   *pix1, *pix2;
 static  l_ok
 boxaRemoveVGaps(BOXA  *boxa)
 {
-l_int32  nbox, i, y1, h1, y2, h2, delta;
+int32_t  nbox, i, y1, h1, y2, h2, delta;
 
     nbox = boxaGetCount(boxa);
     for (i = 0; i < nbox - 1; i++) {

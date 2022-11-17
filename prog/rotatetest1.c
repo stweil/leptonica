@@ -38,7 +38,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32    i, w, h, d, rotflag;
+int32_t    i, w, h, d, rotflag;
 PIX       *pixs, *pixt, *pixd;
 l_float32  angle, deg2rad, ang;
 char      *filein, *fileout;

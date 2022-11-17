@@ -52,17 +52,17 @@
 #include "allheaders.h"
 #include "pix_internal.h"
 
-static PIX *DoBlendTest(PIX *pix, BOX *box, l_uint32 val, l_float32 gamma,
-                        l_int32 minval, l_int32 maxval, l_int32 which);
+static PIX *DoBlendTest(PIX *pix, BOX *box, uint32_t val, l_float32 gamma,
+                        int32_t minval, int32_t maxval, int32_t which);
 
 int main(int    argc,
          char **argv)
 {
-l_uint8      *data;
-l_int32       w, h, n1, n2, n, i, minval, maxval;
-l_int32       ncolors, rval, gval, bval, equal;
-l_int32      *rmap, *gmap, *bmap;
-l_uint32      color;
+uint8_t      *data;
+int32_t       w, h, n1, n2, n, i, minval, maxval;
+int32_t       ncolors, rval, gval, bval, equal;
+int32_t      *rmap, *gmap, *bmap;
+uint32_t      color;
 l_float32     gamma;
 BOX          *box;
 FILE         *fp;
@@ -298,8 +298,8 @@ L_REGPARAMS  *rp;
      * the original, blending over a box at the bottom (2 ways), and
      * multiplying over a box at the bottom (2 ways). */
 static PIX *
-DoBlendTest(PIX *pix, BOX *box, l_uint32 color, l_float32 gamma,
-            l_int32 minval, l_int32 maxval, l_int32 which)
+DoBlendTest(PIX *pix, BOX *box, uint32_t color, l_float32 gamma,
+            int32_t minval, int32_t maxval, int32_t which)
 {
 PIX   *pix1, *pix2, *pix3, *pixd;
 PIXA  *pixa;

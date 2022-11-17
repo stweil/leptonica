@@ -55,7 +55,7 @@ static const char  *kel3ystr = "  20  -70   40  100   40  -70  20 ";
 int main(int    argc,
          char **argv)
 {
-l_int32       i, j, sizex, sizey, bias;
+int32_t       i, j, sizex, sizey, bias;
 FPIX         *fpixv, *fpixrv;
 L_KERNEL     *kel1, *kel2, *kel3x, *kel3y;
 PIX          *pixs, *pixacc, *pixg, *pixt, *pixd;

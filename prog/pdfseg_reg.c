@@ -42,12 +42,12 @@
 #include "allheaders.h"
 
     /* All images scaled to this width  */
-static const l_int32  WIDTH = 800;
+static const int32_t  WIDTH = 800;
 
 int main(int    argc,
          char **argv)
 {
-l_int32      h;
+int32_t      h;
 l_float32    scalefactor;
 BOX         *box;
 BOXA        *boxa1, *boxa2;

@@ -56,7 +56,7 @@ int main(int    argc,
          char **argv)
 {
 char      *filein, *fileout;
-l_int32    w, h, index, level;
+int32_t    w, h, index, level;
 l_float32  scale;
 FILE      *fp;
 PIX       *pixs, *pix1;
@@ -90,7 +90,7 @@ PIX       *pixs, *pix1;
         lept_fclose(fp);
     } else {  /* levels 2 and 3 */
         index = 0;
-        pixWriteCompressedToPS(pix1, fileout, (l_int32)(300. / scale),
+        pixWriteCompressedToPS(pix1, fileout, (int32_t)(300. / scale),
                                level, &index);
     }
 

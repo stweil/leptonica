@@ -47,10 +47,10 @@
 
 #define  NORMALIZE     1
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32     d, method, pageno;
+int32_t     d, method, pageno;
 L_DEWARP   *dew1;
 L_DEWARPA  *dewa;
 PIX        *pixs, *pixn, *pixg, *pixb, *pixd;

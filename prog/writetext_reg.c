@@ -39,7 +39,7 @@
 #include "allheaders.h"
 
 void AddTextAndSave(PIXA *pixa, PIX *pixs, L_BMF *bmf, const char *textstr,
-                    l_int32 location, l_uint32 val);
+                    int32_t location, uint32_t val);
 
 const char  *textstr[] =
            {"This is a simple test of text writing: 8 bpp",
@@ -57,9 +57,9 @@ const char  *topstr[] =
             "Text is added over the bottom of each image",
             "Text is added below each image"};
 
-const l_int32  loc[] = {1, 5, 6, 2};
+const int32_t  loc[] = {1, 5, 6, 2};
 
-const l_uint32  colors[6] = {0x4090e000, 0x40e09000, 0x9040e000, 0x90e04000,
+const uint32_t  colors[6] = {0x4090e000, 0x40e09000, 0x9040e000, 0x90e04000,
                              0xe0409000, 0xe0904000};
 
 
@@ -67,7 +67,7 @@ int main(int    argc,
          char **argv)
 {
 char          buf[512];
-l_int32       i;
+int32_t       i;
 L_BMF        *bmf, *bmftop;
 PIX          *pixs, *pixt, *pixd;
 PIX          *pix1, *pix2, *pix3, *pix4, *pix5, *pix6, *pix7, *pix8;
@@ -163,10 +163,10 @@ AddTextAndSave(PIXA        *pixa,
                PIX         *pixs,
                L_BMF       *bmf,
                const char  *textstr,
-               l_int32      location,
-               l_uint32     val)
+               int32_t      location,
+               uint32_t     val)
 {
-l_int32  n, newrow, ovf;
+int32_t  n, newrow, ovf;
 PIX     *pix1;
 
     pix1 = pixAddSingleTextblock(pixs, bmf, textstr, val, location, &ovf);

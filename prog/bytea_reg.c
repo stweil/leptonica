@@ -42,8 +42,8 @@ int main(int    argc,
          char **argv)
 {
 char         *str1, *str2;
-l_uint8      *data1, *data2;
-l_int32       i, n;
+uint8_t      *data1, *data2;
+int32_t       i, n;
 size_t        size1, size2, slice, total, start;
 FILE         *fp;
 L_DNA        *da;
@@ -97,25 +97,25 @@ L_REGPARAMS  *rp;
          * append the '\r'.  We have 3 ways to remove the '\r'
          * characters from the byte array data1 with size1 bytes:
          *   str1 = (char *)arrayReplaceEachSequence(data1, size1,
-         *          (l_uint8 *)"\r", 1, NULL, 0, &size2, NULL);
+         *          (uint8_t *)"\r", 1, NULL, 0, &size2, NULL);
          *   str1 = stringReplaceEachSubstr((char *)data1, "\r",
          *           "", NULL);
          *   str1 = stringRemoveChars((char *)data1, "\r");
          * which can then be used to initialize a L_Bytea using
-         *   lba1 = l_byteaInitFromMem((l_uint8 *)str1, strlen(str1));
+         *   lba1 = l_byteaInitFromMem((uint8_t *)str1, strlen(str1));
          */
 
     data1 = l_binaryRead("kernel_reg.c", &size1);
 #if 0
-    str1 = (char *)arrayReplaceEachSequence(data1, size1, (l_uint8 *)"\r", 1,
+    str1 = (char *)arrayReplaceEachSequence(data1, size1, (uint8_t *)"\r", 1,
                                             NULL, 0, &size2, NULL);
-    lba1 = l_byteaInitFromMem((l_uint8 *)str1, size2);
+    lba1 = l_byteaInitFromMem((uint8_t *)str1, size2);
 #elif 0
     str1 = stringReplaceEachSubstr((char *)data1, "\r", "", NULL);
-    lba1 = l_byteaInitFromMem((l_uint8 *)str1, strlen(str1));
+    lba1 = l_byteaInitFromMem((uint8_t *)str1, strlen(str1));
 #else
     str1 = stringRemoveChars((char *)data1, "\r");
-    lba1 = l_byteaInitFromMem((l_uint8 *)str1, strlen(str1));
+    lba1 = l_byteaInitFromMem((uint8_t *)str1, strlen(str1));
 #endif
     sa = sarrayCreateLinesFromString(str1, 1);
     lba2 = l_byteaCreate(0);
@@ -157,7 +157,7 @@ L_REGPARAMS  *rp;
     convertToPdf("test24.jpg", L_JPEG_ENCODE, 0, "/tmp/lept/bytea/test24.pdf",
                  0, 0, 100, NULL, NULL, 0);
     lba1 = l_byteaInitFromFile("/tmp/lept/bytea/test24.pdf");
-    l_byteaFindEachSequence(lba1, (l_uint8 *)" 0 obj\n", 7, &da);
+    l_byteaFindEachSequence(lba1, (uint8_t *)" 0 obj\n", 7, &da);
     n = l_dnaGetCount(da);
     regTestCompareValues(rp, 6, n, 0.0);  /* 6 */
     l_byteaDestroy(&lba1);

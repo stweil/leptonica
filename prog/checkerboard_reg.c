@@ -39,7 +39,7 @@
 
 void LocateCheckerboardCorners(L_REGPARAMS *rp,
                                const char *fname,
-                               l_int32 nsels);
+                               int32_t nsels);
 
 int main(int    argc,
          char **argv)
@@ -58,9 +58,9 @@ L_REGPARAMS  *rp;
 void
 LocateCheckerboardCorners(L_REGPARAMS  *rp,
                           const char   *fname,
-                          l_int32       nsels)
+                          int32_t       nsels)
 {
-l_int32  w, h, n, i;
+int32_t  w, h, n, i;
 PIX     *pix1, *pix2, *pix3, *pix4;
 PIXA    *pixa1;
 PTA     *pta1;

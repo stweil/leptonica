@@ -30,25 +30,25 @@
  *
  *     Access within an array of 32-bit words
  *
- *           l_int32     l_getDataBit()
+ *           int32_t     l_getDataBit()
  *           void        l_setDataBit()
  *           void        l_clearDataBit()
  *           void        l_setDataBitVal()
- *           l_int32     l_getDataDibit()
+ *           int32_t     l_getDataDibit()
  *           void        l_setDataDibit()
  *           void        l_clearDataDibit()
- *           l_int32     l_getDataQbit()
+ *           int32_t     l_getDataQbit()
  *           void        l_setDataQbit()
  *           void        l_clearDataQbit()
- *           l_int32     l_getDataByte()
+ *           int32_t     l_getDataByte()
  *           void        l_setDataByte()
- *           l_int32     l_getDataTwoBytes()
+ *           int32_t     l_getDataTwoBytes()
  *           void        l_setDataTwoBytes()
- *           l_int32     l_getDataFourBytes()
+ *           int32_t     l_getDataFourBytes()
  *           void        l_setDataFourBytes()
  *
  *     Note that these all require 32-bit alignment, and hence an input
- *     ptr to l_uint32.  However, this is not enforced by the compiler.
+ *     ptr to uint32_t.  However, this is not enforced by the compiler.
  *     Instead, we allow the use of a void* ptr, because the line ptrs
  *     are an efficient way to get random access (see pixGetLinePtrs()).
  *     It is then necessary to cast internally within each function
@@ -73,11 +73,11 @@
  * \param[in]    n     pixel index
  * \return  val of the nth 1-bit pixel.
  */
-l_int32
+int32_t
 l_getDataBit(const void *line,
-             l_int32     n)
+             int32_t     n)
 {
-    return (*((const l_uint32 *)line + (n >> 5)) >> (31 - (n & 31))) & 1;
+    return (*((const uint32_t *)line + (n >> 5)) >> (31 - (n & 31))) & 1;
 }
 
 
@@ -92,9 +92,9 @@ l_getDataBit(const void *line,
  */
 void
 l_setDataBit(void    *line,
-             l_int32  n)
+             int32_t  n)
 {
-    *((l_uint32 *)line + (n >> 5)) |= (0x80000000 >> (n & 31));
+    *((uint32_t *)line + (n >> 5)) |= (0x80000000 >> (n & 31));
 }
 
 
@@ -109,9 +109,9 @@ l_setDataBit(void    *line,
  */
 void
 l_clearDataBit(void    *line,
-               l_int32  n)
+               int32_t  n)
 {
-    *((l_uint32 *)line + (n >> 5)) &= ~(0x80000000 >> (n & 31));
+    *((uint32_t *)line + (n >> 5)) &= ~(0x80000000 >> (n & 31));
 }
 
 
@@ -135,14 +135,14 @@ l_clearDataBit(void    *line,
  */
 void
 l_setDataBitVal(void    *line,
-                l_int32  n,
-                l_int32  val)
+                int32_t  n,
+                int32_t  val)
 {
-l_uint32    *pword;
+uint32_t    *pword;
 
-    pword = (l_uint32 *)line + (n >> 5);
+    pword = (uint32_t *)line + (n >> 5);
     *pword &= ~(0x80000000 >> (n & 31));  /* clear */
-    *pword |= (l_uint32)val << (31 - (n & 31));   /* set */
+    *pword |= (uint32_t)val << (31 - (n & 31));   /* set */
 }
 
 
@@ -153,11 +153,11 @@ l_uint32    *pword;
  * \param[in]    n     pixel index
  * \return  val of the nth 2-bit pixel.
  */
-l_int32
+int32_t
 l_getDataDibit(const void *line,
-               l_int32     n)
+               int32_t     n)
 {
-    return (*((const l_uint32 *)line + (n >> 4)) >> (2 * (15 - (n & 15)))) & 3;
+    return (*((const uint32_t *)line + (n >> 4)) >> (2 * (15 - (n & 15)))) & 3;
 }
 
 
@@ -171,14 +171,14 @@ l_getDataDibit(const void *line,
  */
 void
 l_setDataDibit(void    *line,
-               l_int32  n,
-               l_int32  val)
+               int32_t  n,
+               int32_t  val)
 {
-l_uint32    *pword;
+uint32_t    *pword;
 
-    pword = (l_uint32 *)line + (n >> 4);
+    pword = (uint32_t *)line + (n >> 4);
     *pword &= ~(0xc0000000 >> (2 * (n & 15)));  /* clear */
-    *pword |= (l_uint32)(val & 3) << (30 - 2 * (n & 15));   /* set */
+    *pword |= (uint32_t)(val & 3) << (30 - 2 * (n & 15));   /* set */
 }
 
 
@@ -193,9 +193,9 @@ l_uint32    *pword;
  */
 void
 l_clearDataDibit(void    *line,
-                 l_int32  n)
+                 int32_t  n)
 {
-    *((l_uint32 *)line + (n >> 4)) &= ~(0xc0000000 >> (2 * (n & 15)));
+    *((uint32_t *)line + (n >> 4)) &= ~(0xc0000000 >> (2 * (n & 15)));
 }
 
 
@@ -206,11 +206,11 @@ l_clearDataDibit(void    *line,
  * \param[in]    n     pixel index
  * \return  val of the nth 4-bit pixel.
  */
-l_int32
+int32_t
 l_getDataQbit(const void *line,
-              l_int32     n)
+              int32_t     n)
 {
-    return (*((const l_uint32 *)line + (n >> 3)) >> (4 * (7 - (n & 7)))) & 0xf;
+    return (*((const uint32_t *)line + (n >> 3)) >> (4 * (7 - (n & 7)))) & 0xf;
 }
 
 
@@ -224,14 +224,14 @@ l_getDataQbit(const void *line,
  */
 void
 l_setDataQbit(void    *line,
-              l_int32  n,
-              l_int32  val)
+              int32_t  n,
+              int32_t  val)
 {
-l_uint32    *pword;
+uint32_t    *pword;
 
-    pword = (l_uint32 *)line + (n >> 3);
+    pword = (uint32_t *)line + (n >> 3);
     *pword &= ~(0xf0000000 >> (4 * (n & 7)));  /* clear */
-    *pword |= (l_uint32)(val & 15) << (28 - 4 * (n & 7));   /* set */
+    *pword |= (uint32_t)(val & 15) << (28 - 4 * (n & 7));   /* set */
 }
 
 
@@ -246,9 +246,9 @@ l_uint32    *pword;
  */
 void
 l_clearDataQbit(void    *line,
-                l_int32  n)
+                int32_t  n)
 {
-    *((l_uint32 *)line + (n >> 3)) &= ~(0xf0000000 >> (4 * (n & 7)));
+    *((uint32_t *)line + (n >> 3)) &= ~(0xf0000000 >> (4 * (n & 7)));
 }
 
 
@@ -259,14 +259,14 @@ l_clearDataQbit(void    *line,
  * \param[in]    n     pixel index
  * \return  value of the n-th byte pixel
  */
-l_int32
+int32_t
 l_getDataByte(const void *line,
-              l_int32     n)
+              int32_t     n)
 {
 #ifdef  L_BIG_ENDIAN
-    return *((const l_uint8 *)line + n);
+    return *((const uint8_t *)line + n);
 #else  /* L_LITTLE_ENDIAN */
-    return *(l_uint8 *)((l_uintptr_t)((const l_uint8 *)line + n) ^ 3);
+    return *(uint8_t *)((l_uintptr_t)((const uint8_t *)line + n) ^ 3);
 #endif  /* L_BIG_ENDIAN */
 }
 
@@ -281,13 +281,13 @@ l_getDataByte(const void *line,
  */
 void
 l_setDataByte(void    *line,
-              l_int32  n,
-              l_int32  val)
+              int32_t  n,
+              int32_t  val)
 {
 #ifdef  L_BIG_ENDIAN
-    *((l_uint8 *)line + n) = val;
+    *((uint8_t *)line + n) = val;
 #else  /* L_LITTLE_ENDIAN */
-    *(l_uint8 *)((l_uintptr_t)((l_uint8 *)line + n) ^ 3) = val;
+    *(uint8_t *)((l_uintptr_t)((uint8_t *)line + n) ^ 3) = val;
 #endif  /* L_BIG_ENDIAN */
 }
 
@@ -299,14 +299,14 @@ l_setDataByte(void    *line,
  * \param[in]    n     pixel index
  * \return  value of the n-th 2-byte pixel
  */
-l_int32
+int32_t
 l_getDataTwoBytes(const void *line,
-                  l_int32     n)
+                  int32_t     n)
 {
 #ifdef  L_BIG_ENDIAN
-    return *((const l_uint16 *)line + n);
+    return *((const uint16_t *)line + n);
 #else  /* L_LITTLE_ENDIAN */
-    return *(l_uint16 *)((l_uintptr_t)((const l_uint16 *)line + n) ^ 2);
+    return *(uint16_t *)((l_uintptr_t)((const uint16_t *)line + n) ^ 2);
 #endif  /* L_BIG_ENDIAN */
 }
 
@@ -321,13 +321,13 @@ l_getDataTwoBytes(const void *line,
  */
 void
 l_setDataTwoBytes(void    *line,
-                  l_int32  n,
-                  l_int32  val)
+                  int32_t  n,
+                  int32_t  val)
 {
 #ifdef  L_BIG_ENDIAN
-    *((l_uint16 *)line + n) = val;
+    *((uint16_t *)line + n) = val;
 #else  /* L_LITTLE_ENDIAN */
-    *(l_uint16 *)((l_uintptr_t)((l_uint16 *)line + n) ^ 2) = val;
+    *(uint16_t *)((l_uintptr_t)((uint16_t *)line + n) ^ 2) = val;
 #endif  /* L_BIG_ENDIAN */
 }
 
@@ -339,11 +339,11 @@ l_setDataTwoBytes(void    *line,
  * \param[in]    n     pixel index
  * \return  value of the n-th 4-byte pixel
  */
-l_int32
+int32_t
 l_getDataFourBytes(const void *line,
-                   l_int32     n)
+                   int32_t     n)
 {
-    return *((const l_uint32 *)line + n);
+    return *((const uint32_t *)line + n);
 }
 
 
@@ -357,8 +357,8 @@ l_getDataFourBytes(const void *line,
  */
 void
 l_setDataFourBytes(void    *line,
-                   l_int32  n,
-                   l_int32  val)
+                   int32_t  n,
+                   int32_t  val)
 {
-    *((l_uint32 *)line + n) = val;
+    *((uint32_t *)line + n) = val;
 }

@@ -53,7 +53,7 @@ end
 -- \return true on success
 function modify(fs, fd)
 	local state = 0		-- parsing state
-	local to_l_ok = false	-- true, if the l_int32 return type should be changed
+	local to_l_ok = false	-- true, if the int32_t return type should be changed
 	local b_file = false	-- true, have seen a \file comment
 
 	while true do
@@ -80,7 +80,7 @@ function modify(fs, fd)
 		if state == 2 then
 			-- 1st line after a comment
 			-- contains the return type
-			if to_l_ok and line == 'l_int32' then
+			if to_l_ok and line == 'int32_t' then
 				line = 'l_ok'
 			end
 			if b_file then

@@ -37,24 +37,24 @@
 
 #include "allheaders.h"
 
-static void Count_pieces(L_REGPARAMS *rp, PIX  *pix, l_int32 nexp);
-static void Count_pieces2(L_REGPARAMS *rp, BOXA *boxa, l_int32 nexp);
-static l_int32 Count_ones(L_REGPARAMS *rp, NUMA  *na, l_int32 nexp,
-                          l_int32 index, const char *name);
+static void Count_pieces(L_REGPARAMS *rp, PIX  *pix, int32_t nexp);
+static void Count_pieces2(L_REGPARAMS *rp, BOXA *boxa, int32_t nexp);
+static int32_t Count_ones(L_REGPARAMS *rp, NUMA  *na, int32_t nexp,
+                          int32_t index, const char *name);
 
 static const l_float32 edges[13] = {0.0f, 0.2f, 0.3f, 0.35f, 0.4f, 0.45f, 0.5f,
                                     0.55f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f};
 
     /* for feyn.tif */
-static const l_int32 band[12] = {1, 11, 48, 264, 574, 704, 908, 786, 466,
+static const int32_t band[12] = {1, 11, 48, 264, 574, 704, 908, 786, 466,
                                  157, 156, 230};
-static const l_int32 total[12] = {1, 12, 60, 324, 898, 1602, 2510, 3296,
+static const int32_t total[12] = {1, 12, 60, 324, 898, 1602, 2510, 3296,
                                   3762, 3919, 4075, 4305};
 #if 0
     /* for rabi.png */
-static const l_int32 band[12] = {24, 295, 490, 817, 1768, 962, 8171,
+static const int32_t band[12] = {24, 295, 490, 817, 1768, 962, 8171,
                                  63, 81, 51, 137, 8619};
-static const l_int32 total[12] = {24, 319, 809, 1626, 3394, 4356, 12527,
+static const int32_t total[12] = {24, 319, 809, 1626, 3394, 4356, 12527,
                                   12590, 12671, 12722, 12859, 21478};
 #endif
 
@@ -62,7 +62,7 @@ static const l_int32 total[12] = {24, 319, 809, 1626, 3394, 4356, 12527,
 int main(int    argc,
          char **argv)
 {
-l_int32       w, h, n, i, sum, sumi, empty;
+int32_t       w, h, n, i, sum, sumi, empty;
 BOX          *box1, *box2, *box3, *box4;
 BOXA         *boxa1, *boxa2;
 NUMA         *na1, *na2, *na3, *na4, *na5;
@@ -297,9 +297,9 @@ L_REGPARAMS  *rp;
 /* ---------------------  Helpers -------------------------- */
 
 static void
-Count_pieces(L_REGPARAMS *rp, PIX  *pix, l_int32 nexp)
+Count_pieces(L_REGPARAMS *rp, PIX  *pix, int32_t nexp)
 {
-l_int32  n;
+int32_t  n;
 BOXA    *boxa;
 
     if (rp->index > 28 && rp->index < 55)
@@ -314,9 +314,9 @@ BOXA    *boxa;
 }
 
 static void
-Count_pieces2(L_REGPARAMS *rp, BOXA  *boxa, l_int32 nexp)
+Count_pieces2(L_REGPARAMS *rp, BOXA  *boxa, int32_t nexp)
 {
-l_int32  n;
+int32_t  n;
 
     n = boxaGetCount(boxa);
     regTestCompareValues(rp, nexp, n, 0.0);
@@ -325,11 +325,11 @@ l_int32  n;
     boxaDestroy(&boxa);
 }
 
-static l_int32
-Count_ones(L_REGPARAMS *rp, NUMA  *na, l_int32 nexp,
-           l_int32 index, const char *name)
+static int32_t
+Count_ones(L_REGPARAMS *rp, NUMA  *na, int32_t nexp,
+           int32_t index, const char *name)
 {
-l_int32  i, n, val, sum;
+int32_t  i, n, val, sum;
 
     n = numaGetCount(na);
     sum = 0;

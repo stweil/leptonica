@@ -40,7 +40,7 @@ int main(int    argc,
 {
 char    *filein;
 char    *fileout = NULL;
-l_int32  d, same;
+int32_t  d, same;
 PIX     *pixs, *pixd, *pix1, *pix2, *pix3, *pix4;
 
     if (argc != 2 && argc != 3)

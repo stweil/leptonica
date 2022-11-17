@@ -49,18 +49,18 @@ static const char *image[10] = {"feyn-fract.tif",   /* 1 bpp */
                                 "test24.jpg"};      /* 32 bpp rgb */
 
 
-static const l_int32    SPACE = 30;
-static const l_int32    WIDTH = 300;
+static const int32_t    SPACE = 30;
+static const int32_t    WIDTH = 300;
 static const l_float32  FACTOR[5] = {2.3f, 1.5f, 1.1f, 0.6f, 0.3f};
 
-static void AddScaledImages(PIXA *pixa, const char *fname, l_int32 width);
+static void AddScaledImages(PIXA *pixa, const char *fname, int32_t width);
 static void PixaSaveDisplay(PIXA *pixa, L_REGPARAMS *rp);
 static void TestSmoothScaling(const char *fname, L_REGPARAMS *rp);
 
 int main(int    argc,
          char **argv)
 {
-l_int32       i;
+int32_t       i;
 PIX          *pixs, *pixc;
 PIXA         *pixa;
 L_REGPARAMS  *rp;
@@ -245,9 +245,9 @@ L_REGPARAMS  *rp;
 static void
 AddScaledImages(PIXA         *pixa,
                 const char   *fname,
-                l_int32       width)
+                int32_t       width)
 {
-l_int32    i, w;
+int32_t    i, w;
 l_float32  scalefactor;
 PIX       *pixs, *pix1, *pix2, *pix3;
 
@@ -280,7 +280,7 @@ PIX  *pixd;
 static void
 TestSmoothScaling(const char *fname, L_REGPARAMS *rp)
 {
-l_int32    i;
+int32_t    i;
 l_float32  scale, upscale;
 PIX       *pix1, *pix2, *pix3;
 PIXA      *pixa;

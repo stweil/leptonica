@@ -34,38 +34,38 @@
  *           PIXCMAP    *pixcmapCreateLinear()
  *           PIXCMAP    *pixcmapCopy()
  *           void        pixcmapDestroy()
- *           l_int32     pixcmapIsValid()
- *           l_int32     pixcmapAddColor()
- *           l_int32     pixcmapAddRGBA()
- *           l_int32     pixcmapAddNewColor()
- *           l_int32     pixcmapAddNearestColor()
- *           l_int32     pixcmapUsableColor()
- *           l_int32     pixcmapAddBlackOrWhite()
- *           l_int32     pixcmapSetBlackAndWhite()
- *           l_int32     pixcmapGetCount()
- *           l_int32     pixcmapGetDepth()
- *           l_int32     pixcmapGetMinDepth()
- *           l_int32     pixcmapGetFreeCount()
- *           l_int32     pixcmapClear()
+ *           int32_t     pixcmapIsValid()
+ *           int32_t     pixcmapAddColor()
+ *           int32_t     pixcmapAddRGBA()
+ *           int32_t     pixcmapAddNewColor()
+ *           int32_t     pixcmapAddNearestColor()
+ *           int32_t     pixcmapUsableColor()
+ *           int32_t     pixcmapAddBlackOrWhite()
+ *           int32_t     pixcmapSetBlackAndWhite()
+ *           int32_t     pixcmapGetCount()
+ *           int32_t     pixcmapGetDepth()
+ *           int32_t     pixcmapGetMinDepth()
+ *           int32_t     pixcmapGetFreeCount()
+ *           int32_t     pixcmapClear()
  *
  *      Colormap random access and test
- *           l_int32     pixcmapGetColor()
- *           l_int32     pixcmapGetColor32()
- *           l_int32     pixcmapGetRGBA()
- *           l_int32     pixcmapGetRGBA32()
- *           l_int32     pixcmapResetColor()
- *           l_int32     pixcmapSetAlpha()
- *           l_int32     pixcmapGetIndex()
- *           l_int32     pixcmapHasColor()
- *           l_int32     pixcmapIsOpaque()
- *           l_int32     pixcmapNonOpaqueColorsInfo()
- *           l_int32     pixcmapIsBlackAndWhite()
- *           l_int32     pixcmapCountGrayColors()
- *           l_int32     pixcmapGetRankIntensity()
- *           l_int32     pixcmapGetNearestIndex()
- *           l_int32     pixcmapGetNearestGrayIndex()
- *           l_int32     pixcmapGetDistanceToColor()
- *           l_int32     pixcmapGetRangeValues()
+ *           int32_t     pixcmapGetColor()
+ *           int32_t     pixcmapGetColor32()
+ *           int32_t     pixcmapGetRGBA()
+ *           int32_t     pixcmapGetRGBA32()
+ *           int32_t     pixcmapResetColor()
+ *           int32_t     pixcmapSetAlpha()
+ *           int32_t     pixcmapGetIndex()
+ *           int32_t     pixcmapHasColor()
+ *           int32_t     pixcmapIsOpaque()
+ *           int32_t     pixcmapNonOpaqueColorsInfo()
+ *           int32_t     pixcmapIsBlackAndWhite()
+ *           int32_t     pixcmapCountGrayColors()
+ *           int32_t     pixcmapGetRankIntensity()
+ *           int32_t     pixcmapGetNearestIndex()
+ *           int32_t     pixcmapGetNearestGrayIndex()
+ *           int32_t     pixcmapGetDistanceToColor()
+ *           int32_t     pixcmapGetRangeValues()
  *
  *      Colormap conversion
  *           PIXCMAP    *pixcmapGrayToFalseColor()
@@ -75,25 +75,25 @@
  *           PIXCMAP    *pixcmapConvertTo8()
  *
  *      Colormap I/O
- *           l_int32     pixcmapRead()
- *           l_int32     pixcmapReadStream()
- *           l_int32     pixcmapReadMem()
- *           l_int32     pixcmapWrite()
- *           l_int32     pixcmapWriteStream()
- *           l_int32     pixcmapWriteMem()
+ *           int32_t     pixcmapRead()
+ *           int32_t     pixcmapReadStream()
+ *           int32_t     pixcmapReadMem()
+ *           int32_t     pixcmapWrite()
+ *           int32_t     pixcmapWriteStream()
+ *           int32_t     pixcmapWriteMem()
  *
  *      Extract colormap arrays and serialization
- *           l_int32     pixcmapToArrays()
- *           l_int32     pixcmapToRGBTable()
- *           l_int32     pixcmapSerializeToMemory()
+ *           int32_t     pixcmapToArrays()
+ *           int32_t     pixcmapToRGBTable()
+ *           int32_t     pixcmapSerializeToMemory()
  *           PIXCMAP    *pixcmapDeserializeFromMemory()
  *           char       *pixcmapConvertToHex()
  *
  *      Colormap transforms
- *           l_int32     pixcmapGammaTRC()
- *           l_int32     pixcmapContrastTRC()
- *           l_int32     pixcmapShiftIntensity()
- *           l_int32     pixcmapShiftByComponent()
+ *           int32_t     pixcmapGammaTRC()
+ *           int32_t     pixcmapContrastTRC()
+ *           int32_t     pixcmapShiftIntensity()
+ *           int32_t     pixcmapShiftByComponent()
  *
  *  Note:
  *      (1) colormaps in leptonica have a maximum of 256 entries.
@@ -123,7 +123,7 @@
  * \return  cmap, or NULL on error
  */
 PIXCMAP *
-pixcmapCreate(l_int32  depth)
+pixcmapCreate(int32_t  depth)
 {
 RGBA_QUAD  *cta;
 PIXCMAP    *cmap;
@@ -168,12 +168,12 @@ PIXCMAP    *cmap;
  * </pre>
  */
 PIXCMAP *
-pixcmapCreateRandom(l_int32  depth,
-                    l_int32  hasblack,
-                    l_int32  haswhite)
+pixcmapCreateRandom(int32_t  depth,
+                    int32_t  hasblack,
+                    int32_t  haswhite)
 {
-l_int32   ncolors, i;
-l_int32   red[256], green[256], blue[256];
+int32_t   ncolors, i;
+int32_t   red[256], green[256], blue[256];
 PIXCMAP  *cmap;
 
     if (depth != 2 && depth != 4 && depth != 8)
@@ -186,9 +186,9 @@ PIXCMAP  *cmap;
     if (hasblack)  /* first color is optionally black */
         pixcmapAddColor(cmap, 0, 0, 0);
     for (i = hasblack; i < ncolors - haswhite; i++) {
-        red[i] = (l_uint32)rand() & 0xff;
-        green[i] = (l_uint32)rand() & 0xff;
-        blue[i] = (l_uint32)rand() & 0xff;
+        red[i] = (uint32_t)rand() & 0xff;
+        green[i] = (uint32_t)rand() & 0xff;
+        blue[i] = (uint32_t)rand() & 0xff;
         pixcmapAddColor(cmap, red[i], green[i], blue[i]);
     }
     if (haswhite)  /* last color is optionally white */
@@ -212,10 +212,10 @@ PIXCMAP  *cmap;
  * </pre>
  */
 PIXCMAP *
-pixcmapCreateLinear(l_int32  d,
-                    l_int32  nlevels)
+pixcmapCreateLinear(int32_t  d,
+                    int32_t  nlevels)
 {
-l_int32   maxlevels, i, val;
+int32_t   maxlevels, i, val;
 PIXCMAP  *cmap;
 
     if (d != 1 && d != 2 && d !=4 && d != 8)
@@ -242,7 +242,7 @@ PIXCMAP  *cmap;
 PIXCMAP *
 pixcmapCopy(const PIXCMAP  *cmaps)
 {
-l_int32   nbytes, valid;
+int32_t   nbytes, valid;
 PIXCMAP  *cmapd;
 
     if (!cmaps)
@@ -307,9 +307,9 @@ PIXCMAP  *cmap;
 l_ok
 pixcmapIsValid(const PIXCMAP  *cmap,
                PIX            *pix,
-               l_int32        *pvalid)
+               int32_t        *pvalid)
 {
-l_int32  d, depth, nalloc, maxindex, maxcolors;
+int32_t  d, depth, nalloc, maxindex, maxcolors;
 
     if (!pvalid)
         return ERROR_INT("&valid not defined", __func__, 1);
@@ -401,9 +401,9 @@ l_int32  d, depth, nalloc, maxindex, maxcolors;
  */
 l_ok
 pixcmapAddColor(PIXCMAP  *cmap,
-                l_int32   rval,
-                l_int32   gval,
-                l_int32   bval)
+                int32_t   rval,
+                int32_t   gval,
+                int32_t   bval)
 {
 RGBA_QUAD  *cta;
 
@@ -437,10 +437,10 @@ RGBA_QUAD  *cta;
  */
 l_ok
 pixcmapAddRGBA(PIXCMAP  *cmap,
-               l_int32   rval,
-               l_int32   gval,
-               l_int32   bval,
-               l_int32   aval)
+               int32_t   rval,
+               int32_t   gval,
+               int32_t   bval,
+               int32_t   aval)
 {
 RGBA_QUAD  *cta;
 
@@ -479,10 +479,10 @@ RGBA_QUAD  *cta;
  */
 l_ok
 pixcmapAddNewColor(PIXCMAP  *cmap,
-                   l_int32   rval,
-                   l_int32   gval,
-                   l_int32   bval,
-                   l_int32  *pindex)
+                   int32_t   rval,
+                   int32_t   gval,
+                   int32_t   bval,
+                   int32_t  *pindex)
 {
     if (!pindex)
         return ERROR_INT("&index not defined", __func__, 1);
@@ -526,10 +526,10 @@ pixcmapAddNewColor(PIXCMAP  *cmap,
  */
 l_ok
 pixcmapAddNearestColor(PIXCMAP  *cmap,
-                       l_int32   rval,
-                       l_int32   gval,
-                       l_int32   bval,
-                       l_int32  *pindex)
+                       int32_t   rval,
+                       int32_t   gval,
+                       int32_t   bval,
+                       int32_t  *pindex)
 {
     if (!pindex)
         return ERROR_INT("&index not defined", __func__, 1);
@@ -571,12 +571,12 @@ pixcmapAddNearestColor(PIXCMAP  *cmap,
  */
 l_ok
 pixcmapUsableColor(PIXCMAP  *cmap,
-                   l_int32   rval,
-                   l_int32   gval,
-                   l_int32   bval,
-                   l_int32  *pusable)
+                   int32_t   rval,
+                   int32_t   gval,
+                   int32_t   bval,
+                   int32_t  *pusable)
 {
-l_int32  index;
+int32_t  index;
 
     if (!pusable)
         return ERROR_INT("&usable not defined", __func__, 1);
@@ -616,10 +616,10 @@ l_int32  index;
  */
 l_ok
 pixcmapAddBlackOrWhite(PIXCMAP  *cmap,
-                       l_int32   color,
-                       l_int32  *pindex)
+                       int32_t   color,
+                       int32_t  *pindex)
 {
-l_int32  index;
+int32_t  index;
 
     if (pindex) *pindex = 0;
     if (!cmap)
@@ -653,10 +653,10 @@ l_int32  index;
  */
 l_ok
 pixcmapSetBlackAndWhite(PIXCMAP  *cmap,
-                        l_int32   setblack,
-                        l_int32   setwhite)
+                        int32_t   setblack,
+                        int32_t   setwhite)
 {
-l_int32  index;
+int32_t  index;
 
     if (!cmap)
         return ERROR_INT("cmap not defined", __func__, 1);
@@ -679,7 +679,7 @@ l_int32  index;
  * \param[in]    cmap
  * \return  count, or 0 on error
  */
-l_int32
+int32_t
 pixcmapGetCount(const PIXCMAP  *cmap)
 {
     if (!cmap)
@@ -694,7 +694,7 @@ pixcmapGetCount(const PIXCMAP  *cmap)
  * \param[in]    cmap
  * \return  free entries, or 0 on error
  */
-l_int32
+int32_t
 pixcmapGetFreeCount(PIXCMAP  *cmap)
 {
     if (!cmap)
@@ -709,7 +709,7 @@ pixcmapGetFreeCount(PIXCMAP  *cmap)
  * \param[in]    cmap
  * \return  depth, or 0 on error
  */
-l_int32
+int32_t
 pixcmapGetDepth(PIXCMAP  *cmap)
 {
     if (!cmap)
@@ -732,9 +732,9 @@ pixcmapGetDepth(PIXCMAP  *cmap)
  */
 l_ok
 pixcmapGetMinDepth(PIXCMAP  *cmap,
-                   l_int32  *pmindepth)
+                   int32_t  *pmindepth)
 {
-l_int32  ncolors;
+int32_t  ncolors;
 
     if (!pmindepth)
         return ERROR_INT("&mindepth not defined", __func__, 1);
@@ -787,10 +787,10 @@ pixcmapClear(PIXCMAP  *cmap)
  */
 l_ok
 pixcmapGetColor(PIXCMAP  *cmap,
-                l_int32   index,
-                l_int32  *prval,
-                l_int32  *pgval,
-                l_int32  *pbval)
+                int32_t   index,
+                int32_t  *prval,
+                int32_t  *pgval,
+                int32_t  *pbval)
 {
 RGBA_QUAD  *cta;
 
@@ -825,10 +825,10 @@ RGBA_QUAD  *cta;
  */
 l_ok
 pixcmapGetColor32(PIXCMAP   *cmap,
-                  l_int32    index,
-                  l_uint32  *pval32)
+                  int32_t    index,
+                  uint32_t  *pval32)
 {
-l_int32  rval, gval, bval;
+int32_t  rval, gval, bval;
 
     if (!pval32)
         return ERROR_INT("&val32 not defined", __func__, 1);
@@ -851,11 +851,11 @@ l_int32  rval, gval, bval;
  */
 l_ok
 pixcmapGetRGBA(PIXCMAP  *cmap,
-               l_int32   index,
-               l_int32  *prval,
-               l_int32  *pgval,
-               l_int32  *pbval,
-               l_int32  *paval)
+               int32_t   index,
+               int32_t  *prval,
+               int32_t  *pgval,
+               int32_t  *pbval,
+               int32_t  *paval)
 {
 RGBA_QUAD  *cta;
 
@@ -887,10 +887,10 @@ RGBA_QUAD  *cta;
  */
 l_ok
 pixcmapGetRGBA32(PIXCMAP   *cmap,
-                 l_int32    index,
-                 l_uint32  *pval32)
+                 int32_t    index,
+                 uint32_t  *pval32)
 {
-l_int32  rval, gval, bval, aval;
+int32_t  rval, gval, bval, aval;
 
     if (!pval32)
         return ERROR_INT("&val32 not defined", __func__, 1);
@@ -921,10 +921,10 @@ l_int32  rval, gval, bval, aval;
  */
 l_ok
 pixcmapResetColor(PIXCMAP  *cmap,
-                  l_int32   index,
-                  l_int32   rval,
-                  l_int32   gval,
-                  l_int32   bval)
+                  int32_t   index,
+                  int32_t   rval,
+                  int32_t   gval,
+                  int32_t   bval)
 {
 RGBA_QUAD  *cta;
 
@@ -960,8 +960,8 @@ RGBA_QUAD  *cta;
  */
 l_ok
 pixcmapSetAlpha(PIXCMAP  *cmap,
-                l_int32   index,
-                l_int32   aval)
+                int32_t   index,
+                int32_t   aval)
 {
 RGBA_QUAD  *cta;
 
@@ -985,14 +985,14 @@ RGBA_QUAD  *cta;
  * \param[out]   pindex             value of index found
  * \return  0 if found, 1 if not found caller must check
  */
-l_int32
+int32_t
 pixcmapGetIndex(PIXCMAP  *cmap,
-                l_int32   rval,
-                l_int32   gval,
-                l_int32   bval,
-                l_int32  *pindex)
+                int32_t   rval,
+                int32_t   gval,
+                int32_t   bval,
+                int32_t  *pindex)
 {
-l_int32     n, i;
+int32_t     n, i;
 RGBA_QUAD  *cta;
 
     if (!pindex)
@@ -1024,10 +1024,10 @@ RGBA_QUAD  *cta;
  */
 l_ok
 pixcmapHasColor(PIXCMAP  *cmap,
-                l_int32  *pcolor)
+                int32_t  *pcolor)
 {
-l_int32   n, i;
-l_int32  *rmap, *gmap, *bmap;
+int32_t   n, i;
+int32_t  *rmap, *gmap, *bmap;
 
     if (!pcolor)
         return ERROR_INT("&color not defined", __func__, 1);
@@ -1061,9 +1061,9 @@ l_int32  *rmap, *gmap, *bmap;
  */
 l_ok
 pixcmapIsOpaque(PIXCMAP  *cmap,
-                l_int32  *popaque)
+                int32_t  *popaque)
 {
-l_int32     i, n;
+int32_t     i, n;
 RGBA_QUAD  *cta;
 
     if (!popaque)
@@ -1118,11 +1118,11 @@ RGBA_QUAD  *cta;
  */
 l_ok
 pixcmapNonOpaqueColorsInfo(PIXCMAP  *cmap,
-                           l_int32  *pntrans,
-                           l_int32  *pmax_trans,
-                           l_int32  *pmin_opaque)
+                           int32_t  *pntrans,
+                           int32_t  *pmax_trans,
+                           int32_t  *pmin_opaque)
 {
-l_int32     i, n, ntrans, max_trans, min_opaque, opaque_found;
+int32_t     i, n, ntrans, max_trans, min_opaque, opaque_found;
 RGBA_QUAD  *cta;
 
     if (pntrans) *pntrans = 0;
@@ -1163,9 +1163,9 @@ RGBA_QUAD  *cta;
  */
 l_ok
 pixcmapIsBlackAndWhite(PIXCMAP  *cmap,
-                       l_int32  *pblackwhite)
+                       int32_t  *pblackwhite)
 {
-l_int32     val0, val1, hascolor;
+int32_t     val0, val1, hascolor;
 RGBA_QUAD  *cta;
 
     if (!pblackwhite)
@@ -1202,10 +1202,10 @@ RGBA_QUAD  *cta;
  */
 l_ok
 pixcmapCountGrayColors(PIXCMAP  *cmap,
-                       l_int32  *pngray)
+                       int32_t  *pngray)
 {
-l_int32   n, i, rval, gval, bval, count;
-l_int32  *array;
+int32_t   n, i, rval, gval, bval, count;
+int32_t  *array;
 
     if (!pngray)
         return ERROR_INT("&ngray not defined", __func__, 1);
@@ -1213,7 +1213,7 @@ l_int32  *array;
     if (!cmap)
         return ERROR_INT("cmap not defined", __func__, 1);
 
-    array = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
+    array = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
     n = pixcmapGetCount(cmap);
     count = 0;
     for (i = 0; i < n; i++) {
@@ -1242,9 +1242,9 @@ l_int32  *array;
 l_ok
 pixcmapGetRankIntensity(PIXCMAP    *cmap,
                         l_float32   rankval,
-                        l_int32    *pindex)
+                        int32_t    *pindex)
 {
-l_int32  n, i, rval, gval, bval, rankindex;
+int32_t  n, i, rval, gval, bval, rankindex;
 NUMA    *na, *nasort;
 
     if (!pindex)
@@ -1262,7 +1262,7 @@ NUMA    *na, *nasort;
         numaAddNumber(na, rval + gval + bval);
     }
     nasort = numaGetSortIndex(na, L_SORT_INCREASING);
-    rankindex = (l_int32)(rankval * (n - 1) + 0.5);
+    rankindex = (int32_t)(rankval * (n - 1) + 0.5);
     numaGetIValue(nasort, rankindex, pindex);
 
     numaDestroy(&na);
@@ -1290,12 +1290,12 @@ NUMA    *na, *nasort;
  */
 l_ok
 pixcmapGetNearestIndex(PIXCMAP  *cmap,
-                       l_int32   rval,
-                       l_int32   gval,
-                       l_int32   bval,
-                       l_int32  *pindex)
+                       int32_t   rval,
+                       int32_t   gval,
+                       int32_t   bval,
+                       int32_t  *pindex)
 {
-l_int32     i, n, delta, dist, mindist;
+int32_t     i, n, delta, dist, mindist;
 RGBA_QUAD  *cta;
 
     if (!pindex)
@@ -1346,10 +1346,10 @@ RGBA_QUAD  *cta;
  */
 l_ok
 pixcmapGetNearestGrayIndex(PIXCMAP  *cmap,
-                           l_int32   val,
-                           l_int32  *pindex)
+                           int32_t   val,
+                           int32_t  *pindex)
 {
-l_int32     i, n, dist, mindist;
+int32_t     i, n, dist, mindist;
 RGBA_QUAD  *cta;
 
     if (!pindex)
@@ -1397,13 +1397,13 @@ RGBA_QUAD  *cta;
  */
 l_ok
 pixcmapGetDistanceToColor(PIXCMAP  *cmap,
-                          l_int32   index,
-                          l_int32   rval,
-                          l_int32   gval,
-                          l_int32   bval,
-                          l_int32  *pdist)
+                          int32_t   index,
+                          int32_t   rval,
+                          int32_t   gval,
+                          int32_t   bval,
+                          int32_t  *pdist)
 {
-l_int32     n, delta, dist;
+int32_t     n, delta, dist;
 RGBA_QUAD  *cta;
 
     if (!pdist)
@@ -1451,13 +1451,13 @@ RGBA_QUAD  *cta;
  */
 l_ok
 pixcmapGetRangeValues(PIXCMAP  *cmap,
-                      l_int32   select,
-                      l_int32  *pminval,
-                      l_int32  *pmaxval,
-                      l_int32  *pminindex,
-                      l_int32  *pmaxindex)
+                      int32_t   select,
+                      int32_t  *pminval,
+                      int32_t  *pmaxval,
+                      int32_t  *pminindex,
+                      int32_t  *pmaxindex)
 {
-l_int32  i, n, imin, imax, minval, maxval, rval, gval, bval, aveval;
+int32_t  i, n, imin, imax, minval, maxval, rval, gval, bval, aveval;
 
     if (pminval) *pminval = UNDEF;
     if (pmaxval) *pmaxval = UNDEF;
@@ -1544,19 +1544,19 @@ l_int32  i, n, imin, imax, minval, maxval, rval, gval, bval, aveval;
 PIXCMAP *
 pixcmapGrayToFalseColor(l_float32 gamma)
 {
-l_int32    i, rval, gval, bval;
-l_int32   *curve;
+int32_t    i, rval, gval, bval;
+int32_t   *curve;
 l_float32  invgamma, x;
 PIXCMAP   *cmap;
 
     if (gamma <= 0.0) gamma = 1.0;
 
         /* Generate curve for transition part of color map */
-    curve = (l_int32 *)LEPT_CALLOC(64, sizeof(l_int32));
+    curve = (int32_t *)LEPT_CALLOC(64, sizeof(int32_t));
     invgamma = 1. / gamma;
     for (i = 0; i < 64; i++) {
         x = (l_float32)i / 64.;
-        curve[i] = (l_int32)(255. * powf(x, invgamma) + 0.5);
+        curve[i] = (int32_t)(255. * powf(x, invgamma) + 0.5);
     }
 
     cmap = pixcmapCreate(8);
@@ -1606,9 +1606,9 @@ PIXCMAP   *cmap;
  * </pre>
  */
 PIXCMAP *
-pixcmapGrayToColor(l_uint32  color)
+pixcmapGrayToColor(uint32_t  color)
 {
-l_int32   i, rval, gval, bval;
+int32_t   i, rval, gval, bval;
 PIXCMAP  *cmap;
 
     extractRGBValues(color, &rval, &gval, &bval);
@@ -1643,7 +1643,7 @@ pixcmapColorToGray(PIXCMAP   *cmaps,
                    l_float32  gwt,
                    l_float32  bwt)
 {
-l_int32    i, n, rval, gval, bval, val;
+int32_t    i, n, rval, gval, bval, val;
 l_float32  sum;
 PIXCMAP   *cmapd;
 
@@ -1672,7 +1672,7 @@ PIXCMAP   *cmapd;
     n = pixcmapGetCount(cmapd);
     for (i = 0; i < n; i++) {
         pixcmapGetColor(cmapd, i, &rval, &gval, &bval);
-        val = (l_int32)(rwt * rval + gwt * gval + bwt * bval + 0.5);
+        val = (int32_t)(rwt * rval + gwt * gval + bwt * bval + 0.5);
         pixcmapResetColor(cmapd, i, val, val, val);
     }
 
@@ -1695,7 +1695,7 @@ PIXCMAP   *cmapd;
 PIXCMAP *
 pixcmapConvertTo4(PIXCMAP  *cmaps)
 {
-l_int32   i, n, rval, gval, bval;
+int32_t   i, n, rval, gval, bval;
 PIXCMAP  *cmapd;
 
     if (!cmaps)
@@ -1728,7 +1728,7 @@ PIXCMAP  *cmapd;
 PIXCMAP *
 pixcmapConvertTo8(PIXCMAP  *cmaps)
 {
-l_int32   i, n, depth, rval, gval, bval;
+int32_t   i, n, depth, rval, gval, bval;
 PIXCMAP  *cmapd;
 
     if (!cmaps)
@@ -1785,8 +1785,8 @@ PIXCMAP  *cmap;
 PIXCMAP *
 pixcmapReadStream(FILE  *fp)
 {
-l_int32   rval, gval, bval, aval, ignore;
-l_int32   i, index, ret, depth, ncolors;
+int32_t   rval, gval, bval, aval, ignore;
+int32_t   i, index, ret, depth, ncolors;
 PIXCMAP  *cmap;
 
     if (!fp)
@@ -1823,7 +1823,7 @@ PIXCMAP  *cmap;
  * \return  cmap, or NULL on error
  */
 PIXCMAP *
-pixcmapReadMem(const l_uint8  *data,
+pixcmapReadMem(const uint8_t  *data,
                size_t          size)
 {
 FILE     *fp;
@@ -1852,7 +1852,7 @@ l_ok
 pixcmapWrite(const char     *filename,
              const PIXCMAP  *cmap)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (!filename)
@@ -1882,8 +1882,8 @@ l_ok
 pixcmapWriteStream(FILE           *fp,
                    const PIXCMAP  *cmap)
 {
-l_int32  *rmap, *gmap, *bmap, *amap;
-l_int32   i;
+int32_t  *rmap, *gmap, *bmap, *amap;
+int32_t   i;
 
     if (!fp)
         return ERROR_INT("stream not defined", __func__, 1);
@@ -1923,11 +1923,11 @@ l_int32   i;
  * </pre>
  */
 l_ok
-pixcmapWriteMem(l_uint8        **pdata,
+pixcmapWriteMem(uint8_t        **pdata,
                 size_t         *psize,
                 const PIXCMAP  *cmap)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (pdata) *pdata = NULL;
@@ -1979,13 +1979,13 @@ FILE    *fp;
  */
 l_ok
 pixcmapToArrays(const PIXCMAP  *cmap,
-                l_int32       **prmap,
-                l_int32       **pgmap,
-                l_int32       **pbmap,
-                l_int32       **pamap)
+                int32_t       **prmap,
+                int32_t       **pgmap,
+                int32_t       **pbmap,
+                int32_t       **pamap)
 {
-l_int32    *rmap, *gmap, *bmap, *amap;
-l_int32     i, ncolors;
+int32_t    *rmap, *gmap, *bmap, *amap;
+int32_t     i, ncolors;
 RGBA_QUAD  *cta;
 
     if (!prmap || !pgmap || !pbmap)
@@ -1996,14 +1996,14 @@ RGBA_QUAD  *cta;
         return ERROR_INT("cmap not defined", __func__, 1);
 
     ncolors = pixcmapGetCount(cmap);
-    rmap = (l_int32 *)LEPT_CALLOC(ncolors, sizeof(l_int32));
-    gmap = (l_int32 *)LEPT_CALLOC(ncolors, sizeof(l_int32));
-    bmap = (l_int32 *)LEPT_CALLOC(ncolors, sizeof(l_int32));
+    rmap = (int32_t *)LEPT_CALLOC(ncolors, sizeof(int32_t));
+    gmap = (int32_t *)LEPT_CALLOC(ncolors, sizeof(int32_t));
+    bmap = (int32_t *)LEPT_CALLOC(ncolors, sizeof(int32_t));
     *prmap = rmap;
     *pgmap = gmap;
     *pbmap = bmap;
     if (pamap) {
-        amap = (l_int32 *)LEPT_CALLOC(ncolors, sizeof(l_int32));
+        amap = (int32_t *)LEPT_CALLOC(ncolors, sizeof(int32_t));
         *pamap = amap;
     }
 
@@ -2030,11 +2030,11 @@ RGBA_QUAD  *cta;
  */
 l_ok
 pixcmapToRGBTable(PIXCMAP    *cmap,
-                  l_uint32  **ptab,
-                  l_int32    *pncolors)
+                  uint32_t  **ptab,
+                  int32_t    *pncolors)
 {
-l_int32    i, ncolors, rval, gval, bval, aval;
-l_uint32  *tab;
+int32_t    i, ncolors, rval, gval, bval, aval;
+uint32_t  *tab;
 
     if (!ptab)
         return ERROR_INT("&tab not defined", __func__, 1);
@@ -2044,7 +2044,7 @@ l_uint32  *tab;
 
     ncolors = pixcmapGetCount(cmap);
     if (pncolors) *pncolors = ncolors;
-    tab = (l_uint32 *)LEPT_CALLOC(ncolors, sizeof(l_uint32));
+    tab = (uint32_t *)LEPT_CALLOC(ncolors, sizeof(uint32_t));
     *ptab = tab;
 
     for (i = 0; i < ncolors; i++) {
@@ -2071,12 +2071,12 @@ l_uint32  *tab;
  */
 l_ok
 pixcmapSerializeToMemory(PIXCMAP   *cmap,
-                         l_int32    cpc,
-                         l_int32   *pncolors,
-                         l_uint8  **pdata)
+                         int32_t    cpc,
+                         int32_t   *pncolors,
+                         uint8_t  **pdata)
 {
-l_int32   i, ncolors, rval, gval, bval, aval;
-l_uint8  *data;
+int32_t   i, ncolors, rval, gval, bval, aval;
+uint8_t  *data;
 
     if (!pdata)
         return ERROR_INT("&data not defined", __func__, 1);
@@ -2091,7 +2091,7 @@ l_uint8  *data;
 
     ncolors = pixcmapGetCount(cmap);
     *pncolors = ncolors;
-    data = (l_uint8 *)LEPT_CALLOC((size_t)cpc * ncolors, sizeof(l_uint8));
+    data = (uint8_t *)LEPT_CALLOC((size_t)cpc * ncolors, sizeof(uint8_t));
     *pdata = data;
 
     for (i = 0; i < ncolors; i++) {
@@ -2115,11 +2115,11 @@ l_uint8  *data;
  * \return  cmap, or NULL on error
  */
 PIXCMAP *
-pixcmapDeserializeFromMemory(l_uint8  *data,
-                             l_int32   cpc,
-                             l_int32   ncolors)
+pixcmapDeserializeFromMemory(uint8_t  *data,
+                             int32_t   cpc,
+                             int32_t   ncolors)
 {
-l_int32   i, d, rval, gval, bval, aval;
+int32_t   i, d, rval, gval, bval, aval;
 PIXCMAP  *cmap;
 
     if (!data)
@@ -2174,10 +2174,10 @@ PIXCMAP  *cmap;
  * </pre>
  */
 char *
-pixcmapConvertToHex(l_uint8 *data,
-                    l_int32  ncolors)
+pixcmapConvertToHex(uint8_t *data,
+                    int32_t  ncolors)
 {
-l_int32  i, j, hexbytes;
+int32_t  i, j, hexbytes;
 char    *hexdata = NULL;
 char     buf[4];
 
@@ -2232,10 +2232,10 @@ char     buf[4];
 l_ok
 pixcmapGammaTRC(PIXCMAP   *cmap,
                 l_float32  gamma,
-                l_int32    minval,
-                l_int32    maxval)
+                int32_t    minval,
+                int32_t    maxval)
 {
-l_int32  rval, gval, bval, trval, tgval, tbval, i, ncolors;
+int32_t  rval, gval, bval, trval, tgval, tbval, i, ncolors;
 NUMA    *nag;
 
     if (!cmap)
@@ -2286,7 +2286,7 @@ l_ok
 pixcmapContrastTRC(PIXCMAP   *cmap,
                    l_float32  factor)
 {
-l_int32  i, ncolors, rval, gval, bval, trval, tgval, tbval;
+int32_t  i, ncolors, rval, gval, bval, trval, tgval, tbval;
 NUMA    *nac;
 
     if (!cmap)
@@ -2336,7 +2336,7 @@ l_ok
 pixcmapShiftIntensity(PIXCMAP   *cmap,
                       l_float32  fraction)
 {
-l_int32  i, ncolors, rval, gval, bval;
+int32_t  i, ncolors, rval, gval, bval;
 
     if (!cmap)
         return ERROR_INT("cmap not defined", __func__, 1);
@@ -2348,14 +2348,14 @@ l_int32  i, ncolors, rval, gval, bval;
         pixcmapGetColor(cmap, i, &rval, &gval, &bval);
         if (fraction < 0.0)
             pixcmapResetColor(cmap, i,
-                              (l_int32)((1.0 + fraction) * rval),
-                              (l_int32)((1.0 + fraction) * gval),
-                              (l_int32)((1.0 + fraction) * bval));
+                              (int32_t)((1.0 + fraction) * rval),
+                              (int32_t)((1.0 + fraction) * gval),
+                              (int32_t)((1.0 + fraction) * bval));
         else
             pixcmapResetColor(cmap, i,
-                              rval + (l_int32)(fraction * (255 - rval)),
-                              gval + (l_int32)(fraction * (255 - gval)),
-                              bval + (l_int32)(fraction * (255 - bval)));
+                              rval + (int32_t)(fraction * (255 - rval)),
+                              gval + (int32_t)(fraction * (255 - gval)),
+                              bval + (int32_t)(fraction * (255 - bval)));
     }
 
     return 0;
@@ -2382,11 +2382,11 @@ l_int32  i, ncolors, rval, gval, bval;
  */
 l_ok
 pixcmapShiftByComponent(PIXCMAP  *cmap,
-                        l_uint32  srcval,
-                        l_uint32  dstval)
+                        uint32_t  srcval,
+                        uint32_t  dstval)
 {
-l_int32   i, ncolors, rval, gval, bval;
-l_uint32  newval;
+int32_t   i, ncolors, rval, gval, bval;
+uint32_t  newval;
 
     if (!cmap)
         return ERROR_INT("cmap not defined", __func__, 1);

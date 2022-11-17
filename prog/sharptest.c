@@ -44,7 +44,7 @@ int main(int    argc,
          char **argv)
 {
 PIX       *pixs, *pixd;
-l_int32    smooth;
+int32_t    smooth;
 l_float32  fract;
 char      *filein, *fileout;
 

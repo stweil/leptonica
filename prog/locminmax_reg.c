@@ -38,12 +38,12 @@
 #include <math.h>
 #include "allheaders.h"
 
-void DoLocMinmax(L_REGPARAMS *rp, PIX *pixs, l_int32 minmax, l_int32 maxmin);
+void DoLocMinmax(L_REGPARAMS *rp, PIX *pixs, int32_t minmax, int32_t maxmin);
 
 int main(int    argc,
          char **argv)
 {
-l_int32       i, j;
+int32_t       i, j;
 l_float32     f;
 PIX          *pix1, *pix2, *pix3;
 L_REGPARAMS  *rp;
@@ -58,7 +58,7 @@ L_REGPARAMS  *rp;
             f += 33.4 * cos(0.0712 * (l_float32)i);
             f += 18.6 * sin(0.0561 * (l_float32)j);
             f += 23.6 * cos(0.0327 * (l_float32)j);
-            pixSetPixel(pix1, j, i, (l_int32)f);
+            pixSetPixel(pix1, j, i, (int32_t)f);
         }
     }
     pix2 = pixRead("karen8.jpg");
@@ -74,10 +74,10 @@ L_REGPARAMS  *rp;
 void
 DoLocMinmax(L_REGPARAMS  *rp,
             PIX          *pixs,
-            l_int32       minmax,
-            l_int32       maxmin)
+            int32_t       minmax,
+            int32_t       maxmin)
 {
-l_uint32  redval, greenval;
+uint32_t  redval, greenval;
 PIX      *pix1, *pix2, *pix3, *pixd;
 PIXA     *pixa;
 

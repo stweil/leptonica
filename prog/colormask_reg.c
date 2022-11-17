@@ -41,8 +41,8 @@
 int main(int    argc,
          char **argv)
 {
-l_int32       i, j, x, y, rval, gval, bval;
-l_uint32      pixel1, pixel2;
+int32_t       i, j, x, y, rval, gval, bval;
+uint32_t      pixel1, pixel2;
 l_float32     frval, fgval, fbval;
 NUMA         *nahue, *nasat, *napk;
 PIX          *pixs, *pixhsv, *pixh, *pixg, *pixf, *pixd, *pixr;
@@ -132,7 +132,7 @@ L_REGPARAMS  *rp;
         pixaAddPix(pixa, pix1, L_INSERT);
         pixGetAverageMaskedRGB(pixr, pix1, 0, 0, 1, L_MEAN_ABSVAL,
                                &frval, &fgval, &fbval);
-        composeRGBPixel((l_int32)frval, (l_int32)fgval, (l_int32)fbval,
+        composeRGBPixel((int32_t)frval, (int32_t)fgval, (int32_t)fbval,
                         &pixel1);
         pixGetPixelAverage(pixr, pix1, 0, 0, 1, &pixel2);
         regTestCompareValues(rp, pixel1 >> 8, pixel2 >> 8, 0.0);  /* 5 - 10 */

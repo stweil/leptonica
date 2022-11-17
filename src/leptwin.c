@@ -47,7 +47,7 @@
  * This accounts for DWORD alignment by adding 31 bits,
  * then dividing by 32, then rounding up to the next highest
  * count of 4-bytes.  Then, we multiply by 4 to get the total byte count.  */
-#define BYTESPERLINE(Width, BPP) ((l_int32)((((DWORD)(Width) * (DWORD)(BPP) + 31) >> 5)) << 2)
+#define BYTESPERLINE(Width, BPP) ((int32_t)((((DWORD)(Width) * (DWORD)(BPP) + 31) >> 5)) << 2)
 
 
 /* **********************************************************************
@@ -132,7 +132,7 @@ static int
 setColormap(LPBITMAPINFO  pbmi,
             PIXCMAP      *cmap)
 {
-l_int32  i, nColors, rval, gval, bval;
+int32_t  i, nColors, rval, gval, bval;
 
     nColors = pixcmapGetCount(cmap);
     for (i = 0; i < nColors; i++) {
@@ -147,13 +147,13 @@ l_int32  i, nColors, rval, gval, bval;
 }
 
 /* **********************************************************************
-  HBITMAP DSCreateBitmapInfo(l_int32 width, l_int32 height, l_int32 depth,
+  HBITMAP DSCreateBitmapInfo(int32_t width, int32_t height, int32_t depth,
                              PIXCMAP *cmap)
 
   PARAMETERS:
-    l_int32 width - Desired width of the DIBSection
-    l_int32 height - Desired height of the DIBSection
-    l_int32 depth - Desired bit-depth of the DIBSection
+    int32_t width - Desired width of the DIBSection
+    int32_t height - Desired height of the DIBSection
+    int32_t depth - Desired bit-depth of the DIBSection
     PIXCMAP cmap - leptonica colormap for depths < 16
 
   RETURNS:
@@ -165,12 +165,12 @@ l_int32  i, nColors, rval, gval, bval;
 
 ********************************************************************** */
 static LPBITMAPINFO
-DSCreateBitmapInfo(l_int32 width,
-                   l_int32 height,
-                   l_int32 depth,
+DSCreateBitmapInfo(int32_t width,
+                   int32_t height,
+                   int32_t depth,
                    PIXCMAP *cmap)
 {
-l_int32       nInfoSize;
+int32_t       nInfoSize;
 LPBITMAPINFO  pbmi;
 LPDWORD       pMasks;
 
@@ -242,13 +242,13 @@ LPDWORD       pMasks;
 }
 
 /* **********************************************************************
-  HBITMAP DSCreateDIBSection(l_int32 width, l_int32 height, l_int32 depth,
+  HBITMAP DSCreateDIBSection(int32_t width, int32_t height, int32_t depth,
                              PIXCMAP *cmap)
 
   PARAMETERS:
-    l_int32 width - Desired width of the DIBSection
-    l_int32 height - Desired height of the DIBSection
-    l_int32 depth - Desired bit-depth of the DIBSection
+    int32_t width - Desired width of the DIBSection
+    int32_t height - Desired height of the DIBSection
+    int32_t depth - Desired bit-depth of the DIBSection
     PIXCMAP cmap - leptonica colormap for depths < 16
 
   RETURNS:
@@ -260,13 +260,13 @@ LPDWORD       pMasks;
 
 ********************************************************************** */
 static HBITMAP
-DSCreateDIBSection(l_int32  width,
-                   l_int32  height,
-                   l_int32  depth,
+DSCreateDIBSection(int32_t  width,
+                   int32_t  height,
+                   int32_t  depth,
                    PIXCMAP  *cmap)
 {
 HBITMAP       hBitmap;
-l_int32       nInfoSize;
+int32_t       nInfoSize;
 LPBITMAPINFO  pbmi;
 HDC           hRefDC;
 LPBYTE        pBits;
@@ -302,8 +302,8 @@ LPBYTE        pBits;
 HBITMAP
 pixGetWindowsHBITMAP(PIX  *pix)
 {
-l_int32    width, height, depth;
-l_uint32  *data;
+int32_t    width, height, depth;
+uint32_t  *data;
 HBITMAP    hBitmap = NULL;
 BITMAP     bm;
 DWORD      imageBitsSize;

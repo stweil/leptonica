@@ -44,50 +44,50 @@
 
 /* ----------------------------------------------------------------------*/
 
-PIX * pixReadJp2k(const char *filename, l_uint32 reduction, BOX *box,
-                  l_int32 hint, l_int32 debug)
+PIX * pixReadJp2k(const char *filename, uint32_t reduction, BOX *box,
+                  int32_t hint, int32_t debug)
 {
     return (PIX * )ERROR_PTR("function not present", __func__, NULL);
 }
 
 /* ----------------------------------------------------------------------*/
 
-PIX * pixReadStreamJp2k(FILE *fp, l_uint32 reduction, BOX *box,
-                        l_int32 hint, l_int32 debug)
+PIX * pixReadStreamJp2k(FILE *fp, uint32_t reduction, BOX *box,
+                        int32_t hint, int32_t debug)
 {
     return (PIX * )ERROR_PTR("function not present", __func__, NULL);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_ok pixWriteJp2k(const char *filename, PIX *pix, l_int32 quality,
-                  l_int32 nlevels, l_int32 hint, l_int32 debug)
+l_ok pixWriteJp2k(const char *filename, PIX *pix, int32_t quality,
+                  int32_t nlevels, int32_t hint, int32_t debug)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_ok pixWriteStreamJp2k(FILE *fp, PIX *pix, l_int32 quality,
-                        l_int32 nlevels, l_int32 codec,
-                        l_int32 hint, l_int32 debug)
+l_ok pixWriteStreamJp2k(FILE *fp, PIX *pix, int32_t quality,
+                        int32_t nlevels, int32_t codec,
+                        int32_t hint, int32_t debug)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
 
 /* ----------------------------------------------------------------------*/
 
-PIX * pixReadMemJp2k(const l_uint8 *data, size_t size, l_uint32 reduction,
-                     BOX *box, l_int32 hint, l_int32 debug)
+PIX * pixReadMemJp2k(const uint8_t *data, size_t size, uint32_t reduction,
+                     BOX *box, int32_t hint, int32_t debug)
 {
     return (PIX * )ERROR_PTR("function not present", __func__, NULL);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_ok pixWriteMemJp2k(l_uint8 **pdata, size_t *psize, PIX *pix,
-                     l_int32 quality, l_int32 nlevels, l_int32 hint,
-                     l_int32 debug)
+l_ok pixWriteMemJp2k(uint8_t **pdata, size_t *psize, PIX *pix,
+                     int32_t quality, int32_t nlevels, int32_t hint,
+                     int32_t debug)
 {
     return ERROR_INT("function not present", __func__, 1);
 }

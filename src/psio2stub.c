@@ -49,7 +49,7 @@ l_ok pixWritePSEmbed(const char *filein, const char *fileout)
 
 /* ----------------------------------------------------------------------*/
 
-l_ok pixWriteStreamPS(FILE *fp, PIX *pix, BOX *box, l_int32 res,
+l_ok pixWriteStreamPS(FILE *fp, PIX *pix, BOX *box, int32_t res,
                          l_float32 scale)
 {
     return ERROR_INT("function not present", __func__, 1);
@@ -57,17 +57,17 @@ l_ok pixWriteStreamPS(FILE *fp, PIX *pix, BOX *box, l_int32 res,
 
 /* ----------------------------------------------------------------------*/
 
-char * pixWriteStringPS(PIX *pixs, BOX *box, l_int32 res, l_float32 scale)
+char * pixWriteStringPS(PIX *pixs, BOX *box, int32_t res, l_float32 scale)
 {
     return (char *)ERROR_PTR("function not present", __func__, NULL);
 }
 
 /* ----------------------------------------------------------------------*/
 
-char * generateUncompressedPS(char *hexdata, l_int32 w, l_int32 h, l_int32 d,
-                              l_int32 psbpl, l_int32 bps, l_float32 xpt,
+char * generateUncompressedPS(char *hexdata, int32_t w, int32_t h, int32_t d,
+                              int32_t psbpl, int32_t bps, l_float32 xpt,
                               l_float32 ypt, l_float32 wpt, l_float32 hpt,
-                              l_int32 boxflag)
+                              int32_t boxflag)
 {
     return (char *)ERROR_PTR("function not present", __func__, NULL);
 }
@@ -82,9 +82,9 @@ l_ok convertJpegToPSEmbed(const char *filein, const char *fileout)
 /* ----------------------------------------------------------------------*/
 
 l_ok convertJpegToPS(const char *filein, const char *fileout,
-                     const char *operation, l_int32 x, l_int32 y,
-                     l_int32 res, l_float32 scale, l_int32 pageno,
-                     l_int32 endpage)
+                     const char *operation, int32_t x, int32_t y,
+                     int32_t res, l_float32 scale, int32_t pageno,
+                     int32_t endpage)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
@@ -99,9 +99,9 @@ l_ok convertG4ToPSEmbed(const char *filein, const char *fileout)
 /* ----------------------------------------------------------------------*/
 
 l_ok convertG4ToPS(const char *filein, const char *fileout,
-                   const char *operation, l_int32 x, l_int32 y,
-                   l_int32 res, l_float32 scale, l_int32 pageno,
-                   l_int32 maskflag, l_int32 endpage)
+                   const char *operation, int32_t x, int32_t y,
+                   int32_t res, l_float32 scale, int32_t pageno,
+                   int32_t maskflag, int32_t endpage)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
@@ -124,31 +124,31 @@ l_ok convertFlateToPSEmbed(const char *filein, const char *fileout)
 /* ----------------------------------------------------------------------*/
 
 l_ok convertFlateToPS(const char *filein, const char *fileout,
-                      const char *operation, l_int32 x, l_int32 y,
-                      l_int32 res, l_float32 scale, l_int32 pageno,
-                      l_int32 endpage)
+                      const char *operation, int32_t x, int32_t y,
+                      int32_t res, l_float32 scale, int32_t pageno,
+                      int32_t endpage)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_ok pixWriteMemPS(l_uint8 **pdata, size_t *psize, PIX *pix, BOX *box,
-                   l_int32 res, l_float32 scale)
+l_ok pixWriteMemPS(uint8_t **pdata, size_t *psize, PIX *pix, BOX *box,
+                   int32_t res, l_float32 scale)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_int32 getResLetterPage(l_int32 w, l_int32 h, l_float32 fillfract)
+int32_t getResLetterPage(int32_t w, int32_t h, l_float32 fillfract)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
 
 /* ----------------------------------------------------------------------*/
 
-void l_psWriteBoundingBox(l_int32 flag)
+void l_psWriteBoundingBox(int32_t flag)
 {
     L_ERROR("function not present\n", __func__);
     return;

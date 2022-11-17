@@ -30,11 +30,11 @@
  *
  *        PIXTILING       *pixTilingCreate()
  *        void            *pixTilingDestroy()
- *        l_int32          pixTilingGetCount()
- *        l_int32          pixTilingGetSize()
+ *        int32_t          pixTilingGetCount()
+ *        int32_t          pixTilingGetSize()
  *        PIX             *pixTilingGetTile()
- *        l_int32          pixTilingNoStripOnPaint()
- *        l_int32          pixTilingPaintTile()
+ *        int32_t          pixTilingNoStripOnPaint()
+ *        int32_t          pixTilingPaintTile()
  *
  *   This provides a simple way to split an image into tiles
  *   and to perform operations independently on each tile.
@@ -122,14 +122,14 @@
  */
 PIXTILING *
 pixTilingCreate(PIX     *pixs,
-                l_int32  nx,
-                l_int32  ny,
-                l_int32  w,
-                l_int32  h,
-                l_int32  xoverlap,
-                l_int32  yoverlap)
+                int32_t  nx,
+                int32_t  ny,
+                int32_t  w,
+                int32_t  h,
+                int32_t  xoverlap,
+                int32_t  yoverlap)
 {
-l_int32     width, height;
+int32_t     width, height;
 PIXTILING  *pt;
 
     if (!pixs)
@@ -203,8 +203,8 @@ PIXTILING  *pt;
  */
 l_ok
 pixTilingGetCount(PIXTILING  *pt,
-                  l_int32    *pnx,
-                  l_int32    *pny)
+                  int32_t    *pnx,
+                  int32_t    *pny)
 {
     if (!pt)
         return ERROR_INT("pt not defined", __func__, 1);
@@ -224,8 +224,8 @@ pixTilingGetCount(PIXTILING  *pt,
  */
 l_ok
 pixTilingGetSize(PIXTILING  *pt,
-                 l_int32    *pw,
-                 l_int32    *ph)
+                 int32_t    *pw,
+                 int32_t    *ph)
 {
     if (!pt)
         return ERROR_INT("pt not defined", __func__, 1);
@@ -246,12 +246,12 @@ pixTilingGetSize(PIXTILING  *pt,
  */
 PIX *
 pixTilingGetTile(PIXTILING  *pt,
-                 l_int32     i,
-                 l_int32     j)
+                 int32_t     i,
+                 int32_t     j)
 {
-l_int32  wpix, hpix, wt, ht, nx, ny;
-l_int32  xoverlap, yoverlap, wtlast, htlast;
-l_int32  left, top, xtraleft, xtraright, xtratop, xtrabot, width, height;
+int32_t  wpix, hpix, wt, ht, nx, ny;
+int32_t  xoverlap, yoverlap, wtlast, htlast;
+int32_t  left, top, xtraleft, xtraright, xtratop, xtrabot, width, height;
 BOX     *box;
 PIX     *pixs, *pixt, *pixd;
 
@@ -377,12 +377,12 @@ pixTilingNoStripOnPaint(PIXTILING  *pt)
  */
 l_ok
 pixTilingPaintTile(PIX        *pixd,
-                   l_int32     i,
-                   l_int32     j,
+                   int32_t     i,
+                   int32_t     j,
                    PIX        *pixs,
                    PIXTILING  *pt)
 {
-l_int32  w, h;
+int32_t  w, h;
 
     if (!pixd)
         return ERROR_INT("pixd not defined", __func__, 1);

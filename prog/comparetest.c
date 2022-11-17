@@ -61,7 +61,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32    type, comptype, d1, d2, same, first, last;
+int32_t    type, comptype, d1, d2, same, first, last;
 l_float32  fract, diff, rmsdiff;
 char      *filein1, *filein2, *fileout;
 GPLOT     *gplot;

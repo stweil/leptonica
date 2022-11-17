@@ -39,16 +39,16 @@
 
 #include "allheaders.h"
 
-static const l_int32  MAX_SEL_SIZE = 120;
+static const int32_t  MAX_SEL_SIZE = 120;
 
-static void writeResult(const char *sequence, l_int32 same);
+static void writeResult(const char *sequence, int32_t same);
 
 
 int main(int    argc,
          char **argv)
 {
 char     buffer1[256], buffer2[256];
-l_int32  i, same, same2, factor1, factor2, diff, success;
+int32_t  i, same, same2, factor1, factor2, diff, success;
 PIX     *pixs, *pixsd, *pixt1, *pixt2, *pixt3;
 
     if (argc != 1)
@@ -170,7 +170,7 @@ PIX     *pixs, *pixsd, *pixt1, *pixt2, *pixt3;
 
 
 static void writeResult(const char *sequence,
-                        l_int32 same)
+                        int32_t same)
 {
     if (same)
         lept_stderr("Sequence %s: SUCCESS\n", sequence);

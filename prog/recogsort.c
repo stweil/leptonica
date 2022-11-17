@@ -36,11 +36,11 @@
 #include "allheaders.h"
 
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
 char     *boxatxt;
-l_int32   i;
+int32_t   i;
 BOXA     *boxa1, *boxa2, *boxa3;
 BOXAA    *baa, *baa1;
 NUMAA    *naa1;
@@ -67,7 +67,7 @@ SARRAY   *sa1;
     pix1 = pixRead("recog/sets/samples06.png");
     boxatxt = pixGetText(pix1);
     lept_stderr("%s\n", boxatxt);
-    boxa1 = boxaReadMem((l_uint8 *)boxatxt, strlen(boxatxt));
+    boxa1 = boxaReadMem((uint8_t *)boxatxt, strlen(boxatxt));
     pixa1 = pixaCreateFromBoxa(pix1, boxa1, 0, 0, NULL);
     pixDestroy(&pix1);  /* destroys boxa1 */
 

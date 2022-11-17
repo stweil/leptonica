@@ -43,48 +43,48 @@
  *          PTA        *generatePtaFilledCircle()
  *          PTA        *generatePtaFilledSquare()
  *          PTA        *generatePtaLineFromPt()
- *          l_int32     locatePtRadially()
+ *          int32_t     locatePtRadially()
  *
  *      Rendering function plots directly on images
- *          l_int32     pixRenderPlotFromNuma()
- *          l_int32     pixRenderPlotFromNumaGen()
+ *          int32_t     pixRenderPlotFromNuma()
+ *          int32_t     pixRenderPlotFromNumaGen()
  *          PTA        *makePlotPtaFromNuma()
  *          PTA        *makePlotPtaFromNumaGen()
  *
  *      Pta rendering
- *          l_int32     pixRenderPta()
- *          l_int32     pixRenderPtaArb()
- *          l_int32     pixRenderPtaBlend()
+ *          int32_t     pixRenderPta()
+ *          int32_t     pixRenderPtaArb()
+ *          int32_t     pixRenderPtaBlend()
  *
  *      Rendering of arbitrary shapes built with lines
- *          l_int32     pixRenderLine()
- *          l_int32     pixRenderLineArb()
- *          l_int32     pixRenderLineBlend()
+ *          int32_t     pixRenderLine()
+ *          int32_t     pixRenderLineArb()
+ *          int32_t     pixRenderLineBlend()
  *
- *          l_int32     pixRenderBox()
- *          l_int32     pixRenderBoxArb()
- *          l_int32     pixRenderBoxBlend()
+ *          int32_t     pixRenderBox()
+ *          int32_t     pixRenderBoxArb()
+ *          int32_t     pixRenderBoxBlend()
  *
- *          l_int32     pixRenderBoxa()
- *          l_int32     pixRenderBoxaArb()
- *          l_int32     pixRenderBoxaBlend()
+ *          int32_t     pixRenderBoxa()
+ *          int32_t     pixRenderBoxaArb()
+ *          int32_t     pixRenderBoxaBlend()
  *
- *          l_int32     pixRenderHashBox()
- *          l_int32     pixRenderHashBoxArb()
- *          l_int32     pixRenderHashBoxBlend()
- *          l_int32     pixRenderHashMaskArb()
+ *          int32_t     pixRenderHashBox()
+ *          int32_t     pixRenderHashBoxArb()
+ *          int32_t     pixRenderHashBoxBlend()
+ *          int32_t     pixRenderHashMaskArb()
  *
- *          l_int32     pixRenderHashBoxa()
- *          l_int32     pixRenderHashBoxaArb()
- *          l_int32     pixRenderHashBoxaBlend()
+ *          int32_t     pixRenderHashBoxa()
+ *          int32_t     pixRenderHashBoxaArb()
+ *          int32_t     pixRenderHashBoxaBlend()
  *
- *          l_int32     pixRenderPolyline()
- *          l_int32     pixRenderPolylineArb()
- *          l_int32     pixRenderPolylineBlend()
+ *          int32_t     pixRenderPolyline()
+ *          int32_t     pixRenderPolylineArb()
+ *          int32_t     pixRenderPolylineBlend()
  *
- *          l_int32     pixRenderGrid()
+ *          int32_t     pixRenderGrid()
  *
- *          l_int32     pixRenderRandomCmapPtaa()
+ *          int32_t     pixRenderRandomCmapPtaa()
  *
  *      Rendering and filling of polygons
  *          PIX        *pixRenderPolygon()
@@ -138,12 +138,12 @@
  * </pre>
  */
 PTA  *
-generatePtaLine(l_int32  x1,
-                l_int32  y1,
-                l_int32  x2,
-                l_int32  y2)
+generatePtaLine(int32_t  x1,
+                int32_t  y1,
+                int32_t  x2,
+                int32_t  y2)
 {
-l_int32    npts, diff, getyofx, sign, i, x, y;
+int32_t    npts, diff, getyofx, sign, i, x, y;
 l_float32  slope;
 PTA       *pta;
 
@@ -177,12 +177,12 @@ PTA       *pta;
     if (getyofx) {  /* y = y(x) */
         for (i = 0; i < npts; i++) {
             x = x1 + sign * i;
-            y = (l_int32)(y1 + (l_float32)i * slope + 0.5);
+            y = (int32_t)(y1 + (l_float32)i * slope + 0.5);
             ptaAddPt(pta, x, y);
         }
     } else {   /* x = x(y) */
         for (i = 0; i < npts; i++) {
-            x = (l_int32)(x1 + (l_float32)i * slope + 0.5);
+            x = (int32_t)(x1 + (l_float32)i * slope + 0.5);
             y = y1 + sign * i;
             ptaAddPt(pta, x, y);
         }
@@ -201,13 +201,13 @@ PTA       *pta;
  * \return  ptaj, or NULL on error
  */
 PTA  *
-generatePtaWideLine(l_int32  x1,
-                    l_int32  y1,
-                    l_int32  x2,
-                    l_int32  y2,
-                    l_int32  width)
+generatePtaWideLine(int32_t  x1,
+                    int32_t  y1,
+                    int32_t  x2,
+                    int32_t  y2,
+                    int32_t  width)
 {
-l_int32  i, x1a, x2a, y1a, y2a;
+int32_t  i, x1a, x2a, y1a, y2a;
 PTA     *pta, *ptaj;
 
     if (width < 1) {
@@ -270,9 +270,9 @@ PTA     *pta, *ptaj;
  */
 PTA  *
 generatePtaBox(BOX     *box,
-               l_int32  width)
+               int32_t  width)
 {
-l_int32  x, y, w, h;
+int32_t  x, y, w, h;
 PTA     *ptad, *pta;
 
     if (!box)
@@ -345,10 +345,10 @@ PTA     *ptad, *pta;
  */
 PTA  *
 generatePtaBoxa(BOXA    *boxa,
-                l_int32  width,
-                l_int32  removedups)
+                int32_t  width,
+                int32_t  removedups)
 {
-l_int32  i, n;
+int32_t  i, n;
 BOX     *box;
 PTA     *ptad, *ptat, *pta;
 
@@ -400,12 +400,12 @@ PTA     *ptad, *ptat, *pta;
  */
 PTA  *
 generatePtaHashBox(BOX     *box,
-                   l_int32  spacing,
-                   l_int32  width,
-                   l_int32  orient,
-                   l_int32  outline)
+                   int32_t  spacing,
+                   int32_t  width,
+                   int32_t  orient,
+                   int32_t  outline)
 {
-l_int32  bx, by, bh, bw, x, y, x1, y1, x2, y2, i, n, npts;
+int32_t  bx, by, bh, bw, x, y, x1, y1, x2, y2, i, n, npts;
 PTA     *ptad, *pta;
 
     if (!box)
@@ -447,9 +447,9 @@ PTA     *ptad, *pta;
             ptaDestroy(&pta);
         }
     } else if (orient == L_POS_SLOPE_LINE) {
-        n = 2 + (l_int32)((bw + bh) / (1.4 * spacing));
+        n = 2 + (int32_t)((bw + bh) / (1.4 * spacing));
         for (i = 0; i < n; i++) {
-            x = (l_int32)(bx + (i + 0.5) * 1.4 * spacing);
+            x = (int32_t)(bx + (i + 0.5) * 1.4 * spacing);
             boxIntersectByLine(box, x, by - 1, 1.0, &x1, &y1, &x2, &y2, &npts);
             if (npts == 2) {
                 pta = generatePtaWideLine(x1, y1, x2, y2, width);
@@ -458,9 +458,9 @@ PTA     *ptad, *pta;
             }
         }
     } else {  /* orient == L_NEG_SLOPE_LINE */
-        n = 2 + (l_int32)((bw + bh) / (1.4 * spacing));
+        n = 2 + (int32_t)((bw + bh) / (1.4 * spacing));
         for (i = 0; i < n; i++) {
-            x = (l_int32)(bx - bh + (i + 0.5) * 1.4 * spacing);
+            x = (int32_t)(bx - bh + (i + 0.5) * 1.4 * spacing);
             boxIntersectByLine(box, x, by - 1, -1.0, &x1, &y1, &x2, &y2, &npts);
             if (npts == 2) {
                 pta = generatePtaWideLine(x1, y1, x2, y2, width);
@@ -501,13 +501,13 @@ PTA     *ptad, *pta;
  */
 PTA  *
 generatePtaHashBoxa(BOXA    *boxa,
-                    l_int32  spacing,
-                    l_int32  width,
-                    l_int32  orient,
-                    l_int32  outline,
-                    l_int32  removedups)
+                    int32_t  spacing,
+                    int32_t  width,
+                    int32_t  orient,
+                    int32_t  outline,
+                    int32_t  removedups)
 {
-l_int32  i, n;
+int32_t  i, n;
 BOX     *box;
 PTA     *ptad, *ptat, *pta;
 
@@ -560,7 +560,7 @@ PTA     *ptad, *ptat, *pta;
 PTAA  *
 generatePtaaBoxa(BOXA  *boxa)
 {
-l_int32  i, n, x, y, w, h;
+int32_t  i, n, x, y, w, h;
 BOX     *box;
 PTA     *pta;
 PTAA    *ptaa;
@@ -610,12 +610,12 @@ PTAA    *ptaa;
  */
 PTAA *
 generatePtaaHashBoxa(BOXA    *boxa,
-                     l_int32  spacing,
-                     l_int32  width,
-                     l_int32  orient,
-                     l_int32  outline)
+                     int32_t  spacing,
+                     int32_t  width,
+                     int32_t  orient,
+                     int32_t  outline)
 {
-l_int32  i, n;
+int32_t  i, n;
 BOX     *box;
 PTA     *pta;
 PTAA    *ptaa;
@@ -656,11 +656,11 @@ PTAA    *ptaa;
  */
 PTA *
 generatePtaPolyline(PTA     *ptas,
-                    l_int32  width,
-                    l_int32  closeflag,
-                    l_int32  removedups)
+                    int32_t  width,
+                    int32_t  closeflag,
+                    int32_t  removedups)
 {
-l_int32  i, n, x1, y1, x2, y2;
+int32_t  i, n, x1, y1, x2, y2;
 PTA     *ptad, *ptat, *pta;
 
     if (!ptas)
@@ -711,13 +711,13 @@ PTA     *ptad, *ptat, *pta;
  * \return  ptad, or NULL on error
  */
 PTA  *
-generatePtaGrid(l_int32  w,
-                l_int32  h,
-                l_int32  nx,
-                l_int32  ny,
-                l_int32  width)
+generatePtaGrid(int32_t  w,
+                int32_t  h,
+                int32_t  nx,
+                int32_t  ny,
+                int32_t  width)
 {
-l_int32  i, j, bx, by, x1, x2, y1, y2;
+int32_t  i, j, bx, by, x1, x2, y1, y2;
 BOX     *box;
 BOXA    *boxa;
 PTA     *pta;
@@ -769,7 +769,7 @@ PTA     *pta;
 PTA *
 convertPtaLineTo4cc(PTA  *ptas)
 {
-l_int32  i, n, x, y, xp, yp;
+int32_t  i, n, x, y, xp, yp;
 PTA     *ptad;
 
     if (!ptas)
@@ -808,9 +808,9 @@ PTA     *ptad;
  * </pre>
  */
 PTA *
-generatePtaFilledCircle(l_int32  radius)
+generatePtaFilledCircle(int32_t  radius)
 {
-l_int32    x, y;
+int32_t    x, y;
 l_float32  radthresh, sqdist;
 PTA       *pta;
 
@@ -846,9 +846,9 @@ PTA       *pta;
  * </pre>
  */
 PTA *
-generatePtaFilledSquare(l_int32  side)
+generatePtaFilledSquare(int32_t  side)
 {
-l_int32  x, y;
+int32_t  x, y;
 PTA     *pta;
 
     if (side < 1)
@@ -879,15 +879,15 @@ PTA     *pta;
  * </pre>
  */
 PTA *
-generatePtaLineFromPt(l_int32    x,
-                      l_int32    y,
+generatePtaLineFromPt(int32_t    x,
+                      int32_t    y,
                       l_float64  length,
                       l_float64  radang)
 {
-l_int32  x2, y2;  /* the point at the other end of the line */
+int32_t  x2, y2;  /* the point at the other end of the line */
 
-    x2 = x + (l_int32)((length - 1.0) * cos(radang));
-    y2 = y + (l_int32)((length - 1.0) * sin(radang));
+    x2 = x + (int32_t)((length - 1.0) * cos(radang));
+    y2 = y + (int32_t)((length - 1.0) * sin(radang));
     return generatePtaLine(x, y, x2, y2);
 }
 
@@ -903,8 +903,8 @@ l_int32  x2, y2;  /* the point at the other end of the line */
  * \return  0 if OK, 1 on error
  */
 l_ok
-locatePtRadially(l_int32     xr,
-                 l_int32     yr,
+locatePtRadially(int32_t     xr,
+                 int32_t     yr,
                  l_float64   dist,
                  l_float64   radang,
                  l_float64  *px,
@@ -945,12 +945,12 @@ locatePtRadially(l_int32     xr,
 l_ok
 pixRenderPlotFromNuma(PIX     **ppix,
                       NUMA     *na,
-                      l_int32   plotloc,
-                      l_int32   linewidth,
-                      l_int32   max,
-                      l_uint32  color)
+                      int32_t   plotloc,
+                      int32_t   linewidth,
+                      int32_t   max,
+                      uint32_t  color)
 {
-l_int32  w, h, size, rval, gval, bval;
+int32_t  w, h, size, rval, gval, bval;
 PIX     *pix1;
 PTA     *pta;
 
@@ -1001,12 +1001,12 @@ PTA     *pta;
  */
 PTA *
 makePlotPtaFromNuma(NUMA    *na,
-                    l_int32  size,
-                    l_int32  plotloc,
-                    l_int32  linewidth,
-                    l_int32  max)
+                    int32_t  size,
+                    int32_t  plotloc,
+                    int32_t  linewidth,
+                    int32_t  max)
 {
-l_int32  orient, refpos;
+int32_t  orient, refpos;
 
     if (!na)
         return (PTA *)ERROR_PTR("na not defined", __func__, NULL);
@@ -1057,14 +1057,14 @@ l_int32  orient, refpos;
 l_ok
 pixRenderPlotFromNumaGen(PIX     **ppix,
                          NUMA     *na,
-                         l_int32   orient,
-                         l_int32   linewidth,
-                         l_int32   refpos,
-                         l_int32   max,
-                         l_int32   drawref,
-                         l_uint32  color)
+                         int32_t   orient,
+                         int32_t   linewidth,
+                         int32_t   refpos,
+                         int32_t   max,
+                         int32_t   drawref,
+                         uint32_t  color)
 {
-l_int32  rval, gval, bval;
+int32_t  rval, gval, bval;
 PIX     *pix1;
 PTA     *pta;
 
@@ -1120,13 +1120,13 @@ PTA     *pta;
  */
 PTA *
 makePlotPtaFromNumaGen(NUMA    *na,
-                       l_int32  orient,
-                       l_int32  linewidth,
-                       l_int32  refpos,
-                       l_int32  max,
-                       l_int32  drawref)
+                       int32_t  orient,
+                       int32_t  linewidth,
+                       int32_t  refpos,
+                       int32_t  max,
+                       int32_t  drawref)
 {
-l_int32    i, n, maxw, maxh;
+int32_t    i, n, maxw, maxh;
 l_float32  minval, maxval, absval, val, scale, start, del;
 PTA       *pta1, *pta2, *ptad;
 
@@ -1231,9 +1231,9 @@ PTA       *pta1, *pta2, *ptad;
 l_ok
 pixRenderPta(PIX     *pix,
              PTA     *pta,
-             l_int32  op)
+             int32_t  op)
 {
-l_int32  i, n, x, y, w, h, d, maxval;
+int32_t  i, n, x, y, w, h, d, maxval;
 
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1318,13 +1318,13 @@ l_int32  i, n, x, y, w, h, d, maxval;
 l_ok
 pixRenderPtaArb(PIX     *pix,
                 PTA     *pta,
-                l_uint8  rval,
-                l_uint8  gval,
-                l_uint8  bval)
+                uint8_t  rval,
+                uint8_t  gval,
+                uint8_t  bval)
 {
-l_int32   i, n, x, y, w, h, d, index;
-l_uint8   val;
-l_uint32  val32;
+int32_t   i, n, x, y, w, h, d, index;
+uint8_t   val;
+uint32_t  val32;
 PIXCMAP  *cmap;
 
     if (!pix)
@@ -1391,14 +1391,14 @@ PIXCMAP  *cmap;
 l_ok
 pixRenderPtaBlend(PIX     *pix,
                   PTA     *pta,
-                  l_uint8  rval,
-                  l_uint8  gval,
-                  l_uint8  bval,
+                  uint8_t  rval,
+                  uint8_t  gval,
+                  uint8_t  bval,
                   l_float32 fract)
 {
-l_int32    i, n, x, y, w, h;
-l_uint8    nrval, ngval, nbval;
-l_uint32   val32;
+int32_t    i, n, x, y, w, h;
+uint8_t    nrval, ngval, nbval;
+uint32_t   val32;
 l_float32  frval, fgval, fbval;
 
     if (!pix)
@@ -1425,11 +1425,11 @@ l_float32  frval, fgval, fbval;
             continue;
         pixGetPixel(pix, x, y, &val32);
         nrval = GET_DATA_BYTE(&val32, COLOR_RED);
-        nrval = (l_uint8)((1. - fract) * nrval + frval);
+        nrval = (uint8_t)((1. - fract) * nrval + frval);
         ngval = GET_DATA_BYTE(&val32, COLOR_GREEN);
-        ngval = (l_uint8)((1. - fract) * ngval + fgval);
+        ngval = (uint8_t)((1. - fract) * ngval + fgval);
         nbval = GET_DATA_BYTE(&val32, COLOR_BLUE);
-        nbval = (l_uint8)((1. - fract) * nbval + fbval);
+        nbval = (uint8_t)((1. - fract) * nbval + fbval);
         composeRGBPixel(nrval, ngval, nbval, &val32);
         pixSetPixel(pix, x, y, val32);
     }
@@ -1453,12 +1453,12 @@ l_float32  frval, fgval, fbval;
  */
 l_ok
 pixRenderLine(PIX     *pix,
-              l_int32  x1,
-              l_int32  y1,
-              l_int32  x2,
-              l_int32  y2,
-              l_int32  width,
-              l_int32  op)
+              int32_t  x1,
+              int32_t  y1,
+              int32_t  x2,
+              int32_t  y2,
+              int32_t  width,
+              int32_t  op)
 {
 PTA  *pta;
 
@@ -1491,14 +1491,14 @@ PTA  *pta;
  */
 l_ok
 pixRenderLineArb(PIX     *pix,
-                 l_int32  x1,
-                 l_int32  y1,
-                 l_int32  x2,
-                 l_int32  y2,
-                 l_int32  width,
-                 l_uint8  rval,
-                 l_uint8  gval,
-                 l_uint8  bval)
+                 int32_t  x1,
+                 int32_t  y1,
+                 int32_t  x2,
+                 int32_t  y2,
+                 int32_t  width,
+                 uint8_t  rval,
+                 uint8_t  gval,
+                 uint8_t  bval)
 {
 PTA  *pta;
 
@@ -1530,14 +1530,14 @@ PTA  *pta;
  */
 l_ok
 pixRenderLineBlend(PIX       *pix,
-                   l_int32    x1,
-                   l_int32    y1,
-                   l_int32    x2,
-                   l_int32    y2,
-                   l_int32    width,
-                   l_uint8    rval,
-                   l_uint8    gval,
-                   l_uint8    bval,
+                   int32_t    x1,
+                   int32_t    y1,
+                   int32_t    x2,
+                   int32_t    y2,
+                   int32_t    width,
+                   uint8_t    rval,
+                   uint8_t    gval,
+                   uint8_t    bval,
                    l_float32  fract)
 {
 PTA  *pta;
@@ -1569,8 +1569,8 @@ PTA  *pta;
 l_ok
 pixRenderBox(PIX     *pix,
              BOX     *box,
-             l_int32  width,
-             l_int32  op)
+             int32_t  width,
+             int32_t  op)
 {
 PTA  *pta;
 
@@ -1605,10 +1605,10 @@ PTA  *pta;
 l_ok
 pixRenderBoxArb(PIX     *pix,
                 BOX     *box,
-                l_int32  width,
-                l_uint8  rval,
-                l_uint8  gval,
-                l_uint8  bval)
+                int32_t  width,
+                uint8_t  rval,
+                uint8_t  gval,
+                uint8_t  bval)
 {
 PTA  *pta;
 
@@ -1643,10 +1643,10 @@ PTA  *pta;
 l_ok
 pixRenderBoxBlend(PIX       *pix,
                   BOX       *box,
-                  l_int32    width,
-                  l_uint8    rval,
-                  l_uint8    gval,
-                  l_uint8    bval,
+                  int32_t    width,
+                  uint8_t    rval,
+                  uint8_t    gval,
+                  uint8_t    bval,
                   l_float32  fract)
 {
 PTA  *pta;
@@ -1680,8 +1680,8 @@ PTA  *pta;
 l_ok
 pixRenderBoxa(PIX     *pix,
               BOXA    *boxa,
-              l_int32  width,
-              l_int32  op)
+              int32_t  width,
+              int32_t  op)
 {
 PTA  *pta;
 
@@ -1716,10 +1716,10 @@ PTA  *pta;
 l_ok
 pixRenderBoxaArb(PIX     *pix,
                  BOXA    *boxa,
-                 l_int32  width,
-                 l_uint8  rval,
-                 l_uint8  gval,
-                 l_uint8  bval)
+                 int32_t  width,
+                 uint8_t  rval,
+                 uint8_t  gval,
+                 uint8_t  bval)
 {
 PTA  *pta;
 
@@ -1755,12 +1755,12 @@ PTA  *pta;
 l_ok
 pixRenderBoxaBlend(PIX       *pix,
                    BOXA      *boxa,
-                   l_int32    width,
-                   l_uint8    rval,
-                   l_uint8    gval,
-                   l_uint8    bval,
+                   int32_t    width,
+                   uint8_t    rval,
+                   uint8_t    gval,
+                   uint8_t    bval,
                    l_float32  fract,
-                   l_int32    removedups)
+                   int32_t    removedups)
 {
 PTA  *pta;
 
@@ -1796,11 +1796,11 @@ PTA  *pta;
 l_ok
 pixRenderHashBox(PIX     *pix,
                  BOX     *box,
-                 l_int32  spacing,
-                 l_int32  width,
-                 l_int32  orient,
-                 l_int32  outline,
-                 l_int32  op)
+                 int32_t  spacing,
+                 int32_t  width,
+                 int32_t  orient,
+                 int32_t  outline,
+                 int32_t  op)
 {
 PTA  *pta;
 
@@ -1844,13 +1844,13 @@ PTA  *pta;
 l_ok
 pixRenderHashBoxArb(PIX     *pix,
                     BOX     *box,
-                    l_int32  spacing,
-                    l_int32  width,
-                    l_int32  orient,
-                    l_int32  outline,
-                    l_int32  rval,
-                    l_int32  gval,
-                    l_int32  bval)
+                    int32_t  spacing,
+                    int32_t  width,
+                    int32_t  orient,
+                    int32_t  outline,
+                    int32_t  rval,
+                    int32_t  gval,
+                    int32_t  bval)
 {
 PTA  *pta;
 
@@ -1894,13 +1894,13 @@ PTA  *pta;
 l_ok
 pixRenderHashBoxBlend(PIX       *pix,
                       BOX       *box,
-                      l_int32    spacing,
-                      l_int32    width,
-                      l_int32    orient,
-                      l_int32    outline,
-                      l_int32    rval,
-                      l_int32    gval,
-                      l_int32    bval,
+                      int32_t    spacing,
+                      int32_t    width,
+                      int32_t    orient,
+                      int32_t    outline,
+                      int32_t    rval,
+                      int32_t    gval,
+                      int32_t    bval,
                       l_float32  fract)
 {
 PTA  *pta;
@@ -1952,17 +1952,17 @@ PTA  *pta;
 l_ok
 pixRenderHashMaskArb(PIX     *pix,
                      PIX     *pixm,
-                     l_int32  x,
-                     l_int32  y,
-                     l_int32  spacing,
-                     l_int32  width,
-                     l_int32  orient,
-                     l_int32  outline,
-                     l_int32  rval,
-                     l_int32  gval,
-                     l_int32  bval)
+                     int32_t  x,
+                     int32_t  y,
+                     int32_t  spacing,
+                     int32_t  width,
+                     int32_t  orient,
+                     int32_t  outline,
+                     int32_t  rval,
+                     int32_t  gval,
+                     int32_t  bval)
 {
-l_int32  w, h;
+int32_t  w, h;
 BOX     *box1, *box2;
 PIX     *pix1;
 PTA     *pta1, *pta2;
@@ -2020,11 +2020,11 @@ PTA     *pta1, *pta2;
 l_ok
 pixRenderHashBoxa(PIX     *pix,
                   BOXA    *boxa,
-                  l_int32  spacing,
-                  l_int32  width,
-                  l_int32  orient,
-                  l_int32  outline,
-                  l_int32  op)
+                  int32_t  spacing,
+                  int32_t  width,
+                  int32_t  orient,
+                  int32_t  outline,
+                  int32_t  op)
  {
 PTA  *pta;
 
@@ -2070,13 +2070,13 @@ PTA  *pta;
 l_ok
 pixRenderHashBoxaArb(PIX     *pix,
                      BOXA    *boxa,
-                     l_int32  spacing,
-                     l_int32  width,
-                     l_int32  orient,
-                     l_int32  outline,
-                     l_int32  rval,
-                     l_int32  gval,
-                     l_int32  bval)
+                     int32_t  spacing,
+                     int32_t  width,
+                     int32_t  orient,
+                     int32_t  outline,
+                     int32_t  rval,
+                     int32_t  gval,
+                     int32_t  bval)
 {
 PTA  *pta;
 
@@ -2122,13 +2122,13 @@ PTA  *pta;
 l_ok
 pixRenderHashBoxaBlend(PIX       *pix,
                        BOXA      *boxa,
-                       l_int32    spacing,
-                       l_int32    width,
-                       l_int32    orient,
-                       l_int32    outline,
-                       l_int32    rval,
-                       l_int32    gval,
-                       l_int32    bval,
+                       int32_t    spacing,
+                       int32_t    width,
+                       int32_t    orient,
+                       int32_t    outline,
+                       int32_t    rval,
+                       int32_t    gval,
+                       int32_t    bval,
                        l_float32  fract)
 {
 PTA  *pta;
@@ -2174,9 +2174,9 @@ PTA  *pta;
 l_ok
 pixRenderPolyline(PIX     *pix,
                   PTA     *ptas,
-                  l_int32  width,
-                  l_int32  op,
-                  l_int32  closeflag)
+                  int32_t  width,
+                  int32_t  op,
+                  int32_t  closeflag)
 {
 PTA  *pta;
 
@@ -2217,11 +2217,11 @@ PTA  *pta;
 l_ok
 pixRenderPolylineArb(PIX     *pix,
                      PTA     *ptas,
-                     l_int32  width,
-                     l_uint8  rval,
-                     l_uint8  gval,
-                     l_uint8  bval,
-                     l_int32  closeflag)
+                     int32_t  width,
+                     uint8_t  rval,
+                     uint8_t  gval,
+                     uint8_t  bval,
+                     int32_t  closeflag)
 {
 PTA  *pta;
 
@@ -2258,13 +2258,13 @@ PTA  *pta;
 l_ok
 pixRenderPolylineBlend(PIX       *pix,
                        PTA       *ptas,
-                       l_int32    width,
-                       l_uint8    rval,
-                       l_uint8    gval,
-                       l_uint8    bval,
+                       int32_t    width,
+                       uint8_t    rval,
+                       uint8_t    gval,
+                       uint8_t    bval,
                        l_float32  fract,
-                       l_int32    closeflag,
-                       l_int32    removedups)
+                       int32_t    closeflag,
+                       int32_t    removedups)
 {
 PTA  *pta;
 
@@ -2296,14 +2296,14 @@ PTA  *pta;
  */
 l_ok
 pixRenderGridArb(PIX     *pix,
-                 l_int32  nx,
-                 l_int32  ny,
-                 l_int32  width,
-                 l_uint8  rval,
-                 l_uint8  gval,
-                 l_uint8  bval)
+                 int32_t  nx,
+                 int32_t  ny,
+                 int32_t  width,
+                 uint8_t  rval,
+                 uint8_t  gval,
+                 uint8_t  bval)
 {
-l_int32  w, h;
+int32_t  w, h;
 PTA     *pta;
 
     if (!pix)
@@ -2355,11 +2355,11 @@ PTA     *pta;
 PIX  *
 pixRenderRandomCmapPtaa(PIX     *pix,
                         PTAA    *ptaa,
-                        l_int32  polyflag,
-                        l_int32  width,
-                        l_int32  closeflag)
+                        int32_t  polyflag,
+                        int32_t  width,
+                        int32_t  closeflag)
 {
-l_int32   i, n, index, rval, gval, bval;
+int32_t   i, n, index, rval, gval, bval;
 PIXCMAP  *cmap;
 PTA      *pta, *ptat;
 PIX      *pixd;
@@ -2421,9 +2421,9 @@ PIX      *pixd;
  */
 PIX *
 pixRenderPolygon(PTA      *ptas,
-                 l_int32   width,
-                 l_int32  *pxmin,
-                 l_int32  *pymin)
+                 int32_t   width,
+                 int32_t  *pxmin,
+                 int32_t  *pymin)
 {
 l_float32  fxmin, fxmax, fymin, fymax;
 PIX       *pixd;
@@ -2444,9 +2444,9 @@ PTA       *pta1, *pta2;
 
         /* Render onto a minimum-sized pix */
     ptaGetRange(pta2, &fxmin, &fxmax, &fymin, &fymax);
-    if (pxmin) *pxmin = (l_int32)(fxmin + 0.5);
-    if (pymin) *pymin = (l_int32)(fymin + 0.5);
-    pixd = pixCreate((l_int32)(fxmax + 0.5) + 1, (l_int32)(fymax + 0.5) + 1, 1);
+    if (pxmin) *pxmin = (int32_t)(fxmin + 0.5);
+    if (pymin) *pymin = (int32_t)(fymin + 0.5);
+    pixd = pixCreate((int32_t)(fxmax + 0.5) + 1, (int32_t)(fymax + 0.5) + 1, 1);
     pixRenderPolyline(pixd, pta2, width, L_SET_PIXELS, 1);
     ptaDestroy(&pta1);
     ptaDestroy(&pta2);
@@ -2475,11 +2475,11 @@ PTA       *pta1, *pta2;
 PIX *
 pixFillPolygon(PIX     *pixs,
                PTA     *pta,
-               l_int32  xmin,
-               l_int32  ymin)
+               int32_t  xmin,
+               int32_t  ymin)
 {
-l_int32   w, h, i, n, inside, found;
-l_int32  *xstart, *xend;
+int32_t   w, h, i, n, inside, found;
+int32_t  *xstart, *xend;
 PIX      *pixi, *pixd;
 
     if (!pixs || (pixGetDepth(pixs) != 1))
@@ -2490,8 +2490,8 @@ PIX      *pixi, *pixd;
         return (PIX *)ERROR_PTR("pta has < 2 pts", __func__, NULL);
 
     pixGetDimensions(pixs, &w, &h, NULL);
-    xstart = (l_int32 *)LEPT_CALLOC(L_MAX(1, w / 2), sizeof(l_int32));
-    xend = (l_int32 *)LEPT_CALLOC(L_MAX(1, w / 2), sizeof(l_int32));
+    xstart = (int32_t *)LEPT_CALLOC(L_MAX(1, w / 2), sizeof(int32_t));
+    xend = (int32_t *)LEPT_CALLOC(L_MAX(1, w / 2), sizeof(int32_t));
     if (!xstart || !xend) {
         LEPT_FREE(xstart);
         LEPT_FREE(xend);
@@ -2558,12 +2558,12 @@ PIX      *pixi, *pixd;
  */
 PIX *
 pixRenderContours(PIX     *pixs,
-                  l_int32  startval,
-                  l_int32  incr,
-                  l_int32  outdepth)
+                  int32_t  startval,
+                  int32_t  incr,
+                  int32_t  outdepth)
 {
-l_int32    w, h, d, maxval, wpls, wpld, i, j, val, test;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    w, h, d, maxval, wpls, wpld, i, j, val, test;
+uint32_t  *datas, *datad, *lines, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -2682,7 +2682,7 @@ PIX       *pixd;
  */
 PIX *
 fpixAutoRenderContours(FPIX    *fpix,
-                       l_int32  ncontours)
+                       int32_t  ncontours)
 {
 l_float32  minval, maxval, incr;
 
@@ -2721,9 +2721,9 @@ fpixRenderContours(FPIX      *fpixs,
                    l_float32  incr,
                    l_float32  proxim)
 {
-l_int32     i, j, w, h, wpls, wpld;
+int32_t     i, j, w, h, wpls, wpld;
 l_float32   val, invincr, finter, above, below, diff;
-l_uint32   *datad, *lined;
+uint32_t   *datad, *lined;
 l_float32  *datas, *lines;
 PIX        *pixd;
 PIXCMAP    *cmap;
@@ -2795,7 +2795,7 @@ PIXCMAP    *cmap;
  */
 PTA  *
 pixGeneratePtaBoundary(PIX     *pixs,
-                       l_int32  width)
+                       int32_t  width)
 {
 PIX  *pix1;
 PTA  *pta;

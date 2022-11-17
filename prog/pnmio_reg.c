@@ -37,10 +37,10 @@
 
 #include "allheaders.h"
 
-l_int32 main(l_int32  argc,
+int32_t main(int32_t  argc,
              char   **argv)
 {
-l_uint8      *data;
+uint8_t      *data;
 size_t        size;
 FILE         *fp;
 PIX          *pix1, *pix2, *pix3, *pix4, *pix5;

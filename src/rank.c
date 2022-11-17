@@ -149,11 +149,11 @@
  */
 PIX  *
 pixRankFilter(PIX       *pixs,
-              l_int32    wf,
-              l_int32    hf,
+              int32_t    wf,
+              int32_t    hf,
               l_float32  rank)
 {
-l_int32  d;
+int32_t  d;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -199,8 +199,8 @@ l_int32  d;
  */
 PIX  *
 pixRankFilterRGB(PIX       *pixs,
-                 l_int32    wf,
-                 l_int32    hf,
+                 int32_t    wf,
+                 int32_t    hf,
                  l_float32  rank)
 {
 PIX  *pixr, *pixg, *pixb, *pixrf, *pixgf, *pixbf, *pixd;
@@ -265,13 +265,13 @@ PIX  *pixr, *pixg, *pixb, *pixrf, *pixgf, *pixbf, *pixd;
  */
 PIX  *
 pixRankFilterGray(PIX       *pixs,
-                  l_int32    wf,
-                  l_int32    hf,
+                  int32_t    wf,
+                  int32_t    hf,
                   l_float32  rank)
 {
-l_int32    w, h, d, i, j, k, m, n, rankloc, wplt, wpld, val, sum;
-l_int32   *histo, *histo16;
-l_uint32  *datat, *linet, *datad, *lined;
+int32_t    w, h, d, i, j, k, m, n, rankloc, wplt, wpld, val, sum;
+int32_t   *histo, *histo16;
+uint32_t  *datat, *linet, *datad, *lined;
 PIX       *pixt, *pixd;
 
     if (!pixs)
@@ -311,9 +311,9 @@ PIX       *pixt, *pixd;
         return (PIX *)ERROR_PTR("pixt not made", __func__, NULL);
 
         /* Set up the two histogram arrays. */
-    histo = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
-    histo16 = (l_int32 *)LEPT_CALLOC(16, sizeof(l_int32));
-    rankloc = (l_int32)(rank * wf * hf);
+    histo = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
+    histo16 = (int32_t *)LEPT_CALLOC(16, sizeof(int32_t));
+    rankloc = (int32_t)(rank * wf * hf);
 
         /* Place the filter center at (0, 0).  This is just a
          * convenient location, because it allows us to perform
@@ -463,8 +463,8 @@ PIX       *pixt, *pixd;
  */
 PIX  *
 pixMedianFilter(PIX     *pixs,
-                l_int32  wf,
-                l_int32  hf)
+                int32_t  wf,
+                int32_t  hf)
 {
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -496,12 +496,12 @@ pixMedianFilter(PIX     *pixs,
  */
 PIX  *
 pixRankFilterWithScaling(PIX       *pixs,
-                         l_int32    wf,
-                         l_int32    hf,
+                         int32_t    wf,
+                         int32_t    hf,
                          l_float32  rank,
                          l_float32  scalefactor)
 {
-l_int32  w, h, d, wfs, hfs;
+int32_t  w, h, d, wfs, hfs;
 PIX     *pix1, *pix2, *pixd;
 
     if (!pixs)
@@ -523,8 +523,8 @@ PIX     *pix1, *pix2, *pixd;
     }
 
     pix1 = pixScaleAreaMap(pixs, scalefactor, scalefactor);
-    wfs = L_MAX(1, (l_int32)(scalefactor * wf + 0.5));
-    hfs = L_MAX(1, (l_int32)(scalefactor * hf + 0.5));
+    wfs = L_MAX(1, (int32_t)(scalefactor * wf + 0.5));
+    hfs = L_MAX(1, (int32_t)(scalefactor * hf + 0.5));
     pix2 = pixRankFilter(pix1, wfs, hfs, rank);
     pixGetDimensions(pixs, &w, &h, NULL);
     pixd = pixScaleToSize(pix2, w, h);

@@ -41,10 +41,10 @@
  *       ------------------------------------------
  *
  *       Control of error, warning and info messages
- *           l_int32    setMsgSeverity()
+ *           int32_t    setMsgSeverity()
  *
  *       Error return functions, invoked by macros
- *           l_int32    returnErrorInt()
+ *           int32_t    returnErrorInt()
  *           l_float32  returnErrorFloat()
  *           void      *returnErrorPtr()
  *
@@ -53,38 +53,38 @@
  *           void lept_stderr()
  *
  *       Test files for equivalence
- *           l_int32    filesAreIdentical()
+ *           int32_t    filesAreIdentical()
  *
  *       Byte-swapping data conversion
- *           l_uint16   convertOnBigEnd16()
- *           l_uint32   convertOnBigEnd32()
- *           l_uint16   convertOnLittleEnd16()
- *           l_uint32   convertOnLittleEnd32()
+ *           uint16_t   convertOnBigEnd16()
+ *           uint32_t   convertOnBigEnd32()
+ *           uint16_t   convertOnLittleEnd16()
+ *           uint32_t   convertOnLittleEnd32()
  *
  *       File corruption and byte replacement operations
- *           l_int32    fileCorruptByDeletion()
- *           l_int32    fileCorruptByMutation()
- *           l_int32    fileReplaceBytes()
+ *           int32_t    fileCorruptByDeletion()
+ *           int32_t    fileCorruptByMutation()
+ *           int32_t    fileReplaceBytes()
  *
  *       Generate random integer in given interval
- *           l_int32    genRandomIntOnInterval()
+ *           int32_t    genRandomIntOnInterval()
  *
  *       Simple math function
- *           l_int32    lept_roundftoi()
+ *           int32_t    lept_roundftoi()
  *
  *       64-bit hash functions
- *           l_int32    l_hashStringToUint64()
- *           l_int32    l_hashStringToUint64Fast()
- *           l_int32    l_hashPtToUint64()
- *           l_int32    l_hashFloat64ToUint64()
+ *           int32_t    l_hashStringToUint64()
+ *           int32_t    l_hashStringToUint64Fast()
+ *           int32_t    l_hashPtToUint64()
+ *           int32_t    l_hashFloat64ToUint64()
  *
  *       Prime finders
- *           l_int32    findNextLargerPrime()
- *           l_int32    lept_isPrime()
+ *           int32_t    findNextLargerPrime()
+ *           int32_t    lept_isPrime()
  *
  *       Gray code conversion
- *           l_uint32   convertIntToGrayCode()
- *           l_uint32   convertGrayCodeToInt()
+ *           uint32_t   convertIntToGrayCode()
+ *           uint32_t   convertGrayCodeToInt()
  *
  *       Leptonica version number
  *           char      *getLeptonicaVersion()
@@ -116,7 +116,7 @@
 #include <math.h>
 
     /* Global for controlling message output at runtime */
-LEPT_DLL l_int32  LeptMsgSeverity = DEFAULT_SEVERITY;
+LEPT_DLL int32_t  LeptMsgSeverity = DEFAULT_SEVERITY;
 
 #define  DEBUG_SEV     0
 
@@ -139,10 +139,10 @@ LEPT_DLL l_int32  LeptMsgSeverity = DEFAULT_SEVERITY;
  *          obtained from the LEPT_MSG_SEVERITY environment variable.
  * </pre>
  */
-l_int32
-setMsgSeverity(l_int32  newsev)
+int32_t
+setMsgSeverity(int32_t  newsev)
 {
-l_int32  oldsev;
+int32_t  oldsev;
 char    *envsev;
 
     oldsev = LeptMsgSeverity;
@@ -189,10 +189,10 @@ char    *envsev;
  * \param[in]    ival       return error val
  * \return  ival typically 1 for an error return
  */
-l_int32
+int32_t
 returnErrorInt(const char  *msg,
                const char  *procname,
-               l_int32      ival)
+               int32_t      ival)
 {
     lept_stderr("Error in %s: %s\n", procname, msg);
     return ival;
@@ -307,7 +307,7 @@ void lept_stderr(const char *fmt, ...)
 {
 va_list  args;
 char     msg[MAX_DEBUG_MESSAGE];
-l_int32  n;
+int32_t  n;
 
     va_start(args, fmt);
     n = vsnprintf(msg, sizeof(msg), fmt, args);
@@ -332,11 +332,11 @@ l_int32  n;
 l_ok
 filesAreIdentical(const char  *fname1,
                   const char  *fname2,
-                  l_int32     *psame)
+                  int32_t     *psame)
 {
-l_int32   i, same;
+int32_t   i, same;
 size_t    nbytes1, nbytes2;
-l_uint8  *array1, *array2;
+uint8_t  *array1, *array2;
 
     if (!psame)
         return ERROR_INT("&same not defined", __func__, 1);
@@ -384,28 +384,28 @@ l_uint8  *array1, *array2;
  *--------------------------------------------------------------------*/
 #ifdef L_BIG_ENDIAN
 
-l_uint16
-convertOnBigEnd16(l_uint16  shortin)
+uint16_t
+convertOnBigEnd16(uint16_t  shortin)
 {
     return ((shortin << 8) | (shortin >> 8));
 }
 
-l_uint16
-convertOnLittleEnd16(l_uint16  shortin)
+uint16_t
+convertOnLittleEnd16(uint16_t  shortin)
 {
     return  shortin;
 }
 
 #else     /* L_LITTLE_ENDIAN */
 
-l_uint16
-convertOnLittleEnd16(l_uint16  shortin)
+uint16_t
+convertOnLittleEnd16(uint16_t  shortin)
 {
     return ((shortin << 8) | (shortin >> 8));
 }
 
-l_uint16
-convertOnBigEnd16(l_uint16  shortin)
+uint16_t
+convertOnBigEnd16(uint16_t  shortin)
 {
     return  shortin;
 }
@@ -418,30 +418,30 @@ convertOnBigEnd16(l_uint16  shortin)
  *--------------------------------------------------------------------*/
 #ifdef L_BIG_ENDIAN
 
-l_uint32
-convertOnBigEnd32(l_uint32  wordin)
+uint32_t
+convertOnBigEnd32(uint32_t  wordin)
 {
     return ((wordin << 24) | ((wordin << 8) & 0x00ff0000) |
             ((wordin >> 8) & 0x0000ff00) | (wordin >> 24));
 }
 
-l_uint32
-convertOnLittleEnd32(l_uint32  wordin)
+uint32_t
+convertOnLittleEnd32(uint32_t  wordin)
 {
     return wordin;
 }
 
 #else  /*  L_LITTLE_ENDIAN */
 
-l_uint32
-convertOnLittleEnd32(l_uint32  wordin)
+uint32_t
+convertOnLittleEnd32(uint32_t  wordin)
 {
     return ((wordin << 24) | ((wordin << 8) & 0x00ff0000) |
             ((wordin >> 8) & 0x0000ff00) | (wordin >> 24));
 }
 
-l_uint32
-convertOnBigEnd32(l_uint32  wordin)
+uint32_t
+convertOnBigEnd32(uint32_t  wordin)
 {
     return wordin;
 }
@@ -478,9 +478,9 @@ fileCorruptByDeletion(const char  *filein,
                       l_float32    size,
                       const char  *fileout)
 {
-l_int32   i, locb, sizeb, rembytes;
+int32_t   i, locb, sizeb, rembytes;
 size_t    inbytes, outbytes;
-l_uint8  *datain, *dataout;
+uint8_t  *datain, *dataout;
 
     if (!filein || !fileout)
         return ERROR_INT("filein and fileout not both specified", __func__, 1);
@@ -492,16 +492,16 @@ l_uint8  *datain, *dataout;
         size = 1.0 - loc;
 
     datain = l_binaryRead(filein, &inbytes);
-    locb = (l_int32)(loc * inbytes + 0.5);
+    locb = (int32_t)(loc * inbytes + 0.5);
     locb = L_MIN(locb, inbytes - 1);
-    sizeb = (l_int32)(size * inbytes + 0.5);
+    sizeb = (int32_t)(size * inbytes + 0.5);
     sizeb = L_MAX(1, sizeb);
     sizeb = L_MIN(sizeb, inbytes - locb);  /* >= 1 */
     L_INFO("Removed %d bytes at location %d\n", __func__, sizeb, locb);
     rembytes = inbytes - locb - sizeb;  /* >= 0; to be copied, after excision */
 
     outbytes = inbytes - sizeb;
-    dataout = (l_uint8 *)LEPT_CALLOC(outbytes, 1);
+    dataout = (uint8_t *)LEPT_CALLOC(outbytes, 1);
     for (i = 0; i < locb; i++)
         dataout[i] = datain[i];
     for (i = 0; i < rembytes; i++)
@@ -540,9 +540,9 @@ fileCorruptByMutation(const char  *filein,
                       l_float32    size,
                       const char  *fileout)
 {
-l_int32   i, locb, sizeb;
+int32_t   i, locb, sizeb;
 size_t    bytes;
-l_uint8  *data;
+uint8_t  *data;
 
     if (!filein || !fileout)
         return ERROR_INT("filein and fileout not both specified", __func__, 1);
@@ -554,9 +554,9 @@ l_uint8  *data;
         size = 1.0 - loc;
 
     data = l_binaryRead(filein, &bytes);
-    locb = (l_int32)(loc * bytes + 0.5);
+    locb = (int32_t)(loc * bytes + 0.5);
     locb = L_MIN(locb, bytes - 1);
-    sizeb = (l_int32)(size * bytes + 0.5);
+    sizeb = (int32_t)(size * bytes + 0.5);
     sizeb = L_MAX(1, sizeb);
     sizeb = L_MIN(sizeb, bytes - locb);  /* >= 1 */
     L_INFO("Randomizing %d bytes at location %d\n", __func__, sizeb, locb);
@@ -564,7 +564,7 @@ l_uint8  *data;
         /* Make an array of random bytes and do the substitution */
     for (i = 0; i < sizeb; i++) {
         data[locb + i] =
-            (l_uint8)(255.9 * ((l_float64)rand() / (l_float64)RAND_MAX));
+            (uint8_t)(255.9 * ((l_float64)rand() / (l_float64)RAND_MAX));
     }
 
     l_binaryWrite(fileout, "w", data, bytes);
@@ -595,15 +595,15 @@ l_uint8  *data;
  */
 l_ok
 fileReplaceBytes(const char  *filein,
-                 l_int32      start,
-                 l_int32      nbytes,
-                 l_uint8     *newdata,
+                 int32_t      start,
+                 int32_t      nbytes,
+                 uint8_t     *newdata,
                  size_t       newsize,
                  const char  *fileout)
 {
-l_int32   i, index;
+int32_t   i, index;
 size_t    inbytes, outbytes;
-l_uint8  *datain, *dataout;
+uint8_t  *datain, *dataout;
 
     if (!filein || !fileout)
         return ERROR_INT("filein and fileout not both specified", __func__, 1);
@@ -614,7 +614,7 @@ l_uint8  *datain, *dataout;
 
     if (!newdata) newsize = 0;
     outbytes = inbytes - nbytes + newsize;
-    if ((dataout = (l_uint8 *)LEPT_CALLOC(outbytes, 1)) == NULL) {
+    if ((dataout = (uint8_t *)LEPT_CALLOC(outbytes, 1)) == NULL) {
         LEPT_FREE(datain);
         return ERROR_INT("calloc fail for dataout", __func__, 1);
     }
@@ -648,10 +648,10 @@ l_uint8  *datain, *dataout;
  * \return  0 if OK, 1 on error
  */
 l_ok
-genRandomIntOnInterval(l_int32   start,
-                       l_int32   end,
-                       l_int32   seed,
-                       l_int32  *pval)
+genRandomIntOnInterval(int32_t   start,
+                       int32_t   end,
+                       int32_t   seed,
+                       int32_t  *pval)
 {
 l_float64  range;
 
@@ -663,7 +663,7 @@ l_float64  range;
 
     if (seed > 0) srand(seed);
     range = (l_float64)(end - start + 1);
-    *pval = start + (l_int32)((l_float64)range *
+    *pval = start + (int32_t)((l_float64)range *
                        ((l_float64)rand() / (l_float64)RAND_MAX));
     return 0;
 }
@@ -686,10 +686,10 @@ l_float64  range;
  *          e.g., for fval in (-0.5 ... 0.5), fval --> 0
  * </pre>
  */
-l_int32
+int32_t
 lept_roundftoi(l_float32  fval)
 {
-    return (fval >= 0.0) ? (l_int32)(fval + 0.5) : (l_int32)(fval - 0.5);
+    return (fval >= 0.0) ? (int32_t)(fval + 0.5) : (int32_t)(fval - 0.5);
 }
 
 
@@ -720,9 +720,9 @@ lept_roundftoi(l_float32  fval)
  */
 l_ok
 l_hashStringToUint64(const char  *str,
-                     l_uint64    *phash)
+                     uint64_t    *phash)
 {
-l_uint64  hash, mulp;
+uint64_t  hash, mulp;
 
     if (phash) *phash = 0;
     if (!str || (str[0] == '\0'))
@@ -757,10 +757,10 @@ l_uint64  hash, mulp;
  */
 l_ok
 l_hashStringToUint64Fast(const char  *str,
-                         l_uint64    *phash)
+                         uint64_t    *phash)
 {
-l_uint64  h;
-l_uint8  *p;
+uint64_t  h;
+uint8_t  *p;
 
     if (phash) *phash = 0;
     if (!str || (str[0] == '\0'))
@@ -769,7 +769,7 @@ l_uint8  *p;
         return ERROR_INT("&hash not defined", __func__, 1);
 
     h = 0;
-    for (p = (l_uint8 *)str; *p != '\0'; p++)
+    for (p = (uint8_t *)str; *p != '\0'; p++)
         h = 37 * h + *p;  /* 37 is good prime number for this */
     *phash = h;
     return 0;
@@ -790,14 +790,14 @@ l_uint8  *p;
  * </pre>
  */
 l_ok
-l_hashPtToUint64(l_int32    x,
-                 l_int32    y,
-                 l_uint64  *phash)
+l_hashPtToUint64(int32_t    x,
+                 int32_t    y,
+                 uint64_t  *phash)
 {
     if (!phash)
         return ERROR_INT("&hash not defined", __func__, 1);
 
-    *phash = (l_uint64)(2173249142.3849 * x + 3763193258.6227 * y);
+    *phash = (uint64_t)(2173249142.3849 * x + 3763193258.6227 * y);
     return 0;
 }
 
@@ -819,12 +819,12 @@ l_hashPtToUint64(l_int32    x,
  */
 l_ok
 l_hashFloat64ToUint64(l_float64  val,
-                      l_uint64  *phash)
+                      uint64_t  *phash)
 {
     if (!phash)
         return ERROR_INT("&hash not defined", __func__, 1);
     val = (val >= 0.0) ? 847019.66701 * val : -217324.91613 * val;
-    *phash = (l_uint64)val;
+    *phash = (uint64_t)val;
     return 0;
 }
 
@@ -840,10 +840,10 @@ l_hashFloat64ToUint64(l_float64  val,
  * \return  0 if OK, 1 on error
  */
 l_ok
-findNextLargerPrime(l_int32    start,
-                    l_uint32  *pprime)
+findNextLargerPrime(int32_t    start,
+                    uint32_t  *pprime)
 {
-l_int32  i, is_prime;
+int32_t  i, is_prime;
 
     if (!pprime)
         return ERROR_INT("&prime not defined", __func__, 1);
@@ -873,12 +873,12 @@ l_int32  i, is_prime;
  * \return  0 if OK, 1 on error
  */
 l_ok
-lept_isPrime(l_uint64   n,
-             l_int32   *pis_prime,
-             l_uint32  *pfactor)
+lept_isPrime(uint64_t   n,
+             int32_t   *pis_prime,
+             uint32_t  *pfactor)
 {
-l_uint32  div;
-l_uint64  limit, ratio;
+uint32_t  div;
+uint64_t  limit, ratio;
 
     if (pis_prime) *pis_prime = 0;
     if (pfactor) *pfactor = 0;
@@ -892,7 +892,7 @@ l_uint64  limit, ratio;
         return 0;
     }
 
-    limit = (l_uint64)sqrt((l_float64)n);
+    limit = (uint64_t)sqrt((l_float64)n);
     for (div = 3; div < limit; div += 2) {
        ratio = n / div;
        if (ratio * div == n) {
@@ -921,8 +921,8 @@ l_uint64  limit, ratio;
  *          only one bit transition between successive integers.
  * </pre>
  */
-l_uint32
-convertIntToGrayCode(l_uint32 val)
+uint32_t
+convertIntToGrayCode(uint32_t val)
 {
     return (val >> 1) ^ val;
 }
@@ -934,10 +934,10 @@ convertIntToGrayCode(l_uint32 val)
  * \param[in]  val    gray code value
  * \return     corresponding integer value
  */
-l_uint32
-convertGrayCodeToInt(l_uint32 val)
+uint32_t
+convertGrayCodeToInt(uint32_t val)
 {
-l_uint32  shift;
+uint32_t  shift;
 
     for (shift = 1; shift < 32; shift <<= 1)
         val ^= val >> shift;
@@ -1024,7 +1024,7 @@ startTimer(void)
 l_float32
 stopTimer(void)
 {
-l_int32  tsec, tusec;
+int32_t  tsec, tusec;
 
     getrusage(RUSAGE_SELF, &rusage_after);
 
@@ -1060,7 +1060,7 @@ struct rusage  *rusage_start;
 l_float32
 stopTimerNested(L_TIMER  rusage_start)
 {
-l_int32        tsec, tusec;
+int32_t        tsec, tusec;
 struct rusage  rusage_stop;
 
     getrusage(RUSAGE_SELF, &rusage_stop);
@@ -1082,14 +1082,14 @@ struct rusage  rusage_stop;
  * \return  void
  */
 void
-l_getCurrentTime(l_int32  *sec,
-                 l_int32  *usec)
+l_getCurrentTime(int32_t  *sec,
+                 int32_t  *usec)
 {
 struct timeval tv;
 
     gettimeofday(&tv, NULL);
-    if (sec) *sec = (l_int32)tv.tv_sec;
-    if (usec) *usec = (l_int32)tv.tv_usec;
+    if (sec) *sec = (int32_t)tv.tv_sec;
+    if (usec) *usec = (int32_t)tv.tv_usec;
 }
 
 #elif defined(__Fuchsia__) /* resource.h not implemented on Fuchsia. */
@@ -1122,8 +1122,8 @@ stopTimerNested(L_TIMER  rusage_start)
 }
 
 void
-l_getCurrentTime(l_int32  *sec,
-                 l_int32  *usec)
+l_getCurrentTime(int32_t  *sec,
+                 int32_t  *usec)
 {
 }
 
@@ -1204,8 +1204,8 @@ ULONGLONG       hnsec;  /* in units of 100 ns intervals */
 }
 
 void
-l_getCurrentTime(l_int32  *sec,
-                 l_int32  *usec)
+l_getCurrentTime(int32_t  *sec,
+                 int32_t  *usec)
 {
 ULARGE_INTEGER  utime, birthunix;
 FILETIME        systemtime;
@@ -1221,8 +1221,8 @@ LONGLONG        usecs;
 
     usecs = (LONGLONG) ((utime.QuadPart - birthunix.QuadPart) / 10);
 
-    if (sec) *sec = (l_int32) (usecs / 1000000);
-    if (usec) *usec = (l_int32) (usecs % 1000000);
+    if (sec) *sec = (int32_t) (usecs / 1000000);
+    if (usec) *usec = (int32_t) (usecs % 1000000);
 }
 
 #endif
@@ -1261,7 +1261,7 @@ L_WALLTIMER  *timer;
 l_float32
 stopWallTimer(L_WALLTIMER  **ptimer)
 {
-l_int32       tsec, tusec;
+int32_t       tsec, tusec;
 L_WALLTIMER  *timer;
 
     if (!ptimer)
@@ -1295,7 +1295,7 @@ char *
 l_getFormattedDate(void)
 {
 char        buf[128] = "", sep = 'Z';
-l_int32     gmt_offset, relh, relm;
+int32_t     gmt_offset, relh, relm;
 time_t      ut, lt;
 struct tm   Tm;
 struct tm  *tptr = &Tm;
@@ -1325,7 +1325,7 @@ struct tm  *tptr = &Tm;
 
         /* Calls "difftime" to obtain the resulting difference in seconds,
          * because "time_t" is an opaque type, per the C standard. */
-    gmt_offset = (l_int32) difftime(ut, lt);
+    gmt_offset = (int32_t) difftime(ut, lt);
     if (gmt_offset > 0)
         sep = '+';
     else if (gmt_offset < 0)

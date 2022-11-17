@@ -43,7 +43,7 @@ int main(int    argc,
          char **argv)
 {
 char    *filein, *fileout;
-l_int32  x, y, n, i;
+int32_t  x, y, n, i;
 PIX     *pixs;
 PTA     *pta;
 PTAA    *ptaa, *ptaa2, *ptaa3;

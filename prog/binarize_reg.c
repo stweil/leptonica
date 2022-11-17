@@ -41,11 +41,11 @@
 
 #include "allheaders.h"
 
-PIX *PixTest1(PIX *pixs, l_int32 size, l_float32 factor, L_REGPARAMS *rp);
-PIX *PixTest2(PIX *pixs, l_int32 size, l_float32 factor, l_int32 nx,
-              l_int32 ny, L_REGPARAMS *rp);
-void PixTest3(PIX *pixs, l_int32 size, l_float32 factor,
-              l_int32 nx, l_int32 ny, l_int32 paircount, L_REGPARAMS *rp);
+PIX *PixTest1(PIX *pixs, int32_t size, l_float32 factor, L_REGPARAMS *rp);
+PIX *PixTest2(PIX *pixs, int32_t size, l_float32 factor, int32_t nx,
+              int32_t ny, L_REGPARAMS *rp);
+void PixTest3(PIX *pixs, int32_t size, l_float32 factor,
+              int32_t nx, int32_t ny, int32_t paircount, L_REGPARAMS *rp);
 
 int main(int    argc,
          char **argv)
@@ -97,11 +97,11 @@ L_REGPARAMS  *rp;
 }
 
 PIX *PixTest1(PIX          *pixs,
-              l_int32       size,
+              int32_t       size,
               l_float32     factor,
               L_REGPARAMS  *rp)
 {
-l_int32  w, h;
+int32_t  w, h;
 PIX     *pixm, *pixsd, *pixth, *pixd, *pix1;
 PIXA    *pixa;
 
@@ -134,13 +134,13 @@ PIXA    *pixa;
 }
 
 PIX *PixTest2(PIX          *pixs,
-              l_int32       size,
+              int32_t       size,
               l_float32     factor,
-              l_int32       nx,
-              l_int32       ny,
+              int32_t       nx,
+              int32_t       ny,
               L_REGPARAMS  *rp)
 {
-l_int32  w, h;
+int32_t  w, h;
 PIX     *pixth, *pixd, *pix1;
 PIXA    *pixa;
 
@@ -173,11 +173,11 @@ PIXA    *pixa;
 }
 
 void PixTest3(PIX          *pixs,
-              l_int32       size,
+              int32_t       size,
               l_float32     factor,
-              l_int32       nx,
-              l_int32       ny,
-              l_int32       paircount,
+              int32_t       nx,
+              int32_t       ny,
+              int32_t       paircount,
               L_REGPARAMS  *rp)
 {
 PIX  *pix1, *pix2;

@@ -36,21 +36,21 @@
 
 #include "allheaders.h"
 
-static const l_int32 SPACE = 30;
-static const l_int32 MAX_WIDTH = 350;
+static const int32_t SPACE = 30;
+static const int32_t MAX_WIDTH = 350;
 static const char *image[4] = {"marge.jpg",
                                "test24.jpg",
                                "juditharismax.jpg",
                                "hardlight2_2.jpg"};
 
-static l_int32 TestImage(const char *filename, l_int32 i, L_REGPARAMS *rp);
+static int32_t TestImage(const char *filename, int32_t i, L_REGPARAMS *rp);
 static void PixSave32(PIXA *pixa, PIX *pixc, L_REGPARAMS *rp);
 
 
 int main(int    argc,
          char **argv)
 {
-l_int32       i;
+int32_t       i;
 L_REGPARAMS  *rp;
 
     if (regTestSetup(argc, argv, &rp))
@@ -65,13 +65,13 @@ L_REGPARAMS  *rp;
 }
 
 
-static l_int32
+static int32_t
 TestImage(const char   *filename,
-          l_int32       i,
+          int32_t       i,
           L_REGPARAMS  *rp)
 {
 char       buf[256];
-l_int32    w, h;
+int32_t    w, h;
 l_float32  factor;
 PIX       *pix, *pixs, *pixc, *pix32, *pixt, *pixd;
 PIXA      *pixa;

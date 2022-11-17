@@ -35,22 +35,22 @@
  *          PIX       *pixDeskewGeneral()
  *
  *      Top-level angle-finding interface
- *          l_int32    pixFindSkew()
+ *          int32_t    pixFindSkew()
  *
  *      Basic angle-finding functions
- *          l_int32    pixFindSkewSweep()
- *          l_int32    pixFindSkewSweepAndSearch()
- *          l_int32    pixFindSkewSweepAndSearchScore()
- *          l_int32    pixFindSkewSweepAndSearchScorePivot()
+ *          int32_t    pixFindSkewSweep()
+ *          int32_t    pixFindSkewSweepAndSearch()
+ *          int32_t    pixFindSkewSweepAndSearchScore()
+ *          int32_t    pixFindSkewSweepAndSearchScorePivot()
  *
  *      Search over arbitrary range of angles in orthogonal directions
- *          l_int32    pixFindSkewOrthogonalRange()
+ *          int32_t    pixFindSkewOrthogonalRange()
  *
  *      Differential square sum function for scoring
- *          l_int32    pixFindDifferentialSquareSum()
+ *          int32_t    pixFindDifferentialSquareSum()
  *
  *      Measures of variance of row sums
- *          l_int32    pixFindNormalizedSquareSum()
+ *          int32_t    pixFindNormalizedSquareSum()
  *
  *
  *      ==============================================================
@@ -113,8 +113,8 @@ static const l_float32  DefaultSweepDelta = 1.0;   /* degrees */
 static const l_float32  DefaultMinbsDelta = 0.01;  /* degrees */
 
     /* Default scale factors for pixFindSkew() */
-static const l_int32  DefaultSweepReduction = 4;  /* sweep part; 4 is good */
-static const l_int32  DefaultBsReduction = 2;  /* binary search part */
+static const int32_t  DefaultSweepReduction = 4;  /* sweep part; 4 is good */
+static const int32_t  DefaultBsReduction = 2;  /* binary search part */
 
     /* Minimum angle for deskewing in pixDeskew() */
 static const l_float32  MinDeskewAngle = 0.1;  /* degree */
@@ -123,7 +123,7 @@ static const l_float32  MinDeskewAngle = 0.1;  /* degree */
 static const l_float32  MinAllowedConfidence = 3.0;
 
     /* Minimum allowed maxscore to give nonzero confidence */
-static const l_int32  MinValidMaxscore = 10000;
+static const int32_t  MinValidMaxscore = 10000;
 
     /* Constant setting threshold for minimum allowed minscore
      * to give nonzero confidence; multiply this constant by
@@ -131,7 +131,7 @@ static const l_int32  MinValidMaxscore = 10000;
 static const l_float32  MinscoreThreshFactor = 0.000002;
 
     /* Default binarization threshold value */
-static const l_int32  DefaultBinaryThreshold = 130;
+static const int32_t  DefaultBinaryThreshold = 130;
 
 #ifndef  NO_CONSOLE_IO
 #define  DEBUG_PRINT_SCORES     0
@@ -165,7 +165,7 @@ static const l_int32  DefaultBinaryThreshold = 130;
  */
 PIX *
 pixDeskewBoth(PIX     *pixs,
-              l_int32  redsearch)
+              int32_t  redsearch)
 {
 PIX  *pix1, *pix2, *pix3, *pix4;
 
@@ -206,7 +206,7 @@ PIX  *pix1, *pix2, *pix3, *pix4;
  */
 PIX *
 pixDeskew(PIX     *pixs,
-          l_int32  redsearch)
+          int32_t  redsearch)
 {
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -240,7 +240,7 @@ pixDeskew(PIX     *pixs,
  */
 PIX *
 pixFindSkewAndDeskew(PIX        *pixs,
-                     l_int32     redsearch,
+                     int32_t     redsearch,
                      l_float32  *pangle,
                      l_float32  *pconf)
 {
@@ -282,15 +282,15 @@ pixFindSkewAndDeskew(PIX        *pixs,
  */
 PIX *
 pixDeskewGeneral(PIX        *pixs,
-                 l_int32     redsweep,
+                 int32_t     redsweep,
                  l_float32   sweeprange,
                  l_float32   sweepdelta,
-                 l_int32     redsearch,
-                 l_int32     thresh,
+                 int32_t     redsearch,
+                 int32_t     thresh,
                  l_float32  *pangle,
                  l_float32  *pconf)
 {
-l_int32    ret, depth;
+int32_t    ret, depth;
 l_float32  angle, conf, deg2rad;
 PIX       *pixb, *pixd;
 
@@ -408,11 +408,11 @@ pixFindSkew(PIX        *pixs,
 l_ok
 pixFindSkewSweep(PIX        *pixs,
                  l_float32  *pangle,
-                 l_int32     reduction,
+                 int32_t     reduction,
                  l_float32   sweeprange,
                  l_float32   sweepdelta)
 {
-l_int32    ret, bzero, i, nangles;
+int32_t    ret, bzero, i, nangles;
 l_float32  deg2rad, theta;
 l_float32  sum, maxscore, maxangle;
 NUMA      *natheta, *nascore;
@@ -447,7 +447,7 @@ PIX       *pix, *pixt;
         return 1;
     }
 
-    nangles = (l_int32)((2. * sweeprange) / sweepdelta + 1);
+    nangles = (int32_t)((2. * sweeprange) / sweepdelta + 1);
     natheta = numaCreate(nangles);
     nascore = numaCreate(nangles);
     pixt = pixCreateTemplate(pix);
@@ -551,8 +551,8 @@ l_ok
 pixFindSkewSweepAndSearch(PIX        *pixs,
                           l_float32  *pangle,
                           l_float32  *pconf,
-                          l_int32     redsweep,
-                          l_int32     redsearch,
+                          int32_t     redsweep,
+                          int32_t     redsearch,
                           l_float32   sweeprange,
                           l_float32   sweepdelta,
                           l_float32   minbsdelta)
@@ -606,8 +606,8 @@ pixFindSkewSweepAndSearchScore(PIX        *pixs,
                                l_float32  *pangle,
                                l_float32  *pconf,
                                l_float32  *pendscore,
-                               l_int32     redsweep,
-                               l_int32     redsearch,
+                               int32_t     redsweep,
+                               int32_t     redsearch,
                                l_float32   sweepcenter,
                                l_float32   sweeprange,
                                l_float32   sweepdelta,
@@ -655,16 +655,16 @@ pixFindSkewSweepAndSearchScorePivot(PIX        *pixs,
                                     l_float32  *pangle,
                                     l_float32  *pconf,
                                     l_float32  *pendscore,
-                                    l_int32     redsweep,
-                                    l_int32     redsearch,
+                                    int32_t     redsweep,
+                                    int32_t     redsearch,
                                     l_float32   sweepcenter,
                                     l_float32   sweeprange,
                                     l_float32   sweepdelta,
                                     l_float32   minbsdelta,
-                                    l_int32     pivot)
+                                    int32_t     pivot)
 {
-l_int32    ret, bzero, i, nangles, n, ratio, maxindex, minloc;
-l_int32    width, height;
+int32_t    ret, bzero, i, nangles, n, ratio, maxindex, minloc;
+int32_t    width, height;
 l_float32  deg2rad, theta, delta;
 l_float32  sum, maxscore, maxangle;
 l_float32  centerangle, leftcenterangle, rightcenterangle;
@@ -729,7 +729,7 @@ PIX       *pixsw, *pixsch, *pixt1, *pixt2;
     else
         pixt2 = pixCreateTemplate(pixsch);
 
-    nangles = (l_int32)((2. * sweeprange) / sweepdelta + 1);
+    nangles = (int32_t)((2. * sweeprange) / sweepdelta + 1);
     natheta = numaCreate(nangles);
     nascore = numaCreate(nangles);
 
@@ -1021,12 +1021,12 @@ cleanup:
  *          %confprior; say 1.5.
  * </pre>
  */
-l_int32
+int32_t
 pixFindSkewOrthogonalRange(PIX        *pixs,
                            l_float32  *pangle,
                            l_float32  *pconf,
-                           l_int32     redsweep,
-                           l_int32     redsearch,
+                           int32_t     redsweep,
+                           int32_t     redsearch,
                            l_float32   sweeprange,
                            l_float32   sweepdelta,
                            l_float32   minbsdelta,
@@ -1096,8 +1096,8 @@ l_ok
 pixFindDifferentialSquareSum(PIX        *pixs,
                              l_float32  *psum)
 {
-l_int32    i, n;
-l_int32    w, h, skiph, skip, nskip;
+int32_t    i, n;
+int32_t    w, h, skiph, skip, nskip;
 l_float32  val1, val2, diff, sum;
 NUMA      *na;
 
@@ -1117,7 +1117,7 @@ NUMA      *na;
          * the top and bottom of a (nearly) all black image. */
     w = pixGetWidth(pixs);
     h = pixGetHeight(pixs);
-    skiph = (l_int32)(0.05 * w);  /* skip for max shear of 0.025 radians */
+    skiph = (int32_t)(0.05 * w);  /* skip for max shear of 0.025 radians */
     skip = L_MIN(h / 10, skiph);  /* don't remove more than 10% of image */
     nskip = L_MAX(skip / 2, 1);  /* at top & bot; skip at least one line */
 
@@ -1169,7 +1169,7 @@ pixFindNormalizedSquareSum(PIX        *pixs,
                            l_float32  *pvratio,
                            l_float32  *pfract)
 {
-l_int32    i, w, h, empty;
+int32_t    i, w, h, empty;
 l_float32  sum, sumsq, uniform, val;
 NUMA      *na;
 PIX       *pixt;

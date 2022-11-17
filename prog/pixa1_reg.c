@@ -36,12 +36,12 @@
 
 #include "allheaders.h"
 
-static const l_int32 CONNECTIVITY = 8;
+static const int32_t CONNECTIVITY = 8;
 
 int main(int    argc,
          char **argv)
 {
-l_int32       size, i, n, n0;
+int32_t       size, i, n, n0;
 BOXA         *boxa;
 GPLOT        *gplot;
 NUMA         *nax, *nay1, *nay2;

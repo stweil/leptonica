@@ -49,14 +49,14 @@
 
 #include "allheaders.h"
 
-static const l_int32  MaxColors[] = {4, 8, 16};
-static const l_int32  FinalColors[] = {4, 8, 16};
+static const int32_t  MaxColors[] = {4, 8, 16};
+static const int32_t  FinalColors[] = {4, 8, 16};
 
 int main(int    argc,
          char **argv)
 {
-l_int32       i, j, k, maxdist, maxcolors, selsize, finalcolors;
-l_int32       nc, rval, gval, bval;
+int32_t       i, j, k, maxdist, maxcolors, selsize, finalcolors;
+int32_t       nc, rval, gval, bval;
 PIX          *pixs, *pix1, *pix2;
 PIXA         *pixa;
 PIXCMAP      *cmap, *cmapr;

@@ -12,7 +12,7 @@ LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
 
 	l_float32  fvarp, fvarm, devw, devh;
 	l_float32  del_evenodd, rms_even, rms_odd, rms_all;
-	l_int32    isame;
+	int32_t    isame;
 
 	boxa1 = boxaReconcileAllByMedian(boxa_payload,
 					 L_ADJUST_LEFT_AND_RIGHT,

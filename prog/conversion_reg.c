@@ -41,7 +41,7 @@ int main(int    argc,
          char **argv)
 {
 char        *errorstr;
-l_int32      same, error;
+int32_t      same, error;
 PIX         *pixs1, *pixs2, *pixs4, *pixs8, *pixs16, *pixs32;
 PIX         *pixc2, *pixc4, *pixc8;
 PIX         *pix1, *pix2, *pix3, *pix4, *pix5, *pix6;

@@ -58,7 +58,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32  ret;
+int32_t  ret;
 char    *dirin, *substr, *fileout;
 
     if (argc != 3 && argc != 4) {

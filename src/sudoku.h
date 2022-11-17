@@ -51,16 +51,16 @@
 
 struct L_Sudoku
 {
-    l_int32        num;       /*!< number of unknowns                     */
-    l_int32       *locs;      /*!< location of unknowns                   */
-    l_int32        current;   /*!< index into %locs of current location   */
-    l_int32       *init;      /*!< initial state, with 0 representing     */
+    int32_t        num;       /*!< number of unknowns                     */
+    int32_t       *locs;      /*!< location of unknowns                   */
+    int32_t        current;   /*!< index into %locs of current location   */
+    int32_t       *init;      /*!< initial state, with 0 representing     */
                               /*!< the unknowns                           */
-    l_int32       *state;     /*!< present state, including inits and     */
+    int32_t       *state;     /*!< present state, including inits and     */
                               /*!< guesses of unknowns up to %current     */
-    l_int32        nguess;    /*!< shows current number of guesses        */
-    l_int32        finished;  /*!< set to 1 when solved                   */
-    l_int32        failure;   /*!< set to 1 if no solution is possible    */
+    int32_t        nguess;    /*!< shows current number of guesses        */
+    int32_t        finished;  /*!< set to 1 when solved                   */
+    int32_t        failure;   /*!< set to 1 if no solution is possible    */
 };
 typedef struct L_Sudoku  L_SUDOKU;
 

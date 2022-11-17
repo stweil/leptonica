@@ -38,10 +38,10 @@
 #include "allheaders.h"
 
 static void AddTestSet(PIXA *pixa, PIX *pixs,
-                       l_int32 filtertype, l_int32 edgethresh,
-                       l_int32 smoothx, l_int32 smoothy,
-                       l_float32 gamma, l_int32 minval,
-                       l_int32 maxval, l_int32 targetthresh);
+                       int32_t filtertype, int32_t edgethresh,
+                       int32_t smoothx, int32_t smoothy,
+                       l_float32 gamma, int32_t minval,
+                       int32_t maxval, int32_t targetthresh);
 
 int main(int    argc,
          char **argv)
@@ -77,14 +77,14 @@ L_REGPARAMS  *rp;
 void
 AddTestSet(PIXA      *pixa,
            PIX       *pixs,
-           l_int32    filtertype,
-           l_int32    edgethresh,
-           l_int32    smoothx,
-           l_int32    smoothy,
+           int32_t    filtertype,
+           int32_t    edgethresh,
+           int32_t    smoothx,
+           int32_t    smoothy,
            l_float32  gamma,
-           l_int32    minval,
-           l_int32    maxval,
-           l_int32    targetthresh)
+           int32_t    minval,
+           int32_t    maxval,
+           int32_t    targetthresh)
 {
 PIX  *pix1, *pix2, *pix3;
 

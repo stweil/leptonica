@@ -61,7 +61,7 @@ int main(int    argc,
          char **argv)
 {
 char    *fileout;
-l_int32  width, type, display;
+int32_t  width, type, display;
 BOXAA   *baa;
 PIX     *pix1;
 PIXA    *pixa1, *pixa2;

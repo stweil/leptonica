@@ -41,12 +41,12 @@
 #include <sys/types.h>
 #include "allheaders.h"
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
 char       buf[512], dirname[256];
 char      *dirin, *pattern, *subdirout, *fname, *tail, *basename;
-l_int32    thresh, i, n;
+int32_t    thresh, i, n;
 l_float32  scalefactor;
 PIX       *pix1, *pix2, *pix3, *pix4;
 SARRAY    *sa;

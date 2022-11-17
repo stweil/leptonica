@@ -37,11 +37,11 @@
  *            BOXA     *pixConnComp()
  *            BOXA     *pixConnCompPixa()
  *            BOXA     *pixConnCompBB()
- *            l_int32   pixCountConnComp()
+ *            int32_t   pixCountConnComp()
  *
  *      Identify the next c.c. to be erased:
- *            l_int32   nextOnPixelInRaster()
- *    static  l_int32   nextOnPixelInRasterLow()
+ *            int32_t   nextOnPixelInRaster()
+ *    static  int32_t   nextOnPixelInRasterLow()
  *
  *      Erase the c.c., saving the b.b.:
  *            BOX      *pixSeedfillBB()
@@ -49,9 +49,9 @@
  *            BOX      *pixSeedfill8BB()
  *
  *      Just erase the c.c.:
- *            l_int32   pixSeedfill()
- *            l_int32   pixSeedfill4()
- *            l_int32   pixSeedfill8()
+ *            int32_t   pixSeedfill()
+ *            int32_t   pixSeedfill4()
+ *            int32_t   pixSeedfill8()
  *
  *      Static stack helper functions for single raster line seedfill:
  *            static void    pushFillsegBB()
@@ -103,26 +103,26 @@
  */
 struct FillSeg
 {
-    l_int32    xleft;    /*!< left edge of run */
-    l_int32    xright;   /*!< right edge of run */
-    l_int32    y;        /*!< run y  */
-    l_int32    dy;       /*!< parent segment direction: 1 above, -1 below) */
+    int32_t    xleft;    /*!< left edge of run */
+    int32_t    xright;   /*!< right edge of run */
+    int32_t    y;        /*!< run y  */
+    int32_t    dy;       /*!< parent segment direction: 1 above, -1 below) */
 };
 typedef struct FillSeg    FILLSEG;
 
-static l_int32 nextOnPixelInRasterLow(l_uint32 *data, l_int32 w, l_int32 h,
-                                      l_int32 wpl, l_int32 xstart,
-                                      l_int32 ystart, l_int32 *px, l_int32 *py);
+static int32_t nextOnPixelInRasterLow(uint32_t *data, int32_t w, int32_t h,
+                                      int32_t wpl, int32_t xstart,
+                                      int32_t ystart, int32_t *px, int32_t *py);
 
     /* Static accessors for FillSegs on a stack */
-static void pushFillsegBB(L_STACK *stack, l_int32 xleft, l_int32 xright,
-                          l_int32 y, l_int32 dy, l_int32 ymax,
-                          l_int32 *pminx, l_int32 *pmaxx,
-                          l_int32 *pminy, l_int32 *pmaxy);
-static void pushFillseg(L_STACK *stack, l_int32 xleft, l_int32 xright,
-                        l_int32 y, l_int32 dy, l_int32 ymax);
-static void popFillseg(L_STACK *stack, l_int32 *pxleft, l_int32 *pxright,
-                       l_int32 *py, l_int32 *pdy);
+static void pushFillsegBB(L_STACK *stack, int32_t xleft, int32_t xright,
+                          int32_t y, int32_t dy, int32_t ymax,
+                          int32_t *pminx, int32_t *pmaxx,
+                          int32_t *pminy, int32_t *pmaxy);
+static void pushFillseg(L_STACK *stack, int32_t xleft, int32_t xright,
+                        int32_t y, int32_t dy, int32_t ymax);
+static void popFillseg(L_STACK *stack, int32_t *pxleft, int32_t *pxright,
+                       int32_t *py, int32_t *pdy);
 
 
 #ifndef  NO_CONSOLE_IO
@@ -151,7 +151,7 @@ static void popFillseg(L_STACK *stack, l_int32 *pxleft, l_int32 *pxright,
 BOXA *
 pixConnComp(PIX     *pixs,
             PIXA   **ppixa,
-            l_int32  connectivity)
+            int32_t  connectivity)
 {
 
     if (ppixa) *ppixa = NULL;
@@ -193,10 +193,10 @@ pixConnComp(PIX     *pixs,
 BOXA *
 pixConnCompPixa(PIX     *pixs,
                 PIXA   **ppixa,
-                l_int32  connectivity)
+                int32_t  connectivity)
 {
-l_int32   h, iszero;
-l_int32   x, y, xstart, ystart;
+int32_t   h, iszero;
+int32_t   x, y, xstart, ystart;
 PIX      *pix1, *pix2, *pix3, *pix4;
 PIXA     *pixa;
 BOX      *box;
@@ -305,10 +305,10 @@ cleanup:
  */
 BOXA *
 pixConnCompBB(PIX     *pixs,
-              l_int32  connectivity)
+              int32_t  connectivity)
 {
-l_int32   h, iszero;
-l_int32   x, y, xstart, ystart;
+int32_t   h, iszero;
+int32_t   x, y, xstart, ystart;
 PIX      *pix1;
 BOX      *box;
 BOXA     *boxa;
@@ -387,11 +387,11 @@ cleanup:
  */
 l_ok
 pixCountConnComp(PIX      *pixs,
-                 l_int32   connectivity,
-                 l_int32  *pcount)
+                 int32_t   connectivity,
+                 int32_t  *pcount)
 {
-l_int32   h, iszero;
-l_int32   x, y, xstart, ystart;
+int32_t   h, iszero;
+int32_t   x, y, xstart, ystart;
 PIX      *pix1;
 L_STACK  *stack, *auxstack;
 
@@ -446,15 +446,15 @@ L_STACK  *stack, *auxstack;
  * \param[out]   px, py           coord value of next ON pixel
  * \return  1 if a pixel is found; 0 otherwise or on error
  */
-l_int32
+int32_t
 nextOnPixelInRaster(PIX      *pixs,
-                    l_int32   xstart,
-                    l_int32   ystart,
-                    l_int32  *px,
-                    l_int32  *py)
+                    int32_t   xstart,
+                    int32_t   ystart,
+                    int32_t  *px,
+                    int32_t  *py)
 {
-l_int32    w, h, d, wpl;
-l_uint32  *data;
+int32_t    w, h, d, wpl;
+uint32_t  *data;
 
     if (!pixs)
         return ERROR_INT("pixs not defined", __func__, 0);
@@ -478,18 +478,18 @@ l_uint32  *data;
  * \param[out]   px, py           coord value of next ON pixel
  * \return  1 if a pixel is found; 0 otherwise or on error
  */
-static l_int32
-nextOnPixelInRasterLow(l_uint32  *data,
-                       l_int32    w,
-                       l_int32    h,
-                       l_int32    wpl,
-                       l_int32    xstart,
-                       l_int32    ystart,
-                       l_int32   *px,
-                       l_int32   *py)
+static int32_t
+nextOnPixelInRasterLow(uint32_t  *data,
+                       int32_t    w,
+                       int32_t    h,
+                       int32_t    wpl,
+                       int32_t    xstart,
+                       int32_t    ystart,
+                       int32_t   *px,
+                       int32_t   *py)
 {
-l_int32    i, x, y, xend, startword;
-l_uint32  *line, *pword;
+int32_t    i, x, y, xend, startword;
+uint32_t  *line, *pword;
 
         /* Look at the first word */
     line = data + ystart * wpl;
@@ -558,9 +558,9 @@ l_uint32  *line, *pword;
 BOX *
 pixSeedfillBB(PIX      *pixs,
               L_STACK  *stack,
-              l_int32   x,
-              l_int32   y,
-              l_int32   connectivity)
+              int32_t   x,
+              int32_t   y,
+              int32_t   connectivity)
 {
 BOX  *box;
 
@@ -619,13 +619,13 @@ BOX  *box;
 BOX *
 pixSeedfill4BB(PIX      *pixs,
                L_STACK  *stack,
-               l_int32   x,
-               l_int32   y)
+               int32_t   x,
+               int32_t   y)
 {
-l_int32    w, h, xstart, wpl, x1, x2, dy;
-l_int32    xmax, ymax;
-l_int32    minx, maxx, miny, maxy;  /* for bounding box of this c.c. */
-l_uint32  *data, *line;
+int32_t    w, h, xstart, wpl, x1, x2, dy;
+int32_t    xmax, ymax;
+int32_t    minx, maxx, miny, maxy;  /* for bounding box of this c.c. */
+uint32_t  *data, *line;
 BOX       *box;
 
     if (!pixs || pixGetDepth(pixs) != 1)
@@ -732,13 +732,13 @@ BOX       *box;
 BOX *
 pixSeedfill8BB(PIX      *pixs,
                L_STACK  *stack,
-               l_int32   x,
-               l_int32   y)
+               int32_t   x,
+               int32_t   y)
 {
-l_int32    w, h, xstart, wpl, x1, x2, dy;
-l_int32    xmax, ymax;
-l_int32    minx, maxx, miny, maxy;  /* for bounding box of this c.c. */
-l_uint32  *data, *line;
+int32_t    w, h, xstart, wpl, x1, x2, dy;
+int32_t    xmax, ymax;
+int32_t    minx, maxx, miny, maxy;  /* for bounding box of this c.c. */
+uint32_t  *data, *line;
 BOX       *box;
 
     if (!pixs || pixGetDepth(pixs) != 1)
@@ -836,11 +836,11 @@ BOX       *box;
 l_ok
 pixSeedfill(PIX      *pixs,
             L_STACK  *stack,
-            l_int32   x,
-            l_int32   y,
-            l_int32   connectivity)
+            int32_t   x,
+            int32_t   y,
+            int32_t   connectivity)
 {
-l_int32  retval;
+int32_t  retval;
 
     if (!pixs || pixGetDepth(pixs) != 1)
         return ERROR_INT("pixs not defined or not 1 bpp", __func__, 1);
@@ -878,12 +878,12 @@ l_int32  retval;
 l_ok
 pixSeedfill4(PIX      *pixs,
              L_STACK  *stack,
-             l_int32   x,
-             l_int32   y)
+             int32_t   x,
+             int32_t   y)
 {
-l_int32    w, h, xstart, wpl, x1, x2, dy;
-l_int32    xmax, ymax;
-l_uint32  *data, *line;
+int32_t    w, h, xstart, wpl, x1, x2, dy;
+int32_t    xmax, ymax;
+uint32_t  *data, *line;
 
     if (!pixs || pixGetDepth(pixs) != 1)
         return ERROR_INT("pixs not defined or not 1 bpp", __func__, 1);
@@ -970,12 +970,12 @@ l_uint32  *data, *line;
 l_ok
 pixSeedfill8(PIX      *pixs,
              L_STACK  *stack,
-             l_int32   x,
-             l_int32   y)
+             int32_t   x,
+             int32_t   y)
 {
-l_int32    w, h, xstart, wpl, x1, x2, dy;
-l_int32    xmax, ymax;
-l_uint32  *data, *line;
+int32_t    w, h, xstart, wpl, x1, x2, dy;
+int32_t    xmax, ymax;
+uint32_t  *data, *line;
 
     if (!pixs || pixGetDepth(pixs) != 1)
         return ERROR_INT("pixs not defined or not 1 bpp", __func__, 1);
@@ -1070,15 +1070,15 @@ l_uint32  *data, *line;
  */
 static void
 pushFillsegBB(L_STACK  *stack,
-              l_int32   xleft,
-              l_int32   xright,
-              l_int32   y,
-              l_int32   dy,
-              l_int32   ymax,
-              l_int32  *pminx,
-              l_int32  *pmaxx,
-              l_int32  *pminy,
-              l_int32  *pmaxy)
+              int32_t   xleft,
+              int32_t   xright,
+              int32_t   y,
+              int32_t   dy,
+              int32_t   ymax,
+              int32_t  *pminx,
+              int32_t  *pmaxx,
+              int32_t  *pminy,
+              int32_t  *pmaxy)
 {
 FILLSEG  *fseg;
 L_STACK  *auxstack;
@@ -1133,11 +1133,11 @@ L_STACK  *auxstack;
  */
 static void
 pushFillseg(L_STACK  *stack,
-            l_int32   xleft,
-            l_int32   xright,
-            l_int32   y,
-            l_int32   dy,
-            l_int32   ymax)
+            int32_t   xleft,
+            int32_t   xright,
+            int32_t   y,
+            int32_t   dy,
+            int32_t   ymax)
 {
 FILLSEG  *fseg;
 L_STACK  *auxstack;
@@ -1186,10 +1186,10 @@ L_STACK  *auxstack;
  */
 static void
 popFillseg(L_STACK  *stack,
-           l_int32  *pxleft,
-           l_int32  *pxright,
-           l_int32  *py,
-           l_int32  *pdy)
+           int32_t  *pxleft,
+           int32_t  *pxright,
+           int32_t  *py,
+           int32_t  *pdy)
 {
 FILLSEG  *fseg;
 L_STACK  *auxstack;

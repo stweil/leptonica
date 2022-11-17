@@ -39,34 +39,34 @@
  *          L_DEWARPA         *dewarpaCreate()
  *          L_DEWARPA         *dewarpaCreateFromPixacomp()
  *          void               dewarpaDestroy()
- *          l_int32            dewarpaDestroyDewarp()
+ *          int32_t            dewarpaDestroyDewarp()
  *
  *      Dewarpa insertion/extraction
- *          l_int32            dewarpaInsertDewarp()
- *          static l_int32     dewarpaExtendArraysToSize()
+ *          int32_t            dewarpaInsertDewarp()
+ *          static int32_t     dewarpaExtendArraysToSize()
  *          L_DEWARP          *dewarpaGetDewarp()
  *
  *      Setting parameters to control rendering from the model
- *          l_int32            dewarpaSetCurvatures()
- *          l_int32            dewarpaUseBothArrays()
- *          l_int32            dewarpaSetCheckColumns()
- *          l_int32            dewarpaSetMaxDistance()
+ *          int32_t            dewarpaSetCurvatures()
+ *          int32_t            dewarpaUseBothArrays()
+ *          int32_t            dewarpaSetCheckColumns()
+ *          int32_t            dewarpaSetMaxDistance()
  *
  *      Dewarp serialized I/O
  *          L_DEWARP          *dewarpRead()
  *          L_DEWARP          *dewarpReadStream()
  *          L_DEWARP          *dewarpReadMem()
- *          l_int32            dewarpWrite()
- *          l_int32            dewarpWriteStream()
- *          l_int32            dewarpWriteMem()
+ *          int32_t            dewarpWrite()
+ *          int32_t            dewarpWriteStream()
+ *          int32_t            dewarpWriteMem()
  *
  *      Dewarpa serialized I/O
  *          L_DEWARPA         *dewarpaRead()
  *          L_DEWARPA         *dewarpaReadStream()
  *          L_DEWARPA         *dewarpaReadMem()
- *          l_int32            dewarpaWrite()
- *          l_int32            dewarpaWriteStream()
- *          l_int32            dewarpaWriteMem()
+ *          int32_t            dewarpaWrite()
+ *          int32_t            dewarpaWriteStream()
+ *          int32_t            dewarpaWriteMem()
  *
  *
  *  Examples of usage
@@ -416,26 +416,26 @@
 #include <math.h>
 #include "allheaders.h"
 
-static l_int32 dewarpaExtendArraysToSize(L_DEWARPA *dewa, l_int32 size);
+static int32_t dewarpaExtendArraysToSize(L_DEWARPA *dewa, int32_t size);
 
     /* Parameter values used in dewarpaCreate() */
-static const l_int32     InitialPtrArraySize = 20;   /* n'import quoi */
-static const l_int32     MaxPtrArraySize = 10000;
-static const l_int32     DefaultArraySampling = 30;
-static const l_int32     MinArraySampling = 8;
-static const l_int32     DefaultMinLines = 15;
-static const l_int32     MinMinLines = 4;
-static const l_int32     DefaultMaxRefDist = 16;
-static const l_int32     DefaultUseBoth = TRUE;
-static const l_int32     DefaultCheckColumns = TRUE;
+static const int32_t     InitialPtrArraySize = 20;   /* n'import quoi */
+static const int32_t     MaxPtrArraySize = 10000;
+static const int32_t     DefaultArraySampling = 30;
+static const int32_t     MinArraySampling = 8;
+static const int32_t     DefaultMinLines = 15;
+static const int32_t     MinMinLines = 4;
+static const int32_t     DefaultMaxRefDist = 16;
+static const int32_t     DefaultUseBoth = TRUE;
+static const int32_t     DefaultCheckColumns = TRUE;
 
     /* Parameter values used in dewarpaSetCurvatures() */
-static const l_int32     DefaultMaxLineCurv = 150;
-static const l_int32     DefaultMinDiffLineCurv = 0;
-static const l_int32     DefaultMaxDiffLineCurv = 170;
-static const l_int32     DefaultMaxEdgeCurv = 50;
-static const l_int32     DefaultMaxDiffEdgeCurv = 40;
-static const l_int32     DefaultMaxEdgeSlope = 80;
+static const int32_t     DefaultMaxLineCurv = 150;
+static const int32_t     DefaultMinDiffLineCurv = 0;
+static const int32_t     DefaultMaxDiffLineCurv = 170;
+static const int32_t     DefaultMaxEdgeCurv = 50;
+static const int32_t     DefaultMaxDiffEdgeCurv = 40;
+static const int32_t     DefaultMaxEdgeSlope = 80;
 
 /*----------------------------------------------------------------------*
  *                           Create/destroy Dewarp                      *
@@ -457,7 +457,7 @@ static const l_int32     DefaultMaxEdgeSlope = 80;
  */
 L_DEWARP *
 dewarpCreate(PIX     *pixs,
-             l_int32  pageno)
+             int32_t  pageno)
 {
 L_DEWARP  *dew;
 
@@ -493,8 +493,8 @@ L_DEWARP  *dew;
  * </pre>
  */
 L_DEWARP *
-dewarpCreateRef(l_int32  pageno,
-                l_int32  refpage)
+dewarpCreateRef(int32_t  pageno,
+                int32_t  refpage)
 {
 L_DEWARP  *dew;
 
@@ -573,11 +573,11 @@ L_DEWARP  *dew;
  * </pre>
  */
 L_DEWARPA *
-dewarpaCreate(l_int32  nptrs,
-              l_int32  sampling,
-              l_int32  redfactor,
-              l_int32  minlines,
-              l_int32  maxdist)
+dewarpaCreate(int32_t  nptrs,
+              int32_t  sampling,
+              int32_t  redfactor,
+              int32_t  minlines,
+              int32_t  maxdist)
 {
 L_DEWARPA  *dewa;
 
@@ -661,12 +661,12 @@ L_DEWARPA  *dewa;
  */
 L_DEWARPA *
 dewarpaCreateFromPixacomp(PIXAC   *pixac,
-                          l_int32  useboth,
-                          l_int32  sampling,
-                          l_int32  minlines,
-                          l_int32  maxdist)
+                          int32_t  useboth,
+                          int32_t  sampling,
+                          int32_t  minlines,
+                          int32_t  maxdist)
 {
-l_int32     i, nptrs, pageno;
+int32_t     i, nptrs, pageno;
 L_DEWARP   *dew;
 L_DEWARPA  *dewa;
 PIX        *pixt;
@@ -721,7 +721,7 @@ PIX        *pixt;
 void
 dewarpaDestroy(L_DEWARPA  **pdewa)
 {
-l_int32     i;
+int32_t     i;
 L_DEWARP   *dew;
 L_DEWARPA  *dewa;
 
@@ -757,7 +757,7 @@ L_DEWARPA  *dewa;
  */
 l_ok
 dewarpaDestroyDewarp(L_DEWARPA  *dewa,
-                     l_int32     pageno)
+                     int32_t     pageno)
 {
 L_DEWARP   *dew;
 
@@ -800,7 +800,7 @@ l_ok
 dewarpaInsertDewarp(L_DEWARPA  *dewa,
                     L_DEWARP   *dew)
 {
-l_int32    pageno, n, newsize;
+int32_t    pageno, n, newsize;
 L_DEWARP  *prevdew;
 
     if (!dewa)
@@ -861,9 +861,9 @@ L_DEWARP  *prevdew;
  *      (1) If necessary, reallocs main and cache dewarpa ptr arrays to %size.
  * </pre>
  */
-static l_int32
+static int32_t
 dewarpaExtendArraysToSize(L_DEWARPA  *dewa,
-                         l_int32     size)
+                         int32_t     size)
 {
     if (!dewa)
         return ERROR_INT("dewa not defined", __func__, 1);
@@ -893,7 +893,7 @@ dewarpaExtendArraysToSize(L_DEWARPA  *dewa,
  */
 L_DEWARP *
 dewarpaGetDewarp(L_DEWARPA  *dewa,
-                 l_int32     index)
+                 int32_t     index)
 {
     if (!dewa)
         return (L_DEWARP *)ERROR_PTR("dewa not defined", __func__, NULL);
@@ -960,12 +960,12 @@ dewarpaGetDewarp(L_DEWARPA  *dewa,
  */
 l_ok
 dewarpaSetCurvatures(L_DEWARPA  *dewa,
-                     l_int32     max_linecurv,
-                     l_int32     min_diff_linecurv,
-                     l_int32     max_diff_linecurv,
-                     l_int32     max_edgecurv,
-                     l_int32     max_diff_edgecurv,
-                     l_int32     max_edgeslope)
+                     int32_t     max_linecurv,
+                     int32_t     min_diff_linecurv,
+                     int32_t     max_diff_linecurv,
+                     int32_t     max_edgecurv,
+                     int32_t     max_diff_edgecurv,
+                     int32_t     max_edgeslope)
 {
     if (!dewa)
         return ERROR_INT("dewa not defined", __func__, 1);
@@ -1022,7 +1022,7 @@ dewarpaSetCurvatures(L_DEWARPA  *dewa,
  */
 l_ok
 dewarpaUseBothArrays(L_DEWARPA  *dewa,
-                     l_int32     useboth)
+                     int32_t     useboth)
 {
     if (!dewa)
         return ERROR_INT("dewa not defined", __func__, 1);
@@ -1059,7 +1059,7 @@ dewarpaUseBothArrays(L_DEWARPA  *dewa,
  */
 l_ok
 dewarpaSetCheckColumns(L_DEWARPA  *dewa,
-                       l_int32     check_columns)
+                       int32_t     check_columns)
 {
     if (!dewa)
         return ERROR_INT("dewa not defined", __func__, 1);
@@ -1083,7 +1083,7 @@ dewarpaSetCheckColumns(L_DEWARPA  *dewa,
  */
 l_ok
 dewarpaSetMaxDistance(L_DEWARPA  *dewa,
-                      l_int32     maxdist)
+                      int32_t     maxdist)
 {
     if (!dewa)
         return ERROR_INT("dewa not defined", __func__, 1);
@@ -1144,9 +1144,9 @@ L_DEWARP  *dew;
 L_DEWARP *
 dewarpReadStream(FILE  *fp)
 {
-l_int32    version, sampling, redfactor, minlines, pageno, hasref, refpage;
-l_int32    w, h, nx, ny, vdispar, hdispar, nlines;
-l_int32    mincurv, maxcurv, leftslope, rightslope, leftcurv, rightcurv;
+int32_t    version, sampling, redfactor, minlines, pageno, hasref, refpage;
+int32_t    w, h, nx, ny, vdispar, hdispar, nlines;
+int32_t    mincurv, maxcurv, leftslope, rightslope, leftcurv, rightcurv;
 L_DEWARP  *dew;
 FPIX      *fpixv, *fpixh;
 
@@ -1245,7 +1245,7 @@ FPIX      *fpixv, *fpixh;
  * \return  dew  dewarp, or NULL on error
  */
 L_DEWARP  *
-dewarpReadMem(const l_uint8  *data,
+dewarpReadMem(const uint8_t  *data,
               size_t          size)
 {
 FILE      *fp;
@@ -1274,7 +1274,7 @@ l_ok
 dewarpWrite(const char  *filename,
             L_DEWARP    *dew)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (!filename)
@@ -1310,7 +1310,7 @@ l_ok
 dewarpWriteStream(FILE      *fp,
                   L_DEWARP  *dew)
 {
-l_int32  vdispar, hdispar;
+int32_t  vdispar, hdispar;
 
     if (!fp)
         return ERROR_INT("stream not defined", __func__, 1);
@@ -1361,11 +1361,11 @@ l_int32  vdispar, hdispar;
  * </pre>
  */
 l_ok
-dewarpWriteMem(l_uint8  **pdata,
+dewarpWriteMem(uint8_t  **pdata,
                size_t    *psize,
                L_DEWARP  *dew)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (pdata) *pdata = NULL;
@@ -1449,10 +1449,10 @@ L_DEWARPA  *dewa;
 L_DEWARPA *
 dewarpaReadStream(FILE  *fp)
 {
-l_int32     i, version, ndewarp, maxpage;
-l_int32     sampling, redfactor, minlines, maxdist, useboth;
-l_int32     max_linecurv, min_diff_linecurv, max_diff_linecurv;
-l_int32     max_edgeslope, max_edgecurv, max_diff_edgecurv;
+int32_t     i, version, ndewarp, maxpage;
+int32_t     sampling, redfactor, minlines, maxdist, useboth;
+int32_t     max_linecurv, min_diff_linecurv, max_diff_linecurv;
+int32_t     max_edgeslope, max_edgecurv, max_diff_edgecurv;
 L_DEWARP   *dew;
 L_DEWARPA  *dewa;
 NUMA       *namodels;
@@ -1521,7 +1521,7 @@ NUMA       *namodels;
  * \return  dewa  dewarpa, or NULL on error
  */
 L_DEWARPA  *
-dewarpaReadMem(const l_uint8  *data,
+dewarpaReadMem(const uint8_t  *data,
                size_t          size)
 {
 FILE       *fp;
@@ -1550,7 +1550,7 @@ l_ok
 dewarpaWrite(const char  *filename,
              L_DEWARPA   *dewa)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (!filename)
@@ -1579,7 +1579,7 @@ l_ok
 dewarpaWriteStream(FILE       *fp,
                    L_DEWARPA  *dewa)
 {
-l_int32  ndewarp, i, pageno;
+int32_t  ndewarp, i, pageno;
 
     if (!fp)
         return ERROR_INT("stream not defined", __func__, 1);
@@ -1630,11 +1630,11 @@ l_int32  ndewarp, i, pageno;
  * </pre>
  */
 l_ok
-dewarpaWriteMem(l_uint8   **pdata,
+dewarpaWriteMem(uint8_t   **pdata,
                 size_t     *psize,
                 L_DEWARPA  *dewa)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (pdata) *pdata = NULL;

@@ -45,7 +45,7 @@ int main(int    argc,
          char **argv)
 {
 char          buf1[64], buf2[64];
-l_int32       i, n, hw, thresh, same, ival;
+int32_t       i, n, hw, thresh, same, ival;
 l_float32     val, maxval, rank;
 BOX          *box1;
 NUMA         *na, *nax, *nay, *nap, *nasy, *na1, *na2, *na3, *na4;

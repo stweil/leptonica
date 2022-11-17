@@ -42,32 +42,32 @@
 #if  !USE_JP2KHEADER   /* defined in environ.h */
 /* --------------------------------------------*/
 
-l_ok readHeaderJp2k(const char *filename, l_int32 *pw, l_int32 *ph,
-                    l_int32 *pbps, l_int32 *pspp, l_int32 *pcodec)
+l_ok readHeaderJp2k(const char *filename, int32_t *pw, int32_t *ph,
+                    int32_t *pbps, int32_t *pspp, int32_t *pcodec)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_ok freadHeaderJp2k(FILE *fp, l_int32 *pw, l_int32 *ph,
-                     l_int32 *pbps, l_int32 *pspp, l_int32 *pcodec)
+l_ok freadHeaderJp2k(FILE *fp, int32_t *pw, int32_t *ph,
+                     int32_t *pbps, int32_t *pspp, int32_t *pcodec)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_ok readHeaderMemJp2k(const l_uint8 *cdata, size_t size, l_int32 *pw,
-                       l_int32 *ph, l_int32 *pbps, l_int32 *pspp,
-                       l_int32 *pcodec)
+l_ok readHeaderMemJp2k(const uint8_t *cdata, size_t size, int32_t *pw,
+                       int32_t *ph, int32_t *pbps, int32_t *pspp,
+                       int32_t *pcodec)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_int32 fgetJp2kResolution(FILE *fp, l_int32 *pxres, l_int32 *pyres)
+int32_t fgetJp2kResolution(FILE *fp, int32_t *pxres, int32_t *pyres)
 {
     return ERROR_INT("function not present", __func__, 1);
 }

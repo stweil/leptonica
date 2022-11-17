@@ -45,7 +45,7 @@ int main(int    argc,
          char **argv)
 {
 char       buf[256];
-l_int32    ret;
+int32_t    ret;
 l_float32  fract;
 PIX       *pix1, *pix2, *pix3, *pix4;
 PIXA      *pixa1, *pixa2, *pixa3;

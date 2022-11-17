@@ -81,7 +81,7 @@ int main(int    argc,
 {
 char      *pagedir, *pagesubstr, *maskdir, *masksubstr;
 char      *title, *fileout, *boxaafile, *boxaapath;
-l_int32    ret, res, type, thresh;
+int32_t    ret, res, type, thresh;
 l_float32  scalefactor;
 BOXAA     *baa;
 

@@ -47,7 +47,7 @@ int main(int    argc,
          char **argv)
 {
 char      *filein, *fileout;
-l_int32    i, j, w, d, nhue, nsat, tilewidth;
+int32_t    i, j, w, d, nhue, nsat, tilewidth;
 l_float32  scale, dhue, dsat, delhue, delsat;
 PIX       *pixs, *pixt1, *pixt2, *pixd;
 PIXA      *pixa;

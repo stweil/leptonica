@@ -45,7 +45,7 @@ int main(int    argc,
          char **argv)
 {
 char    *infile, *outfile;
-l_int32  d;
+int32_t  d;
 PIX     *pixs, *pixgr, *pixb;
 
     if (argc != 3)

@@ -36,15 +36,15 @@
 
 #include "allheaders.h"
 
-static const l_int32   BIN_SIZE = 1;
+static const int32_t   BIN_SIZE = 1;
 
 int main(int    argc,
          char **argv)
 {
 char      *filein;
-l_int32    i, j, w, h, d, sampling;
+int32_t    i, j, w, h, d, sampling;
 l_float32  rank, rval;
-l_uint32   val;
+uint32_t   val;
 NUMA      *na, *nah, *nar, *nav;
 PIX       *pix;
 

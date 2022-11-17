@@ -79,7 +79,7 @@ void
 RotateOrthTest(PIX          *pixs,
                L_REGPARAMS  *rp)
 {
-l_int32   zero, count;
+int32_t   zero, count;
 PIX      *pixt, *pixd;
 
 	/* Test 4 successive 90 degree rotations */

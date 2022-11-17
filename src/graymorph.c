@@ -132,14 +132,14 @@ static PIX *pixDilateGray3h(PIX *pixs);
 static PIX *pixDilateGray3v(PIX *pixs);
 
     /*  Low-level gray morphological operations */
-static void dilateGrayLow(l_uint32 *datad, l_int32 w, l_int32 h,
-                          l_int32 wpld, l_uint32 *datas, l_int32 wpls,
-                          l_int32 size, l_int32 direction, l_uint8 *buffer,
-                          l_uint8 *maxarray);
-static void erodeGrayLow(l_uint32 *datad, l_int32 w, l_int32 h,
-                         l_int32 wpld, l_uint32 *datas, l_int32 wpls,
-                         l_int32 size, l_int32 direction, l_uint8 *buffer,
-                         l_uint8 *minarray);
+static void dilateGrayLow(uint32_t *datad, int32_t w, int32_t h,
+                          int32_t wpld, uint32_t *datas, int32_t wpls,
+                          int32_t size, int32_t direction, uint8_t *buffer,
+                          uint8_t *maxarray);
+static void erodeGrayLow(uint32_t *datad, int32_t w, int32_t h,
+                         int32_t wpld, uint32_t *datas, int32_t wpls,
+                         int32_t size, int32_t direction, uint8_t *buffer,
+                         uint8_t *minarray);
 
 /*-----------------------------------------------------------------*
  *           Top-level grayscale morphological operations          *
@@ -160,13 +160,13 @@ static void erodeGrayLow(l_uint32 *datad, l_int32 w, l_int32 h,
  */
 PIX *
 pixErodeGray(PIX     *pixs,
-             l_int32  hsize,
-             l_int32  vsize)
+             int32_t  hsize,
+             int32_t  vsize)
 {
-l_uint8   *buffer, *minarray;
-l_int32    w, h, wplb, wplt;
-l_int32    leftpix, rightpix, toppix, bottompix, maxsize;
-l_uint32  *datab, *datat;
+uint8_t   *buffer, *minarray;
+int32_t    w, h, wplb, wplt;
+int32_t    leftpix, rightpix, toppix, bottompix, maxsize;
+uint32_t  *datab, *datat;
 PIX       *pixb, *pixt, *pixd;
 
     if (!pixs)
@@ -220,9 +220,9 @@ PIX       *pixb, *pixt, *pixd;
     wplb = pixGetWpl(pixb);
     wplt = pixGetWpl(pixt);
 
-    buffer = (l_uint8 *)LEPT_CALLOC(L_MAX(w, h), sizeof(l_uint8));
+    buffer = (uint8_t *)LEPT_CALLOC(L_MAX(w, h), sizeof(uint8_t));
     maxsize = L_MAX(hsize, vsize);
-    minarray = (l_uint8 *)LEPT_CALLOC(2 * maxsize, sizeof(l_uint8));
+    minarray = (uint8_t *)LEPT_CALLOC(2 * maxsize, sizeof(uint8_t));
     if (!buffer || !minarray) {
         L_ERROR("buffer and minarray not made\n", __func__);
         goto cleanup;
@@ -274,13 +274,13 @@ cleanup:
  */
 PIX *
 pixDilateGray(PIX     *pixs,
-              l_int32  hsize,
-              l_int32  vsize)
+              int32_t  hsize,
+              int32_t  vsize)
 {
-l_uint8   *buffer, *maxarray;
-l_int32    w, h, wplb, wplt;
-l_int32    leftpix, rightpix, toppix, bottompix, maxsize;
-l_uint32  *datab, *datat;
+uint8_t   *buffer, *maxarray;
+int32_t    w, h, wplb, wplt;
+int32_t    leftpix, rightpix, toppix, bottompix, maxsize;
+uint32_t  *datab, *datat;
 PIX       *pixb, *pixt, *pixd;
 
     if (!pixs)
@@ -334,9 +334,9 @@ PIX       *pixb, *pixt, *pixd;
     wplb = pixGetWpl(pixb);
     wplt = pixGetWpl(pixt);
 
-    buffer = (l_uint8 *)LEPT_CALLOC(L_MAX(w, h), sizeof(l_uint8));
+    buffer = (uint8_t *)LEPT_CALLOC(L_MAX(w, h), sizeof(uint8_t));
     maxsize = L_MAX(hsize, vsize);
-    maxarray = (l_uint8 *)LEPT_CALLOC(2 * maxsize, sizeof(l_uint8));
+    maxarray = (uint8_t *)LEPT_CALLOC(2 * maxsize, sizeof(uint8_t));
     if (!buffer || !maxarray) {
         L_ERROR("buffer and maxarray not made\n", __func__);
         goto cleanup;
@@ -388,14 +388,14 @@ cleanup:
  */
 PIX *
 pixOpenGray(PIX     *pixs,
-            l_int32  hsize,
-            l_int32  vsize)
+            int32_t  hsize,
+            int32_t  vsize)
 {
-l_uint8   *buffer;
-l_uint8   *array;  /* used to find either min or max in interval */
-l_int32    w, h, wplb, wplt;
-l_int32    leftpix, rightpix, toppix, bottompix, maxsize;
-l_uint32  *datab, *datat;
+uint8_t   *buffer;
+uint8_t   *array;  /* used to find either min or max in interval */
+int32_t    w, h, wplb, wplt;
+int32_t    leftpix, rightpix, toppix, bottompix, maxsize;
+uint32_t  *datab, *datat;
 PIX       *pixb, *pixt, *pixd;
 
     if (!pixs)
@@ -449,9 +449,9 @@ PIX       *pixb, *pixt, *pixd;
     wplb = pixGetWpl(pixb);
     wplt = pixGetWpl(pixt);
 
-    buffer = (l_uint8 *)LEPT_CALLOC(L_MAX(w, h), sizeof(l_uint8));
+    buffer = (uint8_t *)LEPT_CALLOC(L_MAX(w, h), sizeof(uint8_t));
     maxsize = L_MAX(hsize, vsize);
-    array = (l_uint8 *)LEPT_CALLOC(2 * maxsize, sizeof(l_uint8));
+    array = (uint8_t *)LEPT_CALLOC(2 * maxsize, sizeof(uint8_t));
     if (!buffer || !array) {
         L_ERROR("buffer and array not made\n", __func__);
         goto cleanup;
@@ -518,14 +518,14 @@ cleanup:
  */
 PIX *
 pixCloseGray(PIX     *pixs,
-             l_int32  hsize,
-             l_int32  vsize)
+             int32_t  hsize,
+             int32_t  vsize)
 {
-l_uint8   *buffer;
-l_uint8   *array;  /* used to find either min or max in interval */
-l_int32    w, h, wplb, wplt;
-l_int32    leftpix, rightpix, toppix, bottompix, maxsize;
-l_uint32  *datab, *datat;
+uint8_t   *buffer;
+uint8_t   *array;  /* used to find either min or max in interval */
+int32_t    w, h, wplb, wplt;
+int32_t    leftpix, rightpix, toppix, bottompix, maxsize;
+uint32_t  *datab, *datat;
 PIX       *pixb, *pixt, *pixd;
 
     if (!pixs)
@@ -579,9 +579,9 @@ PIX       *pixb, *pixt, *pixd;
     wplb = pixGetWpl(pixb);
     wplt = pixGetWpl(pixt);
 
-    buffer = (l_uint8 *)LEPT_CALLOC(L_MAX(w, h), sizeof(l_uint8));
+    buffer = (uint8_t *)LEPT_CALLOC(L_MAX(w, h), sizeof(uint8_t));
     maxsize = L_MAX(hsize, vsize);
-    array = (l_uint8 *)LEPT_CALLOC(2 * maxsize, sizeof(l_uint8));
+    array = (uint8_t *)LEPT_CALLOC(2 * maxsize, sizeof(uint8_t));
     if (!buffer || !array) {
         L_ERROR("buffer and array not made\n", __func__);
         goto cleanup;
@@ -655,8 +655,8 @@ cleanup:
  */
 PIX *
 pixErodeGray3(PIX     *pixs,
-              l_int32  hsize,
-              l_int32  vsize)
+              int32_t  hsize,
+              int32_t  vsize)
 {
 PIX  *pixt, *pixb, *pixbd, *pixd;
 
@@ -707,9 +707,9 @@ PIX  *pixt, *pixb, *pixbd, *pixd;
 static PIX *
 pixErodeGray3h(PIX  *pixs)
 {
-l_uint32  *datas, *datad, *lines, *lined;
-l_int32    w, h, wpl, i, j;
-l_int32    val0, val1, val2, val3, val4, val5, val6, val7, val8, val9, minval;
+uint32_t  *datas, *datad, *lines, *lined;
+int32_t    w, h, wpl, i, j;
+int32_t    val0, val1, val2, val3, val4, val5, val6, val7, val8, val9, minval;
 PIX       *pixd;
 
     if (!pixs)
@@ -772,9 +772,9 @@ PIX       *pixd;
 static PIX *
 pixErodeGray3v(PIX  *pixs)
 {
-l_uint32  *datas, *datad, *linesi, *linedi;
-l_int32    w, h, wpl, i, j;
-l_int32    val0, val1, val2, val3, val4, val5, val6, val7, val8, val9, minval;
+uint32_t  *datas, *datad, *linesi, *linedi;
+int32_t    w, h, wpl, i, j;
+int32_t    val0, val1, val2, val3, val4, val5, val6, val7, val8, val9, minval;
 PIX       *pixd;
 
     if (!pixs)
@@ -835,8 +835,8 @@ PIX       *pixd;
  */
 PIX *
 pixDilateGray3(PIX     *pixs,
-               l_int32  hsize,
-               l_int32  vsize)
+               int32_t  hsize,
+               int32_t  vsize)
 {
 PIX  *pixt, *pixb, *pixbd, *pixd;
 
@@ -887,9 +887,9 @@ PIX  *pixt, *pixb, *pixbd, *pixd;
 static PIX *
 pixDilateGray3h(PIX  *pixs)
 {
-l_uint32  *datas, *datad, *lines, *lined;
-l_int32    w, h, wpl, i, j;
-l_int32    val0, val1, val2, val3, val4, val5, val6, val7, val8, val9, maxval;
+uint32_t  *datas, *datad, *lines, *lined;
+int32_t    w, h, wpl, i, j;
+int32_t    val0, val1, val2, val3, val4, val5, val6, val7, val8, val9, maxval;
 PIX       *pixd;
 
     if (!pixs)
@@ -949,9 +949,9 @@ PIX       *pixd;
 static PIX *
 pixDilateGray3v(PIX  *pixs)
 {
-l_uint32  *datas, *datad, *linesi, *linedi;
-l_int32    w, h, wpl, i, j;
-l_int32    val0, val1, val2, val3, val4, val5, val6, val7, val8, val9, maxval;
+uint32_t  *datas, *datad, *linesi, *linedi;
+int32_t    w, h, wpl, i, j;
+int32_t    val0, val1, val2, val3, val4, val5, val6, val7, val8, val9, maxval;
 PIX       *pixd;
 
     if (!pixs)
@@ -1014,8 +1014,8 @@ PIX       *pixd;
  */
 PIX *
 pixOpenGray3(PIX     *pixs,
-             l_int32  hsize,
-             l_int32  vsize)
+             int32_t  hsize,
+             int32_t  vsize)
 {
 PIX  *pixt, *pixb, *pixbd, *pixd;
 
@@ -1078,8 +1078,8 @@ PIX  *pixt, *pixb, *pixbd, *pixd;
  */
 PIX *
 pixCloseGray3(PIX     *pixs,
-              l_int32  hsize,
-              l_int32  vsize)
+              int32_t  hsize,
+              int32_t  vsize)
 {
 PIX  *pixt, *pixb, *pixbd, *pixd;
 
@@ -1158,21 +1158,21 @@ PIX  *pixt, *pixb, *pixbd, *pixd;
  * </pre>
  */
 static void
-dilateGrayLow(l_uint32  *datad,
-              l_int32    w,
-              l_int32    h,
-              l_int32    wpld,
-              l_uint32  *datas,
-              l_int32    wpls,
-              l_int32    size,
-              l_int32    direction,
-              l_uint8   *buffer,
-              l_uint8   *maxarray)
+dilateGrayLow(uint32_t  *datad,
+              int32_t    w,
+              int32_t    h,
+              int32_t    wpld,
+              uint32_t  *datas,
+              int32_t    wpls,
+              int32_t    size,
+              int32_t    direction,
+              uint8_t   *buffer,
+              uint8_t   *maxarray)
 {
-l_int32    i, j, k;
-l_int32    hsize, nsteps, startmax, startx, starty;
-l_uint8    maxval;
-l_uint32  *lines, *lined;
+int32_t    i, j, k;
+int32_t    hsize, nsteps, startmax, startx, starty;
+uint8_t    maxval;
+uint32_t  *lines, *lined;
 
     if (direction == L_HORIZ) {
         hsize = size / 2;
@@ -1265,21 +1265,21 @@ l_uint32  *lines, *lined;
  * </pre>
  */
 static void
-erodeGrayLow(l_uint32  *datad,
-             l_int32    w,
-             l_int32    h,
-             l_int32    wpld,
-             l_uint32  *datas,
-             l_int32    wpls,
-             l_int32    size,
-             l_int32    direction,
-             l_uint8   *buffer,
-             l_uint8   *minarray)
+erodeGrayLow(uint32_t  *datad,
+             int32_t    w,
+             int32_t    h,
+             int32_t    wpld,
+             uint32_t  *datas,
+             int32_t    wpls,
+             int32_t    size,
+             int32_t    direction,
+             uint8_t   *buffer,
+             uint8_t   *minarray)
 {
-l_int32    i, j, k;
-l_int32    hsize, nsteps, startmin, startx, starty;
-l_uint8    minval;
-l_uint32  *lines, *lined;
+int32_t    i, j, k;
+int32_t    hsize, nsteps, startmin, startx, starty;
+uint8_t    minval;
+uint32_t  *lines, *lined;
 
     if (direction == L_HORIZ) {
         hsize = size / 2;

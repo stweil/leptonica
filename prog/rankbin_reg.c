@@ -42,9 +42,9 @@
 int main(int    argc,
          char **argv)
 {
-l_int32       i, n, w, h, nbins;
-l_uint8      *data;
-l_uint32     *carray;
+int32_t       i, n, w, h, nbins;
+uint8_t      *data;
+uint32_t     *carray;
 size_t        nbytes;
 BOXA         *boxa1, *boxa2, *boxa3;
 NUMA         *naindex, *na1, *na2, *na3, *na4;

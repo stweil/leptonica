@@ -40,7 +40,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32       i, nbins, ival;
+int32_t       i, nbins, ival;
 l_float64     pi, angle, val, sum;
 L_DNA        *da1, *da2, *da3, *da4, *da5;
 L_DNAA       *daa1, *daa2;

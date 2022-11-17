@@ -35,30 +35,30 @@
 
 #include "allheaders.h"
 
-static void MakePtas(l_int32 i, PTA **pptas, PTA **pptad);
+static void MakePtas(int32_t i, PTA **pptas, PTA **pptad);
 
     /* Sample values.
      *    1-3: invertability tests
      *    4: comparison between sampling and sequential
      *    5: test with large distortion
      */
-static const l_int32  x1[] =  { 300,  300,  300,  300,   32};
-static const l_int32  y1[] =  {1200, 1200, 1250, 1250,  934};
-static const l_int32  x2[] =  {1200, 1200, 1125, 1300,  487};
-static const l_int32  y2[] =  {1100, 1100, 1100, 1250,  934};
-static const l_int32  x3[] =  { 200,  200,  200,  250,   32};
-static const l_int32  y3[] =  { 200,  200,  200,  300,   67};
-static const l_int32  x4[] =  {1200, 1200, 1300, 1250,  332};
-static const l_int32  y4[] =  { 400,  200,  200,  300,   57};
+static const int32_t  x1[] =  { 300,  300,  300,  300,   32};
+static const int32_t  y1[] =  {1200, 1200, 1250, 1250,  934};
+static const int32_t  x2[] =  {1200, 1200, 1125, 1300,  487};
+static const int32_t  y2[] =  {1100, 1100, 1100, 1250,  934};
+static const int32_t  x3[] =  { 200,  200,  200,  250,   32};
+static const int32_t  y3[] =  { 200,  200,  200,  300,   67};
+static const int32_t  x4[] =  {1200, 1200, 1300, 1250,  332};
+static const int32_t  y4[] =  { 400,  200,  200,  300,   57};
 
-static const l_int32  xp1[] = { 300,  300, 1150,  300,   32};
-static const l_int32  yp1[] = {1200, 1400, 1150, 1350,  934};
-static const l_int32  xp2[] = {1100, 1400,  320, 1300,  487};
-static const l_int32  yp2[] = {1000, 1500, 1300, 1200,  904};
-static const l_int32  xp3[] = { 250,  200, 1310,  300,   61};
-static const l_int32  yp3[] = { 200,  300,  250,  325,   83};
-static const l_int32  xp4[] = {1250, 1200,  240, 1250,  412};
-static const l_int32  yp4[] = { 300,  300,  250,  350,   83};
+static const int32_t  xp1[] = { 300,  300, 1150,  300,   32};
+static const int32_t  yp1[] = {1200, 1400, 1150, 1350,  934};
+static const int32_t  xp2[] = {1100, 1400,  320, 1300,  487};
+static const int32_t  yp2[] = {1000, 1500, 1300, 1200,  904};
+static const int32_t  xp3[] = { 250,  200, 1310,  300,   61};
+static const int32_t  yp3[] = { 200,  300,  250,  325,   83};
+static const int32_t  xp4[] = {1250, 1200,  240, 1250,  412};
+static const int32_t  yp4[] = { 300,  300,  250,  350,   83};
 
 #define   ADDED_BORDER_PIXELS       250
 #define   ALL     1
@@ -67,7 +67,7 @@ static const l_int32  yp4[] = { 300,  300,  250,  350,   83};
 int main(int    argc,
          char **argv)
 {
-l_int32       i;
+int32_t       i;
 PIX          *pixs, *pixsc, *pixb, *pixg, *pixc, *pixcs, *pix1, *pix2, *pixd;
 PIXA         *pixa;
 PTA          *ptas, *ptad;
@@ -214,7 +214,7 @@ L_REGPARAMS  *rp;
 }
 
 static void
-MakePtas(l_int32  i,
+MakePtas(int32_t  i,
          PTA    **pptas,
          PTA    **pptad)
 {

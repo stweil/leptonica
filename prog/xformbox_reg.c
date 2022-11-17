@@ -38,27 +38,27 @@
 #include "allheaders.h"
 
     /* Consts for second set */
-static const l_int32  SHIFTX_2 = 50;
-static const l_int32  SHIFTY_2 = 70;
+static const int32_t  SHIFTX_2 = 50;
+static const int32_t  SHIFTY_2 = 70;
 static const l_float32  SCALEX_2 = 1.17;
 static const l_float32  SCALEY_2 = 1.13;
 static const l_float32  ROTATION_2 = 0.10;   /* radian */
 
     /* Consts for third set */
-static const l_int32  SHIFTX_3 = 44;
-static const l_int32  SHIFTY_3 = 39;
+static const int32_t  SHIFTX_3 = 44;
+static const int32_t  SHIFTY_3 = 39;
 static const l_float32  SCALEX_3 = 0.83;
 static const l_float32  SCALEY_3 = 0.78;
 static const l_float32  ROTATION_3 = 0.11;   /* radian */
 
 
-l_int32 RenderTransformedBoxa(PIX *pixt, BOXA *boxa, l_int32 i);
+int32_t RenderTransformedBoxa(PIX *pixt, BOXA *boxa, int32_t i);
 
 
 int main(int    argc,
          char **argv)
 {
-l_int32       i, n, ws, hs, w, h, rval, gval, bval, order;
+int32_t       i, n, ws, hs, w, h, rval, gval, bval, order;
 l_float32    *mat1, *mat2, *mat3;
 l_float32     matd[9];
 BOX          *box, *boxt;
@@ -301,12 +301,12 @@ L_REGPARAMS  *rp;
 }
 
 
-l_int32
+int32_t
 RenderTransformedBoxa(PIX    *pixt,
                       BOXA   *boxa,
-                      l_int32 i)
+                      int32_t i)
 {
-l_int32  j, n, rval, gval, bval;
+int32_t  j, n, rval, gval, bval;
 BOX     *box;
 
     n = boxaGetCount(boxa);

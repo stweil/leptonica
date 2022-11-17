@@ -43,7 +43,7 @@ const char *files[7] = {"brev.06.75.jpg", "brev.10.75.jpg", "brev.14.75.jpg",
 int main(int    argc,
          char **argv)
 {
-l_int32       i, ws, hs, ncols;
+int32_t       i, ws, hs, ncols;
 char         *fname;
 BOX          *box;
 BOXA         *boxa;

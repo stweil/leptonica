@@ -36,7 +36,7 @@
 
 #include "allheaders.h"
 
-static const l_int32  SIZE = 7;
+static const int32_t  SIZE = 7;
 
 int main(int    argc,
          char **argv)

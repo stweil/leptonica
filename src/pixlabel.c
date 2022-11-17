@@ -35,9 +35,9 @@
  *           PIX         *pixConnCompAreaTransform()
  *
  *     Label pixels to allow incremental computation of connected components
- *           l_int32      pixConnCompIncrInit()
- *           l_int32      pixConnCompIncrAdd()
- *           l_int32      pixGetSortedNeighborValues()
+ *           int32_t      pixConnCompIncrInit()
+ *           int32_t      pixConnCompIncrAdd()
+ *           int32_t      pixGetSortedNeighborValues()
  *
  *     Label pixels with spatially-dependent color coding
  *           PIX         *pixLocToColorTransform()
@@ -115,10 +115,10 @@
  */
 PIX *
 pixConnCompTransform(PIX     *pixs,
-                     l_int32  connect,
-                     l_int32  depth)
+                     int32_t  connect,
+                     int32_t  depth)
 {
-l_int32  i, n, index, w, h, xb, yb, wb, hb;
+int32_t  i, n, index, w, h, xb, yb, wb, hb;
 BOXA    *boxa;
 PIX     *pix1, *pix2, *pixd;
 PIXA    *pixa;
@@ -193,10 +193,10 @@ PIXA    *pixa;
  */
 PIX *
 pixConnCompAreaTransform(PIX     *pixs,
-                         l_int32  connect)
+                         int32_t  connect)
 {
-l_int32   i, n, npix, w, h, xb, yb, wb, hb;
-l_int32  *tab8;
+int32_t   i, n, npix, w, h, xb, yb, wb, hb;
+int32_t  *tab8;
 BOXA     *boxa;
 PIX      *pix1, *pix2, *pixd;
 PIXA     *pixa;
@@ -264,12 +264,12 @@ PIXA     *pixa;
  */
 l_ok
 pixConnCompIncrInit(PIX     *pixs,
-                    l_int32  conn,
+                    int32_t  conn,
                     PIX    **ppixd,
                     PTAA   **pptaa,
-                    l_int32 *pncc)
+                    int32_t *pncc)
 {
-l_int32  empty, w, h, ncc;
+int32_t  empty, w, h, ncc;
 PIX     *pixd;
 PTA     *pta;
 PTAA    *ptaa;
@@ -344,17 +344,17 @@ PTAA    *ptaa;
  *          per second.
  * </pre>
  */
-l_int32
+int32_t
 pixConnCompIncrAdd(PIX       *pixs,
                    PTAA      *ptaa,
-                   l_int32   *pncc,
+                   int32_t   *pncc,
                    l_float32  x,
                    l_float32  y,
-                   l_int32    debug)
+                   int32_t    debug)
 {
-l_int32   conn, i, j, w, h, count, nvals, ns, firstindex;
-l_uint32  val;
-l_int32  *neigh;
+int32_t   conn, i, j, w, h, count, nvals, ns, firstindex;
+uint32_t  val;
+int32_t  *neigh;
 PTA      *ptas, *ptad;
 
     if (!pixs || pixGetDepth(pixs) != 32)
@@ -474,15 +474,15 @@ PTA      *ptas, *ptad;
  */
 l_ok
 pixGetSortedNeighborValues(PIX       *pixs,
-                           l_int32    x,
-                           l_int32    y,
-                           l_int32    conn,
-                           l_int32  **pneigh,
-                           l_int32   *pnvals)
+                           int32_t    x,
+                           int32_t    y,
+                           int32_t    conn,
+                           int32_t  **pneigh,
+                           int32_t   *pnvals)
 {
-l_int32       i, npt, index;
-l_int32       neigh[4];
-l_uint32      val;
+int32_t       i, npt, index;
+int32_t       neigh[4];
+uint32_t      val;
 l_float32     fx, fy;
 L_ASET       *aset;
 L_ASET_NODE  *node;
@@ -505,7 +505,7 @@ RB_TYPE       key;
     npt = ptaGetCount(pta);
     for (i = 0; i < npt; i++) {
         ptaGetPt(pta, i, &fx, &fy);
-        pixGetPixel(pixs, (l_int32)fx, (l_int32)fy, &val);
+        pixGetPixel(pixs, (int32_t)fx, (int32_t)fy, &val);
         key.utype = val;
         l_asetInsert(aset, key);
     }
@@ -518,12 +518,12 @@ RB_TYPE       key;
     while (node) {
         val = node->key.utype;
         if (val > 0)
-            neigh[index++] = (l_int32)val;
+            neigh[index++] = (int32_t)val;
         node = l_asetGetNext(node);
     }
     *pnvals = index;
     if (index > 0) {
-        *pneigh = (l_int32 *)LEPT_CALLOC(index, sizeof(l_int32));
+        *pneigh = (int32_t *)LEPT_CALLOC(index, sizeof(int32_t));
         for (i = 0; i < index; i++)
             (*pneigh)[i] = neigh[i];
     }
@@ -559,10 +559,10 @@ RB_TYPE       key;
 PIX *
 pixLocToColorTransform(PIX  *pixs)
 {
-l_int32    w, h, w2, h2, wpls, wplr, wplg, wplb, wplcc, i, j, rval, gval, bval;
+int32_t    w, h, w2, h2, wpls, wplr, wplg, wplb, wplcc, i, j, rval, gval, bval;
 l_float32  invw2, invh2;
-l_uint32  *datas, *datar, *datag, *datab, *datacc;
-l_uint32  *lines, *liner, *lineg, *lineb, *linecc;
+uint32_t  *datas, *datar, *datag, *datab, *datacc;
+uint32_t  *lines, *liner, *lineg, *lineb, *linecc;
 PIX       *pix1, *pixcc, *pixr, *pixg, *pixb, *pixd;
 
     if (!pixs || pixGetDepth(pixs) != 1)

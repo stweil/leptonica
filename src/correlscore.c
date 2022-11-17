@@ -31,12 +31,12 @@
  *     pairs of 1 bpp images.
  *
  *     Optimized 2 pix correlators (for jbig2 clustering)
- *         l_int32     pixCorrelationScore()
- *         l_int32     pixCorrelationScoreThresholded()
+ *         int32_t     pixCorrelationScore()
+ *         int32_t     pixCorrelationScoreThresholded()
  *
  *     Simple 2 pix correlators
- *         l_int32     pixCorrelationScoreSimple()
- *         l_int32     pixCorrelationScoreShifted()
+ *         int32_t     pixCorrelationScoreSimple()
+ *         int32_t     pixCorrelationScoreShifted()
  *
  *     There are other, more application-oriented functions, that
  *     compute the correlation between two binary images, taking into
@@ -127,20 +127,20 @@
 l_ok
 pixCorrelationScore(PIX        *pix1,
                     PIX        *pix2,
-                    l_int32     area1,
-                    l_int32     area2,
+                    int32_t     area1,
+                    int32_t     area2,
                     l_float32   delx,   /* x(1) - x(3) */
                     l_float32   dely,   /* y(1) - y(3) */
-                    l_int32     maxdiffw,
-                    l_int32     maxdiffh,
-                    l_int32    *tab,
+                    int32_t     maxdiffw,
+                    int32_t     maxdiffh,
+                    int32_t    *tab,
                     l_float32  *pscore)
 {
-l_int32    wi, hi, wt, ht, delw, delh, idelx, idely, count;
-l_int32    wpl1, wpl2, lorow, hirow, locol, hicol;
-l_int32    x, y, pix1lskip, pix2lskip, rowwords1, rowwords2;
-l_uint32   word1, word2, andw;
-l_uint32  *row1, *row2;
+int32_t    wi, hi, wt, ht, delw, delh, idelx, idely, count;
+int32_t    wpl1, wpl2, lorow, hirow, locol, hicol;
+int32_t    x, y, pix1lskip, pix2lskip, rowwords1, rowwords2;
+uint32_t   word1, word2, andw;
+uint32_t  *row1, *row2;
 
     if (!pscore)
         return ERROR_INT("&score not defined", __func__, 1);
@@ -166,13 +166,13 @@ l_uint32  *row1, *row2;
 
         /* Round difference to nearest integer */
     if (delx >= 0)
-        idelx = (l_int32)(delx + 0.5);
+        idelx = (int32_t)(delx + 0.5);
     else
-        idelx = (l_int32)(delx - 0.5);
+        idelx = (int32_t)(delx - 0.5);
     if (dely >= 0)
-        idely = (l_int32)(dely + 0.5);
+        idely = (int32_t)(dely + 0.5);
     else
-        idely = (l_int32)(dely - 0.5);
+        idely = (int32_t)(dely - 0.5);
 
     count = 0;
     wpl1 = pixGetWpl(pix1);
@@ -420,26 +420,26 @@ l_uint32  *row1, *row2;
  *  This very fast correlation matcher was contributed by William Rucklidge.
  * </pre>
  */
-l_int32
+int32_t
 pixCorrelationScoreThresholded(PIX       *pix1,
                                PIX       *pix2,
-                               l_int32    area1,
-                               l_int32    area2,
+                               int32_t    area1,
+                               int32_t    area2,
                                l_float32  delx,   /* x(1) - x(3) */
                                l_float32  dely,   /* y(1) - y(3) */
-                               l_int32    maxdiffw,
-                               l_int32    maxdiffh,
-                               l_int32   *tab,
-                               l_int32   *downcount,
+                               int32_t    maxdiffw,
+                               int32_t    maxdiffh,
+                               int32_t   *tab,
+                               int32_t   *downcount,
                                l_float32  score_threshold)
 {
-l_int32    wi, hi, wt, ht, delw, delh, idelx, idely, count;
-l_int32    wpl1, wpl2, lorow, hirow, locol, hicol, untouchable;
-l_int32    x, y, pix1lskip, pix2lskip, rowwords1, rowwords2;
-l_uint32   word1, word2, andw;
-l_uint32  *row1, *row2;
+int32_t    wi, hi, wt, ht, delw, delh, idelx, idely, count;
+int32_t    wpl1, wpl2, lorow, hirow, locol, hicol, untouchable;
+int32_t    x, y, pix1lskip, pix2lskip, rowwords1, rowwords2;
+uint32_t   word1, word2, andw;
+uint32_t  *row1, *row2;
 l_float32  score;
-l_int32    threshold;
+int32_t    threshold;
 
     if (!pix1 || pixGetDepth(pix1) != 1)
         return ERROR_INT("pix1 undefined or not 1 bpp", __func__, 0);
@@ -462,17 +462,17 @@ l_int32    threshold;
 
         /* Round difference to nearest integer */
     if (delx >= 0)
-        idelx = (l_int32)(delx + 0.5);
+        idelx = (int32_t)(delx + 0.5);
     else
-        idelx = (l_int32)(delx - 0.5);
+        idelx = (int32_t)(delx - 0.5);
     if (dely >= 0)
-        idely = (l_int32)(dely + 0.5);
+        idely = (int32_t)(dely + 0.5);
     else
-        idely = (l_int32)(dely - 0.5);
+        idely = (int32_t)(dely - 0.5);
 
         /* Compute the correlation count that is needed so that
          * count * count / (area1 * area2) >= score_threshold */
-    threshold = (l_int32)ceil(sqrt((l_float64)score_threshold * area1 * area2));
+    threshold = (int32_t)ceil(sqrt((l_float64)score_threshold * area1 * area2));
 
     count = 0;
     wpl1 = pixGetWpl(pix1);
@@ -731,16 +731,16 @@ l_int32    threshold;
 l_ok
 pixCorrelationScoreSimple(PIX        *pix1,
                           PIX        *pix2,
-                          l_int32     area1,
-                          l_int32     area2,
+                          int32_t     area1,
+                          int32_t     area2,
                           l_float32   delx,   /* x(1) - x(3) */
                           l_float32   dely,   /* y(1) - y(3) */
-                          l_int32     maxdiffw,
-                          l_int32     maxdiffh,
-                          l_int32    *tab,
+                          int32_t     maxdiffw,
+                          int32_t     maxdiffh,
+                          int32_t    *tab,
                           l_float32  *pscore)
 {
-l_int32  wi, hi, wt, ht, delw, delh, idelx, idely, count;
+int32_t  wi, hi, wt, ht, delw, delh, idelx, idely, count;
 PIX     *pixt;
 
     if (!pscore)
@@ -767,13 +767,13 @@ PIX     *pixt;
 
         /* Round difference to nearest integer */
     if (delx >= 0)
-        idelx = (l_int32)(delx + 0.5);
+        idelx = (int32_t)(delx + 0.5);
     else
-        idelx = (l_int32)(delx - 0.5);
+        idelx = (int32_t)(delx - 0.5);
     if (dely >= 0)
-        idely = (l_int32)(dely + 0.5);
+        idely = (int32_t)(dely + 0.5);
     else
-        idely = (l_int32)(dely - 0.5);
+        idely = (int32_t)(dely - 0.5);
 
         /*  pixt = pixAnd(NULL, pix1, pix2), including shift.
          *  To insure that pixels are ON only within the
@@ -832,14 +832,14 @@ PIX     *pixt;
 l_ok
 pixCorrelationScoreShifted(PIX        *pix1,
                            PIX        *pix2,
-                           l_int32     area1,
-                           l_int32     area2,
-                           l_int32     delx,
-                           l_int32     dely,
-                           l_int32    *tab,
+                           int32_t     area1,
+                           int32_t     area2,
+                           int32_t     delx,
+                           int32_t     dely,
+                           int32_t    *tab,
                            l_float32  *pscore)
 {
-l_int32  w1, h1, w2, h2, count;
+int32_t  w1, h1, w2, h2, count;
 PIX     *pixt;
 
     if (!pscore)

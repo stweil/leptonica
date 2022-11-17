@@ -64,7 +64,7 @@
 static PIXA  *MakeBootnum1(void);
 static PIXA  *MakeBootnum2(void);
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
 PIX          *pix1;
@@ -281,7 +281,7 @@ PIXA        *pixa1, *pixa2, *pixa3;
 PIXA *MakeBootnum2(void)
 {
 char     *fname;
-l_int32   i, n, w, h;
+int32_t   i, n, w, h;
 BOX      *box;
 PIX      *pix;
 PIXA     *pixa;

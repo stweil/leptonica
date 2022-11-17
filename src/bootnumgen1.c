@@ -293,8 +293,8 @@ static const char *l_bootnum1 =
 PIXA *
 l_bootnum_gen1(void)
 {
-l_uint8  *data1, *data2;
-l_int32   size1;
+uint8_t  *data1, *data2;
+int32_t   size1;
 size_t    size2;
 PIXA     *pixa;
 

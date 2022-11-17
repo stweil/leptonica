@@ -64,7 +64,7 @@ static const char *seltext = "xxxxxxx"
 int main(int    argc,
          char **argv)
 {
-l_int32    w, h, d, w2, h2, i, ncols, same;
+int32_t    w, h, d, w2, h2, i, ncols, same;
 l_float32  angle, conf;
 BOX       *box;
 BOXA      *boxa1, *boxa2;

@@ -36,13 +36,13 @@
  *           PIX             *pixBlendColor()
  *           PIX             *pixBlendColorByChannel()
  *           PIX             *pixBlendGrayAdapt()
- *           static l_int32   blendComponents()
+ *           static int32_t   blendComponents()
  *           PIX             *pixFadeWithGray()
  *           PIX             *pixBlendHardLight()
- *           static l_int32   blendHardLightComponents()
+ *           static int32_t   blendHardLightComponents()
  *
  *      Blending two colormapped images
- *           l_int32          pixBlendCmap()
+ *           int32_t          pixBlendCmap()
  *
  *      Blending two images using a third (alpha mask)
  *           PIX             *pixBlendWithGrayMask()
@@ -63,7 +63,7 @@
  *           PIX             *pixSetAlphaOverWhite()
  *
  *      Fading from the edge
- *           l_int32          pixLinearEdgeFade()
+ *           int32_t          pixLinearEdgeFade()
  *
  *  In blending operations a new pix is produced where typically
  *  a subset of pixels in src1 are changed by the set of pixels
@@ -150,8 +150,8 @@
 
 #include "allheaders.h"
 
-static l_int32 blendComponents(l_int32 a, l_int32 b, l_float32 fract);
-static l_int32 blendHardLightComponents(l_int32 a, l_int32 b, l_float32 fract);
+static int32_t blendComponents(int32_t a, int32_t b, l_float32 fract);
+static int32_t blendHardLightComponents(int32_t a, int32_t b, l_float32 fract);
 
 /*-------------------------------------------------------------*
  *         Blending two images that are not colormapped        *
@@ -175,11 +175,11 @@ static l_int32 blendHardLightComponents(l_int32 a, l_int32 b, l_float32 fract);
 PIX *
 pixBlend(PIX       *pixs1,
          PIX       *pixs2,
-         l_int32    x,
-         l_int32    y,
+         int32_t    x,
+         int32_t    y,
          l_float32  fract)
 {
-l_int32    w1, h1, d1, d2;
+int32_t    w1, h1, d1, d2;
 BOX       *box;
 PIX       *pixc, *pixt, *pixd;
 
@@ -263,15 +263,15 @@ PIX *
 pixBlendMask(PIX       *pixd,
              PIX       *pixs1,
              PIX       *pixs2,
-             l_int32    x,
-             l_int32    y,
+             int32_t    x,
+             int32_t    y,
              l_float32  fract,
-             l_int32    type)
+             int32_t    type)
 {
-l_int32    i, j, d, wc, hc, w, h, wplc;
-l_int32    val, rval, gval, bval;
-l_uint32   pixval;
-l_uint32  *linec, *datac;
+int32_t    i, j, d, wc, hc, w, h, wplc;
+int32_t    val, rval, gval, bval;
+uint32_t   pixval;
+uint32_t  *linec, *datac;
 PIX       *pixc, *pix1, *pix2;
 
     if (!pixs1)
@@ -342,15 +342,15 @@ PIX       *pixc, *pix1, *pix2;
                     {
                     case 8:
                         pixGetPixel(pixd, x + j, y + i, &pixval);
-                        val = (l_int32)(pixval + fract * (255 - 2 * pixval));
+                        val = (int32_t)(pixval + fract * (255 - 2 * pixval));
                         pixSetPixel(pixd, x + j, y + i, val);
                         break;
                     case 32:
                         pixGetPixel(pixd, x + j, y + i, &pixval);
                         extractRGBValues(pixval, &rval, &gval, &bval);
-                        rval = (l_int32)(rval + fract * (255 - 2 * rval));
-                        gval = (l_int32)(gval + fract * (255 - 2 * gval));
-                        bval = (l_int32)(bval + fract * (255 - 2 * bval));
+                        rval = (int32_t)(rval + fract * (255 - 2 * rval));
+                        gval = (int32_t)(gval + fract * (255 - 2 * gval));
+                        bval = (int32_t)(bval + fract * (255 - 2 * bval));
                         composeRGBPixel(rval, gval, bval, &pixval);
                         pixSetPixel(pixd, x + j, y + i, pixval);
                         break;
@@ -378,15 +378,15 @@ PIX       *pixc, *pix1, *pix2;
                     {
                     case 8:
                         pixGetPixel(pixd, x + j, y + i, &pixval);
-                        val = (l_int32)(pixval + fract * (255 - pixval));
+                        val = (int32_t)(pixval + fract * (255 - pixval));
                         pixSetPixel(pixd, x + j, y + i, val);
                         break;
                     case 32:
                         pixGetPixel(pixd, x + j, y + i, &pixval);
                         extractRGBValues(pixval, &rval, &gval, &bval);
-                        rval = (l_int32)(rval + fract * (255 - rval));
-                        gval = (l_int32)(gval + fract * (255 - gval));
-                        bval = (l_int32)(bval + fract * (255 - bval));
+                        rval = (int32_t)(rval + fract * (255 - rval));
+                        gval = (int32_t)(gval + fract * (255 - gval));
+                        bval = (int32_t)(bval + fract * (255 - bval));
                         composeRGBPixel(rval, gval, bval, &pixval);
                         pixSetPixel(pixd, x + j, y + i, pixval);
                         break;
@@ -414,15 +414,15 @@ PIX       *pixc, *pix1, *pix2;
                     {
                     case 8:
                         pixGetPixel(pixd, x + j, y + i, &pixval);
-                        val = (l_int32)((1. - fract) * pixval);
+                        val = (int32_t)((1. - fract) * pixval);
                         pixSetPixel(pixd, x + j, y + i, val);
                         break;
                     case 32:
                         pixGetPixel(pixd, x + j, y + i, &pixval);
                         extractRGBValues(pixval, &rval, &gval, &bval);
-                        rval = (l_int32)((1. - fract) * rval);
-                        gval = (l_int32)((1. - fract) * gval);
-                        bval = (l_int32)((1. - fract) * bval);
+                        rval = (int32_t)((1. - fract) * rval);
+                        gval = (int32_t)((1. - fract) * gval);
+                        bval = (int32_t)((1. - fract) * bval);
                         composeRGBPixel(rval, gval, bval, &pixval);
                         pixSetPixel(pixd, x + j, y + i, pixval);
                         break;
@@ -490,17 +490,17 @@ PIX *
 pixBlendGray(PIX       *pixd,
              PIX       *pixs1,
              PIX       *pixs2,
-             l_int32    x,
-             l_int32    y,
+             int32_t    x,
+             int32_t    y,
              l_float32  fract,
-             l_int32    type,
-             l_int32    transparent,
-             l_uint32   transpix)
+             int32_t    type,
+             int32_t    transparent,
+             uint32_t   transpix)
 {
-l_int32    i, j, d, wc, hc, w, h, wplc, wpld, delta;
-l_int32    ival, irval, igval, ibval, cval, dval;
-l_uint32   val32;
-l_uint32  *linec, *lined, *datac, *datad;
+int32_t    i, j, d, wc, hc, w, h, wplc, wpld, delta;
+int32_t    ival, irval, igval, ibval, cval, dval;
+uint32_t   val32;
+uint32_t  *linec, *lined, *datac, *datad;
 PIX       *pixc, *pix1, *pix2;
 
     if (!pixs1)
@@ -565,7 +565,7 @@ PIX       *pixc, *pix1, *pix2;
                     cval = GET_DATA_BYTE(linec, j);
                     if (transparent == 0 || cval != transpix) {
                         dval = GET_DATA_BYTE(lined, j + x);
-                        ival = (l_int32)((1. - fract) * dval + fract * cval);
+                        ival = (int32_t)((1. - fract) * dval + fract * cval);
                         SET_DATA_BYTE(lined, j + x, ival);
                     }
                 }
@@ -577,9 +577,9 @@ PIX       *pixc, *pix1, *pix2;
                     if (transparent == 0 || cval != transpix) {
                         val32 = *(lined + j + x);
                         extractRGBValues(val32, &irval, &igval, &ibval);
-                        irval = (l_int32)((1. - fract) * irval + fract * cval);
-                        igval = (l_int32)((1. - fract) * igval + fract * cval);
-                        ibval = (l_int32)((1. - fract) * ibval + fract * cval);
+                        irval = (int32_t)((1. - fract) * irval + fract * cval);
+                        igval = (int32_t)((1. - fract) * igval + fract * cval);
+                        ibval = (int32_t)((1. - fract) * ibval + fract * cval);
                         composeRGBPixel(irval, igval, ibval, &val32);
                         *(lined + j + x) = val32;
                     }
@@ -613,7 +613,7 @@ PIX       *pixc, *pix1, *pix2;
                     if (transparent == 0 || cval != transpix) {
                         ival = GET_DATA_BYTE(lined, j + x);
                         delta = (128 - ival) * (255 - cval) / 256;
-                        ival += (l_int32)(fract * delta + 0.5);
+                        ival += (int32_t)(fract * delta + 0.5);
                         SET_DATA_BYTE(lined, j + x, ival);
                     }
                 }
@@ -627,11 +627,11 @@ PIX       *pixc, *pix1, *pix2;
                         val32 = *(lined + j + x);
                         extractRGBValues(val32, &irval, &igval, &ibval);
                         delta = (128 - irval) * (255 - cval) / 256;
-                        irval += (l_int32)(fract * delta + 0.5);
+                        irval += (int32_t)(fract * delta + 0.5);
                         delta = (128 - igval) * (255 - cval) / 256;
-                        igval += (l_int32)(fract * delta + 0.5);
+                        igval += (int32_t)(fract * delta + 0.5);
                         delta = (128 - ibval) * (255 - cval) / 256;
-                        ibval += (l_int32)(fract * delta + 0.5);
+                        ibval += (int32_t)(fract * delta + 0.5);
                         composeRGBPixel(irval, igval, ibval, &val32);
                         *(lined + j + x) = val32;
                     }
@@ -688,15 +688,15 @@ PIX *
 pixBlendGrayInverse(PIX       *pixd,
                     PIX       *pixs1,
                     PIX       *pixs2,
-                    l_int32    x,
-                    l_int32    y,
+                    int32_t    x,
+                    int32_t    y,
                     l_float32  fract)
 {
-l_int32    i, j, d, wc, hc, w, h, wplc, wpld;
-l_int32    irval, igval, ibval, cval, dval;
+int32_t    i, j, d, wc, hc, w, h, wplc, wpld;
+int32_t    irval, igval, ibval, cval, dval;
 l_float32  a;
-l_uint32   val32;
-l_uint32  *linec, *lined, *datac, *datad;
+uint32_t   val32;
+uint32_t  *linec, *lined, *datac, *datad;
 PIX       *pixc, *pix1, *pix2;
 
     if (!pixs1)
@@ -751,7 +751,7 @@ PIX       *pixc, *pix1, *pix2;
                 cval = GET_DATA_BYTE(linec, j);
                 dval = GET_DATA_BYTE(lined, j + x);
                 a = (1.0 - fract) * dval + fract * (255.0 - dval);
-                dval = (l_int32)(cval * dval / 255.0 +
+                dval = (int32_t)(cval * dval / 255.0 +
                                   a * (255.0 - cval) / 255.0);
                 SET_DATA_BYTE(lined, j + x, dval);
             }
@@ -763,13 +763,13 @@ PIX       *pixc, *pix1, *pix2;
                 val32 = *(lined + j + x);
                 extractRGBValues(val32, &irval, &igval, &ibval);
                 a = (1.0 - fract) * irval + fract * (255.0 - irval);
-                irval = (l_int32)(cval * irval / 255.0 +
+                irval = (int32_t)(cval * irval / 255.0 +
                                   a * (255.0 - cval) / 255.0);
                 a = (1.0 - fract) * igval + fract * (255.0 - igval);
-                igval = (l_int32)(cval * igval / 255.0 +
+                igval = (int32_t)(cval * igval / 255.0 +
                                   a * (255.0 - cval) / 255.0);
                 a = (1.0 - fract) * ibval + fract * (255.0 - ibval);
-                ibval = (l_int32)(cval * ibval / 255.0 +
+                ibval = (int32_t)(cval * ibval / 255.0 +
                                   a * (255.0 - cval) / 255.0);
                 composeRGBPixel(irval, igval, ibval, &val32);
                 *(lined + j + x) = val32;
@@ -820,16 +820,16 @@ PIX *
 pixBlendColor(PIX       *pixd,
               PIX       *pixs1,
               PIX       *pixs2,
-              l_int32    x,
-              l_int32    y,
+              int32_t    x,
+              int32_t    y,
               l_float32  fract,
-              l_int32    transparent,
-              l_uint32   transpix)
+              int32_t    transparent,
+              uint32_t   transpix)
 {
-l_int32    i, j, wc, hc, w, h, wplc, wpld;
-l_int32    rval, gval, bval, rcval, gcval, bcval;
-l_uint32   cval32, val32;
-l_uint32  *linec, *lined, *datac, *datad;
+int32_t    i, j, wc, hc, w, h, wplc, wpld;
+int32_t    rval, gval, bval, rcval, gcval, bcval;
+uint32_t   cval32, val32;
+uint32_t  *linec, *lined, *datac, *datad;
 PIX       *pixc;
 
     if (!pixs1)
@@ -881,9 +881,9 @@ PIX       *pixc;
                 val32 = *(lined + j + x);
                 extractRGBValues(cval32, &rcval, &gcval, &bcval);
                 extractRGBValues(val32, &rval, &gval, &bval);
-                rval = (l_int32)((1. - fract) * rval + fract * rcval);
-                gval = (l_int32)((1. - fract) * gval + fract * gcval);
-                bval = (l_int32)((1. - fract) * bval + fract * bcval);
+                rval = (int32_t)((1. - fract) * rval + fract * rcval);
+                gval = (int32_t)((1. - fract) * gval + fract * gcval);
+                bval = (int32_t)((1. - fract) * bval + fract * bcval);
                 composeRGBPixel(rval, gval, bval, &val32);
                 *(lined + j + x) = val32;
             }
@@ -936,18 +936,18 @@ PIX *
 pixBlendColorByChannel(PIX       *pixd,
                        PIX       *pixs1,
                        PIX       *pixs2,
-                       l_int32    x,
-                       l_int32    y,
+                       int32_t    x,
+                       int32_t    y,
                        l_float32  rfract,
                        l_float32  gfract,
                        l_float32  bfract,
-                       l_int32    transparent,
-                       l_uint32   transpix)
+                       int32_t    transparent,
+                       uint32_t   transpix)
 {
-l_int32    i, j, wc, hc, w, h, wplc, wpld;
-l_int32    rval, gval, bval, rcval, gcval, bcval;
-l_uint32   cval32, val32;
-l_uint32  *linec, *lined, *datac, *datad;
+int32_t    i, j, wc, hc, w, h, wplc, wpld;
+int32_t    rval, gval, bval, rcval, gcval, bcval;
+uint32_t   cval32, val32;
+uint32_t  *linec, *lined, *datac, *datad;
 PIX       *pixc;
 
     if (!pixs1)
@@ -1003,16 +1003,16 @@ PIX       *pixc;
 }
 
 
-static l_int32
-blendComponents(l_int32    a,
-                l_int32    b,
+static int32_t
+blendComponents(int32_t    a,
+                int32_t    b,
                 l_float32  fract)
 {
     if (fract < 0.)
         return ((a < b) ? a : b);
     if (fract > 1.)
         return ((a > b) ? a : b);
-    return (l_int32)((1. - fract) * a + fract * b);
+    return (int32_t)((1. - fract) * a + fract * b);
 }
 
 
@@ -1064,15 +1064,15 @@ PIX *
 pixBlendGrayAdapt(PIX       *pixd,
                   PIX       *pixs1,
                   PIX       *pixs2,
-                  l_int32    x,
-                  l_int32    y,
+                  int32_t    x,
+                  int32_t    y,
                   l_float32  fract,
-                  l_int32    shift)
+                  int32_t    shift)
 {
-l_int32    i, j, d, wc, hc, w, h, wplc, wpld, delta, overlap;
-l_int32    rval, gval, bval, cval, dval, mval, median, pivot;
-l_uint32   val32;
-l_uint32  *linec, *lined, *datac, *datad;
+int32_t    i, j, d, wc, hc, w, h, wplc, wpld, delta, overlap;
+int32_t    rval, gval, bval, cval, dval, mval, median, pivot;
+uint32_t   val32;
+uint32_t  *linec, *lined, *datac, *datad;
 l_float32  fmedian, factor;
 BOX       *box, *boxt;
 PIX       *pixc, *pix1, *pix2;
@@ -1129,7 +1129,7 @@ PIX       *pixc, *pix1, *pix2;
     pix1 = pixClipRectangle(pixd, box, NULL);
     pix2 = pixConvertTo8(pix1, 0);
     pixGetRankValueMasked(pix2, NULL, 0, 0, 1, 0.5, &fmedian, NULL);
-    median = (l_int32)(fmedian + 0.5);
+    median = (int32_t)(fmedian + 0.5);
     if (median < 128)
         pivot = median + shift;
     else
@@ -1168,7 +1168,7 @@ PIX       *pixc, *pix1, *pix2;
                 dval = GET_DATA_BYTE(lined, j + x);
                 cval = GET_DATA_BYTE(linec, j);
                 delta = (pivot - dval) * (255 - cval) / 256;
-                dval += (l_int32)(fract * delta + 0.5);
+                dval += (int32_t)(fract * delta + 0.5);
                 SET_DATA_BYTE(lined, j + x, dval);
             }
             break;
@@ -1196,9 +1196,9 @@ PIX       *pixc, *pix1, *pix2;
                 mval = L_MAX(mval, 1);
                 delta = (pivot - mval) * (255 - cval) / 256;
                 factor = fract * delta / mval;
-                rval += (l_int32)(factor * rval + 0.5);
-                gval += (l_int32)(factor * gval + 0.5);
-                bval += (l_int32)(factor * bval + 0.5);
+                rval += (int32_t)(factor * rval + 0.5);
+                gval += (int32_t)(factor * gval + 0.5);
+                bval += (int32_t)(factor * bval + 0.5);
                 composeRGBPixel(rval, gval, bval, &val32);
                 *(lined + j + x) = val32;
             }
@@ -1236,13 +1236,13 @@ PIX *
 pixFadeWithGray(PIX       *pixs,
                 PIX       *pixb,
                 l_float32  factor,
-                l_int32    type)
+                int32_t    type)
 {
-l_int32    i, j, w, h, d, wb, hb, db, wd, hd, wplb, wpld;
-l_int32    valb, vald, nvald, rval, gval, bval, nrval, ngval, nbval;
+int32_t    i, j, w, h, d, wb, hb, db, wd, hd, wplb, wpld;
+int32_t    valb, vald, nvald, rval, gval, bval, nrval, ngval, nbval;
 l_float32  nfactor, fract;
-l_uint32   val32, nval32;
-l_uint32  *lined, *datad, *lineb, *datab;
+uint32_t   val32, nval32;
+uint32_t  *lined, *datad, *lineb, *datab;
 PIX       *pixd;
 
     if (!pixs)
@@ -1285,21 +1285,21 @@ PIX       *pixd;
             if (d == 8) {
                 vald = GET_DATA_BYTE(lined, j);
                 if (type == L_BLEND_TO_WHITE)
-                    nvald = vald + (l_int32)(fract * (255. - (l_float32)vald));
+                    nvald = vald + (int32_t)(fract * (255. - (l_float32)vald));
                 else  /* L_BLEND_TO_BLACK */
-                    nvald = vald - (l_int32)(fract * (l_float32)vald);
+                    nvald = vald - (int32_t)(fract * (l_float32)vald);
                 SET_DATA_BYTE(lined, j, nvald);
             } else {  /* d == 32 */
                 val32 = lined[j];
                 extractRGBValues(val32, &rval, &gval, &bval);
                 if (type == L_BLEND_TO_WHITE) {
-                    nrval = rval + (l_int32)(fract * (255. - (l_float32)rval));
-                    ngval = gval + (l_int32)(fract * (255. - (l_float32)gval));
-                    nbval = bval + (l_int32)(fract * (255. - (l_float32)bval));
+                    nrval = rval + (int32_t)(fract * (255. - (l_float32)rval));
+                    ngval = gval + (int32_t)(fract * (255. - (l_float32)gval));
+                    nbval = bval + (int32_t)(fract * (255. - (l_float32)bval));
                 } else {
-                    nrval = rval - (l_int32)(fract * (l_float32)rval);
-                    ngval = gval - (l_int32)(fract * (l_float32)gval);
-                    nbval = bval - (l_int32)(fract * (l_float32)bval);
+                    nrval = rval - (int32_t)(fract * (l_float32)rval);
+                    ngval = gval - (int32_t)(fract * (l_float32)gval);
+                    nbval = bval - (int32_t)(fract * (l_float32)bval);
                 }
                 composeRGBPixel(nrval, ngval, nbval, &nval32);
                 lined[j] = nval32;
@@ -1350,14 +1350,14 @@ PIX *
 pixBlendHardLight(PIX       *pixd,
                   PIX       *pixs1,
                   PIX       *pixs2,
-                  l_int32    x,
-                  l_int32    y,
+                  int32_t    x,
+                  int32_t    y,
                   l_float32  fract)
 {
-l_int32    i, j, w, h, d, wc, hc, dc, wplc, wpld;
-l_int32    cval, dval, rcval, gcval, bcval, rdval, gdval, bdval;
-l_uint32   cval32, dval32;
-l_uint32  *linec, *lined, *datac, *datad;
+int32_t    i, j, w, h, d, wc, hc, dc, wplc, wpld;
+int32_t    cval, dval, rcval, gcval, bcval, rdval, gdval, bdval;
+uint32_t   cval32, dval32;
+uint32_t  *linec, *lined, *datac, *datad;
 PIX       *pixc, *pixt;
 
     if (!pixs1)
@@ -1509,15 +1509,15 @@ PIX       *pixc, *pixt;
  *    blending formulas that can be conjured up.
  * </pre>
  */
-static l_int32 blendHardLightComponents(l_int32    a,
-                                        l_int32    b,
+static int32_t blendHardLightComponents(int32_t    a,
+                                        int32_t    b,
                                         l_float32  fract)
 {
     if (b < 0x80) {
-        b = 0x80 - (l_int32)(fract * (0x80 - b));
+        b = 0x80 - (int32_t)(fract * (0x80 - b));
         return (a * b) >> 7;
     } else {
-        b = 0x80 + (l_int32)(fract * (b - 0x80));
+        b = 0x80 + (int32_t)(fract * (b - 0x80));
         return  0xff - (((0xff - b) * (0xff - a)) >> 7);
     }
 }
@@ -1556,16 +1556,16 @@ static l_int32 blendHardLightComponents(l_int32    a,
 l_ok
 pixBlendCmap(PIX     *pixs,
              PIX     *pixb,
-             l_int32  x,
-             l_int32  y,
-             l_int32  sindex)
+             int32_t  x,
+             int32_t  y,
+             int32_t  sindex)
 {
-l_int32    rval, gval, bval;
-l_int32    i, j, w, h, d, ncb, wb, hb, wpls;
-l_int32    index, val, nadded;
-l_int32    lut[256];
-l_uint32   pval;
-l_uint32  *lines, *datas;
+int32_t    rval, gval, bval;
+int32_t    i, j, w, h, d, ncb, wb, hb, wpls;
+int32_t    index, val, nadded;
+int32_t    lut[256];
+uint32_t   pval;
+uint32_t  *lines, *datas;
 PIXCMAP   *cmaps, *cmapb, *cmapsc;
 
     if (!pixs)
@@ -1692,14 +1692,14 @@ PIX *
 pixBlendWithGrayMask(PIX     *pixs1,
                      PIX     *pixs2,
                      PIX     *pixg,
-                     l_int32  x,
-                     l_int32  y)
+                     int32_t  x,
+                     int32_t  y)
 {
-l_int32    w1, h1, d1, w2, h2, d2, spp, wg, hg, wmin, hmin, wpld, wpls, wplg;
-l_int32    i, j, val, dval, sval;
-l_int32    drval, dgval, dbval, srval, sgval, sbval;
-l_uint32   dval32, sval32;
-l_uint32  *datad, *datas, *datag, *lined, *lines, *lineg;
+int32_t    w1, h1, d1, w2, h2, d2, spp, wg, hg, wmin, hmin, wpld, wpls, wplg;
+int32_t    i, j, val, dval, sval;
+int32_t    drval, dgval, dbval, srval, sgval, sbval;
+uint32_t   dval32, sval32;
+uint32_t  *datad, *datas, *datag, *lined, *lines, *lineg;
 l_float32  fract;
 PIX       *pixr1, *pixr2, *pix1, *pix2, *pixg2, *pixd;
 
@@ -1790,16 +1790,16 @@ PIX       *pixr1, *pixr2, *pix1, *pix2, *pixg2, *pixd;
             if (d1 == 8) {
                 dval = GET_DATA_BYTE(lined, j + x);
                 sval = GET_DATA_BYTE(lines, j);
-                dval = (l_int32)((1.0 - fract) * dval + fract * sval);
+                dval = (int32_t)((1.0 - fract) * dval + fract * sval);
                 SET_DATA_BYTE(lined, j + x, dval);
             } else {  /* 32 */
                 dval32 = *(lined + j + x);
                 sval32 = *(lines + j);
                 extractRGBValues(dval32, &drval, &dgval, &dbval);
                 extractRGBValues(sval32, &srval, &sgval, &sbval);
-                drval = (l_int32)((1.0 - fract) * drval + fract * srval);
-                dgval = (l_int32)((1.0 - fract) * dgval + fract * sgval);
-                dbval = (l_int32)((1.0 - fract) * dbval + fract * sbval);
+                drval = (int32_t)((1.0 - fract) * drval + fract * srval);
+                dgval = (int32_t)((1.0 - fract) * dgval + fract * sgval);
+                dbval = (int32_t)((1.0 - fract) * dbval + fract * sbval);
                 composeRGBPixel(drval, dgval, dbval, &dval32);
                 *(lined + j + x) = dval32;
             }
@@ -1844,12 +1844,12 @@ PIX *
 pixBlendBackgroundToColor(PIX       *pixd,
                           PIX       *pixs,
                           BOX       *box,
-                          l_uint32   color,
+                          uint32_t   color,
                           l_float32  gamma,
-                          l_int32    minval,
-                          l_int32    maxval)
+                          int32_t    minval,
+                          int32_t    maxval)
 {
-l_int32  x, y, w, h;
+int32_t  x, y, w, h;
 BOX     *boxt;
 PIX     *pixt, *pixc, *pixr, *pixg;
 
@@ -1922,12 +1922,12 @@ PIX *
 pixMultiplyByColor(PIX       *pixd,
                    PIX       *pixs,
                    BOX       *box,
-                   l_uint32   color)
+                   uint32_t   color)
 {
-l_int32    i, j, bx, by, w, h, wpl;
-l_int32    red, green, blue, rval, gval, bval, nrval, ngval, nbval;
+int32_t    i, j, bx, by, w, h, wpl;
+int32_t    red, green, blue, rval, gval, bval, nrval, ngval, nbval;
 l_float32  frval, fgval, fbval;
-l_uint32  *data, *line;
+uint32_t  *data, *line;
 PIX       *pixt;
 
     if (!pixs)
@@ -1958,9 +1958,9 @@ PIX       *pixt;
         line = data + i * wpl;
         for (j = 0; j < w; j++) {
             extractRGBValues(line[j], &rval, &gval, &bval);
-            nrval = (l_int32)(frval * rval + 0.5);
-            ngval = (l_int32)(fgval * gval + 0.5);
-            nbval = (l_int32)(fbval * bval + 0.5);
+            nrval = (int32_t)(frval * rval + 0.5);
+            ngval = (int32_t)(fgval * gval + 0.5);
+            nbval = (int32_t)(fbval * bval + 0.5);
             composeRGBPixel(nrval, ngval, nbval, line + j);
         }
     }
@@ -1996,7 +1996,7 @@ PIX       *pixt;
  */
 PIX *
 pixAlphaBlendUniform(PIX      *pixs,
-                     l_uint32  color)
+                     uint32_t  color)
 {
 PIX  *pixt, *pixd;
 
@@ -2048,7 +2048,7 @@ PIX  *pixt, *pixd;
 PIX *
 pixAddAlphaToBlend(PIX       *pixs,
                    l_float32  fract,
-                   l_int32    invert)
+                   int32_t    invert)
 {
 PIX  *pixd, *pix1, *pix2;
 
@@ -2164,14 +2164,14 @@ PIX  *pixd, *pix1, *pix2, *pix3, *pix4;
  */
 l_ok
 pixLinearEdgeFade(PIX       *pixs,
-                  l_int32    dir,
-                  l_int32    fadeto,
+                  int32_t    dir,
+                  int32_t    fadeto,
                   l_float32  distfract,
                   l_float32  maxfade)
 {
-l_int32    i, j, w, h, d, wpl, xmin, ymin, range, val, rval, gval, bval;
+int32_t    i, j, w, h, d, wpl, xmin, ymin, range, val, rval, gval, bval;
 l_float32  slope, limit, del;
-l_uint32  *data, *line;
+uint32_t  *data, *line;
 
     if (!pixs)
         return ERROR_INT("pixs not defined", __func__, 1);
@@ -2197,19 +2197,19 @@ l_uint32  *data, *line;
 
         /* Set up parameters */
     if (dir == L_FROM_LEFT) {
-        range = (l_int32)(distfract * w);
+        range = (int32_t)(distfract * w);
         xmin = 0;
         slope = maxfade / (l_float32)range;
     } else if (dir == L_FROM_RIGHT) {
-        range = (l_int32)(distfract * w);
+        range = (int32_t)(distfract * w);
         xmin = w - range;
         slope = maxfade / (l_float32)range;
     } else if (dir == L_FROM_TOP) {
-        range = (l_int32)(distfract * h);
+        range = (int32_t)(distfract * h);
         ymin = 0;
         slope = maxfade / (l_float32)range;
     } else if (dir == L_FROM_BOT) {
-        range = (l_int32)(distfract * h);
+        range = (int32_t)(distfract * h);
         ymin = h - range;
         slope = maxfade / (l_float32)range;
     }

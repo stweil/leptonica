@@ -131,7 +131,7 @@
  *   be found in pix_internal.h.
  *
  *       (1) The image data is stored in a single contiguous
- *           array of l_uint32, into which the pixels are packed.
+ *           array of uint32_t, into which the pixels are packed.
  *           By "packed" we mean that there are no unused bits
  *           between pixels, except for end-of-line padding to
  *           satisfy item (2) below.
@@ -331,14 +331,14 @@ enum {
     L_ALPHA_CHANNEL = 3   /*!< alpha value index in RGBA_QUAD  */
 };
 
-static const l_int32  L_RED_SHIFT =
-       8 * (sizeof(l_uint32) - 1 - COLOR_RED);           /* 24 */
-static const l_int32  L_GREEN_SHIFT =
-       8 * (sizeof(l_uint32) - 1 - COLOR_GREEN);         /* 16 */
-static const l_int32  L_BLUE_SHIFT =
-       8 * (sizeof(l_uint32) - 1 - COLOR_BLUE);          /*  8 */
-static const l_int32  L_ALPHA_SHIFT =
-       8 * (sizeof(l_uint32) - 1 - L_ALPHA_CHANNEL);     /*  0 */
+static const int32_t  L_RED_SHIFT =
+       8 * (sizeof(uint32_t) - 1 - COLOR_RED);           /* 24 */
+static const int32_t  L_GREEN_SHIFT =
+       8 * (sizeof(uint32_t) - 1 - COLOR_GREEN);         /* 16 */
+static const int32_t  L_BLUE_SHIFT =
+       8 * (sizeof(uint32_t) - 1 - COLOR_BLUE);          /*  8 */
+static const int32_t  L_ALPHA_SHIFT =
+       8 * (sizeof(uint32_t) - 1 - L_ALPHA_CHANNEL);     /*  0 */
 
 
 /*-------------------------------------------------------------------------*

@@ -64,8 +64,8 @@
  *  surrounding braces:
  * \code
  *     #define  SET_DATA_QBIT(pdata, n, val) \
- *        {l_uint32 *_TEMP_WORD_PTR_; \
- *         _TEMP_WORD_PTR_ = (l_uint32 *)(pdata) + ((n) >> 3); \
+ *        {uint32_t *_TEMP_WORD_PTR_; \
+ *         _TEMP_WORD_PTR_ = (uint32_t *)(pdata) + ((n) >> 3); \
  *         *_TEMP_WORD_PTR_ &= ~(0xf0000000 >> (4 * ((n) & 7))); \
  *         *_TEMP_WORD_PTR_ |= (((val) & 15) << (28 - 4 * ((n) & 7)));}
  * \endcode
@@ -95,8 +95,8 @@
  *         do {....} while(0)
  *      Then the semicolon just terminates the expression.
  *  (2) Reduce the blocks to a single expression; e.g,
- *         *((l_uint32 *)(pdata) + ((n) >> 3)) = \
- *           *((l_uint32 *)(pdata) + ((n) >> 3)) \
+ *         *((uint32_t *)(pdata) + ((n) >> 3)) = \
+ *           *((uint32_t *)(pdata) + ((n) >> 3)) \
  *           & ~(0xf0000000 >> (4 * ((n) & 7))) \
  *           | (((val) & 15) << (28 - 4 * ((n) & 7)))
  *      This appears to cause redundant computation, but the compiler
@@ -121,40 +121,40 @@
      *--------------------------------------------------*/
 /*! 1 bit access - get */
 #define  GET_DATA_BIT(pdata, n) \
-    ((*((const l_uint32 *)(pdata) + ((n) >> 5)) >> (31 - ((n) & 31))) & 1)
+    ((*((const uint32_t *)(pdata) + ((n) >> 5)) >> (31 - ((n) & 31))) & 1)
 
 /*! 1 bit access - set */
 #define  SET_DATA_BIT(pdata, n) \
-    *((l_uint32 *)(pdata) + ((n) >> 5)) |= (0x80000000 >> ((n) & 31))
+    *((uint32_t *)(pdata) + ((n) >> 5)) |= (0x80000000 >> ((n) & 31))
 
 /*! 1 bit access - clear */
 #define  CLEAR_DATA_BIT(pdata, n) \
-    *((l_uint32 *)(pdata) + ((n) >> 5)) &= ~(0x80000000 >> ((n) & 31))
+    *((uint32_t *)(pdata) + ((n) >> 5)) &= ~(0x80000000 >> ((n) & 31))
 
 /*! 1 bit access - set value (0 or 1) */
 #define  SET_DATA_BIT_VAL(pdata, n, val) \
-     *((l_uint32 *)(pdata) + ((n) >> 5)) = \
-        ((*((l_uint32 *)(pdata) + ((n) >> 5)) \
+     *((uint32_t *)(pdata) + ((n) >> 5)) = \
+        ((*((uint32_t *)(pdata) + ((n) >> 5)) \
         & (~(0x80000000 >> ((n) & 31)))) \
-        | ((l_uint32)(val) << (31 - ((n) & 31))))
+        | ((uint32_t)(val) << (31 - ((n) & 31))))
 
     /*--------------------------------------------------*
      *                     2 bit access                 *
      *--------------------------------------------------*/
 /*! 2 bit access - get */
 #define  GET_DATA_DIBIT(pdata, n) \
-    ((*((const l_uint32 *)(pdata) + ((n) >> 4)) >> (2 * (15 - ((n) & 15)))) & 3)
+    ((*((const uint32_t *)(pdata) + ((n) >> 4)) >> (2 * (15 - ((n) & 15)))) & 3)
 
 /*! 2 bit access - set value (0 ... 3) */
 #define  SET_DATA_DIBIT(pdata, n, val) \
-     *((l_uint32 *)(pdata) + ((n) >> 4)) = \
-        ((*((l_uint32 *)(pdata) + ((n) >> 4)) \
+     *((uint32_t *)(pdata) + ((n) >> 4)) = \
+        ((*((uint32_t *)(pdata) + ((n) >> 4)) \
         & (~(0xc0000000 >> (2 * ((n) & 15))))) \
-        | ((l_uint32)((val) & 3) << (30 - 2 * ((n) & 15))))
+        | ((uint32_t)((val) & 3) << (30 - 2 * ((n) & 15))))
 
 /*! 2 bit access - clear */
 #define  CLEAR_DATA_DIBIT(pdata, n) \
-    *((l_uint32 *)(pdata) + ((n) >> 4)) &= ~(0xc0000000 >> (2 * ((n) & 15)))
+    *((uint32_t *)(pdata) + ((n) >> 4)) &= ~(0xc0000000 >> (2 * ((n) & 15)))
 
 
     /*--------------------------------------------------*
@@ -162,18 +162,18 @@
      *--------------------------------------------------*/
 /*! 4 bit access - get */
 #define  GET_DATA_QBIT(pdata, n) \
-     ((*((const l_uint32 *)(pdata) + ((n) >> 3)) >> (4 * (7 - ((n) & 7)))) & 0xf)
+     ((*((const uint32_t *)(pdata) + ((n) >> 3)) >> (4 * (7 - ((n) & 7)))) & 0xf)
 
 /*! 4 bit access - set value (0 ... 15) */
 #define  SET_DATA_QBIT(pdata, n, val) \
-     *((l_uint32 *)(pdata) + ((n) >> 3)) = \
-        ((*((l_uint32 *)(pdata) + ((n) >> 3)) \
+     *((uint32_t *)(pdata) + ((n) >> 3)) = \
+        ((*((uint32_t *)(pdata) + ((n) >> 3)) \
         & (~(0xf0000000 >> (4 * ((n) & 7))))) \
-        | ((l_uint32)((val) & 15) << (28 - 4 * ((n) & 7))))
+        | ((uint32_t)((val) & 15) << (28 - 4 * ((n) & 7))))
 
 /*! 4 bit access - clear */
 #define  CLEAR_DATA_QBIT(pdata, n) \
-    *((l_uint32 *)(pdata) + ((n) >> 3)) &= ~(0xf0000000 >> (4 * ((n) & 7)))
+    *((uint32_t *)(pdata) + ((n) >> 3)) &= ~(0xf0000000 >> (4 * ((n) & 7)))
 
 
     /*--------------------------------------------------*
@@ -182,21 +182,21 @@
 #ifdef  L_BIG_ENDIAN
 /*! 8 bit access - get */
 #define  GET_DATA_BYTE(pdata, n) \
-             (*((const l_uint8 *)(pdata) + (n)))
+             (*((const uint8_t *)(pdata) + (n)))
 #else  /* L_LITTLE_ENDIAN */
 /*! 8 bit access - get */
 #define  GET_DATA_BYTE(pdata, n) \
-             (*(l_uint8 *)((l_uintptr_t)((const l_uint8 *)(pdata) + (n)) ^ 3))
+             (*(uint8_t *)((l_uintptr_t)((const uint8_t *)(pdata) + (n)) ^ 3))
 #endif  /* L_BIG_ENDIAN */
 
 #ifdef  L_BIG_ENDIAN
 /*! 8 bit access - set value (0 ... 255) */
 #define  SET_DATA_BYTE(pdata, n, val) \
-             *((l_uint8 *)(pdata) + (n)) = (val)
+             *((uint8_t *)(pdata) + (n)) = (val)
 #else  /* L_LITTLE_ENDIAN */
 /*! 8 bit access - set value (0 ... 255) */
 #define  SET_DATA_BYTE(pdata, n, val) \
-             *(l_uint8 *)((l_uintptr_t)((l_uint8 *)(pdata) + (n)) ^ 3) = (val)
+             *(uint8_t *)((l_uintptr_t)((uint8_t *)(pdata) + (n)) ^ 3) = (val)
 #endif  /* L_BIG_ENDIAN */
 
 
@@ -206,21 +206,21 @@
 #ifdef  L_BIG_ENDIAN
 /*! 16 bit access - get */
 #define  GET_DATA_TWO_BYTES(pdata, n) \
-             (*((const l_uint16 *)(pdata) + (n)))
+             (*((const uint16_t *)(pdata) + (n)))
 #else  /* L_LITTLE_ENDIAN */
 /*! 16 bit access - get */
 #define  GET_DATA_TWO_BYTES(pdata, n) \
-             (*(l_uint16 *)((l_uintptr_t)((const l_uint16 *)(pdata) + (n)) ^ 2))
+             (*(uint16_t *)((l_uintptr_t)((const uint16_t *)(pdata) + (n)) ^ 2))
 #endif  /* L_BIG_ENDIAN */
 
 #ifdef  L_BIG_ENDIAN
 /*! 16 bit access - set value (0 ... 65535) */
 #define  SET_DATA_TWO_BYTES(pdata, n, val) \
-             *((l_uint16 *)(pdata) + (n)) = (val)
+             *((uint16_t *)(pdata) + (n)) = (val)
 #else  /* L_LITTLE_ENDIAN */
 /*! 16 bit access - set value (0 ... 65535) */
 #define  SET_DATA_TWO_BYTES(pdata, n, val) \
-             *(l_uint16 *)((l_uintptr_t)((l_uint16 *)(pdata) + (n)) ^ 2) = (val)
+             *(uint16_t *)((l_uintptr_t)((uint16_t *)(pdata) + (n)) ^ 2) = (val)
 #endif  /* L_BIG_ENDIAN */
 
 
@@ -229,11 +229,11 @@
      *--------------------------------------------------*/
 /*! 32 bit access - get */
 #define  GET_DATA_FOUR_BYTES(pdata, n) \
-             (*((const l_uint32 *)(pdata) + (n)))
+             (*((const uint32_t *)(pdata) + (n)))
 
 /*! 32 bit access - set (0 ... 4294967295) */
 #define  SET_DATA_FOUR_BYTES(pdata, n, val) \
-             *((l_uint32 *)(pdata) + (n)) = (val)
+             *((uint32_t *)(pdata) + (n)) = (val)
 
 
 #else

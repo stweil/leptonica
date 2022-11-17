@@ -40,7 +40,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32       i, n;
+int32_t       i, n;
 l_float32     pi, angle, val;
 BOX          *box;
 BOXA         *boxa, *boxa1, *boxa2;

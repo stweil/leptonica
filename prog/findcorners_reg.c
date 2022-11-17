@@ -53,7 +53,7 @@
 
 #include "allheaders.h"
 
-static BOXA *LocateBarcodes(PIX *pixs, PIX **ppixd, l_int32 flag);
+static BOXA *LocateBarcodes(PIX *pixs, PIX **ppixd, int32_t flag);
 static SELA *GetCornerSela(L_REGPARAMS *rp);
 
 static const char *sel_cross = "     xxx     "
@@ -70,10 +70,10 @@ static const char *sel_cross = "     xxx     "
                                "     xxx     "
                                "     xxx     ";
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32       i, n, flag;
+int32_t       i, n, flag;
 l_float32     angle, conf, deg2rad;
 BOX          *box1, *box2, *box3, *box4;
 BOXA         *boxa, *boxa2;
@@ -157,7 +157,7 @@ L_REGPARAMS  *rp;
 static BOXA *
 LocateBarcodes(PIX     *pixs,
                PIX    **ppixd,
-               l_int32  flag)
+               int32_t  flag)
 {
 BOXA    *boxa1, *boxa2, *boxad;
 PIX     *pix1, *pix2, *pix3;

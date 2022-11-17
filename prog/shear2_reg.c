@@ -36,11 +36,11 @@
 
 #include "allheaders.h"
 
-void PixSave(PIX **ppixs, PIXA *pixa, l_int32 newrow,
+void PixSave(PIX **ppixs, PIXA *pixa, int32_t newrow,
              L_BMF *bmf, const char *textstr);
 
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
 L_BMF        *bmf;
@@ -168,7 +168,7 @@ L_REGPARAMS  *rp;
 void
 PixSave(PIX        **ppixs,
         PIXA        *pixa,
-        l_int32      newrow,
+        int32_t      newrow,
         L_BMF       *bmf,
         const char  *textstr)
 {

@@ -61,7 +61,7 @@ int main(int    argc,
          char **argv)
 {
 char          seq[512];
-l_int32       w, h;
+int32_t       w, h;
 PIX          *pixs, *pix1, *pix2, *pix3, *pix4, *pix5;
 PIXA         *pixa;
 PIXACC       *pacc;

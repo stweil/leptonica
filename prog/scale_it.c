@@ -79,7 +79,7 @@ int main(int    argc,
          char **argv)
 {
 char      *filein, *fileout;
-l_int32    sharpen, antialias, togray, format, lossless, d;
+int32_t    sharpen, antialias, togray, format, lossless, d;
 l_float32  scalex, scaley;
 PIX       *pixs, *pixd;
 

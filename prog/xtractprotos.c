@@ -100,7 +100,7 @@ int main(int    argc,
 {
 char     *filein, *str, *tempfile, *prestring, *outprotos, *protostr;
 char      buf[L_BUFSIZE];
-l_int32   i, maxindex, in_line, nflags, protos_added, firstfile, len, ret;
+int32_t   i, maxindex, in_line, nflags, protos_added, firstfile, len, ret;
 size_t    nbytes;
 L_BYTEA  *ba, *ba2;
 SARRAY   *sa;

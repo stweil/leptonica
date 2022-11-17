@@ -92,7 +92,7 @@
 
 #include "allheaders.h"
 
-void TestMessageControl(l_int32  severity);
+void TestMessageControl(int32_t  severity);
 void TestStderrRedirect();
 
     /* dev null callback for stderr redirect */
@@ -133,9 +133,9 @@ int main ()
     return 0;
 }
 
-void TestMessageControl(l_int32  severity)
+void TestMessageControl(int32_t  severity)
 {
-l_int32  orig_severity;
+int32_t  orig_severity;
 
     setMsgSeverity(DEFAULT_SEVERITY);
     fputc ('\n', stderr);

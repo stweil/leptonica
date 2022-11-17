@@ -40,15 +40,15 @@
 #include <string.h>
 #include "allheaders.h"
 
-static const l_int32  NBoxes = 20;
-static const l_int32  Polarity = 0;  /* background */
+static const int32_t  NBoxes = 20;
+static const int32_t  Polarity = 0;  /* background */
 
 int main(int    argc,
          char **argv)
 {
 char          buf[64];
 char         *newpath;
-l_int32       i, bx, by, bw, bh, index, rval, gval, bval;
+int32_t       i, bx, by, bw, bh, index, rval, gval, bval;
 BOX          *box1, *box2;
 BOXA         *boxa;
 PIX          *pixs, *pix1, *pix2, *pix3;

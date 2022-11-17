@@ -36,12 +36,12 @@
 
 #include "allheaders.h"
 
-static l_int32 pageno = 35;
-static l_int32 build_output = 0;
-static l_int32 apply_output = 0;
-static l_int32 map_output = 1;
+static int32_t pageno = 35;
+static int32_t build_output = 0;
+static int32_t apply_output = 0;
+static int32_t map_output = 1;
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
 char        buf[64];

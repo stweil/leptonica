@@ -54,15 +54,15 @@
 
 #define   NFONTS        9
 
-const l_int32 sizes[] = {4, 6, 8, 10, 12, 14, 16, 18, 20};
+const int32_t sizes[] = {4, 6, 8, 10, 12, 14, 16, 18, 20};
 
 int main(int    argc,
          char **argv)
 {
 char          buf[512];
 char         *pathname, *datastr, *formstr;
-l_uint8      *data1, *data2;
-l_int32       i, bl1, bl2, bl3, sbytes, formbytes, fontsize, rbytes;
+uint8_t      *data1, *data2;
+int32_t       i, bl1, bl2, bl3, sbytes, formbytes, fontsize, rbytes;
 size_t        nbytes;
 PIX          *pix1, *pix2, *pixd;
 PIXA         *pixa;

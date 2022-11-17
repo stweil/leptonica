@@ -47,8 +47,8 @@
 #include "allheaders.h"
 
     /* for pixDisplayHitMissSel() */
-static const l_uint32  HitColor = 0x33aa4400;
-static const l_uint32  MissColor = 0xaa44bb00;
+static const uint32_t  HitColor = 0x33aa4400;
+static const uint32_t  MissColor = 0xaa44bb00;
 
     /* Patterns at full resolution */
 static const char *patname[3] = {
@@ -60,7 +60,7 @@ static const char *patname[3] = {
 int main(int    argc,
          char **argv)
 {
-l_int32  patno, reduction, width, cols, cx, cy;
+int32_t  patno, reduction, width, cols, cx, cy;
 PIX     *pixs, *pixt, *pix, *pixr, *pixp, *pixsel, *pixhmt;
 PIX     *pixd1, *pixd2, *pixd3, *pixd;
 PIXA    *pixa;

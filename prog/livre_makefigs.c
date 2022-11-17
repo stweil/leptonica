@@ -43,7 +43,7 @@ int main(int    argc,
          char **argv)
 {
 char     buf[256];
-l_int32  ignore;
+int32_t  ignore;
 
     if (argc != 1)
         return ERROR_INT(" Syntax:  livre_makefigs", __func__, 1);

@@ -42,15 +42,15 @@
 static const char  *boxafiles[3] = {"boxap1.ba", "boxap2.ba", "boxap3.ba"};
 static l_float32  varp[3] = {0.0165, 0.0432, 0.0716};
 static l_float32  varm[3] = {0.0088, 0.0213, 0.0357};
-static l_int32  same[3] = {1, -1, -1};
+static int32_t  same[3] = {1, -1, -1};
 
-static void TestBoxa(L_REGPARAMS *rp, l_int32 index);
-static void PlotBoxa(L_REGPARAMS *rp, l_int32 index);
+static void TestBoxa(L_REGPARAMS *rp, int32_t index);
+static void PlotBoxa(L_REGPARAMS *rp, int32_t index);
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32       i;
+int32_t       i;
 L_REGPARAMS  *rp;
 
 #if !defined(HAVE_LIBPNG)
@@ -70,10 +70,10 @@ L_REGPARAMS  *rp;
 
 static void
 TestBoxa(L_REGPARAMS  *rp,
-         l_int32       index)
+         int32_t       index)
 {
-l_uint8   *data;
-l_int32    w, h, medw, medh, isame;
+uint8_t   *data;
+int32_t    w, h, medw, medh, isame;
 size_t     size;
 l_float32  scalefact, devw, devh, ratiowh, fvarp, fvarm;
 BOXA      *boxa1, *boxa2, *boxa3;
@@ -154,7 +154,7 @@ PIX       *pix1;
 
 static void
 PlotBoxa(L_REGPARAMS  *rp,
-         l_int32       index)
+         int32_t       index)
 {
 BOXA  *boxa1, *boxa2;
 PIX   *pix1, *pix2, *pix3;

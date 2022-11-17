@@ -40,9 +40,9 @@
 
 #include "allheaders.h"
 
-static void DoTestsOnImage(PIX *pixs, L_REGPARAMS *rp, l_int32 width);
+static void DoTestsOnImage(PIX *pixs, L_REGPARAMS *rp, int32_t width);
 
-static const l_int32  ncomps = 10;
+static const int32_t  ncomps = 10;
 
 int main(int    argc,
          char **argv)
@@ -72,7 +72,7 @@ L_REGPARAMS  *rp;
 static void
 DoTestsOnImage(PIX          *pixs,
                L_REGPARAMS  *rp,
-               l_int32       width)
+               int32_t       width)
 {
 PIX   *pix, *pixd;
 PIXA  *pixa;

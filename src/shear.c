@@ -40,8 +40,8 @@
  *           PIX      *pixVShearCenter()
  *
  *    In place about arbitrary lines
- *           l_int32   pixHShearIP()
- *           l_int32   pixVShearIP()
+ *           int32_t   pixHShearIP()
+ *           int32_t   pixVShearIP()
  *
  *    Linear interpolated shear about arbitrary lines
  *           PIX      *pixHShearLI()
@@ -116,12 +116,12 @@ static l_float32 normalizeAngleForShear(l_float32 radang, l_float32 mindif);
 PIX *
 pixHShear(PIX       *pixd,
           PIX       *pixs,
-          l_int32    yloc,
+          int32_t    yloc,
           l_float32  radang,
-          l_int32    incolor)
+          int32_t    incolor)
 {
-l_int32    sign, w, h;
-l_int32    y, yincr, inityincr, hshift;
+int32_t    sign, w, h;
+int32_t    y, yincr, inityincr, hshift;
 l_float32  tanangle, invangle;
 
     if (!pixs)
@@ -160,13 +160,13 @@ l_float32  tanangle, invangle;
     sign = L_SIGN(radang);
     tanangle = tan(radang);
     invangle = L_ABS(1. / tanangle);
-    inityincr = (l_int32)(invangle / 2.);
-    yincr = (l_int32)invangle;
+    inityincr = (int32_t)(invangle / 2.);
+    yincr = (int32_t)invangle;
     pixRasterop(pixd, 0, yloc - inityincr, w, 2 * inityincr, PIX_SRC,
                 pixs, 0, yloc - inityincr);
 
     for (hshift = 1, y = yloc + inityincr; y < h; hshift++) {
-        yincr = (l_int32)(invangle * (hshift + 0.5) + 0.5) - (y - yloc);
+        yincr = (int32_t)(invangle * (hshift + 0.5) + 0.5) - (y - yloc);
         if (h - y < yincr)  /* reduce for last one if req'd */
             yincr = h - y;
         pixRasterop(pixd, -sign*hshift, y, w, yincr, PIX_SRC, pixs, 0, y);
@@ -177,7 +177,7 @@ l_float32  tanangle, invangle;
     }
 
     for (hshift = -1, y = yloc - inityincr; y > 0; hshift--) {
-        yincr = (y - yloc) - (l_int32)(invangle * (hshift - 0.5) + 0.5);
+        yincr = (y - yloc) - (int32_t)(invangle * (hshift - 0.5) + 0.5);
         if (y < yincr)  /* reduce for last one if req'd */
             yincr = y;
         pixRasterop(pixd, -sign*hshift, y - yincr, w, yincr, PIX_SRC,
@@ -235,12 +235,12 @@ l_float32  tanangle, invangle;
 PIX *
 pixVShear(PIX       *pixd,
           PIX       *pixs,
-          l_int32    xloc,
+          int32_t    xloc,
           l_float32  radang,
-          l_int32    incolor)
+          int32_t    incolor)
 {
-l_int32    sign, w, h;
-l_int32    x, xincr, initxincr, vshift;
+int32_t    sign, w, h;
+int32_t    x, xincr, initxincr, vshift;
 l_float32  tanangle, invangle;
 
     if (!pixs)
@@ -279,13 +279,13 @@ l_float32  tanangle, invangle;
     sign = L_SIGN(radang);
     tanangle = tan(radang);
     invangle = L_ABS(1. / tanangle);
-    initxincr = (l_int32)(invangle / 2.);
-    xincr = (l_int32)invangle;
+    initxincr = (int32_t)(invangle / 2.);
+    xincr = (int32_t)invangle;
     pixRasterop(pixd, xloc - initxincr, 0, 2 * initxincr, h, PIX_SRC,
                 pixs, xloc - initxincr, 0);
 
     for (vshift = 1, x = xloc + initxincr; x < w; vshift++) {
-        xincr = (l_int32)(invangle * (vshift + 0.5) + 0.5) - (x - xloc);
+        xincr = (int32_t)(invangle * (vshift + 0.5) + 0.5) - (x - xloc);
         if (w - x < xincr)  /* reduce for last one if req'd */
             xincr = w - x;
         pixRasterop(pixd, x, sign*vshift, xincr, h, PIX_SRC, pixs, x, 0);
@@ -296,7 +296,7 @@ l_float32  tanangle, invangle;
     }
 
     for (vshift = -1, x = xloc - initxincr; x > 0; vshift--) {
-        xincr = (x - xloc) - (l_int32)(invangle * (vshift - 0.5) + 0.5);
+        xincr = (x - xloc) - (int32_t)(invangle * (vshift - 0.5) + 0.5);
         if (x < xincr)  /* reduce for last one if req'd */
             xincr = x;
         pixRasterop(pixd, x - xincr, sign*vshift, xincr, h, PIX_SRC,
@@ -336,7 +336,7 @@ PIX *
 pixHShearCorner(PIX       *pixd,
                 PIX       *pixs,
                 l_float32  radang,
-                l_int32    incolor)
+                int32_t    incolor)
 {
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, pixd);
@@ -365,7 +365,7 @@ PIX *
 pixVShearCorner(PIX       *pixd,
                 PIX       *pixs,
                 l_float32  radang,
-                l_int32    incolor)
+                int32_t    incolor)
 {
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, pixd);
@@ -394,7 +394,7 @@ PIX *
 pixHShearCenter(PIX       *pixd,
                 PIX       *pixs,
                 l_float32  radang,
-                l_int32    incolor)
+                int32_t    incolor)
 {
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, pixd);
@@ -423,7 +423,7 @@ PIX *
 pixVShearCenter(PIX       *pixd,
                 PIX       *pixs,
                 l_float32  radang,
-                l_int32    incolor)
+                int32_t    incolor)
 {
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, pixd);
@@ -457,12 +457,12 @@ pixVShearCenter(PIX       *pixd,
  */
 l_ok
 pixHShearIP(PIX       *pixs,
-            l_int32    yloc,
+            int32_t    yloc,
             l_float32  radang,
-            l_int32    incolor)
+            int32_t    incolor)
 {
-l_int32    sign, w, h;
-l_int32    y, yincr, inityincr, hshift;
+int32_t    sign, w, h;
+int32_t    y, yincr, inityincr, hshift;
 l_float32  tanangle, invangle;
 
     if (!pixs)
@@ -481,14 +481,14 @@ l_float32  tanangle, invangle;
     pixGetDimensions(pixs, &w, &h, NULL);
     tanangle = tan(radang);
     invangle = L_ABS(1. / tanangle);
-    inityincr = (l_int32)(invangle / 2.);
-    yincr = (l_int32)invangle;
+    inityincr = (int32_t)(invangle / 2.);
+    yincr = (int32_t)invangle;
 
     if (inityincr > 0)
         pixRasteropHip(pixs, yloc - inityincr, 2 * inityincr, 0, incolor);
 
     for (hshift = 1, y = yloc + inityincr; y < h; hshift++) {
-        yincr = (l_int32)(invangle * (hshift + 0.5) + 0.5) - (y - yloc);
+        yincr = (int32_t)(invangle * (hshift + 0.5) + 0.5) - (y - yloc);
         if (yincr == 0) continue;
         if (h - y < yincr)  /* reduce for last one if req'd */
             yincr = h - y;
@@ -497,7 +497,7 @@ l_float32  tanangle, invangle;
     }
 
     for (hshift = -1, y = yloc - inityincr; y > 0; hshift--) {
-        yincr = (y - yloc) - (l_int32)(invangle * (hshift - 0.5) + 0.5);
+        yincr = (y - yloc) - (int32_t)(invangle * (hshift - 0.5) + 0.5);
         if (yincr == 0) continue;
         if (y < yincr)  /* reduce for last one if req'd */
             yincr = y;
@@ -530,12 +530,12 @@ l_float32  tanangle, invangle;
  */
 l_ok
 pixVShearIP(PIX       *pixs,
-            l_int32    xloc,
+            int32_t    xloc,
             l_float32  radang,
-            l_int32    incolor)
+            int32_t    incolor)
 {
-l_int32    sign, w, h;
-l_int32    x, xincr, initxincr, vshift;
+int32_t    sign, w, h;
+int32_t    x, xincr, initxincr, vshift;
 l_float32  tanangle, invangle;
 
     if (!pixs)
@@ -554,14 +554,14 @@ l_float32  tanangle, invangle;
     pixGetDimensions(pixs, &w, &h, NULL);
     tanangle = tan(radang);
     invangle = L_ABS(1. / tanangle);
-    initxincr = (l_int32)(invangle / 2.);
-    xincr = (l_int32)invangle;
+    initxincr = (int32_t)(invangle / 2.);
+    xincr = (int32_t)invangle;
 
     if (initxincr > 0)
         pixRasteropVip(pixs, xloc - initxincr, 2 * initxincr, 0, incolor);
 
     for (vshift = 1, x = xloc + initxincr; x < w; vshift++) {
-        xincr = (l_int32)(invangle * (vshift + 0.5) + 0.5) - (x - xloc);
+        xincr = (int32_t)(invangle * (vshift + 0.5) + 0.5) - (x - xloc);
         if (xincr == 0) continue;
         if (w - x < xincr)  /* reduce for last one if req'd */
             xincr = w - x;
@@ -570,7 +570,7 @@ l_float32  tanangle, invangle;
     }
 
     for (vshift = -1, x = xloc - initxincr; x > 0; vshift--) {
-        xincr = (x - xloc) - (l_int32)(invangle * (vshift - 0.5) + 0.5);
+        xincr = (x - xloc) - (int32_t)(invangle * (vshift - 0.5) + 0.5);
         if (xincr == 0) continue;
         if (x < xincr)  /* reduce for last one if req'd */
             xincr = x;
@@ -611,13 +611,13 @@ l_float32  tanangle, invangle;
  */
 PIX *
 pixHShearLI(PIX       *pixs,
-            l_int32    yloc,
+            int32_t    yloc,
             l_float32  radang,
-            l_int32    incolor)
+            int32_t    incolor)
 {
-l_int32    i, jd, x, xp, xf, w, h, d, wm, wpls, wpld, val, rval, gval, bval;
-l_uint32   word0, word1;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    i, jd, x, xp, xf, w, h, d, wm, wpls, wpld, val, rval, gval, bval;
+uint32_t   word0, word1;
+uint32_t  *datas, *datad, *lines, *lined;
 l_float32  tanangle, xshift;
 PIX       *pix, *pixd;
 
@@ -659,7 +659,7 @@ PIX       *pix, *pixd;
         lined = datad + i * wpld;
         xshift = (yloc - i) * tanangle;
         for (jd = 0; jd < w; jd++) {
-            x = (l_int32)(64.0 * (-xshift + jd) + 0.5);
+            x = (int32_t)(64.0 * (-xshift + jd) + 0.5);
             xp = x / 64;
             xf = x & 63;
             wm = w - 1;
@@ -721,13 +721,13 @@ PIX       *pix, *pixd;
  */
 PIX *
 pixVShearLI(PIX       *pixs,
-            l_int32    xloc,
+            int32_t    xloc,
             l_float32  radang,
-            l_int32    incolor)
+            int32_t    incolor)
 {
-l_int32    id, y, yp, yf, j, w, h, d, hm, wpls, wpld, val, rval, gval, bval;
-l_uint32   word0, word1;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    id, y, yp, yf, j, w, h, d, hm, wpls, wpld, val, rval, gval, bval;
+uint32_t   word0, word1;
+uint32_t  *datas, *datad, *lines, *lined;
 l_float32  tanangle, yshift;
 PIX       *pix, *pixd;
 
@@ -767,7 +767,7 @@ PIX       *pix, *pixd;
     for (j = 0; j < w; j++) {
         yshift = (j - xloc) * tanangle;
         for (id = 0; id < h; id++) {
-            y = (l_int32)(64.0 * (-yshift + id) + 0.5);
+            y = (int32_t)(64.0 * (-yshift + id) + 0.5);
             yp = y / 64;
             yf = y & 63;
             hm = h - 1;
@@ -817,7 +817,7 @@ l_float32  pi2;
        /* Bring angle into range [-pi/2, pi/2] */
     pi2 = 3.14159265 / 2.0;
     if (radang < -pi2 || radang > pi2)
-        radang = radang - (l_int32)(radang / pi2) * pi2;
+        radang = radang - (int32_t)(radang / pi2) * pi2;
 
        /* If angle is too close to pi/2 or -pi/2, move it */
     if (radang > pi2 - mindif) {

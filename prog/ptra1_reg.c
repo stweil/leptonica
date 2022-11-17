@@ -37,16 +37,16 @@
 #include "allheaders.h"
 
 static void MakePtrasFromPixa(PIXA *pixa, L_PTRA **ppapix, L_PTRA **ppabox,
-                              l_int32 copyflag);
+                              int32_t copyflag);
 static PIXA *ReconstructPixa1(L_REGPARAMS *rp, L_PTRA *papix, L_PTRA *pabox);
 static PIXA *ReconstructPixa2(L_REGPARAMS *rp, L_PTRA *papix, L_PTRA *pabox);
-static PIX *SaveResult(PIXA *pixac, PIXA **ppixa, l_int32 w, l_int32 h,
-                       l_int32 newline);
+static PIX *SaveResult(PIXA *pixac, PIXA **ppixa, int32_t w, int32_t h,
+                       int32_t newline);
 
 int main(int    argc,
          char **argv)
 {
-l_int32       i, n, w, h, nactual, imax;
+int32_t       i, n, w, h, nactual, imax;
 BOX          *box;
 BOXA         *boxa;
 PIX          *pixs, *pixd, *pix;
@@ -351,9 +351,9 @@ static void
 MakePtrasFromPixa(PIXA     *pixa,
                   L_PTRA  **ppapix,
                   L_PTRA  **ppabox,
-                  l_int32   copyflag)
+                  int32_t   copyflag)
 {
-l_int32  i, n;
+int32_t  i, n;
 BOX     *box;
 PIX     *pix;
 L_PTRA  *papix, *pabox;
@@ -380,7 +380,7 @@ ReconstructPixa1(L_REGPARAMS  *rp,
                  L_PTRA       *papix,
                  L_PTRA       *pabox)
 {
-l_int32  i, imax, nactual;
+int32_t  i, imax, nactual;
 BOX     *box;
 PIX     *pix;
 PIXA    *pixat;
@@ -415,7 +415,7 @@ ReconstructPixa2(L_REGPARAMS  *rp,
                  L_PTRA       *papix,
                  L_PTRA       *pabox)
 {
-l_int32  i, imax, nactual;
+int32_t  i, imax, nactual;
 BOX     *box;
 PIX     *pix;
 PIXA    *pixat;
@@ -475,9 +475,9 @@ PIXA    *pixat;
 PIX *
 SaveResult(PIXA   *pixac,
            PIXA  **ppixa,
-           l_int32  w,
-           l_int32  h,
-           l_int32  newline)
+           int32_t  w,
+           int32_t  h,
+           int32_t  newline)
 {
 PIX   *pixd;
 

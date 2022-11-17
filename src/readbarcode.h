@@ -64,7 +64,7 @@ enum {
      * ----------------------------------------------------------------- */
 
 /*! Currently supported formats */
-static const l_int32  SupportedBarcodeFormat[] = {
+static const int32_t  SupportedBarcodeFormat[] = {
     L_BF_CODE2OF5,
     L_BF_CODEI2OF5,
     L_BF_CODE93,
@@ -84,7 +84,7 @@ static const char  *SupportedBarcodeFormatName[] = {
     "Upca",
     "Ean13"
 };
-static const l_int32  NumSupportedBarcodeFormats = 7; /*!< Number of formats */
+static const int32_t  NumSupportedBarcodeFormats = 7; /*!< Number of formats */
 
 
     /* ----------------------------------------------------------------- *
@@ -97,8 +97,8 @@ static const char *Code2of5[] = {
     "21211", "21112"                                      /* Start, Stop */
 };
 
-static const l_int32  C25_START = 10;
-static const l_int32  C25_STOP =  11;
+static const int32_t  C25_START = 10;
+static const int32_t  C25_STOP =  11;
 
 
     /* ----------------------------------------------------------------- *
@@ -110,8 +110,8 @@ static const char *CodeI2of5[] = {
     "1111", "211"                                   /*  start, stop */
 };
 
-static const l_int32  CI25_START = 10;
-static const l_int32  CI25_STOP =  11;
+static const int32_t  CI25_START = 10;
+static const int32_t  CI25_STOP =  11;
 
 
     /* ----------------------------------------------------------------- *
@@ -134,8 +134,8 @@ static const char *Code93[] = {
 static const char Code93Val[] =
     "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%[]{}#";
 
-static const l_int32  C93_START = 47;
-static const l_int32  C93_STOP =  47;
+static const int32_t  C93_START = 47;
+static const int32_t  C93_STOP =  47;
 
 
     /* ----------------------------------------------------------------- *
@@ -159,8 +159,8 @@ static const char *Code39[] = {
 static const char Code39Val[] =
     "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%*";
 
-static const l_int32  C39_START = 43;
-static const l_int32  C39_STOP =  43;
+static const int32_t  C39_START = 43;
+static const int32_t  C39_STOP =  43;
 
 
     /* ----------------------------------------------------------------- *
@@ -187,9 +187,9 @@ static const char *Upca[] = {
     "111", "111", "11111"                    /* 10: Start, Stop, Mid  */
 };
 
-static const l_int32  UPCA_START = 10;
-static const l_int32  UPCA_STOP =  11;
-static const l_int32  UPCA_MID =   12;
+static const int32_t  UPCA_START = 10;
+static const int32_t  UPCA_STOP =  11;
+static const int32_t  UPCA_MID =   12;
 
 
     /* ----------------------------------------------------------------- *
@@ -220,19 +220,19 @@ static const char *Code128[] = {
     "211232", "2331112"                                  /* 105 - 106 */
 };
 
-static const l_int32  C128_FUN_3 =    96;   /* in A or B only; in C it is 96 */
-static const l_int32  C128_FUNC_2 =   97;   /* in A or B only; in C it is 97 */
-static const l_int32  C128_SHIFT =    98;   /* in A or B only; in C it is 98 */
-static const l_int32  C128_GOTO_C =   99;   /* in A or B only; in C it is 99 */
-static const l_int32  C128_GOTO_B =  100;
-static const l_int32  C128_GOTO_A =  101;
-static const l_int32  C128_FUNC_1 =  102;
-static const l_int32  C128_START_A = 103;
-static const l_int32  C128_START_B = 104;
-static const l_int32  C128_START_C = 105;
-static const l_int32  C128_STOP =    106;
+static const int32_t  C128_FUN_3 =    96;   /* in A or B only; in C it is 96 */
+static const int32_t  C128_FUNC_2 =   97;   /* in A or B only; in C it is 97 */
+static const int32_t  C128_SHIFT =    98;   /* in A or B only; in C it is 98 */
+static const int32_t  C128_GOTO_C =   99;   /* in A or B only; in C it is 99 */
+static const int32_t  C128_GOTO_B =  100;
+static const int32_t  C128_GOTO_A =  101;
+static const int32_t  C128_FUNC_1 =  102;
+static const int32_t  C128_START_A = 103;
+static const int32_t  C128_START_B = 104;
+static const int32_t  C128_START_C = 105;
+static const int32_t  C128_STOP =    106;
     /* code 128 symbols are 11 units */
-static const l_int32  C128_SYMBOL_WIDTH = 11;
+static const int32_t  C128_SYMBOL_WIDTH = 11;
 
 
 

@@ -43,7 +43,7 @@
  */
 
     /* Bound on max initial ptra size */
-LEPT_DLL extern const l_uint32  MaxInitPtraSize;
+LEPT_DLL extern const uint32_t  MaxInitPtraSize;
 
 /*------------------------------------------------------------------------*
  *                     Generic Ptr Array Structs                          *
@@ -52,9 +52,9 @@ LEPT_DLL extern const l_uint32  MaxInitPtraSize;
     /*! Generic pointer array */
 struct L_Ptra
 {
-    l_int32          nalloc;    /*!< size of allocated ptr array         */
-    l_int32          imax;      /*!< greatest valid index                */
-    l_int32          nactual;   /*!< actual number of stored elements    */
+    int32_t          nalloc;    /*!< size of allocated ptr array         */
+    int32_t          imax;      /*!< greatest valid index                */
+    int32_t          nactual;   /*!< actual number of stored elements    */
     void           **array;     /*!< ptr array                           */
 };
 typedef struct L_Ptra  L_PTRA;
@@ -63,7 +63,7 @@ typedef struct L_Ptra  L_PTRA;
     /*! Array of generic pointer arrays */
 struct L_Ptraa
 {
-    l_int32          nalloc;    /*!< size of allocated ptr array         */
+    int32_t          nalloc;    /*!< size of allocated ptr array         */
     struct L_Ptra  **ptra;      /*!< array of ptra                       */
 };
 typedef struct L_Ptraa  L_PTRAA;

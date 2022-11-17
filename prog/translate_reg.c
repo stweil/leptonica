@@ -42,10 +42,10 @@
 #define   COLORMAP_IMAGE      "dreyfus8.png"
 #define   RGB_IMAGE           "marge.jpg"
 
-void TranslateAndSave1(PIXA *pixa, l_int32 depth, PIX *pix,
-                       l_int32 xshift, l_int32 yshift);
+void TranslateAndSave1(PIXA *pixa, int32_t depth, PIX *pix,
+                       int32_t xshift, int32_t yshift);
 
-void TranslateAndSave2(PIXA *pixa, PIX *pix, l_int32 xshift, l_int32 yshift);
+void TranslateAndSave2(PIXA *pixa, PIX *pix, int32_t xshift, int32_t yshift);
 
 
 int main(int    argc,
@@ -125,10 +125,10 @@ L_REGPARAMS  *rp;
 
 void
 TranslateAndSave1(PIXA    *pixa,
-                  l_int32  depth,
+                  int32_t  depth,
                   PIX     *pix,
-                  l_int32  xshift,
-                  l_int32  yshift)
+                  int32_t  xshift,
+                  int32_t  yshift)
 {
 PIX  *pix1, *pix2, *pix3, *pix4;
 
@@ -146,8 +146,8 @@ PIX  *pix1, *pix2, *pix3, *pix4;
 void
 TranslateAndSave2(PIXA    *pixa,
                   PIX     *pix,
-                  l_int32  xshift,
-                  l_int32  yshift)
+                  int32_t  xshift,
+                  int32_t  yshift)
 {
 PIX  *pix1, *pix2, *pix3, *pix4;
 

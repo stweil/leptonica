@@ -39,26 +39,26 @@
 #include <math.h>
 #include "allheaders.h"
 
-static void MakePtasAffine(l_int32 i, PTA **pptas, PTA **pptad);
-static void MakePtas(l_int32 i, PTA **pptas, PTA **pptad);
+static void MakePtasAffine(int32_t i, PTA **pptas, PTA **pptad);
+static void MakePtas(int32_t i, PTA **pptas, PTA **pptad);
 
-static const l_int32  xs1[] =  { 300,  300, 1100,  300,   32};
-static const l_int32  ys1[] =  {1200, 1200, 1200, 1250,  934};
-static const l_int32  xs2[] =  {1200, 1200,  325, 1300,  487};
-static const l_int32  ys2[] =  {1100, 1100, 1200, 1250,  934};
-static const l_int32  xs3[] =  { 200,  200, 1200,  250,   32};
-static const l_int32  ys3[] =  { 200,  200,  200,  300,   67};
-static const l_int32  xs4[] =  {1200, 1200, 1100, 1250,  332};
-static const l_int32  ys4[] =  { 400,  200,  200,  300,   57};
+static const int32_t  xs1[] =  { 300,  300, 1100,  300,   32};
+static const int32_t  ys1[] =  {1200, 1200, 1200, 1250,  934};
+static const int32_t  xs2[] =  {1200, 1200,  325, 1300,  487};
+static const int32_t  ys2[] =  {1100, 1100, 1200, 1250,  934};
+static const int32_t  xs3[] =  { 200,  200, 1200,  250,   32};
+static const int32_t  ys3[] =  { 200,  200,  200,  300,   67};
+static const int32_t  xs4[] =  {1200, 1200, 1100, 1250,  332};
+static const int32_t  ys4[] =  { 400,  200,  200,  300,   57};
 
-static const l_int32  xd1[] = { 300,  300, 1150,  300,   32};
-static const l_int32  yd1[] = {1200, 1400, 1150, 1350,  934};
-static const l_int32  xd2[] = {1100, 1400,  320, 1300,  487};
-static const l_int32  yd2[] = {1000, 1500, 1300, 1200,  904};
-static const l_int32  xd3[] = { 250,  200, 1310,  300,   61};
-static const l_int32  yd3[] = { 200,  300,  250,  325,   83};
-static const l_int32  xd4[] = {1250, 1200, 1140, 1250,  412};
-static const l_int32  yd4[] = { 300,  300,  250,  350,   83};
+static const int32_t  xd1[] = { 300,  300, 1150,  300,   32};
+static const int32_t  yd1[] = {1200, 1400, 1150, 1350,  934};
+static const int32_t  xd2[] = {1100, 1400,  320, 1300,  487};
+static const int32_t  yd2[] = {1000, 1500, 1300, 1200,  904};
+static const int32_t  xd3[] = { 250,  200, 1310,  300,   61};
+static const int32_t  yd3[] = { 200,  300,  250,  325,   83};
+static const int32_t  xd4[] = {1250, 1200, 1140, 1250,  412};
+static const int32_t  yd4[] = { 300,  300,  250,  350,   83};
 
 
 int main(int    argc,
@@ -324,7 +324,7 @@ L_REGPARAMS  *rp;
 
 
 static void
-MakePtas(l_int32  i,
+MakePtas(int32_t  i,
          PTA    **pptas,
          PTA    **pptad)
 {
@@ -345,7 +345,7 @@ PTA  *ptas, *ptad;
 }
 
 static void
-MakePtasAffine(l_int32  i,
+MakePtasAffine(int32_t  i,
                PTA    **pptas,
                PTA    **pptad)
 {

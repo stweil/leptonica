@@ -48,7 +48,7 @@ int main(int    argc,
          char **argv)
 {
 char    *dirin, *dirout, *infile, *outfile, *tail;
-l_int32  i, nfiles, border, x, y, w, h, xb, yb, wb, hb;
+int32_t  i, nfiles, border, x, y, w, h, xb, yb, wb, hb;
 BOX     *box1, *box2;
 BOXA    *boxa1, *boxa2;
 PIX     *pixs, *pixt1, *pixd;

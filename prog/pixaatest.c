@@ -37,14 +37,14 @@
 #include "allheaders.h"
 #include "pix_internal.h"
 
-static const l_int32  nx = 10;
-static const l_int32  ny = 12;
-static const l_int32  ncols = 3;
+static const int32_t  nx = 10;
+static const int32_t  ny = 12;
+static const int32_t  ncols = 3;
 
 int main(int    argc,
          char **argv)
 {
-l_int32  w, d, tilewidth;
+int32_t  w, d, tilewidth;
 PIX     *pixs;
 PIXA    *pixa, *pixad1, *pixad2;
 PIXAA   *pixaa1, *pixaa2;

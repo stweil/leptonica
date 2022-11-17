@@ -43,7 +43,7 @@ int main(int    argc,
 {
 char    *filein, *fileout;
 char     error_msg[] = " ps level = {1,2,3}; level 2 is default";
-l_int32  level;
+int32_t  level;
 
     if (argc != 3 && argc != 4) {
         lept_stderr("Syntax: converttops filein fileout [level]\n");

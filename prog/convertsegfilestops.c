@@ -81,7 +81,7 @@ int main(int    argc,
          char **argv)
 {
 char      *pagedir, *pagestr, *maskdir, *maskstr, *fileout;
-l_int32    threshold, page_numpre, mask_numpre, numpost, maxnum;
+int32_t    threshold, page_numpre, mask_numpre, numpost, maxnum;
 l_float32  textscale, imagescale;
 
     if (argc != 13) {

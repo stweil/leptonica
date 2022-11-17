@@ -100,13 +100,13 @@ static const l_float32  LimitShearAngle = 0.35;    /* radians; ~20 deg   */
 PIX *
 pixRotate(PIX       *pixs,
           l_float32  angle,
-          l_int32    type,
-          l_int32    incolor,
-          l_int32    width,
-          l_int32    height)
+          int32_t    type,
+          int32_t    incolor,
+          int32_t    width,
+          int32_t    height)
 {
-l_int32    w, h, d;
-l_uint32   fillval;
+int32_t    w, h, d;
+uint32_t   fillval;
 PIX       *pix1, *pix2, *pix3, *pixd;
 PIXCMAP   *cmap;
 
@@ -240,11 +240,11 @@ PIXCMAP   *cmap;
 PIX *
 pixEmbedForRotation(PIX       *pixs,
                     l_float32  angle,
-                    l_int32    incolor,
-                    l_int32    width,
-                    l_int32    height)
+                    int32_t    incolor,
+                    int32_t    width,
+                    int32_t    height)
 {
-l_int32    w, h, d, w1, h1, w2, h2, maxside, wnew, hnew, xoff, yoff, setcolor;
+int32_t    w, h, d, w1, h1, w2, h2, maxside, wnew, hnew, xoff, yoff, setcolor;
 l_float64  sina, cosa, fw, fh;
 PIX       *pixd;
 
@@ -257,7 +257,7 @@ PIX       *pixd;
 
         /* Test if big enough to hold any rotation of the original image */
     pixGetDimensions(pixs, &w, &h, &d);
-    maxside = (l_int32)(sqrt((l_float64)(width * width) +
+    maxside = (int32_t)(sqrt((l_float64)(width * width) +
                              (l_float64)(height * height)) + 0.5);
     if (w >= maxside && h >= maxside)  /* big enough */
         return pixClone(pixs);
@@ -269,10 +269,10 @@ PIX       *pixd;
     sina = sin(angle);
     fw = (l_float64)w;
     fh = (l_float64)h;
-    w1 = (l_int32)(L_ABS(fw * cosa - fh * sina) + 0.5);
-    w2 = (l_int32)(L_ABS(-fw * cosa - fh * sina) + 0.5);
-    h1 = (l_int32)(L_ABS(fw * sina + fh * cosa) + 0.5);
-    h2 = (l_int32)(L_ABS(-fw * sina + fh * cosa) + 0.5);
+    w1 = (int32_t)(L_ABS(fw * cosa - fh * sina) + 0.5);
+    w2 = (int32_t)(L_ABS(-fw * cosa - fh * sina) + 0.5);
+    h1 = (int32_t)(L_ABS(fw * sina + fh * cosa) + 0.5);
+    h2 = (int32_t)(L_ABS(-fw * sina + fh * cosa) + 0.5);
     wnew = L_MAX(w, L_MAX(w1, w2));
     hnew = L_MAX(h, L_MAX(h1, h2));
 
@@ -318,15 +318,15 @@ PIX       *pixd;
  */
 PIX *
 pixRotateBySampling(PIX       *pixs,
-                    l_int32    xcen,
-                    l_int32    ycen,
+                    int32_t    xcen,
+                    int32_t    ycen,
                     l_float32  angle,
-                    l_int32    incolor)
+                    int32_t    incolor)
 {
-l_int32    w, h, d, i, j, x, y, xdif, ydif, wm1, hm1, wpld;
-l_uint32   val;
+int32_t    w, h, d, i, j, x, y, xdif, ydif, wm1, hm1, wpld;
+uint32_t   val;
 l_float32  sina, cosa;
-l_uint32  *datad, *lined;
+uint32_t  *datad, *lined;
 void     **lines;
 PIX       *pixd;
 
@@ -360,9 +360,9 @@ PIX       *pixd;
             ydif = ycen - i;
             for (j = 0; j < w; j++) {
                 xdif = xcen - j;
-                x = xcen + (l_int32)(-xdif * cosa - ydif * sina);
+                x = xcen + (int32_t)(-xdif * cosa - ydif * sina);
                 if (x < 0 || x > wm1) continue;
-                y = ycen + (l_int32)(-ydif * cosa + xdif * sina);
+                y = ycen + (int32_t)(-ydif * cosa + xdif * sina);
                 if (y < 0 || y > hm1) continue;
                 if (incolor == L_BRING_IN_WHITE) {
                     if (GET_DATA_BIT(lines[y], x))
@@ -382,9 +382,9 @@ PIX       *pixd;
         ydif = ycen - i;
         for (j = 0; j < w; j++) {
             xdif = xcen - j;
-            x = xcen + (l_int32)(-xdif * cosa - ydif * sina);
+            x = xcen + (int32_t)(-xdif * cosa - ydif * sina);
             if (x < 0 || x > wm1) continue;
-            y = ycen + (l_int32)(-ydif * cosa + xdif * sina);
+            y = ycen + (int32_t)(-ydif * cosa + xdif * sina);
             if (y < 0 || y > hm1) continue;
             switch (d)
             {
@@ -450,7 +450,7 @@ PIX       *pixd;
 PIX *
 pixRotateBinaryNice(PIX       *pixs,
                     l_float32  angle,
-                    l_int32    incolor)
+                    int32_t    incolor)
 {
 PIX  *pix1, *pix2, *pix3, *pix4, *pixd;
 
@@ -529,7 +529,7 @@ pixRotateWithAlpha(PIX       *pixs,
                    PIX       *pixg,
                    l_float32  fract)
 {
-l_int32  ws, hs, d, spp;
+int32_t  ws, hs, d, spp;
 PIX     *pixd, *pix32, *pixg2, *pixgr;
 
     if (!pixs)
@@ -566,15 +566,15 @@ PIX     *pixd, *pix32, *pixg2, *pixgr;
         if (fract == 1.0)
             pixSetAll(pixg2);
         else if (fract > 0.0)
-            pixSetAllArbitrary(pixg2, (l_int32)(255.0 * fract));
+            pixSetAllArbitrary(pixg2, (int32_t)(255.0 * fract));
     } else {
         pixg2 = pixResizeToMatch(pixg, NULL, ws, hs);
     }
     if (ws > 10 && hs > 10) {  /* see note 8 */
         pixSetBorderRingVal(pixg2, 1,
-                            (l_int32)(255.0 * fract * AlphaMaskBorderVals[0]));
+                            (int32_t)(255.0 * fract * AlphaMaskBorderVals[0]));
         pixSetBorderRingVal(pixg2, 2,
-                            (l_int32)(255.0 * fract * AlphaMaskBorderVals[1]));
+                            (int32_t)(255.0 * fract * AlphaMaskBorderVals[1]));
     }
     pixgr = pixRotate(pixg2, angle, L_ROTATE_AREA_MAP,
                       L_BRING_IN_BLACK, ws, hs);

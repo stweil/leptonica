@@ -46,12 +46,12 @@
 
 #include "allheaders.h"
 
-static const l_int32  num_erodes = 8;
+static const int32_t  num_erodes = 8;
 
 int main(int    argc,
          char **argv)
 {
-l_int32       i, k, prevcount, count, nfiles, n, maxloc, maxval, minval;
+int32_t       i, k, prevcount, count, nfiles, n, maxloc, maxval, minval;
 NUMA         *na;
 PIX          *pixs, *pixsi, *pixc, *pixoc, *pix1, *pix2, *pix3;
 PIXA         *pixas, *pixa1, *pixa2;

@@ -33,22 +33,22 @@
  *          void        *ptraDestroy()
  *
  *      Add/insert/remove/replace generic ptr object
- *          l_int32      ptraAdd()
- *          static l_int32  ptraExtendArray()
- *          l_int32      ptraInsert()
+ *          int32_t      ptraAdd()
+ *          static int32_t  ptraExtendArray()
+ *          int32_t      ptraInsert()
  *          void        *ptraRemove()
  *          void        *ptraRemoveLast()
  *          void        *ptraReplace()
- *          l_int32      ptraSwap()
- *          l_int32      ptraCompactArray()
+ *          int32_t      ptraSwap()
+ *          int32_t      ptraCompactArray()
  *
  *      Other array operations
- *          l_int32      ptraReverse()
- *          l_int32      ptraJoin()
+ *          int32_t      ptraReverse()
+ *          int32_t      ptraJoin()
  *
  *      Simple Ptra accessors
- *          l_int32      ptraGetMaxIndex()
- *          l_int32      ptraGetActualCount()
+ *          int32_t      ptraGetMaxIndex()
+ *          int32_t      ptraGetActualCount()
  *          void        *ptraGetPtrToItem()
  *
  *      Ptraa creation and destruction
@@ -56,8 +56,8 @@
  *          void        *ptraaDestroy()
  *
  *      Ptraa accessors
- *          l_int32      ptraaGetSize()
- *          l_int32      ptraaInsertPtra()
+ *          int32_t      ptraaGetSize()
+ *          int32_t      ptraaInsertPtra()
  *          L_PTRA      *ptraaGetPtra()
  *
  *      Ptraa conversion
@@ -125,11 +125,11 @@
 #include "allheaders.h"
 
     /* Bounds on initial array size */
-LEPT_DLL const l_uint32  MaxInitPtraSize = 1000001;
-static const l_int32 DefaultInitPtraSize = 20;      /*!< n'importe quoi */
+LEPT_DLL const uint32_t  MaxInitPtraSize = 1000001;
+static const int32_t DefaultInitPtraSize = 20;      /*!< n'importe quoi */
 
     /* Static function */
-static l_int32 ptraExtendArray(L_PTRA *pa);
+static int32_t ptraExtendArray(L_PTRA *pa);
 
 /*--------------------------------------------------------------------------*
  *                       Ptra creation and destruction                      *
@@ -141,7 +141,7 @@ static l_int32 ptraExtendArray(L_PTRA *pa);
  * \return  pa, or NULL on error
  */
 L_PTRA *
-ptraCreate(l_int32  n)
+ptraCreate(int32_t  n)
 {
 L_PTRA  *pa;
 
@@ -190,10 +190,10 @@ L_PTRA  *pa;
  */
 void
 ptraDestroy(L_PTRA  **ppa,
-            l_int32   freeflag,
-            l_int32   warnflag)
+            int32_t   freeflag,
+            int32_t   warnflag)
 {
-l_int32  i, nactual;
+int32_t  i, nactual;
 void    *item;
 L_PTRA  *pa;
 
@@ -246,7 +246,7 @@ l_ok
 ptraAdd(L_PTRA  *pa,
         void    *item)
 {
-l_int32  imax;
+int32_t  imax;
 
     if (!pa)
         return ERROR_INT("pa not defined", __func__, 1);
@@ -269,7 +269,7 @@ l_int32  imax;
  * \param[in]    pa
  * \return  0 if OK, 1 on error
  */
-static l_int32
+static int32_t
 ptraExtendArray(L_PTRA  *pa)
 {
     if (!pa)
@@ -334,11 +334,11 @@ ptraExtendArray(L_PTRA  *pa)
  */
 l_ok
 ptraInsert(L_PTRA  *pa,
-           l_int32  index,
+           int32_t  index,
            void    *item,
-           l_int32  shiftflag)
+           int32_t  shiftflag)
 {
-l_int32    i, ihole, imax;
+int32_t    i, ihole, imax;
 l_float32  nexpected;
 
     if (!pa)
@@ -430,10 +430,10 @@ l_float32  nexpected;
  */
 void *
 ptraRemove(L_PTRA  *pa,
-           l_int32  index,
-           l_int32  flag)
+           int32_t  index,
+           int32_t  flag)
 {
-l_int32  i, imax, fromend, icurrent;
+int32_t  i, imax, fromend, icurrent;
 void    *item;
 
     if (!pa)
@@ -478,7 +478,7 @@ void    *item;
 void *
 ptraRemoveLast(L_PTRA  *pa)
 {
-l_int32  imax;
+int32_t  imax;
 
     if (!pa)
         return (void *)ERROR_PTR("pa not defined", __func__, NULL);
@@ -504,11 +504,11 @@ l_int32  imax;
  */
 void *
 ptraReplace(L_PTRA  *pa,
-            l_int32  index,
+            int32_t  index,
             void    *item,
-            l_int32  freeflag)
+            int32_t  freeflag)
 {
-l_int32  imax;
+int32_t  imax;
 void    *olditem;
 
     if (!pa)
@@ -543,10 +543,10 @@ void    *olditem;
  */
 l_ok
 ptraSwap(L_PTRA  *pa,
-         l_int32  index1,
-         l_int32  index2)
+         int32_t  index1,
+         int32_t  index2)
 {
-l_int32  imax;
+int32_t  imax;
 void    *item;
 
     if (!pa)
@@ -579,7 +579,7 @@ void    *item;
 l_ok
 ptraCompactArray(L_PTRA  *pa)
 {
-l_int32  i, imax, nactual, index;
+int32_t  i, imax, nactual, index;
 
     if (!pa)
         return ERROR_INT("pa not defined", __func__, 1);
@@ -612,7 +612,7 @@ l_int32  i, imax, nactual, index;
 l_ok
 ptraReverse(L_PTRA  *pa)
 {
-l_int32  i, imax;
+int32_t  i, imax;
 
     if (!pa)
         return ERROR_INT("pa not defined", __func__, 1);
@@ -635,7 +635,7 @@ l_ok
 ptraJoin(L_PTRA  *pa1,
          L_PTRA  *pa2)
 {
-l_int32  i, imax;
+int32_t  i, imax;
 void    *item;
 
     if (!pa1)
@@ -681,7 +681,7 @@ void    *item;
  */
 l_ok
 ptraGetMaxIndex(L_PTRA   *pa,
-                l_int32  *pmaxindex)
+                int32_t  *pmaxindex)
 {
     if (!pa)
         return ERROR_INT("pa not defined", __func__, 1);
@@ -707,7 +707,7 @@ ptraGetMaxIndex(L_PTRA   *pa,
  */
 l_ok
 ptraGetActualCount(L_PTRA   *pa,
-                   l_int32  *pcount)
+                   int32_t  *pcount)
 {
     if (!pa)
         return ERROR_INT("pa not defined", __func__, 1);
@@ -737,7 +737,7 @@ ptraGetActualCount(L_PTRA   *pa,
  */
 void *
 ptraGetPtrToItem(L_PTRA  *pa,
-                 l_int32  index)
+                 int32_t  index)
 {
     if (!pa)
         return (void *)ERROR_PTR("pa not defined", __func__, NULL);
@@ -765,7 +765,7 @@ ptraGetPtrToItem(L_PTRA  *pa,
  * </pre>
  */
 L_PTRAA *
-ptraaCreate(l_int32  n)
+ptraaCreate(int32_t  n)
 {
 L_PTRAA  *paa;
 
@@ -800,10 +800,10 @@ L_PTRAA  *paa;
  */
 void
 ptraaDestroy(L_PTRAA  **ppaa,
-             l_int32    freeflag,
-             l_int32    warnflag)
+             int32_t    freeflag,
+             int32_t    warnflag)
 {
-l_int32   i, n;
+int32_t   i, n;
 L_PTRA   *pa;
 L_PTRAA  *paa;
 
@@ -838,7 +838,7 @@ L_PTRAA  *paa;
  */
 l_ok
 ptraaGetSize(L_PTRAA  *paa,
-             l_int32  *psize)
+             int32_t  *psize)
 {
     if (!paa)
         return ERROR_INT("paa not defined", __func__, 1);
@@ -867,10 +867,10 @@ ptraaGetSize(L_PTRAA  *paa,
  */
 l_ok
 ptraaInsertPtra(L_PTRAA  *paa,
-                l_int32   index,
+                int32_t   index,
                 L_PTRA   *pa)
 {
-l_int32  n;
+int32_t  n;
 
     if (!paa)
         return ERROR_INT("paa not defined", __func__, 1);
@@ -908,10 +908,10 @@ l_int32  n;
  */
 L_PTRA *
 ptraaGetPtra(L_PTRAA  *paa,
-             l_int32   index,
-             l_int32   accessflag)
+             int32_t   index,
+             int32_t   accessflag)
 {
-l_int32  n;
+int32_t  n;
 L_PTRA  *pa;
 
     if (!paa)
@@ -949,7 +949,7 @@ L_PTRA  *pa;
 L_PTRA *
 ptraaFlattenToPtra(L_PTRAA  *paa)
 {
-l_int32  i, n;
+int32_t  i, n;
 L_PTRA    *pat, *pad;
 
     if (!paa)

@@ -55,16 +55,16 @@
 
 #include "allheaders.h"
 
-static const l_int32    MAX_DIST      = 120;
-static const l_int32    MAX_COLORS    = 15;
-static const l_int32    SEL_SIZE      = 4;
-static const l_int32    FINAL_COLORS  = 15;
+static const int32_t    MAX_DIST      = 120;
+static const int32_t    MAX_COLORS    = 15;
+static const int32_t    SEL_SIZE      = 4;
+static const int32_t    FINAL_COLORS  = 15;
 
 
 int main(int    argc,
          char **argv)
 {
-l_int32  max_dist, max_colors, sel_size, final_colors;
+int32_t  max_dist, max_colors, sel_size, final_colors;
 PIX     *pixs, *pixd, *pixt;
 char    *filein, *fileout;
 

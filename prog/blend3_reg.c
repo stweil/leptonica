@@ -95,7 +95,7 @@ BlendTest(const char  *file1,
           const char  *file2,
           l_float32    fract)
 {
-l_int32  d1, d2;
+int32_t  d1, d2;
 PIX     *pixs1, *pixs2, *pix1, *pix2, *pix3, *pix4, *pix5, *pixd;
 PIXA    *pixa;
 

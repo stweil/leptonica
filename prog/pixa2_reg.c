@@ -40,7 +40,7 @@ int main(int    argc,
          char **argv)
 {
 const char   *name;
-l_int32       i, n;
+int32_t       i, n;
 BOX          *box;
 PIX          *pix0, *pix1, *pixd;
 PIXA         *pixa;

@@ -75,13 +75,13 @@
 #define   FILE_32BPP    "marge.jpg"
 
 static void test_gif(const char *fname, PIXA *pixa, L_REGPARAMS *rp);
-static l_int32 test_mem_gif(const char *fname, l_int32 index);
+static int32_t test_mem_gif(const char *fname, int32_t index);
 
 int main(int    argc,
          char **argv)
 {
 char          buf[64];
-l_int32       success;
+int32_t       success;
 PIX          *pix;
 PIXA         *pixa;
 L_REGPARAMS  *rp;
@@ -165,7 +165,7 @@ test_gif(const char   *fname,
          L_REGPARAMS  *rp)
 {
 char     buf[256];
-l_int32  same;
+int32_t  same;
 PIX     *pixs, *pix1, *pix2;
 
     pixs = pixRead(fname);
@@ -195,12 +195,12 @@ PIX     *pixs, *pix1, *pix2;
 
 
     /* Returns 1 on error */
-static l_int32
+static int32_t
 test_mem_gif(const char  *fname,
-             l_int32      index)
+             int32_t      index)
 {
-l_uint8  *data = NULL;
-l_int32   same;
+uint8_t  *data = NULL;
+int32_t   same;
 size_t    size = 0;
 PIX      *pixs;
 PIX      *pixd = NULL;

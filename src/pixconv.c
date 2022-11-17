@@ -39,7 +39,7 @@
  *           PIX        *pixRemoveColormap()
  *
  *      Add colormap losslessly (8 to 8)
- *           l_int32     pixAddGrayColormap8()
+ *           int32_t     pixAddGrayColormap8()
  *           PIX        *pixAddMinimalGrayColormap8()
  *
  *      Conversion from RGB color to 8 bit gray
@@ -66,7 +66,7 @@
  *           PIX        *pixConvertCmapTo1()
  *
  *      Quantization for relatively small number of colors in source
- *           l_int32     pixQuantizeIfFewColors()
+ *           int32_t     pixQuantizeIfFewColors()
  *
  *      Conversion from 16 bpp to 8 bpp
  *           PIX        *pixConvert16To8()
@@ -164,7 +164,7 @@
 
 /* ------- Set neutral point for min/max boost conversion to gray ------ */
    /* Call l_setNeutralBoostVal() to change this */
-static l_int32  var_NEUTRAL_BOOST_VAL = 180;
+static int32_t  var_NEUTRAL_BOOST_VAL = 180;
 
 
 #ifndef  NO_CONSOLE_IO
@@ -208,9 +208,9 @@ static l_int32  var_NEUTRAL_BOOST_VAL = 180;
  */
 PIX *
 pixThreshold8(PIX     *pixs,
-              l_int32  d,
-              l_int32  nlevels,
-              l_int32  cmapflag)
+              int32_t  d,
+              int32_t  nlevels,
+              int32_t  cmapflag)
 {
 PIX       *pixd;
 PIXCMAP   *cmap;
@@ -274,8 +274,8 @@ PIXCMAP   *cmap;
  */
 PIX *
 pixRemoveColormapGeneral(PIX     *pixs,
-                         l_int32  type,
-                         l_int32  ifnocmap)
+                         int32_t  type,
+                         int32_t  ifnocmap)
 {
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -322,14 +322,14 @@ pixRemoveColormapGeneral(PIX     *pixs,
  */
 PIX *
 pixRemoveColormap(PIX     *pixs,
-                  l_int32  type)
+                  int32_t  type)
 {
-l_int32    sval, rval, gval, bval, val0, val1;
-l_int32    i, j, k, w, h, d, wpls, wpld, ncolors, nalloc, count;
-l_int32    opaque, colorfound, blackwhite;
-l_int32   *rmap, *gmap, *bmap, *amap;
-l_uint32  *datas, *lines, *datad, *lined, *lut, *graymap;
-l_uint32   sword, dword;
+int32_t    sval, rval, gval, bval, val0, val1;
+int32_t    i, j, k, w, h, d, wpls, wpld, ncolors, nalloc, count;
+int32_t    opaque, colorfound, blackwhite;
+int32_t   *rmap, *gmap, *bmap, *amap;
+uint32_t  *datas, *lines, *datad, *lined, *lut, *graymap;
+uint32_t   sword, dword;
 PIXCMAP   *cmap;
 PIX       *pixd;
 
@@ -403,9 +403,9 @@ PIX       *pixd;
         pixCopyInputFormat(pixd, pixs);
         datad = pixGetData(pixd);
         wpld = pixGetWpl(pixd);
-        graymap = (l_uint32 *)LEPT_CALLOC(nalloc, sizeof(l_uint32));
+        graymap = (uint32_t *)LEPT_CALLOC(nalloc, sizeof(uint32_t));
         for (i = 0; i < ncolors; i++) {
-            graymap[i] = (l_uint32)(L_RED_WEIGHT * rmap[i] +
+            graymap[i] = (uint32_t)(L_RED_WEIGHT * rmap[i] +
                                     L_GREEN_WEIGHT * gmap[i] +
                                     L_BLUE_WEIGHT * bmap[i] + 0.5);
         }
@@ -560,7 +560,7 @@ PIX       *pixd;
             pixSetSpp(pixd, 4);
         datad = pixGetData(pixd);
         wpld = pixGetWpl(pixd);
-        lut = (l_uint32 *)LEPT_CALLOC(nalloc, sizeof(l_uint32));
+        lut = (uint32_t *)LEPT_CALLOC(nalloc, sizeof(uint32_t));
         for (i = 0; i < ncolors; i++) {
             if (type == REMOVE_CMAP_TO_FULL_COLOR)
                 composeRGBPixel(rmap[i], gmap[i], bmap[i], lut + i);
@@ -644,9 +644,9 @@ PIXCMAP  *cmap;
 PIX *
 pixAddMinimalGrayColormap8(PIX  *pixs)
 {
-l_int32    ncolors, w, h, i, j, wpl1, wpld, index, val;
-l_int32   *inta, *revmap;
-l_uint32  *data1, *datad, *line1, *lined;
+int32_t    ncolors, w, h, i, j, wpl1, wpld, index, val;
+int32_t   *inta, *revmap;
+uint32_t  *data1, *datad, *line1, *lined;
 PIX       *pix1, *pixd;
 PIXCMAP   *cmap;
 
@@ -674,7 +674,7 @@ PIXCMAP   *cmap;
     pixGetDimensions(pix1, &w, &h, NULL);
     data1 = pixGetData(pix1);
     wpl1 = pixGetWpl(pix1);
-    inta = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
+    inta = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
     for (i = 0; i < h; i++) {
         line1 = data1 + i * wpl1;
         for (j = 0; j < w; j++) {
@@ -683,7 +683,7 @@ PIXCMAP   *cmap;
         }
     }
     cmap = pixcmapCreate(8);
-    revmap = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
+    revmap = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
     for (i = 0, index = 0; i < 256; i++) {
         if (inta[i]) {
             pixcmapAddColor(cmap, i, i, i);
@@ -754,7 +754,7 @@ pixConvertRGBToLuminance(PIX *pixs)
  */
 PIX *
 pixConvertRGBToGrayGeneral(PIX       *pixs,
-                           l_int32    type,
+                           int32_t    type,
                            l_float32  rwt,
                            l_float32  gwt,
                            l_float32  bwt)
@@ -817,9 +817,9 @@ pixConvertRGBToGray(PIX       *pixs,
                     l_float32  gwt,
                     l_float32  bwt)
 {
-l_int32    i, j, w, h, wpls, wpld, val;
-l_uint32   word;
-l_uint32  *datas, *lines, *datad, *lined;
+int32_t    i, j, w, h, wpls, wpld, val;
+uint32_t   word;
+uint32_t  *datas, *lines, *datad, *lined;
 l_float32  sum;
 PIX       *pixd;
 
@@ -860,7 +860,7 @@ PIX       *pixd;
         lined = datad + i * wpld;
         for (j = 0; j < w; j++) {
             word = *(lines + j);
-            val = (l_int32)(rwt * ((word >> L_RED_SHIFT) & 0xff) +
+            val = (int32_t)(rwt * ((word >> L_RED_SHIFT) & 0xff) +
                             gwt * ((word >> L_GREEN_SHIFT) & 0xff) +
                             bwt * ((word >> L_BLUE_SHIFT) & 0xff) + 0.5);
             SET_DATA_BYTE(lined, j, val);
@@ -890,8 +890,8 @@ PIX       *pixd;
 PIX *
 pixConvertRGBToGrayFast(PIX  *pixs)
 {
-l_int32    i, j, w, h, wpls, wpld, val;
-l_uint32  *datas, *lines, *datad, *lined;
+int32_t    i, j, w, h, wpls, wpld, val;
+uint32_t  *datas, *lines, *datad, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -945,10 +945,10 @@ PIX       *pixd;
  */
 PIX *
 pixConvertRGBToGrayMinMax(PIX     *pixs,
-                          l_int32  type)
+                          int32_t  type)
 {
-l_int32    i, j, w, h, wpls, wpld, rval, gval, bval, val, minval, maxval;
-l_uint32  *datas, *lines, *datad, *lined;
+int32_t    i, j, w, h, wpls, wpld, rval, gval, bval, val, minval, maxval;
+uint32_t  *datas, *lines, *datad, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -1030,13 +1030,13 @@ PIX       *pixd;
  */
 PIX  *
 pixConvertRGBToGraySatBoost(PIX     *pixs,
-                            l_int32  refval)
+                            int32_t  refval)
 {
-l_int32     w, h, d, i, j, wplt, wpld;
-l_int32     rval, gval, bval, sval, minrg, maxrg, min, max, delta;
-l_int32     fullsat, newval;
+int32_t     w, h, d, i, j, wplt, wpld;
+int32_t     rval, gval, bval, sval, minrg, maxrg, min, max, delta;
+int32_t     fullsat, newval;
 l_float32  *invmax, *ratio;
-l_uint32   *linet, *lined, *datat, *datad;
+uint32_t   *linet, *lined, *datat, *datad;
 PIX        *pixt, *pixd;
 
     if (!pixs)
@@ -1074,7 +1074,7 @@ PIX        *pixt, *pixd;
             if (delta == 0)  /* gray; no chroma */
                 sval = 0;
             else
-                sval = (l_int32)(255. * (l_float32)delta * invmax[max] + 0.5);
+                sval = (int32_t)(255. * (l_float32)delta * invmax[max] + 0.5);
 
             fullsat = L_MIN(255, 255 * ratio[max]);
             newval = (sval * fullsat + (255 - sval) * max) / 255;
@@ -1110,8 +1110,8 @@ pixConvertRGBToGrayArb(PIX       *pixs,
                        l_float32  gc,
                        l_float32  bc)
 {
-l_int32    i, j, w, h, wpls, wpld, rval, gval, bval, val;
-l_uint32  *datas, *lines, *datad, *lined;
+int32_t    i, j, w, h, wpls, wpld, rval, gval, bval, val;
+uint32_t  *datas, *lines, *datad, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -1136,7 +1136,7 @@ PIX       *pixd;
         lined = datad + i * wpld;
         for (j = 0; j < w; j++) {
             extractRGBValues(lines[j], &rval, &gval, &bval);
-            val = (l_int32)(rc * rval + gc * gval + bc * bval);
+            val = (int32_t)(rc * rval + gc * gval + bc * bval);
             val = L_MIN(255, L_MAX(0, val));
             SET_DATA_BYTE(lined, j, val);
         }
@@ -1169,10 +1169,10 @@ pixConvertRGBToBinaryArb(PIX       *pixs,
                          l_float32  rc,
                          l_float32  gc,
                          l_float32  bc,
-                         l_int32    thresh,
-                         l_int32    relation)
+                         int32_t    thresh,
+                         int32_t    relation)
 {
-l_int32  threshold;
+int32_t  threshold;
 PIX     *pix1, *pix2;
 
     if (!pixs || pixGetDepth(pixs) != 32)
@@ -1222,7 +1222,7 @@ PIX     *pix1, *pix2;
 PIX *
 pixConvertGrayToColormap(PIX  *pixs)
 {
-l_int32    d;
+int32_t    d;
 PIX       *pixd;
 PIXCMAP   *cmap;
 
@@ -1274,12 +1274,12 @@ PIXCMAP   *cmap;
  */
 PIX *
 pixConvertGrayToColormap8(PIX     *pixs,
-                          l_int32  mindepth)
+                          int32_t  mindepth)
 {
-l_int32    ncolors, w, h, depth, i, j, wpls, wpld;
-l_int32    index, num, val, newval;
-l_int32    array[256];
-l_uint32  *lines, *lined, *datas, *datad;
+int32_t    ncolors, w, h, depth, i, j, wpls, wpld;
+int32_t    index, num, val, newval;
+int32_t    array[256];
+uint32_t  *lines, *lined, *datas, *datad;
 NUMA      *na;
 PIX       *pixd;
 PIXCMAP   *cmap;
@@ -1369,11 +1369,11 @@ PIXCMAP   *cmap;
  */
 PIX *
 pixColorizeGray(PIX      *pixs,
-                l_uint32  color,
-                l_int32   cmapflag)
+                uint32_t  color,
+                int32_t   cmapflag)
 {
-l_int32    i, j, w, h, wplt, wpld, val8;
-l_uint32  *datad, *datat, *lined, *linet, *tab;
+int32_t    i, j, w, h, wplt, wpld, val8;
+uint32_t  *datad, *datat, *lined, *linet, *tab;
 PIX       *pixt, *pixd;
 PIXCMAP   *cmap;
 
@@ -1454,9 +1454,9 @@ PIXCMAP   *cmap;
  */
 PIX *
 pixConvertRGBToColormap(PIX     *pixs,
-                        l_int32  ditherflag)
+                        int32_t  ditherflag)
 {
-l_int32  ncolors;
+int32_t  ncolors;
 NUMA    *na;
 PIX     *pixd;
 
@@ -1517,11 +1517,11 @@ PIX     *pixd;
 PIX *
 pixConvertCmapTo1(PIX  *pixs)
 {
-l_int32    i, j, nc, w, h, imin, imax, factor, wpl1, wpld;
-l_int32    index, rmin, gmin, bmin, rmax, gmax, bmax, dmin, dmax;
+int32_t    i, j, nc, w, h, imin, imax, factor, wpl1, wpld;
+int32_t    index, rmin, gmin, bmin, rmax, gmax, bmax, dmin, dmax;
 l_float32  minfract, ifract;
-l_int32   *lut;
-l_uint32  *line1, *lined, *data1, *datad;
+int32_t   *lut;
+uint32_t  *line1, *lined, *data1, *datad;
 NUMA      *na1, *na2;  /* histograms */
 PIX       *pix1, *pixd;
 PIXCMAP   *cmap;
@@ -1542,10 +1542,10 @@ PIXCMAP   *cmap;
         /* Assign colors to the two classes.  The histogram is
          * initialized to 0, so any colors not found when computing
          * the sampled histogram will get zero weight in minfract. */
-    if ((lut = (l_int32 *)LEPT_CALLOC(nc, sizeof(l_int32))) == NULL)
+    if ((lut = (int32_t *)LEPT_CALLOC(nc, sizeof(int32_t))) == NULL)
         return (PIX *)ERROR_PTR("calloc fail for lut", __func__, NULL);
     pixGetDimensions(pixs, &w, &h, NULL);
-    factor = L_MAX(1, (l_int32)sqrt((l_float64)(w * h) / 50000. + 0.5));
+    factor = L_MAX(1, (int32_t)sqrt((l_float64)(w * h) / 50000. + 0.5));
     na1 = pixGetCmapHistogram(pixs, factor);
     na2 = numaNormalizeHistogram(na1, 1.0);
     minfract = 0.0;
@@ -1625,12 +1625,12 @@ PIXCMAP   *cmap;
  */
 l_ok
 pixQuantizeIfFewColors(PIX     *pixs,
-                       l_int32  maxcolors,
-                       l_int32  mingraycolors,
-                       l_int32  octlevel,
+                       int32_t  maxcolors,
+                       int32_t  mingraycolors,
+                       int32_t  octlevel,
                        PIX    **ppixd)
 {
-l_int32  d, ncolors, iscolor, graycolors;
+int32_t  d, ncolors, iscolor, graycolors;
 PIX     *pixg, *pixd;
 
     if (!ppixd)
@@ -1686,7 +1686,7 @@ PIX     *pixg, *pixd;
             pixg = pixConvertRGBToLuminance(pixs);
         else
             pixg = pixClone(pixs);
-        graycolors = L_MAX(mingraycolors, (l_int32)(1.5 * ncolors));
+        graycolors = L_MAX(mingraycolors, (int32_t)(1.5 * ncolors));
         graycolors = L_MIN(graycolors, 256);
         if (graycolors < 16)
             pixd = pixThresholdTo4bpp(pixg, graycolors, 1);
@@ -1724,12 +1724,12 @@ PIX     *pixg, *pixd;
  */
 PIX *
 pixConvert16To8(PIX     *pixs,
-                l_int32  type)
+                int32_t  type)
 {
-l_uint16   dword;
-l_int32    w, h, wpls, wpld, i, j, val, use_lsb;
-l_uint32   sword, first, second;
-l_uint32  *datas, *datad, *lines, *lined;
+uint16_t   dword;
+int32_t    w, h, wpls, wpld, i, j, val, use_lsb;
+uint32_t   sword, first, second;
+uint32_t  *datas, *datad, *lines, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -1820,7 +1820,7 @@ PIX *
 pixConvertGrayToFalseColor(PIX       *pixs,
                            l_float32  gamma)
 {
-l_int32   d;
+int32_t   d;
 PIX      *pixd;
 PIXCMAP  *cmap;
 
@@ -1871,8 +1871,8 @@ PIXCMAP  *cmap;
  */
 PIX *
 pixUnpackBinary(PIX     *pixs,
-                l_int32  depth,
-                l_int32  invert)
+                int32_t  depth,
+                int32_t  invert)
 {
 PIX  *pixd;
 
@@ -1935,13 +1935,13 @@ PIX  *pixd;
 PIX *
 pixConvert1To16(PIX      *pixd,
                 PIX      *pixs,
-                l_uint16  val0,
-                l_uint16  val1)
+                uint16_t  val0,
+                uint16_t  val1)
 {
-l_int32    w, h, i, j, dibit, ndibits, wpls, wpld;
-l_uint16   val[2];
-l_uint32   index;
-l_uint32  *tab, *datas, *datad, *lines, *lined;
+int32_t    w, h, i, j, dibit, ndibits, wpls, wpld;
+uint16_t   val[2];
+uint32_t   index;
+uint32_t  *tab, *datas, *datad, *lines, *lined;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -1962,7 +1962,7 @@ l_uint32  *tab, *datas, *datad, *lines, *lined;
     pixCopyInputFormat(pixd, pixs);
 
         /* Use a table to convert 2 src bits at a time */
-    tab = (l_uint32 *)LEPT_CALLOC(4, sizeof(l_uint32));
+    tab = (uint32_t *)LEPT_CALLOC(4, sizeof(uint32_t));
     val[0] = val0;
     val[1] = val1;
     for (index = 0; index < 4; index++) {
@@ -2007,12 +2007,12 @@ l_uint32  *tab, *datas, *datad, *lines, *lined;
 PIX *
 pixConvert1To32(PIX      *pixd,
                 PIX      *pixs,
-                l_uint32  val0,
-                l_uint32  val1)
+                uint32_t  val0,
+                uint32_t  val1)
 {
-l_int32    w, h, i, j, wpls, wpld, bit;
-l_uint32   val[2];
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    w, h, i, j, wpls, wpld, bit;
+uint32_t   val[2];
+uint32_t  *datas, *datad, *lines, *lined;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -2109,14 +2109,14 @@ PIXCMAP  *cmap;
 PIX *
 pixConvert1To2(PIX     *pixd,
                PIX     *pixs,
-               l_int32  val0,
-               l_int32  val1)
+               int32_t  val0,
+               int32_t  val1)
 {
-l_int32    w, h, i, j, byteval, nbytes, wpls, wpld;
-l_uint8    val[2];
-l_uint32   index;
-l_uint16  *tab;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    w, h, i, j, byteval, nbytes, wpls, wpld;
+uint8_t    val[2];
+uint32_t   index;
+uint16_t  *tab;
+uint32_t  *datas, *datad, *lines, *lined;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, pixd);
@@ -2137,7 +2137,7 @@ l_uint32  *datas, *datad, *lines, *lined;
     pixCopyInputFormat(pixd, pixs);
 
         /* Use a table to convert 8 src bits to 16 dest bits */
-    tab = (l_uint16 *)LEPT_CALLOC(256, sizeof(l_uint16));
+    tab = (uint16_t *)LEPT_CALLOC(256, sizeof(uint16_t));
     val[0] = val0;
     val[1] = val1;
     for (index = 0; index < 256; index++) {
@@ -2227,13 +2227,13 @@ PIXCMAP  *cmap;
 PIX *
 pixConvert1To4(PIX     *pixd,
                PIX     *pixs,
-               l_int32  val0,
-               l_int32  val1)
+               int32_t  val0,
+               int32_t  val1)
 {
-l_int32    w, h, i, j, byteval, nbytes, wpls, wpld;
-l_uint8    val[2];
-l_uint32   index;
-l_uint32  *tab, *datas, *datad, *lines, *lined;
+int32_t    w, h, i, j, byteval, nbytes, wpls, wpld;
+uint8_t    val[2];
+uint32_t   index;
+uint32_t  *tab, *datas, *datad, *lines, *lined;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, pixd);
@@ -2254,7 +2254,7 @@ l_uint32  *tab, *datas, *datad, *lines, *lined;
     pixCopyInputFormat(pixd, pixs);
 
         /* Use a table to convert 8 src bits to 32 bit dest word */
-    tab = (l_uint32 *)LEPT_CALLOC(256, sizeof(l_uint32));
+    tab = (uint32_t *)LEPT_CALLOC(256, sizeof(uint32_t));
     val[0] = val0;
     val[1] = val1;
     for (index = 0; index < 256; index++) {
@@ -2344,13 +2344,13 @@ PIXCMAP  *cmap;
 PIX *
 pixConvert1To8(PIX     *pixd,
                PIX     *pixs,
-               l_uint8  val0,
-               l_uint8  val1)
+               uint8_t  val0,
+               uint8_t  val1)
 {
-l_int32    w, h, i, j, qbit, nqbits, wpls, wpld;
-l_uint8    val[2];
-l_uint32   index;
-l_uint32  *tab, *datas, *datad, *lines, *lined;
+int32_t    w, h, i, j, qbit, nqbits, wpls, wpld;
+uint8_t    val[2];
+uint32_t   index;
+uint32_t  *tab, *datas, *datad, *lines, *lined;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, pixd);
@@ -2372,11 +2372,11 @@ l_uint32  *tab, *datas, *datad, *lines, *lined;
     pixSetPadBits(pixs, 0);
 
         /* Use a table to convert 4 src bits at a time */
-    tab = (l_uint32 *)LEPT_CALLOC(16, sizeof(l_uint32));
+    tab = (uint32_t *)LEPT_CALLOC(16, sizeof(uint32_t));
     val[0] = val0;
     val[1] = val1;
     for (index = 0; index < 16; index++) {
-        tab[index] = ((l_uint32)val[(index >> 3) & 1] << 24) |
+        tab[index] = ((uint32_t)val[(index >> 3) & 1] << 24) |
                      (val[(index >> 2) & 1] << 16) |
                      (val[(index >> 1) & 1] << 8) | val[index & 1];
     }
@@ -2432,16 +2432,16 @@ l_uint32  *tab, *datas, *datad, *lines, *lined;
  */
 PIX *
 pixConvert2To8(PIX     *pixs,
-               l_uint8  val0,
-               l_uint8  val1,
-               l_uint8  val2,
-               l_uint8  val3,
-               l_int32  cmapflag)
+               uint8_t  val0,
+               uint8_t  val1,
+               uint8_t  val2,
+               uint8_t  val3,
+               int32_t  cmapflag)
 {
-l_int32    w, h, i, j, nbytes, wpls, wpld, dibit, byte;
-l_uint32   val[4];
-l_uint32   index;
-l_uint32  *tab, *datas, *datad, *lines, *lined;
+int32_t    w, h, i, j, nbytes, wpls, wpld, dibit, byte;
+uint32_t   val[4];
+uint32_t   index;
+uint32_t  *tab, *datas, *datad, *lines, *lined;
 PIX       *pixd;
 PIXCMAP   *cmaps, *cmapd;
 
@@ -2490,7 +2490,7 @@ PIXCMAP   *cmaps, *cmapd;
         /* Last case: no colormap in either pixs or pixd.
          * Use input values and build a table to convert 1 src byte
          * (4 src pixels) at a time */
-    tab = (l_uint32 *)LEPT_CALLOC(256, sizeof(l_uint32));
+    tab = (uint32_t *)LEPT_CALLOC(256, sizeof(uint32_t));
     val[0] = val0;
     val[1] = val1;
     val[2] = val2;
@@ -2542,10 +2542,10 @@ PIXCMAP   *cmaps, *cmapd;
  */
 PIX *
 pixConvert4To8(PIX     *pixs,
-               l_int32  cmapflag)
+               int32_t  cmapflag)
 {
-l_int32    w, h, i, j, wpls, wpld, byte, qbit;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    w, h, i, j, wpls, wpld, byte, qbit;
+uint32_t  *datas, *datad, *lines, *lined;
 PIX       *pixd;
 PIXCMAP   *cmaps, *cmapd;
 
@@ -2625,10 +2625,10 @@ PIXCMAP   *cmaps, *cmapd;
  */
 PIX *
 pixConvert8To16(PIX     *pixs,
-                l_int32  leftshift)
+                int32_t  leftshift)
 {
-l_int32    i, j, w, h, d, wplt, wpld, val;
-l_uint32  *datat, *datad, *linet, *lined;
+int32_t    i, j, w, h, d, wplt, wpld, val;
+uint32_t  *datat, *datad, *linet, *lined;
 PIX       *pixt, *pixd;
 
     if (!pixs)
@@ -2690,7 +2690,7 @@ PIX       *pixt, *pixd;
 PIX *
 pixConvertTo2(PIX  *pixs)
 {
-l_int32  d;
+int32_t  d;
 PIX     *pix1, *pix2, *pix3, *pixd;
 
     if (!pixs)
@@ -2740,9 +2740,9 @@ PIX     *pix1, *pix2, *pix3, *pixd;
 PIX *
 pixConvert8To2(PIX  *pix)
 {
-l_int32    i, j, w, h, wpls, wpld;
-l_uint32   word;
-l_uint32  *datas, *lines, *datad, *lined;
+int32_t    i, j, w, h, wpls, wpld;
+uint32_t   word;
+uint32_t  *datas, *lines, *datad, *lined;
 PIX       *pixs, *pixd;
 
     if (!pix || pixGetDepth(pix) != 8)
@@ -2794,7 +2794,7 @@ PIX       *pixs, *pixd;
 PIX *
 pixConvertTo4(PIX  *pixs)
 {
-l_int32  d;
+int32_t  d;
 PIX     *pix1, *pix2, *pix3, *pixd;
 
     if (!pixs)
@@ -2844,8 +2844,8 @@ PIX     *pix1, *pix2, *pix3, *pixd;
 PIX *
 pixConvert8To4(PIX  *pix)
 {
-l_int32    i, j, w, h, wpls, wpld, val;
-l_uint32  *datas, *lines, *datad, *lined;
+int32_t    i, j, w, h, wpls, wpld, val;
+uint32_t  *datas, *lines, *datad, *lined;
 PIX       *pixs, *pixd;
 
     if (!pix || pixGetDepth(pix) != 8)
@@ -2894,7 +2894,7 @@ PIX       *pixs, *pixd;
 PIX *
 pixConvertTo1Adaptive(PIX     *pixs)
 {
-l_int32   d, color0, color1, rval, gval, bval;
+int32_t   d, color0, color1, rval, gval, bval;
 PIX      *pix1, *pix2, *pixd;
 PIXCMAP  *cmap;
 
@@ -2950,9 +2950,9 @@ PIXCMAP  *cmap;
  */
 PIX *
 pixConvertTo1(PIX     *pixs,
-              l_int32  threshold)
+              int32_t  threshold)
 {
-l_int32   d, color0, color1, rval, gval, bval;
+int32_t   d, color0, color1, rval, gval, bval;
 PIX      *pixg, *pixd;
 PIXCMAP  *cmap;
 
@@ -3004,8 +3004,8 @@ PIXCMAP  *cmap;
  */
 PIX *
 pixConvertTo1BySampling(PIX     *pixs,
-                        l_int32  factor,
-                        l_int32  threshold)
+                        int32_t  factor,
+                        int32_t  threshold)
 {
 l_float32  scalefactor;
 PIX       *pixt, *pixd;
@@ -3053,9 +3053,9 @@ PIX       *pixt, *pixd;
  */
 PIX *
 pixConvertTo8(PIX     *pixs,
-              l_int32  cmapflag)
+              int32_t  cmapflag)
 {
-l_int32   d;
+int32_t   d;
 PIX      *pix1, *pixd;
 PIXCMAP  *cmap;
 
@@ -3122,8 +3122,8 @@ PIXCMAP  *cmap;
  */
 PIX *
 pixConvertTo8BySampling(PIX     *pixs,
-                        l_int32  factor,
-                        l_int32  cmapflag)
+                        int32_t  factor,
+                        int32_t  cmapflag)
 {
 l_float32  scalefactor;
 PIX       *pixt, *pixd;
@@ -3164,9 +3164,9 @@ PIX       *pixt, *pixd;
  */
 PIX *
 pixConvertTo8Colormap(PIX     *pixs,
-                      l_int32  dither)
+                      int32_t  dither)
 {
-l_int32  d;
+int32_t  d;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -3198,7 +3198,7 @@ l_int32  d;
 PIX *
 pixConvertTo16(PIX  *pixs)
 {
-l_int32  d;
+int32_t  d;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -3245,7 +3245,7 @@ l_int32  d;
 PIX *
 pixConvertTo32(PIX  *pixs)
 {
-l_int32  d;
+int32_t  d;
 PIX     *pix1, *pixd;
 
     if (!pixs)
@@ -3297,7 +3297,7 @@ PIX     *pix1, *pixd;
  */
 PIX *
 pixConvertTo32BySampling(PIX     *pixs,
-                         l_int32  factor)
+                         int32_t  factor)
 {
 l_float32  scalefactor;
 PIX       *pix1, *pixd;
@@ -3331,9 +3331,9 @@ PIX       *pix1, *pixd;
 PIX *
 pixConvert8To32(PIX  *pixs)
 {
-l_int32    i, j, w, h, wpls, wpld, val;
-l_uint32  *datas, *datad, *lines, *lined;
-l_uint32  *tab;
+int32_t    i, j, w, h, wpls, wpld, val;
+uint32_t  *datas, *datad, *lines, *lined;
+uint32_t  *tab;
 PIX       *pixd;
 
     if (!pixs)
@@ -3355,9 +3355,9 @@ PIX       *pixd;
     wpld = pixGetWpl(pixd);
 
         /* Replication table gray --> rgb */
-    tab = (l_uint32 *)LEPT_CALLOC(256, sizeof(l_uint32));
+    tab = (uint32_t *)LEPT_CALLOC(256, sizeof(uint32_t));
     for (i = 0; i < 256; i++)
-      tab[i] = ((l_uint32)i << 24) | (i << 16) | (i << 8);
+      tab[i] = ((uint32_t)i << 24) | (i << 16) | (i << 8);
 
         /* Replicate 1 --> 4 bytes (alpha byte not set) */
     for (i = 0; i < h; i++) {
@@ -3398,10 +3398,10 @@ PIX       *pixd;
  */
 PIX *
 pixConvertTo8Or32(PIX     *pixs,
-                  l_int32  copyflag,
-                  l_int32  warnflag)
+                  int32_t  copyflag,
+                  int32_t  warnflag)
 {
-l_int32  d;
+int32_t  d;
 PIX     *pixd;
 
     if (!pixs)
@@ -3460,10 +3460,10 @@ PIX     *pixd;
 PIX *
 pixConvert24To32(PIX  *pixs)
 {
-l_uint8   *lines;
-l_int32    w, h, d, i, j, wpls, wpld, rval, gval, bval;
-l_uint32   pixel;
-l_uint32  *datas, *datad, *lined;
+uint8_t   *lines;
+int32_t    w, h, d, i, j, wpls, wpld, rval, gval, bval;
+uint32_t   pixel;
+uint32_t  *datas, *datad, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -3478,7 +3478,7 @@ PIX       *pixd;
     wpls = pixGetWpl(pixs);
     wpld = pixGetWpl(pixd);
     for (i = 0; i < h; i++) {
-        lines = (l_uint8 *)(datas + i * wpls);
+        lines = (uint8_t *)(datas + i * wpls);
         lined = datad + i * wpld;
         for (j = 0; j < w; j++) {
             rval = *lines++;
@@ -3508,9 +3508,9 @@ PIX       *pixd;
 PIX *
 pixConvert32To24(PIX  *pixs)
 {
-l_uint8   *rgbdata8;
-l_int32    w, h, d, i, j, wpls, wpld, rval, gval, bval;
-l_uint32  *datas, *lines, *rgbdata;
+uint8_t   *rgbdata8;
+int32_t    w, h, d, i, j, wpls, wpld, rval, gval, bval;
+uint32_t  *datas, *lines, *rgbdata;
 PIX       *pixd;
 
     if (!pixs)
@@ -3526,7 +3526,7 @@ PIX       *pixd;
     wpld = pixGetWpl(pixd);
     for (i = 0; i < h; i++) {
         lines = datas + i * wpls;
-        rgbdata8 = (l_uint8 *)(rgbdata + i * wpld);
+        rgbdata8 = (uint8_t *)(rgbdata + i * wpld);
         for (j = 0; j < w; j++) {
             extractRGBValues(lines[j], &rval, &gval, &bval);
             *rgbdata8++ = rval;
@@ -3553,17 +3553,17 @@ PIX       *pixd;
  * <pre>
  * Notes:
  *      (1) The data in pixs is typically used for labelling.
- *          It is an array of l_uint32 values, not rgb or rgba.
+ *          It is an array of uint32_t values, not rgb or rgba.
  * </pre>
  */
 PIX *
 pixConvert32To16(PIX     *pixs,
-                 l_int32  type)
+                 int32_t  type)
 {
-l_uint16   dword;
-l_int32    w, h, i, j, wpls, wpld;
-l_uint32   sword;
-l_uint32  *datas, *lines, *datad, *lined;
+uint16_t   dword;
+int32_t    w, h, i, j, wpls, wpld;
+uint32_t   sword;
+uint32_t  *datas, *lines, *datad, *lined;
 PIX       *pixd;
 
     if (!pixs || pixGetDepth(pixs) != 32)
@@ -3620,8 +3620,8 @@ PIX       *pixd;
  */
 PIX *
 pixConvert32To8(PIX     *pixs,
-                l_int32  type16,
-                l_int32  type8)
+                int32_t  type16,
+                int32_t  type8)
 {
 PIX  *pix1, *pixd;
 
@@ -3732,10 +3732,10 @@ PIXCMAP  *cmap;
  */
 PIX *
 pixConvertLossless(PIX     *pixs,
-                   l_int32  d)
+                   int32_t  d)
 {
-l_int32    w, h, ds, wpls, wpld, i, j, val;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    w, h, ds, wpls, wpld, i, j, val;
+uint32_t  *datas, *datad, *lines, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -3822,7 +3822,7 @@ PIX       *pixd;
 PIX *
 pixConvertForPSWrap(PIX  *pixs)
 {
-l_int32   d;
+int32_t   d;
 PIX      *pixd;
 PIXCMAP  *cmap;
 
@@ -3900,9 +3900,9 @@ PIX *
 pixConvertToSubpixelRGB(PIX       *pixs,
                         l_float32  scalex,
                         l_float32  scaley,
-                        l_int32    order)
+                        int32_t    order)
 {
-l_int32    d;
+int32_t    d;
 PIX       *pix1, *pixd;
 PIXCMAP   *cmap;
 
@@ -3968,10 +3968,10 @@ PIX *
 pixConvertGrayToSubpixelRGB(PIX       *pixs,
                             l_float32  scalex,
                             l_float32  scaley,
-                            l_int32    order)
+                            int32_t    order)
 {
-l_int32    w, h, d, wd, hd, wplt, wpld, i, j, rval, gval, bval, direction;
-l_uint32  *datat, *datad, *linet, *lined;
+int32_t    w, h, d, wd, hd, wplt, wpld, i, j, rval, gval, bval, direction;
+uint32_t  *datat, *datad, *linet, *lined;
 PIX       *pix1, *pix2, *pixd;
 PIXCMAP   *cmap;
 
@@ -4071,10 +4071,10 @@ PIX *
 pixConvertColorToSubpixelRGB(PIX       *pixs,
                              l_float32  scalex,
                              l_float32  scaley,
-                             l_int32    order)
+                             int32_t    order)
 {
-l_int32    w, h, d, wd, hd, wplt, wpld, i, j, rval, gval, bval, direction;
-l_uint32  *datat, *datad, *linet, *lined;
+int32_t    w, h, d, wd, hd, wplt, wpld, i, j, rval, gval, bval, direction;
+uint32_t  *datat, *datad, *linet, *lined;
 PIX       *pix1, *pix2, *pixd;
 PIXCMAP   *cmap;
 
@@ -4169,7 +4169,7 @@ PIXCMAP   *cmap;
  * </pre>
  */
 void
-l_setNeutralBoostVal(l_int32  val)
+l_setNeutralBoostVal(int32_t  val)
 {
     if (val <= 0) {
         L_ERROR("invalid reference value for neutral boost\n", __func__);

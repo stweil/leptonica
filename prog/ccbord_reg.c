@@ -59,7 +59,7 @@ void RunCCBordTest(const char   *fname,
                    L_REGPARAMS  *rp)
 {
 char     *svgstr;
-l_int32   count, disp;
+int32_t   count, disp;
 CCBORDA  *ccba, *ccba2;
 PIX      *pixs, *pixd, *pixd2, *pixd3;
 PIX      *pixt, *pixc, *pixc2;
@@ -114,8 +114,8 @@ PIX      *pixt, *pixc, *pixc2;
     if (count == 0)
         lept_stderr(" ==> perfect direct reconstruction\n");
     else {
-        l_int32  w, h, i, j;
-        l_uint32 val;
+        int32_t  w, h, i, j;
+        uint32_t val;
         lept_stderr(" ==> %d pixels in error in reconstruction\n", count);
 #if 1
         w = pixGetWidth(pixc);
@@ -171,8 +171,8 @@ PIX      *pixt, *pixc, *pixc2;
     if (count == 0)
         lept_stderr(" ==> perfect image recon\n");
     else {
-        l_int32  w, h, i, j;
-        l_uint32 val;
+        int32_t  w, h, i, j;
+        uint32_t val;
         lept_stderr(" ==> %d pixels in error in image recon\n", count);
 #if 1
         w = pixGetWidth(pixc2);

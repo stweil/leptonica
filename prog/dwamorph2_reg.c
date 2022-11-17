@@ -39,15 +39,15 @@
 #define  HALFWIDTH   3
 
     /* Complete set of linear brick dwa operations */
-PIX *pixMorphDwa_3(PIX *pixd, PIX *pixs, l_int32 operation, char *selname);
+PIX *pixMorphDwa_3(PIX *pixd, PIX *pixs, int32_t operation, char *selname);
 
-static const l_int32  NTIMES = 20;
+static const int32_t  NTIMES = 20;
 
 int main(int    argc,
          char **argv)
 {
 char      *selname;
-l_int32    i, j, nsels, sx, sy;
+int32_t    i, j, nsels, sx, sy;
 l_float32  fact, time;
 GPLOT     *gplot;
 NUMA      *na1, *na2, *na3, *na4, *nac1, *nac2, *nac3, *nac4, *nax;

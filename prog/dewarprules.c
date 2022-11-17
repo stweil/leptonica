@@ -51,10 +51,10 @@
 #include "string.h"
 #include "allheaders.h"
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32     w, h, select, ndew;
+int32_t     w, h, select, ndew;
 BOXA       *boxa1;
 L_DEWARP   *dew;
 L_DEWARPA  *dewa;

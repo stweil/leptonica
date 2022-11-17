@@ -75,10 +75,10 @@
 #include "allheaders.h"
 
     /* Static helpers */
-static SELA *makeCheckerboardCornerSela(l_int32 size, l_int32 dilation,
-                                        l_int32 nsels, PIXA *pixadb);
-static PIXA *makeCheckerboardCornerPixa(l_int32 size, l_int32 dilation,
-                                        l_int32 nsels);
+static SELA *makeCheckerboardCornerSela(int32_t size, int32_t dilation,
+                                        int32_t nsels, PIXA *pixadb);
+static PIXA *makeCheckerboardCornerPixa(int32_t size, int32_t dilation,
+                                        int32_t nsels);
 
 static const char selnames[64] = "s_diag1 s_diag2 s_cross1 s_cross2";
 
@@ -108,9 +108,9 @@ static const char selnames[64] = "s_diag1 s_diag2 s_cross1 s_cross2";
  */
 l_ok
 pixFindCheckerboardCorners(PIX     *pixs,
-                           l_int32  size,
-                           l_int32  dilation,
-                           l_int32  nsels,
+                           int32_t  size,
+                           int32_t  dilation,
+                           int32_t  nsels,
                            PIX    **ppix_corners,
                            PTA    **ppta_corners,
                            PIXA    *pixadb)
@@ -196,9 +196,9 @@ SELA    *sela;
  * </pre>
  */
 static SELA *
-makeCheckerboardCornerSela(l_int32  size,
-                           l_int32  dilation,
-                           l_int32  nsels,
+makeCheckerboardCornerSela(int32_t  size,
+                           int32_t  dilation,
+                           int32_t  nsels,
                            PIXA    *pixadb)
 {
 PIX     *pix1;
@@ -247,9 +247,9 @@ SELA    *sela;
  * </pre>
  */
 static PIXA *
-makeCheckerboardCornerPixa(l_int32  size,
-                           l_int32  dilation,
-                           l_int32  nsels)
+makeCheckerboardCornerPixa(int32_t  size,
+                           int32_t  dilation,
+                           int32_t  nsels)
 {
 PIX   *pix1, *pix2, *pix3;
 PIXA  *pixa1;

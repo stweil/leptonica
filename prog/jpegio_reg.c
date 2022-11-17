@@ -100,7 +100,7 @@ void DoJpegTest1(L_REGPARAMS  *rp,
                  const char   *fname)
 {
 size_t    size;
-l_uint8  *data;
+uint8_t  *data;
 char      buf[256];
 PIX      *pixs, *pix1, *pix2, *pix3, *pix4, *pix5;
 
@@ -146,7 +146,7 @@ void DoJpegTest2(L_REGPARAMS  *rp,
                  const char   *fname)
 {
 size_t    size;
-l_uint8  *data;
+uint8_t  *data;
 char      buf[256];
 PIX      *pixs, *pix1, *pix2, *pix3, *pix4, *pix5, *pix6;
 
@@ -194,9 +194,9 @@ PIX      *pixs, *pix1, *pix2, *pix3, *pix4, *pix5, *pix6;
 void DoJpegTest3(L_REGPARAMS  *rp,
                  const char   *fname)
 {
-l_int32   w1, h1, bps1, spp1, w2, h2, bps2, spp2, format1, format2;
+int32_t   w1, h1, bps1, spp1, w2, h2, bps2, spp2, format1, format2;
 size_t    size;
-l_uint8  *data;
+uint8_t  *data;
 PIX      *pixs;
 
         /* Test header reading (specialized jpeg functions) */
@@ -232,8 +232,8 @@ void DoJpegTest4(L_REGPARAMS  *rp,
 {
 char     buf[256];
 char     comment1[256];
-l_uint8 *comment2;
-l_int32  xres, yres;
+uint8_t *comment2;
+int32_t  xres, yres;
 FILE    *fp;
 PIX     *pixs;
 
@@ -249,11 +249,11 @@ PIX     *pixs;
     fgetJpegResolution(fp, &xres, &yres);
     fgetJpegComment(fp, &comment2);
     if (!comment2)
-        comment2 = (l_uint8 *)stringNew("");
+        comment2 = (uint8_t *)stringNew("");
     lept_fclose(fp);
     regTestCompareValues(rp, xres, 137, 0.0);
     regTestCompareValues(rp, yres, 137, 0.0);
-    regTestCompareStrings(rp, (l_uint8 *)comment1, strlen(comment1),
+    regTestCompareStrings(rp, (uint8_t *)comment1, strlen(comment1),
                           comment2, strlen((char *)comment2));
     lept_stderr("xres = %d, yres = %d, comment = %s\n", xres, yres, comment1);
 

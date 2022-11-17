@@ -53,10 +53,10 @@ void TestLeptCpRm(L_REGPARAMS *rp, const char *srctail, const char *newdir,
 void TestGenPathname(L_REGPARAMS *rp, const char *dir, const char *fname,
                      const char *result);
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32       exists;
+int32_t       exists;
 L_REGPARAMS  *rp;
 
     if (regTestSetup(argc, argv, &rp))
@@ -145,8 +145,8 @@ char  *newpath = NULL;
 char  *path = NULL;
 
     if ((path = pathJoin(first, second)) == NULL) return;
-    regTestCompareStrings(rp, (l_uint8 *)result, strlen(result),
-                          (l_uint8 *)path, strlen(path));
+    regTestCompareStrings(rp, (uint8_t *)result, strlen(result),
+                          (uint8_t *)path, strlen(path));
 
     if (first && first[0] == '\0')
         newfirst = stringNew("\"\"");
@@ -176,7 +176,7 @@ void TestLeptCpRm(L_REGPARAMS  *rp,
 {
 char     realnewdir[256], newnewdir[256];
 char    *realtail, *newsrc, *fname;
-l_int32  nfiles1, nfiles2, nfiles3;
+int32_t  nfiles1, nfiles2, nfiles3;
 SARRAY  *sa;
 
         /* Remove old version if it exists */
@@ -268,11 +268,11 @@ char  expect[512], localdir[256];
 #ifdef _WIN32
         convertSepCharsInPath(expect, UNIX_PATH_SEPCHAR);
 #endif  /* _WIN32 */
-        regTestCompareStrings(rp, (l_uint8 *)expect, strlen(expect),
-                              (l_uint8 *)path, strlen(path));
+        regTestCompareStrings(rp, (uint8_t *)expect, strlen(expect),
+                              (uint8_t *)path, strlen(path));
     } else {
-        regTestCompareStrings(rp, (l_uint8 *)result, strlen(result),
-                              (l_uint8 *)path, strlen(path));
+        regTestCompareStrings(rp, (uint8_t *)result, strlen(result),
+                              (uint8_t *)path, strlen(path));
     }
     if (rp->display) {
         char  *newdir = NULL;

@@ -60,7 +60,7 @@ int main(int    argc,
          char **argv)
 {
 char      *dirin, *substr, *title, *fileout;
-l_int32    ret, res, type, quality;
+int32_t    ret, res, type, quality;
 l_float32  scalefactor;
 
     if (argc != 9) {

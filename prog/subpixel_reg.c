@@ -38,7 +38,7 @@
 
 void AddTextAndSave(PIXA *pixa, PIX *pixs,
                     L_BMF *bmf, const char *textstr,
-                    l_int32 location, l_uint32 val);
+                    int32_t location, uint32_t val);
 
 const char  *textstr[] =
            {"Downscaled with sharpening",
@@ -195,10 +195,10 @@ AddTextAndSave(PIXA        *pixa,
                PIX         *pixs,
                L_BMF       *bmf,
                const char  *textstr,
-               l_int32      location,
-               l_uint32     val)
+               int32_t      location,
+               uint32_t     val)
 {
-l_int32  n, ovf;
+int32_t  n, ovf;
 PIX     *pixt;
 
     pixt = pixAddSingleTextblock(pixs, bmf, textstr, val, location, &ovf);

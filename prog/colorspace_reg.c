@@ -42,8 +42,8 @@ int main(int    argc,
          char **argv)
 {
 char          label[512];
-l_int32       rval, gval, bval, w, h, i, j, rwhite, gwhite, bwhite, count;
-l_uint32      pixel;
+int32_t       rval, gval, bval, w, h, i, j, rwhite, gwhite, bwhite, count;
+uint32_t      pixel;
 GPLOT        *gplot1, *gplot2;
 NUMA         *naseq, *na;
 NUMAA        *naa1, *naa2;

@@ -36,14 +36,14 @@
 
 #include "allheaders.h"
 
-static const l_int32  nbins = 10;
+static const int32_t  nbins = 10;
 
 int main(int    argc,
          char **argv)
 {
 char      *name, *tail;
-l_int32    i, j, n, minval, maxval, rdiff, gdiff, bdiff, maxdiff;
-l_uint32  *rau32, *gau32, *bau32, *carray, *darray;
+int32_t    i, j, n, minval, maxval, rdiff, gdiff, bdiff, maxdiff;
+uint32_t  *rau32, *gau32, *bau32, *carray, *darray;
 PIX       *pixs, *pix1, *pix2, *pix3, *pix4;
 PIXA      *pixa, *pixa1;
 SARRAY    *sa;
@@ -98,7 +98,7 @@ SARRAY    *sa;
         pix2 = pixDisplayColorArray(carray, nbins, 200, 5, 6);
         pixaAddPix(pixa1, pix2, L_INSERT);
 
-        darray = (l_uint32 *)lept_calloc(nbins, sizeof(l_uint32));
+        darray = (uint32_t *)lept_calloc(nbins, sizeof(uint32_t));
         for (j = 0; j < nbins; j++) {
             pixelLinearMapToTargetColor(carray[j], carray[nbins - 1],
                            0xffffff00, &darray[j]);

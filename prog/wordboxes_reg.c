@@ -38,9 +38,9 @@
 
 #include "allheaders.h"
 
-void MakeWordBoxes1(PIX *pixs, l_float32 scalefact, l_int32 thresh,
-                    l_int32 index, L_REGPARAMS *rp);
-void MakeWordBoxes2(PIX *pixs, l_float32 scalefact, l_int32 thresh,
+void MakeWordBoxes1(PIX *pixs, l_float32 scalefact, int32_t thresh,
+                    int32_t index, L_REGPARAMS *rp);
+void MakeWordBoxes2(PIX *pixs, l_float32 scalefact, int32_t thresh,
                     L_REGPARAMS  *rp);
 void TestBoxaAdjacency(PIX *pixs, L_REGPARAMS  *rp);
 
@@ -139,8 +139,8 @@ L_REGPARAMS  *rp;
 void
 MakeWordBoxes1(PIX          *pixs,
                l_float32     scalefact,
-               l_int32       thresh,
-               l_int32       index,
+               int32_t       thresh,
+               int32_t       index,
                L_REGPARAMS  *rp)
 {
 BOXA  *boxa1, *boxa2;
@@ -175,14 +175,14 @@ PIXA  *pixa1;
 void
 MakeWordBoxes2(PIX          *pixs,
                l_float32     scalefact,
-               l_int32       thresh,
+               int32_t       thresh,
                L_REGPARAMS  *rp)
 {
-l_int32  default_minwidth = 10;
-l_int32  default_minheight = 10;
-l_int32  default_maxwidth = 400;
-l_int32  default_maxheight = 70;
-l_int32  minwidth, minheight, maxwidth, maxheight;
+int32_t  default_minwidth = 10;
+int32_t  default_minheight = 10;
+int32_t  default_maxwidth = 400;
+int32_t  default_maxheight = 70;
+int32_t  minwidth, minheight, maxwidth, maxheight;
 BOXA    *boxa1, *boxa2;
 NUMA    *na;
 PIX     *pix1, *pix2, *pix3, *pix4;
@@ -230,7 +230,7 @@ void
 TestBoxaAdjacency(PIX          *pixs,
                   L_REGPARAMS  *rp)
 {
-l_int32  i, j, k, n;
+int32_t  i, j, k, n;
 BOX     *box1, *box2;
 BOXA    *boxa0, *boxa1, *boxa2;
 PIX     *pix0, *pix1, *pix2, *pix3;

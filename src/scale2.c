@@ -57,7 +57,7 @@
  *               PIX      *pixScaleGrayRank2()
  *
  *         Helper function for transferring alpha with scaling
- *               l_int32   pixScaleAndTransferAlpha()
+ *               int32_t   pixScaleAndTransferAlpha()
  *
  *         RGB scaling including alpha (blend) component
  *               PIX      *pixScaleWithAlpha()
@@ -66,32 +66,32 @@
  *
  *         Scale-to-gray 2x
  *                  static void       scaleToGray2Low()
- *                  static l_uint32  *makeSumTabSG2()
- *                  static l_uint8   *makeValTabSG2()
+ *                  static uint32_t  *makeSumTabSG2()
+ *                  static uint8_t   *makeValTabSG2()
  *
  *         Scale-to-gray 3x
  *                  static void       scaleToGray3Low()
- *                  static l_uint32  *makeSumTabSG3()
- *                  static l_uint8   *makeValTabSG3()
+ *                  static uint32_t  *makeSumTabSG3()
+ *                  static uint8_t   *makeValTabSG3()
  *
  *         Scale-to-gray 4x
  *                  static void       scaleToGray4Low()
- *                  static l_uint32  *makeSumTabSG4()
- *                  static l_uint8   *makeValTabSG4()
+ *                  static uint32_t  *makeSumTabSG4()
+ *                  static uint8_t   *makeValTabSG4()
  *
  *         Scale-to-gray 6x
  *                  static void       scaleToGray6Low()
- *                  static l_uint8   *makeValTabSG6()
+ *                  static uint8_t   *makeValTabSG6()
  *
  *         Scale-to-gray 8x
  *                  static void       scaleToGray8Low()
- *                  static l_uint8   *makeValTabSG8()
+ *                  static uint8_t   *makeValTabSG8()
  *
  *         Scale-to-gray 16x
  *                  static void       scaleToGray16Low()
  *
  *         Grayscale mipmap
- *                  static l_int32    scaleMipmapLow()
+ *                  static int32_t    scaleMipmapLow()
  * </pre>
  */
 
@@ -102,35 +102,35 @@
 #include <string.h>
 #include "allheaders.h"
 
-static void scaleToGray2Low(l_uint32 *datad, l_int32 wd, l_int32 hd,
-                            l_int32 wpld, l_uint32 *datas, l_int32 wpls,
-                            l_uint32 *sumtab, l_uint8 *valtab);
-static l_uint32 *makeSumTabSG2(void);
-static l_uint8 *makeValTabSG2(void);
-static void scaleToGray3Low(l_uint32 *datad, l_int32 wd, l_int32 hd,
-                            l_int32 wpld, l_uint32 *datas, l_int32 wpls,
-                            l_uint32 *sumtab, l_uint8 *valtab);
-static l_uint32 *makeSumTabSG3(void);
-static l_uint8 *makeValTabSG3(void);
-static void scaleToGray4Low(l_uint32 *datad, l_int32 wd, l_int32 hd,
-                            l_int32 wpld, l_uint32 *datas, l_int32 wpls,
-                            l_uint32 *sumtab, l_uint8 *valtab);
-static l_uint32 *makeSumTabSG4(void);
-static l_uint8 *makeValTabSG4(void);
-static void scaleToGray6Low(l_uint32 *datad, l_int32 wd, l_int32 hd,
-                            l_int32 wpld, l_uint32 *datas, l_int32 wpls,
-                            l_int32 *tab8, l_uint8 *valtab);
-static l_uint8 *makeValTabSG6(void);
-static void scaleToGray8Low(l_uint32 *datad, l_int32 wd, l_int32 hd,
-                            l_int32 wpld, l_uint32 *datas, l_int32 wpls,
-                            l_int32 *tab8, l_uint8 *valtab);
-static l_uint8 *makeValTabSG8(void);
-static void scaleToGray16Low(l_uint32 *datad, l_int32 wd, l_int32 hd,
-                             l_int32 wpld, l_uint32 *datas, l_int32 wpls,
-                             l_int32 *tab8);
-static l_int32 scaleMipmapLow(l_uint32 *datad, l_int32 wd, l_int32 hd,
-                              l_int32 wpld, l_uint32 *datas1, l_int32 wpls1,
-                              l_uint32 *datas2, l_int32 wpls2, l_float32 red);
+static void scaleToGray2Low(uint32_t *datad, int32_t wd, int32_t hd,
+                            int32_t wpld, uint32_t *datas, int32_t wpls,
+                            uint32_t *sumtab, uint8_t *valtab);
+static uint32_t *makeSumTabSG2(void);
+static uint8_t *makeValTabSG2(void);
+static void scaleToGray3Low(uint32_t *datad, int32_t wd, int32_t hd,
+                            int32_t wpld, uint32_t *datas, int32_t wpls,
+                            uint32_t *sumtab, uint8_t *valtab);
+static uint32_t *makeSumTabSG3(void);
+static uint8_t *makeValTabSG3(void);
+static void scaleToGray4Low(uint32_t *datad, int32_t wd, int32_t hd,
+                            int32_t wpld, uint32_t *datas, int32_t wpls,
+                            uint32_t *sumtab, uint8_t *valtab);
+static uint32_t *makeSumTabSG4(void);
+static uint8_t *makeValTabSG4(void);
+static void scaleToGray6Low(uint32_t *datad, int32_t wd, int32_t hd,
+                            int32_t wpld, uint32_t *datas, int32_t wpls,
+                            int32_t *tab8, uint8_t *valtab);
+static uint8_t *makeValTabSG6(void);
+static void scaleToGray8Low(uint32_t *datad, int32_t wd, int32_t hd,
+                            int32_t wpld, uint32_t *datas, int32_t wpls,
+                            int32_t *tab8, uint8_t *valtab);
+static uint8_t *makeValTabSG8(void);
+static void scaleToGray16Low(uint32_t *datad, int32_t wd, int32_t hd,
+                             int32_t wpld, uint32_t *datas, int32_t wpls,
+                             int32_t *tab8);
+static int32_t scaleMipmapLow(uint32_t *datad, int32_t wd, int32_t hd,
+                              int32_t wpld, uint32_t *datas1, int32_t wpls1,
+                              uint32_t *datas2, int32_t wpls2, l_float32 red);
 
 extern l_float32  AlphaMaskBorderVals[2];
 
@@ -208,7 +208,7 @@ PIX *
 pixScaleToGray(PIX       *pixs,
                l_float32  scalefactor)
 {
-l_int32    w, h, minsrc, mindest;
+int32_t    w, h, minsrc, mindest;
 l_float32  mag, red;
 PIX       *pixt, *pixd;
 
@@ -222,7 +222,7 @@ PIX       *pixt, *pixd;
         return (PIX *)ERROR_PTR("scalefactor >= 1.0", __func__, NULL);
     pixGetDimensions(pixs, &w, &h, NULL);
     minsrc = L_MIN(w, h);
-    mindest = (l_int32)((l_float32)minsrc * scalefactor);
+    mindest = (int32_t)((l_float32)minsrc * scalefactor);
     if (mindest < 2)
         return (PIX *)ERROR_PTR("scalefactor too small", __func__, NULL);
 
@@ -317,7 +317,7 @@ PIX *
 pixScaleToGrayFast(PIX       *pixs,
                    l_float32  scalefactor)
 {
-l_int32    w, h, minsrc, mindest;
+int32_t    w, h, minsrc, mindest;
 l_float32  eps, factor;
 PIX       *pixt, *pixd;
 
@@ -331,7 +331,7 @@ PIX       *pixt, *pixd;
         return (PIX *)ERROR_PTR("scalefactor >= 1.0", __func__, NULL);
     pixGetDimensions(pixs, &w, &h, NULL);
     minsrc = L_MIN(w, h);
-    mindest = (l_int32)((l_float32)minsrc * scalefactor);
+    mindest = (int32_t)((l_float32)minsrc * scalefactor);
     if (mindest < 2)
         return (PIX *)ERROR_PTR("scalefactor too small", __func__, NULL);
     eps = 0.0001;
@@ -385,11 +385,11 @@ PIX       *pixt, *pixd;
 PIX *
 pixScaleToGray2(PIX  *pixs)
 {
-l_uint8   *valtab;
-l_int32    ws, hs, wd, hd;
-l_int32    wpld, wpls;
-l_uint32  *sumtab;
-l_uint32  *datas, *datad;
+uint8_t   *valtab;
+int32_t    ws, hs, wd, hd;
+int32_t    wpld, wpls;
+uint32_t  *sumtab;
+uint32_t  *datas, *datad;
 PIX       *pixd;
 
     if (!pixs)
@@ -441,11 +441,11 @@ PIX       *pixd;
 PIX *
 pixScaleToGray3(PIX  *pixs)
 {
-l_uint8   *valtab;
-l_int32    ws, hs, wd, hd;
-l_int32    wpld, wpls;
-l_uint32  *sumtab;
-l_uint32  *datas, *datad;
+uint8_t   *valtab;
+int32_t    ws, hs, wd, hd;
+int32_t    wpld, wpls;
+uint32_t  *sumtab;
+uint32_t  *datas, *datad;
 PIX       *pixd;
 
     if (!pixs)
@@ -493,11 +493,11 @@ PIX       *pixd;
 PIX *
 pixScaleToGray4(PIX  *pixs)
 {
-l_uint8   *valtab;
-l_int32    ws, hs, wd, hd;
-l_int32    wpld, wpls;
-l_uint32  *sumtab;
-l_uint32  *datas, *datad;
+uint8_t   *valtab;
+int32_t    ws, hs, wd, hd;
+int32_t    wpld, wpls;
+uint32_t  *sumtab;
+uint32_t  *datas, *datad;
 PIX       *pixd;
 
     if (!pixs)
@@ -546,10 +546,10 @@ PIX       *pixd;
 PIX *
 pixScaleToGray6(PIX  *pixs)
 {
-l_uint8   *valtab;
-l_int32    ws, hs, wd, hd, wpld, wpls;
-l_int32   *tab8;
-l_uint32  *datas, *datad;
+uint8_t   *valtab;
+int32_t    ws, hs, wd, hd, wpld, wpls;
+int32_t   *tab8;
+uint32_t  *datas, *datad;
 PIX       *pixd;
 
     if (!pixs)
@@ -592,11 +592,11 @@ PIX       *pixd;
 PIX *
 pixScaleToGray8(PIX  *pixs)
 {
-l_uint8   *valtab;
-l_int32    ws, hs, wd, hd;
-l_int32    wpld, wpls;
-l_int32   *tab8;
-l_uint32  *datas, *datad;
+uint8_t   *valtab;
+int32_t    ws, hs, wd, hd;
+int32_t    wpld, wpls;
+int32_t   *tab8;
+uint32_t  *datas, *datad;
 PIX       *pixd;
 
     if (!pixs)
@@ -639,10 +639,10 @@ PIX       *pixd;
 PIX *
 pixScaleToGray16(PIX  *pixs)
 {
-l_int32    ws, hs, wd, hd;
-l_int32    wpld, wpls;
-l_int32   *tab8;
-l_uint32  *datas, *datad;
+int32_t    ws, hs, wd, hd;
+int32_t    wpld, wpls;
+int32_t   *tab8;
+uint32_t  *datas, *datad;
 PIX       *pixd;
 
     if (!pixs)
@@ -711,7 +711,7 @@ PIX *
 pixScaleToGrayMipmap(PIX       *pixs,
                      l_float32  scalefactor)
 {
-l_int32    w, h, minsrc, mindest;
+int32_t    w, h, minsrc, mindest;
 l_float32  red;
 PIX       *pixs1, *pixs2, *pixt, *pixd;
 
@@ -725,7 +725,7 @@ PIX       *pixs1, *pixs2, *pixt, *pixd;
         return (PIX *)ERROR_PTR("scalefactor >= 1.0", __func__, NULL);
     pixGetDimensions(pixs, &w, &h, NULL);
     minsrc = L_MIN(w, h);
-    mindest = (l_int32)((l_float32)minsrc * scalefactor);
+    mindest = (int32_t)((l_float32)minsrc * scalefactor);
     if (mindest < 2)
         return (PIX *)ERROR_PTR("scalefactor too small", __func__, NULL);
 
@@ -798,8 +798,8 @@ pixScaleMipmap(PIX       *pixs1,
                PIX       *pixs2,
                l_float32  scale)
 {
-l_int32    ws1, hs1, ws2, hs2, wd, hd, wpls1, wpls2, wpld;
-l_uint32  *datas1, *datas2, *datad;
+int32_t    ws1, hs1, ws2, hs2, wd, hd, wpls1, wpls2, wpld;
+uint32_t  *datas1, *datas2, *datad;
 PIX       *pixd;
 
     if (!pixs1 || pixGetDepth(pixs1) != 8 || pixGetColormap(pixs1))
@@ -823,8 +823,8 @@ PIX       *pixd;
     wpls1 = pixGetWpl(pixs1);
     datas2 = pixGetData(pixs2);
     wpls2 = pixGetWpl(pixs2);
-    wd = (l_int32)(2. * scale * pixGetWidth(pixs2));
-    hd = (l_int32)(2. * scale * pixGetHeight(pixs2));
+    wd = (int32_t)(2. * scale * pixGetWidth(pixs2));
+    hd = (int32_t)(2. * scale * pixGetHeight(pixs2));
     if ((pixd = pixCreate(wd, hd, 8)) == NULL)
         return (PIX *)ERROR_PTR("pixd not made", __func__, NULL);
     pixCopyInputFormat(pixd, pixs1);
@@ -850,13 +850,13 @@ PIX       *pixd;
  */
 PIX *
 pixExpandReplicate(PIX     *pixs,
-                   l_int32  factor)
+                   int32_t  factor)
 {
-l_int32    w, h, d, wd, hd, wpls, wpld, start, i, j, k;
-l_uint8    sval;
-l_uint16   sval16;
-l_uint32   sval32;
-l_uint32  *lines, *datas, *lined, *datad;
+int32_t    w, h, d, wd, hd, wpls, wpld, start, i, j, k;
+uint8_t    sval;
+uint16_t   sval16;
+uint32_t   sval32;
+uint32_t  *lines, *datas, *lined, *datad;
 PIX       *pixd;
 
     if (!pixs)
@@ -995,13 +995,13 @@ PIX       *pixd;
  */
 PIX *
 pixScaleGrayMinMax(PIX     *pixs,
-                   l_int32  xfact,
-                   l_int32  yfact,
-                   l_int32  type)
+                   int32_t  xfact,
+                   int32_t  yfact,
+                   int32_t  type)
 {
-l_int32    ws, hs, wd, hd, wpls, wpld, i, j, k, m;
-l_int32    minval, maxval, val;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    ws, hs, wd, hd, wpls, wpld, i, j, k, m;
+int32_t    minval, maxval, val;
+uint32_t  *datas, *datad, *lines, *lined;
 PIX       *pixd;
 
     if (!pixs || pixGetDepth(pixs) != 8 || pixGetColormap(pixs))
@@ -1100,12 +1100,12 @@ PIX       *pixd;
  */
 PIX *
 pixScaleGrayMinMax2(PIX     *pixs,
-                    l_int32  type)
+                    int32_t  type)
 {
-l_int32    ws, hs, wd, hd, wpls, wpld, i, j, k;
-l_int32    minval, maxval;
-l_int32    val[4];
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    ws, hs, wd, hd, wpls, wpld, i, j, k;
+int32_t    minval, maxval;
+int32_t    val[4];
+uint32_t  *datas, *datad, *lines, *lined;
 PIX       *pixd;
 
     if (!pixs || pixGetDepth(pixs) != 8 || pixGetColormap(pixs))
@@ -1181,10 +1181,10 @@ PIX       *pixd;
  */
 PIX *
 pixScaleGrayRankCascade(PIX     *pixs,
-                        l_int32  level1,
-                        l_int32  level2,
-                        l_int32  level3,
-                        l_int32  level4)
+                        int32_t  level1,
+                        int32_t  level2,
+                        int32_t  level3,
+                        int32_t  level4)
 {
 PIX  *pixt1, *pixt2, *pixt3, *pixt4;
 
@@ -1243,13 +1243,13 @@ PIX  *pixt1, *pixt2, *pixt3, *pixt4;
  */
 PIX *
 pixScaleGrayRank2(PIX     *pixs,
-                  l_int32  rank)
+                  int32_t  rank)
 {
-l_int32    ws, hs, wd, hd, wpls, wpld, i, j, k, m;
-l_int32    minval, maxval, rankval, minindex, maxindex;
-l_int32    val[4];
-l_int32    midval[4];  /* should only use 2 of these */
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    ws, hs, wd, hd, wpls, wpld, i, j, k, m;
+int32_t    minval, maxval, rankval, minindex, maxindex;
+int32_t    val[4];
+int32_t    midval[4];  /* should only use 2 of these */
+uint32_t  *datas, *datad, *lines, *lined;
 PIX       *pixd;
 
     if (!pixs || pixGetDepth(pixs) != 8 || pixGetColormap(pixs))
@@ -1414,7 +1414,7 @@ pixScaleWithAlpha(PIX       *pixs,
                   PIX       *pixg,
                   l_float32  fract)
 {
-l_int32  ws, hs, d, spp;
+int32_t  ws, hs, d, spp;
 PIX     *pixd, *pix32, *pixg2, *pixgs;
 
     if (!pixs)
@@ -1453,15 +1453,15 @@ PIX     *pixd, *pix32, *pixg2, *pixgs;
         if (fract == 1.0)
             pixSetAll(pixg2);
         else if (fract > 0.0)
-            pixSetAllArbitrary(pixg2, (l_int32)(255.0 * fract));
+            pixSetAllArbitrary(pixg2, (int32_t)(255.0 * fract));
     } else {
         pixg2 = pixResizeToMatch(pixg, NULL, ws, hs);
     }
     if (ws > 10 && hs > 10) {  /* see note 4 */
         pixSetBorderRingVal(pixg2, 1,
-                            (l_int32)(255.0 * fract * AlphaMaskBorderVals[0]));
+                            (int32_t)(255.0 * fract * AlphaMaskBorderVals[0]));
         pixSetBorderRingVal(pixg2, 2,
-                            (l_int32)(255.0 * fract * AlphaMaskBorderVals[1]));
+                            (int32_t)(255.0 * fract * AlphaMaskBorderVals[1]));
     }
     pixgs = pixScaleGeneral(pixg2, scalex, scaley, 0.0, 0);
 
@@ -1508,18 +1508,18 @@ PIX     *pixd, *pix32, *pixg2, *pixgs;
  * </pre>
  */
 static void
-scaleToGray2Low(l_uint32  *datad,
-                l_int32    wd,
-                l_int32    hd,
-                l_int32    wpld,
-                l_uint32  *datas,
-                l_int32    wpls,
-                l_uint32  *sumtab,
-                l_uint8   *valtab)
+scaleToGray2Low(uint32_t  *datad,
+                int32_t    wd,
+                int32_t    hd,
+                int32_t    wpld,
+                uint32_t  *datas,
+                int32_t    wpls,
+                uint32_t  *sumtab,
+                uint8_t   *valtab)
 {
-l_int32    i, j, l, k, m, wd4, extra;
-l_uint32   sbyte1, sbyte2, sum;
-l_uint32  *lines, *lined;
+int32_t    i, j, l, k, m, wd4, extra;
+uint32_t   sbyte1, sbyte2, sum;
+uint32_t  *lines, *lined;
 
         /* i indexes the dest lines
          * l indexes the source lines
@@ -1560,22 +1560,22 @@ l_uint32  *lines, *lined;
  *
  * <pre>
  * Notes:
- *      (1) Returns a table of 256 l_uint32s, giving the four output
+ *      (1) Returns a table of 256 uint32_ts, giving the four output
  *          8-bit grayscale sums corresponding to 8 input bits of a binary
  *          image, for a 2x scale-to-gray op.  The sums from two
  *          adjacent scanlines are then added and transformed to
  *          output four 8 bpp pixel values, using makeValTabSG2().
  * </pre>
  */
-static l_uint32  *
+static uint32_t  *
 makeSumTabSG2(void)
 {
-l_int32    i;
-l_int32    sum[] = {0, 1, 1, 2};
-l_uint32  *tab;
+int32_t    i;
+int32_t    sum[] = {0, 1, 1, 2};
+uint32_t  *tab;
 
         /* Pack the four sums separately in four bytes */
-    tab = (l_uint32 *)LEPT_CALLOC(256, sizeof(l_uint32));
+    tab = (uint32_t *)LEPT_CALLOC(256, sizeof(uint32_t));
     for (i = 0; i < 256; i++) {
         tab[i] = (sum[i & 0x3] | sum[(i >> 2) & 0x3] << 8 |
                   sum[(i >> 4) & 0x3] << 16 | sum[(i >> 6) & 0x3] << 24);
@@ -1595,13 +1595,13 @@ l_uint32  *tab;
  *          where sum is in set {0,1,2,3,4}
  * </pre>
  */
-static l_uint8 *
+static uint8_t *
 makeValTabSG2(void)
 {
-l_int32   i;
-l_uint8  *tab;
+int32_t   i;
+uint8_t  *tab;
 
-    tab = (l_uint8 *)LEPT_CALLOC(5, sizeof(l_uint8));
+    tab = (uint8_t *)LEPT_CALLOC(5, sizeof(uint8_t));
     for (i = 0; i < 5; i++)
         tab[i] = 255 - (i * 255) / 4;
     return tab;
@@ -1646,18 +1646,18 @@ l_uint8  *tab;
  * </pre>
  */
 static void
-scaleToGray3Low(l_uint32  *datad,
-                l_int32    wd,
-                l_int32    hd,
-                l_int32    wpld,
-                l_uint32  *datas,
-                l_int32    wpls,
-                l_uint32  *sumtab,
-                l_uint8   *valtab)
+scaleToGray3Low(uint32_t  *datad,
+                int32_t    wd,
+                int32_t    hd,
+                int32_t    wpld,
+                uint32_t  *datas,
+                int32_t    wpls,
+                uint32_t  *sumtab,
+                uint8_t   *valtab)
 {
-l_int32    i, j, l, k;
-l_uint32   threebytes1, threebytes2, threebytes3, sum;
-l_uint32  *lines, *lined;
+int32_t    i, j, l, k;
+uint32_t   threebytes1, threebytes2, threebytes3, sum;
+uint32_t  *lines, *lined;
 
         /* i indexes the dest lines
          * l indexes the source lines
@@ -1714,7 +1714,7 @@ l_uint32  *lines, *lined;
  *
  * <pre>
  * Notes:
- *      (1) Returns a table of 64 l_uint32s, giving the two output
+ *      (1) Returns a table of 64 uint32_ts, giving the two output
  *          8-bit grayscale sums corresponding to 6 input bits of a binary
  *          image, for a 3x scale-to-gray op.  In practice, this would
  *          be used three times (on adjacent scanlines), and the sums would
@@ -1722,15 +1722,15 @@ l_uint32  *lines, *lined;
  *          using makeValTabSG3().
  * </pre>
  */
-static l_uint32  *
+static uint32_t  *
 makeSumTabSG3(void)
 {
-l_int32    i;
-l_int32    sum[] = {0, 1, 1, 2, 1, 2, 2, 3};
-l_uint32  *tab;
+int32_t    i;
+int32_t    sum[] = {0, 1, 1, 2, 1, 2, 2, 3};
+uint32_t  *tab;
 
         /* Pack the two sums separately in two bytes */
-    tab = (l_uint32 *)LEPT_CALLOC(64, sizeof(l_uint32));
+    tab = (uint32_t *)LEPT_CALLOC(64, sizeof(uint32_t));
     for (i = 0; i < 64; i++) {
         tab[i] = (sum[i & 0x07]) | (sum[(i >> 3) & 0x07] << 8);
     }
@@ -1749,13 +1749,13 @@ l_uint32  *tab;
  *          where sum is in [0,...,9]
  * </pre>
  */
-static l_uint8 *
+static uint8_t *
 makeValTabSG3(void)
 {
-l_int32   i;
-l_uint8  *tab;
+int32_t   i;
+uint8_t  *tab;
 
-    tab = (l_uint8 *)LEPT_CALLOC(10, sizeof(l_uint8));
+    tab = (uint8_t *)LEPT_CALLOC(10, sizeof(uint8_t));
     for (i = 0; i < 10; i++)
         tab[i] = 0xff - (i * 255) / 9;
     return tab;
@@ -1791,18 +1791,18 @@ l_uint8  *tab;
  * </pre>
  */
 static void
-scaleToGray4Low(l_uint32  *datad,
-                l_int32    wd,
-                l_int32    hd,
-                l_int32    wpld,
-                l_uint32  *datas,
-                l_int32    wpls,
-                l_uint32  *sumtab,
-                l_uint8   *valtab)
+scaleToGray4Low(uint32_t  *datad,
+                int32_t    wd,
+                int32_t    hd,
+                int32_t    wpld,
+                uint32_t  *datas,
+                int32_t    wpls,
+                uint32_t  *sumtab,
+                uint8_t   *valtab)
 {
-l_int32    i, j, l, k;
-l_uint32   sbyte1, sbyte2, sbyte3, sbyte4, sum;
-l_uint32  *lines, *lined;
+int32_t    i, j, l, k;
+uint32_t   sbyte1, sbyte2, sbyte3, sbyte4, sum;
+uint32_t  *lines, *lined;
 
         /* i indexes the dest lines
          * l indexes the source lines
@@ -1832,22 +1832,22 @@ l_uint32  *lines, *lined;
  *
  * <pre>
  * Notes:
- *      (1) Returns a table of 256 l_uint32s, giving the two output
+ *      (1) Returns a table of 256 uint32_ts, giving the two output
  *          8-bit grayscale sums corresponding to 8 input bits of a
  *          binary image, for a 4x scale-to-gray op.  The sums from
  *          four adjacent scanlines are then added and transformed to
  *          output 8 bpp pixel values, using makeValTabSG4().
  * </pre>
  */
-static l_uint32  *
+static uint32_t  *
 makeSumTabSG4(void)
 {
-l_int32    i;
-l_int32    sum[] = {0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4};
-l_uint32  *tab;
+int32_t    i;
+int32_t    sum[] = {0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4};
+uint32_t  *tab;
 
         /* Pack the two sums separately in two bytes */
-    tab = (l_uint32 *)LEPT_CALLOC(256, sizeof(l_uint32));
+    tab = (uint32_t *)LEPT_CALLOC(256, sizeof(uint32_t));
     for (i = 0; i < 256; i++) {
         tab[i] = (sum[i & 0xf]) | (sum[(i >> 4) & 0xf] << 8);
     }
@@ -1866,13 +1866,13 @@ l_uint32  *tab;
  *          where sum is in [0,...,16]
  * </pre>
  */
-static l_uint8 *
+static uint8_t *
 makeValTabSG4(void)
 {
-l_int32   i;
-l_uint8  *tab;
+int32_t   i;
+uint8_t  *tab;
 
-    tab = (l_uint8 *)LEPT_CALLOC(17, sizeof(l_uint8));
+    tab = (uint8_t *)LEPT_CALLOC(17, sizeof(uint8_t));
     for (i = 0; i < 17; i++)
         tab[i] = 0xff - (i * 255) / 16;
     return tab;
@@ -1916,19 +1916,19 @@ l_uint8  *tab;
  * </pre>
  */
 static void
-scaleToGray6Low(l_uint32  *datad,
-                l_int32    wd,
-                l_int32    hd,
-                l_int32    wpld,
-                l_uint32  *datas,
-                l_int32    wpls,
-                l_int32   *tab8,
-                l_uint8   *valtab)
+scaleToGray6Low(uint32_t  *datad,
+                int32_t    wd,
+                int32_t    hd,
+                int32_t    wpld,
+                uint32_t  *datas,
+                int32_t    wpls,
+                int32_t   *tab8,
+                uint8_t   *valtab)
 {
-l_int32    i, j, l, k;
-l_uint32   threebytes1, threebytes2, threebytes3;
-l_uint32   threebytes4, threebytes5, threebytes6, sum;
-l_uint32  *lines, *lined;
+int32_t    i, j, l, k;
+uint32_t   threebytes1, threebytes2, threebytes3;
+uint32_t   threebytes4, threebytes5, threebytes6, sum;
+uint32_t  *lines, *lined;
 
         /* i indexes the dest lines
          * l indexes the source lines
@@ -2011,13 +2011,13 @@ l_uint32  *lines, *lined;
  *          where sum is in [0,...,36]
  * </pre>
  */
-static l_uint8 *
+static uint8_t *
 makeValTabSG6(void)
 {
-l_int32   i;
-l_uint8  *tab;
+int32_t   i;
+uint8_t  *tab;
 
-    tab = (l_uint8 *)LEPT_CALLOC(37, sizeof(l_uint8));
+    tab = (uint8_t *)LEPT_CALLOC(37, sizeof(uint8_t));
     for (i = 0; i < 37; i++)
         tab[i] = 0xff - (i * 255) / 36;
     return tab;
@@ -2052,18 +2052,18 @@ l_uint8  *tab;
  * </pre>
  */
 static void
-scaleToGray8Low(l_uint32  *datad,
-                l_int32    wd,
-                l_int32    hd,
-                l_int32    wpld,
-                l_uint32  *datas,
-                l_int32    wpls,
-                l_int32   *tab8,
-                l_uint8   *valtab)
+scaleToGray8Low(uint32_t  *datad,
+                int32_t    wd,
+                int32_t    hd,
+                int32_t    wpld,
+                uint32_t  *datas,
+                int32_t    wpls,
+                int32_t   *tab8,
+                uint8_t   *valtab)
 {
-l_int32    i, j, k;
-l_int32    sbyte0, sbyte1, sbyte2, sbyte3, sbyte4, sbyte5, sbyte6, sbyte7, sum;
-l_uint32  *lines, *lined;
+int32_t    i, j, k;
+int32_t    sbyte0, sbyte1, sbyte2, sbyte3, sbyte4, sbyte5, sbyte6, sbyte7, sum;
+uint32_t  *lines, *lined;
 
         /* i indexes the dest lines
          * k indexes the source lines
@@ -2103,13 +2103,13 @@ l_uint32  *lines, *lined;
  *          where sum is in [0,...,64]
  * </pre>
  */
-static l_uint8 *
+static uint8_t *
 makeValTabSG8(void)
 {
-l_int32   i;
-l_uint8  *tab;
+int32_t   i;
+uint8_t  *tab;
 
-    tab = (l_uint8 *)LEPT_CALLOC(65, sizeof(l_uint8));
+    tab = (uint8_t *)LEPT_CALLOC(65, sizeof(uint8_t));
     for (i = 0; i < 65; i++)
         tab[i] = 0xff - (i * 255) / 64;
     return tab;
@@ -2142,17 +2142,17 @@ l_uint8  *tab;
  * </pre>
  */
 static void
-scaleToGray16Low(l_uint32  *datad,
-                  l_int32    wd,
-                 l_int32    hd,
-                 l_int32    wpld,
-                 l_uint32  *datas,
-                 l_int32    wpls,
-                 l_int32   *tab8)
+scaleToGray16Low(uint32_t  *datad,
+                  int32_t    wd,
+                 int32_t    hd,
+                 int32_t    wpld,
+                 uint32_t  *datas,
+                 int32_t    wpls,
+                 int32_t   *tab8)
 {
-l_int32    i, j, k, m;
-l_int32    sum;
-l_uint32  *lines, *lined;
+int32_t    i, j, k, m;
+int32_t    sum;
+uint32_t  *lines, *lined;
 
         /* i indexes the dest lines
          * k indexes the source lines
@@ -2218,20 +2218,20 @@ l_uint32  *lines, *lined;
  *          images because of aliasing.
  * </pre>
  */
-static l_int32
-scaleMipmapLow(l_uint32  *datad,
-               l_int32    wd,
-               l_int32    hd,
-               l_int32    wpld,
-               l_uint32  *datas1,
-               l_int32    wpls1,
-               l_uint32  *datas2,
-               l_int32    wpls2,
+static int32_t
+scaleMipmapLow(uint32_t  *datad,
+               int32_t    wd,
+               int32_t    hd,
+               int32_t    wpld,
+               uint32_t  *datas1,
+               int32_t    wpls1,
+               uint32_t  *datas2,
+               int32_t    wpls2,
                l_float32  red)
 {
-l_int32    i, j, val1, val2, val, row2, col2;
-l_int32   *srow, *scol;
-l_uint32  *lines1, *lines2, *lined;
+int32_t    i, j, val1, val2, val, row2, col2;
+int32_t   *srow, *scol;
+uint32_t  *lines1, *lines2, *lined;
 l_float32  ratio, w1, w2;
 
         /* Clear dest */
@@ -2245,17 +2245,17 @@ l_float32  ratio, w1, w2;
            srow[i], scol[j].  The UL corner locations of the higher
            resolution src pixels are obtained from these arrays
            by multiplying by 2. */
-    if ((srow = (l_int32 *)LEPT_CALLOC(hd, sizeof(l_int32))) == NULL)
+    if ((srow = (int32_t *)LEPT_CALLOC(hd, sizeof(int32_t))) == NULL)
         return ERROR_INT("srow not made", __func__, 1);
-    if ((scol = (l_int32 *)LEPT_CALLOC(wd, sizeof(l_int32))) == NULL) {
+    if ((scol = (int32_t *)LEPT_CALLOC(wd, sizeof(int32_t))) == NULL) {
         LEPT_FREE(srow);
         return ERROR_INT("scol not made", __func__, 1);
     }
     ratio = 1. / (2. * red);  /* 0.5 for red = 1, 1 for red = 0.5 */
     for (i = 0; i < hd; i++)
-        srow[i] = (l_int32)(ratio * i);
+        srow[i] = (int32_t)(ratio * i);
     for (j = 0; j < wd; j++)
-        scol[j] = (l_int32)(ratio * j);
+        scol[j] = (int32_t)(ratio * j);
 
         /* Get weights for linear interpolation: these are the
          * 'distances' of the dest image plane from the two
@@ -2273,7 +2273,7 @@ l_float32  ratio, w1, w2;
             col2 = scol[j];
             val1 = GET_DATA_BYTE(lines1, 2 * col2);
             val2 = GET_DATA_BYTE(lines2, col2);
-            val = (l_int32)(w1 * val1 + w2 * val2);
+            val = (int32_t)(w1 * val1 + w2 * val2);
             SET_DATA_BYTE(lined, j, val);
         }
     }

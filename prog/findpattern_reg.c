@@ -51,21 +51,21 @@
 #include "allheaders.h"
 
     /* for pixDisplayHitMissSel() */
-static const l_uint32  HitColor = 0x33aa4400;
-static const l_uint32  MissColor = 0xaa44bb00;
+static const uint32_t  HitColor = 0x33aa4400;
+static const uint32_t  MissColor = 0xaa44bb00;
 
     /* Patterns at full resolution */
 static const char *patname[2] = {
     "tribune-word.png",   /* patno = 0 */
     "tribune-t.png"};     /* patno = 1 */
 
-l_int32 GeneratePattern(l_int32 patno, l_int32 red, L_REGPARAMS  *rp);
+int32_t GeneratePattern(int32_t patno, int32_t red, L_REGPARAMS  *rp);
 
 
 int main(int    argc,
          char **argv)
 {
-l_int32      patno, red;
+int32_t      patno, red;
 L_REGPARAMS  *rp;
 
     if (regTestSetup(argc, argv, &rp))
@@ -82,12 +82,12 @@ L_REGPARAMS  *rp;
 }
 
 
-l_int32
-GeneratePattern(l_int32       patno,
-                l_int32       red,
+int32_t
+GeneratePattern(int32_t       patno,
+                int32_t       red,
                 L_REGPARAMS  *rp)
 {
-l_int32  width, cx, cy;
+int32_t  width, cx, cy;
 PIX     *pixs, *pixt, *pix, *pixr, *pixp, *pixsel, *pixhmt;
 PIX     *pixc1, *pixc2, *pixc3, *pixd;
 PIXA    *pixa;

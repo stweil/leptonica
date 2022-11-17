@@ -53,8 +53,8 @@ static PIX *PtaDisplayRotate(PIX *pixs, l_float32 xc, l_float32 yc);
 int main(int    argc,
          char **argv)
 {
-l_int32       i, nbox, npta, fgcount, bgcount, count, w, h, x, y, same, n;
-l_int32       convex1, convex2, convex3;
+int32_t       i, nbox, npta, fgcount, bgcount, count, w, h, x, y, same, n;
+int32_t       convex1, convex2, convex3;
 l_float32     fx, fy, ang;
 BOXA         *boxa;
 PIX          *pixs, *pixfg, *pixbg, *pixc, *pixb, *pixd;
@@ -247,7 +247,7 @@ PtaDisplayRotate(PIX       *pixs,
                  l_float32  xc,
                  l_float32  yc)
 {
-l_int32  i, w, h;
+int32_t  i, w, h;
 PIX     *pix1, *pix2;
 PTA     *pta1, *pta2, *pta3, *pta4;
 PTAA    *ptaa;

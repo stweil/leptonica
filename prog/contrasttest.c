@@ -43,7 +43,7 @@ int main(int    argc,
 {
 char      *filein, *fileout;
 char       buf[512];
-l_int32    iplot;
+int32_t    iplot;
 l_float32  factor;    /* scaled width of atan curve */
 l_float32  fact[] = {0.2f, 0.4f, 0.6f, 0.8f, 1.0f, -1.0f};
 GPLOT     *gplot;

@@ -31,14 +31,14 @@
  *    Reading gif
  *          PIX            *pixReadStreamGif()
  *          PIX            *pixReadMemGif()
- *          static l_int32  gifReadFunc()
+ *          static int32_t  gifReadFunc()
  *          static PIX     *gifToPix()
  *
  *    Writing gif
- *          l_int32         pixWriteStreamGif()
- *          l_int32         pixWriteMemGif()
- *          static l_int32  gifWriteFunc()
- *          static l_int32  pixToGif()
+ *          int32_t         pixWriteStreamGif()
+ *          int32_t         pixWriteMemGif()
+ *          static int32_t  gifWriteFunc()
+ *          static int32_t  pixToGif()
  *
  *    The initial version of this module was generously contribued by
  *    Antony Dovgal.
@@ -82,22 +82,22 @@
     /* Interface that enables low-level GIF support for reading from memory */
 static PIX * gifToPix(GifFileType *gif);
     /* Interface that enables low-level GIF support for writing to memory */
-static l_int32 pixToGif(PIX *pix, GifFileType *gif);
+static int32_t pixToGif(PIX *pix, GifFileType *gif);
 
     /*! For in-memory decoding of GIF; 5.1+ */
 typedef struct GifReadBuffer
 {
     size_t            size;    /*!< size of buffer                           */
     size_t            pos;     /*!< position relative to beginning of buffer */
-    const l_uint8    *cdata;   /*!< data in the buffer                       */
+    const uint8_t    *cdata;   /*!< data in the buffer                       */
 } GifReadBuffer;
 
     /*! Low-level callback for in-memory decoding */
-static l_int32  gifReadFunc(GifFileType *gif, GifByteType *dest,
-                            l_int32 bytesToRead);
+static int32_t  gifReadFunc(GifFileType *gif, GifByteType *dest,
+                            int32_t bytesToRead);
     /*! Low-level callback for in-memory encoding */
-static l_int32  gifWriteFunc(GifFileType *gif, const GifByteType *src,
-                             l_int32 bytesToWrite);
+static int32_t  gifWriteFunc(GifFileType *gif, const GifByteType *src,
+                             int32_t bytesToWrite);
 
 
 /*---------------------------------------------------------------------*
@@ -112,7 +112,7 @@ static l_int32  gifWriteFunc(GifFileType *gif, const GifByteType *src,
 PIX *
 pixReadStreamGif(FILE  *fp)
 {
-l_uint8  *filedata;
+uint8_t  *filedata;
 size_t    filesize;
 PIX      *pix;
 
@@ -151,7 +151,7 @@ PIX      *pix;
  * </pre>
  */
 PIX *
-pixReadMemGif(const l_uint8  *cdata,
+pixReadMemGif(const uint8_t  *cdata,
               size_t          size)
 {
 GifFileType   *gif;
@@ -181,13 +181,13 @@ GifReadBuffer  buffer;
 }
 
 
-static l_int32
+static int32_t
 gifReadFunc(GifFileType  *gif,
             GifByteType  *dest,
-            l_int32       bytesToRead)
+            int32_t       bytesToRead)
 {
 GifReadBuffer  *buffer;
-l_int32         bytesRead;
+int32_t         bytesRead;
 
     if ((buffer = (GifReadBuffer*)gif->UserData) == NULL)
         return ERROR_INT("UserData not set", __func__, -1);
@@ -219,9 +219,9 @@ l_int32         bytesRead;
 static PIX *
 gifToPix(GifFileType  *gif)
 {
-l_int32          wpl, i, j, w, h, d, cindex, ncolors, valid, nimages;
-l_int32          rval, gval, bval;
-l_uint32        *data, *line;
+int32_t          wpl, i, j, w, h, d, cindex, ncolors, valid, nimages;
+int32_t          rval, gval, bval;
+uint32_t        *data, *line;
 PIX             *pixd;
 PIXCMAP         *cmap;
 ColorMapObject  *gif_cmap;
@@ -361,7 +361,7 @@ l_ok
 pixWriteStreamGif(FILE  *fp,
                   PIX   *pix)
 {
-l_uint8  *filedata;
+uint8_t  *filedata;
 size_t    filebytes, nbytes;
 
     if (!fp)
@@ -398,12 +398,12 @@ size_t    filebytes, nbytes;
  * </pre>
  */
 l_ok
-pixWriteMemGif(l_uint8  **pdata,
+pixWriteMemGif(uint8_t  **pdata,
                size_t    *psize,
                PIX       *pix)
 {
 int           giferr;
-l_int32       result;
+int32_t       result;
 GifFileType  *gif;
 L_BBUFFER    *buffer;
 
@@ -446,17 +446,17 @@ L_BBUFFER    *buffer;
 }
 
 
-static l_int32
+static int32_t
 gifWriteFunc(GifFileType        *gif,
              const GifByteType  *src,
-             l_int32             bytesToWrite)
+             int32_t             bytesToWrite)
 {
 L_BBUFFER  *buffer;
 
     if ((buffer = (L_BBUFFER*)gif->UserData) == NULL)
         return ERROR_INT("UserData not set", __func__, -1);
 
-    if(bbufferRead(buffer, (l_uint8*)src, bytesToWrite) == 0)
+    if(bbufferRead(buffer, (uint8_t*)src, bytesToWrite) == 0)
         return bytesToWrite;
     return 0;
 }
@@ -476,14 +476,14 @@ L_BBUFFER  *buffer;
  *      (2) It is static to make this function private.
  * </pre>
  */
-static l_int32
+static int32_t
 pixToGif(PIX          *pix,
          GifFileType  *gif)
 {
 char            *text;
-l_int32          wpl, i, j, w, h, d, ncolor, rval, gval, bval, valid;
-l_int32          gif_ncolor = 0;
-l_uint32        *data, *line;
+int32_t          wpl, i, j, w, h, d, ncolor, rval, gval, bval, valid;
+int32_t          gif_ncolor = 0;
+uint32_t        *data, *line;
 PIX             *pixd;
 PIXCMAP         *cmap;
 ColorMapObject  *gif_cmap;
@@ -637,14 +637,14 @@ GifByteType     *gif_line;
      * data to normal raster order when reading to a pix. With 5.0,
      * the de-interlacing is done by the library read function.
      * It is here only as a reference. */
-static const l_int32 InterlacedOffset[] = {0, 4, 2, 1};
-static const l_int32 InterlacedJumps[] = {8, 8, 4, 2};
+static const int32_t InterlacedOffset[] = {0, 4, 2, 1};
+static const int32_t InterlacedJumps[] = {8, 8, 4, 2};
 
 static PIX *
 pixUninterlaceGIF(PIX  *pixs)
 {
-l_int32    w, h, d, wpl, j, k, srow, drow;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    w, h, d, wpl, j, k, srow, drow;
+uint32_t  *datas, *datad, *lines, *lined;
 PIX       *pixd;
 
     if (!pixs)

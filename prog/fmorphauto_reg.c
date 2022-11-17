@@ -43,13 +43,13 @@
 #include "allheaders.h"
 
     /* defined in morph.c */
-LEPT_DLL extern l_int32 MORPH_BC;
+LEPT_DLL extern int32_t MORPH_BC;
 
 
 int main(int    argc,
          char **argv)
 {
-l_int32  i, nsels, same, xorcount;
+int32_t  i, nsels, same, xorcount;
 char    *filein, *selname;
 PIX     *pixs, *pixs1, *pixt1, *pixt2, *pixt3, *pixt4;
 SEL     *sel;

@@ -44,7 +44,7 @@ int main(int    argc,
          char **argv)
 {
 char      *filein, *fileout;
-l_int32    i, w, h, liney, linex, same;
+int32_t    i, w, h, liney, linex, same;
 l_float32  angle, deg2rad;
 PIX       *pixt1, *pixt2, *pixs, *pixd;
 
@@ -57,8 +57,8 @@ PIX       *pixt1, *pixt2, *pixs, *pixd;
         /* Compare in-place H shear with H shear to a new pix */
     pixt1 = pixRead("marge.jpg");
     pixGetDimensions(pixt1, &w, &h, NULL);
-    pixt2 = pixHShear(NULL, pixt1, (l_int32)(0.3 * h), 0.17, L_BRING_IN_WHITE);
-    pixHShearIP(pixt1, (l_int32)(0.3 * h), 0.17, L_BRING_IN_WHITE);
+    pixt2 = pixHShear(NULL, pixt1, (int32_t)(0.3 * h), 0.17, L_BRING_IN_WHITE);
+    pixHShearIP(pixt1, (int32_t)(0.3 * h), 0.17, L_BRING_IN_WHITE);
     pixEqual(pixt1, pixt2, &same);
     if (same)
         lept_stderr("Correct for H shear\n");
@@ -70,8 +70,8 @@ PIX       *pixt1, *pixt2, *pixs, *pixd;
         /* Compare in-place V shear with V shear to a new pix */
     pixt1 = pixRead("marge.jpg");
     pixGetDimensions(pixt1, &w, &h, NULL);
-    pixt2 = pixVShear(NULL, pixt1, (l_int32)(0.3 * w), 0.17, L_BRING_IN_WHITE);
-    pixVShearIP(pixt1, (l_int32)(0.3 * w), 0.17, L_BRING_IN_WHITE);
+    pixt2 = pixVShear(NULL, pixt1, (int32_t)(0.3 * w), 0.17, L_BRING_IN_WHITE);
+    pixVShearIP(pixt1, (int32_t)(0.3 * w), 0.17, L_BRING_IN_WHITE);
     pixEqual(pixt1, pixt2, &same);
     if (same)
         lept_stderr("Correct for V shear\n");

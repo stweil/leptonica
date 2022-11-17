@@ -46,7 +46,7 @@ int main(int    argc,
          char **argv)
 {
 char    *filein;
-l_int32  ncontours;
+int32_t  ncontours;
 FPIX    *fpix;
 PIX     *pix;
 

@@ -60,62 +60,62 @@
  *
  *    Pix copy
  *          PIX          *pixCopy()
- *          l_int32       pixResizeImageData()
- *          l_int32       pixCopyColormap()
- *          l_int32       pixTransferAllData()
- *          l_int32       pixSwapAndDestroy()
+ *          int32_t       pixResizeImageData()
+ *          int32_t       pixCopyColormap()
+ *          int32_t       pixTransferAllData()
+ *          int32_t       pixSwapAndDestroy()
  *
  *    Pix accessors
- *          l_int32       pixGetWidth()
- *          l_int32       pixSetWidth()
- *          l_int32       pixGetHeight()
- *          l_int32       pixSetHeight()
- *          l_int32       pixGetDepth()
- *          l_int32       pixSetDepth()
- *          l_int32       pixGetDimensions()
- *          l_int32       pixSetDimensions()
- *          l_int32       pixCopyDimensions()
- *          l_int32       pixGetSpp()
- *          l_int32       pixSetSpp()
- *          l_int32       pixCopySpp()
- *          l_int32       pixGetWpl()
- *          l_int32       pixSetWpl()
- *          l_uint32      pixGetXRes()
- *          l_int32       pixSetXRes()
- *          l_uint32      pixGetYRes()
- *          l_int32       pixSetYRes()
- *          l_int32       pixGetResolution()
- *          l_int32       pixSetResolution()
- *          l_int32       pixCopyResolution()
- *          l_int32       pixScaleResolution()
- *          l_int32       pixGetInputFormat()
- *          l_int32       pixSetInputFormat()
- *          l_int32       pixCopyInputFormat()
- *          l_int32       pixSetSpecial()
+ *          int32_t       pixGetWidth()
+ *          int32_t       pixSetWidth()
+ *          int32_t       pixGetHeight()
+ *          int32_t       pixSetHeight()
+ *          int32_t       pixGetDepth()
+ *          int32_t       pixSetDepth()
+ *          int32_t       pixGetDimensions()
+ *          int32_t       pixSetDimensions()
+ *          int32_t       pixCopyDimensions()
+ *          int32_t       pixGetSpp()
+ *          int32_t       pixSetSpp()
+ *          int32_t       pixCopySpp()
+ *          int32_t       pixGetWpl()
+ *          int32_t       pixSetWpl()
+ *          uint32_t      pixGetXRes()
+ *          int32_t       pixSetXRes()
+ *          uint32_t      pixGetYRes()
+ *          int32_t       pixSetYRes()
+ *          int32_t       pixGetResolution()
+ *          int32_t       pixSetResolution()
+ *          int32_t       pixCopyResolution()
+ *          int32_t       pixScaleResolution()
+ *          int32_t       pixGetInputFormat()
+ *          int32_t       pixSetInputFormat()
+ *          int32_t       pixCopyInputFormat()
+ *          int32_t       pixSetSpecial()
  *          char         *pixGetText()
- *          l_int32       pixSetText()
- *          l_int32       pixAddText()
- *          l_int32       pixCopyText()
- *          l_uint8      *pixGetTextCompNew()
- *          l_int32      *pixSetTextCompNew()
+ *          int32_t       pixSetText()
+ *          int32_t       pixAddText()
+ *          int32_t       pixCopyText()
+ *          uint8_t      *pixGetTextCompNew()
+ *          int32_t      *pixSetTextCompNew()
  *          PIXCMAP      *pixGetColormap()
- *          l_int32       pixSetColormap()
- *          l_int32       pixDestroyColormap()
- *          l_uint32     *pixGetData()
- *          l_int32       pixFreeAndSetData()
- *          l_int32       pixSetData()
- *          l_int32       pixFreeData()
- *          l_uint32     *pixExtractData()
+ *          int32_t       pixSetColormap()
+ *          int32_t       pixDestroyColormap()
+ *          uint32_t     *pixGetData()
+ *          int32_t       pixFreeAndSetData()
+ *          int32_t       pixSetData()
+ *          int32_t       pixFreeData()
+ *          uint32_t     *pixExtractData()
  *
  *    Pix line ptrs
  *          void        **pixGetLinePtrs()
  *
  *    Pix size comparisons
- *          l_int32       pixSizesEqual()
- *          l_int32       pixMaxAspectRatio()
+ *          int32_t       pixSizesEqual()
+ *          int32_t       pixMaxAspectRatio()
  *
  *    Pix debug
- *          l_int32       pixPrintStreamInfo()
+ *          int32_t       pixPrintStreamInfo()
  *
  *
  *  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -312,9 +312,9 @@ setPixMemoryManager(alloc_fn   allocator,
  *                    or NULL on error
  */
 PIX *
-pixCreate(l_int32  width,
-          l_int32  height,
-          l_int32  depth)
+pixCreate(int32_t  width,
+          int32_t  height,
+          int32_t  depth)
 {
 PIX  *pixd;
 
@@ -341,18 +341,18 @@ PIX  *pixd;
  * </pre>
  */
 PIX *
-pixCreateNoInit(l_int32  width,
-                l_int32  height,
-                l_int32  depth)
+pixCreateNoInit(int32_t  width,
+                int32_t  height,
+                int32_t  depth)
 {
-l_int32    wpl;
+int32_t    wpl;
 PIX       *pixd;
-l_uint32  *data;
+uint32_t  *data;
 
     if ((pixd = pixCreateHeader(width, height, depth)) == NULL)
         return (PIX *)ERROR_PTR("pixd not made", __func__, NULL);
     wpl = pixGetWpl(pixd);
-    if ((data = (l_uint32 *)pixdata_malloc(4LL * wpl * height)) == NULL) {
+    if ((data = (uint32_t *)pixdata_malloc(4LL * wpl * height)) == NULL) {
         pixDestroy(&pixd);
         return (PIX *)ERROR_PTR("pixdata_malloc fail for data",
                                 __func__, NULL);
@@ -411,7 +411,7 @@ PIX  *pixd;
 PIX *
 pixCreateTemplateNoInit(const PIX  *pixs)
 {
-l_int32  w, h, d;
+int32_t  w, h, d;
 PIX     *pixd;
 
     if (!pixs)
@@ -448,10 +448,10 @@ PIX     *pixd;
  * </pre>
  */
 PIX *
-pixCreateWithCmap(l_int32  width,
-                 l_int32  height,
-                 l_int32  depth,
-                 l_int32  initcolor)
+pixCreateWithCmap(int32_t  width,
+                 int32_t  height,
+                 int32_t  depth,
+                 int32_t  initcolor)
 {
 PIX       *pix;
 PIXCMAP   *cmap;
@@ -492,12 +492,12 @@ PIXCMAP   *cmap;
  * </pre>
  */
 PIX *
-pixCreateHeader(l_int32  width,
-                l_int32  height,
-                l_int32  depth)
+pixCreateHeader(int32_t  width,
+                int32_t  height,
+                int32_t  depth)
 {
-l_int32   wpl;
-l_uint64  wpl64, bignum;
+int32_t   wpl;
+uint64_t  wpl64, bignum;
 PIX      *pixd;
 
     if ((depth != 1) && (depth != 2) && (depth != 4) && (depth != 8)
@@ -510,13 +510,13 @@ PIX      *pixd;
         return (PIX *)ERROR_PTR("height must be > 0", __func__, NULL);
 
         /* Avoid overflow in malloc, malicious or otherwise */
-    wpl64 = ((l_uint64)width * (l_uint64)depth + 31) / 32;
+    wpl64 = ((uint64_t)width * (uint64_t)depth + 31) / 32;
     if (wpl64 > ((1LL << 24) - 1)) {
         L_ERROR("requested w = %d, h = %d, d = %d\n",
                 __func__, width, height, depth);
         return (PIX *)ERROR_PTR("wpl >= 2^24", __func__, NULL);
     }
-    wpl = (l_int32)wpl64;
+    wpl = (int32_t)wpl64;
     bignum = 4LL * wpl * height;   /* number of bytes to be requested */
     if (bignum > ((1LL << 31) - 1)) {
         L_ERROR("requested w = %d, h = %d, d = %d\n",
@@ -635,7 +635,7 @@ PIX  *pix;
 static void
 pixFree(PIX  *pix)
 {
-l_uint32  *data;
+uint32_t  *data;
 char      *text;
 
     if (!pix) return;
@@ -689,7 +689,7 @@ PIX *
 pixCopy(PIX        *pixd,   /* can be null */
         const PIX  *pixs)
 {
-l_int32  bytes;
+int32_t  bytes;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, pixd);
@@ -750,8 +750,8 @@ l_ok
 pixResizeImageData(PIX        *pixd,
                    const PIX  *pixs)
 {
-l_int32    w, h, d, wpl, bytes;
-l_uint32  *data;
+int32_t    w, h, d, wpl, bytes;
+uint32_t  *data;
 
     if (!pixs)
         return ERROR_INT("pixs not defined", __func__, 1);
@@ -765,7 +765,7 @@ l_uint32  *data;
     pixGetDimensions(pixs, &w, &h, &d);
     wpl = pixGetWpl(pixs);
     bytes = 4 * wpl * h;
-    if ((data = (l_uint32 *)pixdata_malloc(bytes)) == NULL)
+    if ((data = (uint32_t *)pixdata_malloc(bytes)) == NULL)
         return ERROR_INT("pixdata_malloc fail for data", __func__, 1);
 
         /* OK, do it */
@@ -795,7 +795,7 @@ l_ok
 pixCopyColormap(PIX        *pixd,
                 const PIX  *pixs)
 {
-l_int32         valid;
+int32_t         valid;
 const PIXCMAP  *cmaps;
 PIXCMAP        *cmapd;
 
@@ -878,10 +878,10 @@ PIXCMAP        *cmapd;
 l_ok
 pixTransferAllData(PIX     *pixd,
                    PIX    **ppixs,
-                   l_int32  copytext,
-                   l_int32  copyformat)
+                   int32_t  copytext,
+                   int32_t  copyformat)
 {
-l_int32  nbytes;
+int32_t  nbytes;
 PIX     *pixs;
 
     if (!ppixs)
@@ -987,7 +987,7 @@ pixSwapAndDestroy(PIX  **ppixd,
 /*--------------------------------------------------------------------*
  *                              Pix Accessors                         *
  *--------------------------------------------------------------------*/
-l_int32
+int32_t
 pixGetWidth(const PIX  *pix)
 {
     if (!pix)
@@ -997,9 +997,9 @@ pixGetWidth(const PIX  *pix)
 }
 
 
-l_int32
+int32_t
 pixSetWidth(PIX     *pix,
-            l_int32  width)
+            int32_t  width)
 {
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1013,7 +1013,7 @@ pixSetWidth(PIX     *pix,
 }
 
 
-l_int32
+int32_t
 pixGetHeight(const PIX  *pix)
 {
     if (!pix)
@@ -1023,9 +1023,9 @@ pixGetHeight(const PIX  *pix)
 }
 
 
-l_int32
+int32_t
 pixSetHeight(PIX     *pix,
-             l_int32  height)
+             int32_t  height)
 {
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1039,7 +1039,7 @@ pixSetHeight(PIX     *pix,
 }
 
 
-l_int32
+int32_t
 pixGetDepth(const PIX  *pix)
 {
     if (!pix)
@@ -1049,9 +1049,9 @@ pixGetDepth(const PIX  *pix)
 }
 
 
-l_int32
+int32_t
 pixSetDepth(PIX     *pix,
-            l_int32  depth)
+            int32_t  depth)
 {
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1072,9 +1072,9 @@ pixSetDepth(PIX     *pix,
  */
 l_ok
 pixGetDimensions(const PIX  *pix,
-                 l_int32    *pw,
-                 l_int32    *ph,
-                 l_int32    *pd)
+                 int32_t    *pw,
+                 int32_t    *ph,
+                 int32_t    *pd)
 {
     if (pw) *pw = 0;
     if (ph) *ph = 0;
@@ -1097,9 +1097,9 @@ pixGetDimensions(const PIX  *pix,
  */
 l_ok
 pixSetDimensions(PIX     *pix,
-                 l_int32  w,
-                 l_int32  h,
-                 l_int32  d)
+                 int32_t  w,
+                 int32_t  h,
+                 int32_t  d)
 {
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1136,7 +1136,7 @@ pixCopyDimensions(PIX        *pixd,
 }
 
 
-l_int32
+int32_t
 pixGetSpp(const PIX  *pix)
 {
     if (!pix)
@@ -1162,9 +1162,9 @@ pixGetSpp(const PIX  *pix)
  *          then write it out as a png.
  * </pre>
  */
-l_int32
+int32_t
 pixSetSpp(PIX     *pix,
-          l_int32  spp)
+          int32_t  spp)
 {
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1199,7 +1199,7 @@ pixCopySpp(PIX        *pixd,
 }
 
 
-l_int32
+int32_t
 pixGetWpl(const PIX  *pix)
 {
     if (!pix)
@@ -1208,9 +1208,9 @@ pixGetWpl(const PIX  *pix)
 }
 
 
-l_int32
+int32_t
 pixSetWpl(PIX     *pix,
-          l_int32  wpl)
+          int32_t  wpl)
 {
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1220,7 +1220,7 @@ pixSetWpl(PIX     *pix,
 }
 
 
-l_int32
+int32_t
 pixGetXRes(const PIX  *pix)
 {
     if (!pix)
@@ -1229,9 +1229,9 @@ pixGetXRes(const PIX  *pix)
 }
 
 
-l_int32
+int32_t
 pixSetXRes(PIX     *pix,
-           l_int32  res)
+           int32_t  res)
 {
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1241,7 +1241,7 @@ pixSetXRes(PIX     *pix,
 }
 
 
-l_int32
+int32_t
 pixGetYRes(const PIX  *pix)
 {
     if (!pix)
@@ -1250,9 +1250,9 @@ pixGetYRes(const PIX  *pix)
 }
 
 
-l_int32
+int32_t
 pixSetYRes(PIX     *pix,
-           l_int32  res)
+           int32_t  res)
 {
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1271,8 +1271,8 @@ pixSetYRes(PIX     *pix,
  */
 l_ok
 pixGetResolution(const PIX  *pix,
-                 l_int32    *pxres,
-                 l_int32    *pyres)
+                 int32_t    *pxres,
+                 int32_t    *pyres)
 {
     if (pxres) *pxres = 0;
     if (pyres) *pyres = 0;
@@ -1295,8 +1295,8 @@ pixGetResolution(const PIX  *pix,
  */
 l_ok
 pixSetResolution(PIX     *pix,
-                 l_int32  xres,
-                 l_int32  yres)
+                 int32_t  xres,
+                 int32_t  yres)
 {
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1306,7 +1306,7 @@ pixSetResolution(PIX     *pix,
 }
 
 
-l_int32
+int32_t
 pixCopyResolution(PIX        *pixd,
                   const PIX  *pixs)
 {
@@ -1323,7 +1323,7 @@ pixCopyResolution(PIX        *pixd,
 }
 
 
-l_int32
+int32_t
 pixScaleResolution(PIX       *pix,
                    l_float32  xscale,
                    l_float32  yscale)
@@ -1338,13 +1338,13 @@ l_float64  maxres = 100000000.0;
 
     xres = (l_float64)xscale * (l_float32)(pix->xres) + 0.5;
     yres = (l_float64)yscale * (l_float32)(pix->yres) + 0.5;
-    pix->xres = (l_uint32)L_MIN(xres, maxres);
-    pix->yres = (l_uint32)L_MIN(yres, maxres);
+    pix->xres = (uint32_t)L_MIN(xres, maxres);
+    pix->yres = (uint32_t)L_MIN(yres, maxres);
     return 0;
 }
 
 
-l_int32
+int32_t
 pixGetInputFormat(const PIX  *pix)
 {
     if (!pix)
@@ -1353,9 +1353,9 @@ pixGetInputFormat(const PIX  *pix)
 }
 
 
-l_int32
+int32_t
 pixSetInputFormat(PIX     *pix,
-                  l_int32  informat)
+                  int32_t  informat)
 {
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1364,7 +1364,7 @@ pixSetInputFormat(PIX     *pix,
 }
 
 
-l_int32
+int32_t
 pixCopyInputFormat(PIX        *pixd,
                    const PIX  *pixs)
 {
@@ -1380,9 +1380,9 @@ pixCopyInputFormat(PIX        *pixd,
 }
 
 
-l_int32
+int32_t
 pixSetSpecial(PIX     *pix,
-              l_int32  special)
+              int32_t  special)
 {
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1468,7 +1468,7 @@ char  *newstring;
 }
 
 
-l_int32
+int32_t
 pixCopyText(PIX        *pixd,
             const PIX  *pixs)
 {
@@ -1501,14 +1501,14 @@ pixCopyText(PIX        *pixd,
  *          is owned by the caller and must be freed.
  * </pre>
  */
-l_uint8 *
+uint8_t *
 pixGetTextCompNew(PIX     *pix,
                   size_t  *psize)
 {
 char  *str;
 
     if (!pix)
-        return (l_uint8 *)ERROR_PTR("pix not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("pix not defined", __func__, NULL);
     str = pixGetText(pix);
     return decodeAscii85WithComp(str, strlen(str), psize);
 }
@@ -1532,7 +1532,7 @@ char  *str;
  */
 l_ok
 pixSetTextCompNew(PIX            *pix,
-                  const l_uint8  *data,
+                  const uint8_t  *data,
                   size_t          size)
 {
 size_t  encodesize;  /* ignored */
@@ -1581,7 +1581,7 @@ l_ok
 pixSetColormap(PIX      *pix,
                PIXCMAP  *colormap)
 {
-l_int32  valid;
+int32_t  valid;
 
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1637,11 +1637,11 @@ PIXCMAP  *cmap;
  *          they only use the data for inspection.
  * </pre>
  */
-l_uint32 *
+uint32_t *
 pixGetData(PIX  *pix)
 {
     if (!pix)
-        return (l_uint32 *)ERROR_PTR("pix not defined", __func__, NULL);
+        return (uint32_t *)ERROR_PTR("pix not defined", __func__, NULL);
     return pix->data;
 }
 
@@ -1658,9 +1658,9 @@ pixGetData(PIX  *pix)
  *      (1) This frees the existing raster data in the pix and assigns %data.
  * </pre>
  */
-l_int32
+int32_t
 pixFreeAndSetData(PIX       *pix,
-                  l_uint32  *data)
+                  uint32_t  *data)
 {
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1684,9 +1684,9 @@ pixFreeAndSetData(PIX       *pix,
  *          data, use pixFreeAndSetData() instead.
  * </pre>
  */
-l_int32
+int32_t
 pixSetData(PIX       *pix,
-           l_uint32  *data)
+           uint32_t  *data)
 {
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1710,10 +1710,10 @@ pixSetData(PIX       *pix,
  *          a subsequent assignment with pixSetData().
  * </pre>
  */
-l_int32
+int32_t
 pixFreeData(PIX  *pix)
 {
-l_uint32  *data;
+uint32_t  *data;
 
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1742,14 +1742,14 @@ l_uint32  *data;
  *          using the pix allocator, and leaving the input pix unchanged.
  * </pre>
  */
-l_uint32 *
+uint32_t *
 pixExtractData(PIX  *pixs)
 {
-l_int32    bytes;
-l_uint32  *data, *datas;
+int32_t    bytes;
+uint32_t  *data, *datas;
 
     if (!pixs)
-        return (l_uint32 *)ERROR_PTR("pixs not defined", __func__, NULL);
+        return (uint32_t *)ERROR_PTR("pixs not defined", __func__, NULL);
 
     if (pixs->refcount == 1) {  /* extract */
         data = pixGetData(pixs);
@@ -1757,8 +1757,8 @@ l_uint32  *data, *datas;
     } else {  /* refcount > 1; copy */
         bytes = 4 * pixGetWpl(pixs) * pixGetHeight(pixs);
         datas = pixGetData(pixs);
-        if ((data = (l_uint32 *)pixdata_malloc(bytes)) == NULL)
-            return (l_uint32 *)ERROR_PTR("data not made", __func__, NULL);
+        if ((data = (uint32_t *)pixdata_malloc(bytes)) == NULL)
+            return (uint32_t *)ERROR_PTR("data not made", __func__, NULL);
         memcpy(data, datas, bytes);
     }
 
@@ -1816,10 +1816,10 @@ l_uint32  *data, *datas;
  *          need to reverse the byte order in each 32-bit word.
  *          Here's a typical usage pattern:
  *              pixEndianByteSwap(pix);   // always safe; no-op on big-endians
- *              l_uint8 **lineptrs = (l_uint8 **)pixGetLinePtrs(pix, NULL);
+ *              uint8_t **lineptrs = (uint8_t **)pixGetLinePtrs(pix, NULL);
  *              pixGetDimensions(pix, &w, &h, NULL);
  *              for (i = 0; i < h; i++) {
- *                  l_uint8 *line = lineptrs[i];
+ *                  uint8_t *line = lineptrs[i];
  *                  for (j = 0; j < w; j++) {
  *                      val = line[j];
  *                      ...
@@ -1828,9 +1828,9 @@ l_uint32  *data, *datas;
  *              pixEndianByteSwap(pix);  // restore big-endian order
  *              LEPT_FREE(lineptrs);
  *          This can be done even more simply as follows:
- *              l_uint8 **lineptrs = pixSetupByteProcessing(pix, &w, &h);
+ *              uint8_t **lineptrs = pixSetupByteProcessing(pix, &w, &h);
  *              for (i = 0; i < h; i++) {
- *                  l_uint8 *line = lineptrs[i];
+ *                  uint8_t *line = lineptrs[i];
  *                  for (j = 0; j < w; j++) {
  *                      val = line[j];
  *                      ...
@@ -1841,10 +1841,10 @@ l_uint32  *data, *datas;
  */
 void **
 pixGetLinePtrs(PIX      *pix,
-               l_int32  *psize)
+               int32_t  *psize)
 {
-l_int32    i, h, wpl;
-l_uint32  *data;
+int32_t    i, h, wpl;
+uint32_t  *data;
 void     **lines;
 
     if (psize) *psize = 0;
@@ -1873,7 +1873,7 @@ void     **lines;
  * \param[in]    pix1, pix2
  * \return  1 if the two pix have same {h, w, d}; 0 otherwise.
  */
-l_int32
+int32_t
 pixSizesEqual(const PIX  *pix1,
               const PIX  *pix2)
 {
@@ -1903,7 +1903,7 @@ l_ok
 pixMaxAspectRatio(PIX        *pixs,
                   l_float32  *pratio)
 {
-l_int32  w, h;
+int32_t  w, h;
 
     if (!pratio)
         return ERROR_INT("&ratio not defined", __func__, 1);
@@ -1939,7 +1939,7 @@ pixPrintStreamInfo(FILE        *fp,
                    const PIX   *pix,
                    const char  *text)
 {
-l_int32         informat;
+int32_t         informat;
 const PIXCMAP  *cmap;
 
     if (!fp)

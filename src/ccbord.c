@@ -36,12 +36,12 @@
  *         static void      ccbDestroy()
  *
  *     CCBORDA addition
- *         static l_int32   ccbaAddCcb()
- *         static l_int32   ccbaExtendArray()
+ *         static int32_t   ccbaAddCcb()
+ *         static int32_t   ccbaExtendArray()
  *
  *     CCBORDA accessors
- *         static l_int32   ccbaGetCount()
- *         static l_int32   ccbaGetCcb()
+ *         static int32_t   ccbaGetCount()
+ *         static int32_t   ccbaGetCcb()
  *
  *     Top-level border-finding routines
  *         CCBORDA         *pixGetAllCCBorders()
@@ -51,18 +51,18 @@
  *
  *     Lower-level border location routines
  *         PTAA            *pixGetOuterBorder()
- *         static l_int32   pixGetHoleBorder()
- *         static l_int32   findNextBorderPixel()
+ *         static int32_t   pixGetHoleBorder()
+ *         static int32_t   findNextBorderPixel()
  *         static void      locateOutsideSeedPixel()
  *
  *     Border conversions
- *         l_int32          ccbaGenerateGlobalLocs()
- *         l_int32          ccbaGenerateStepChains()
- *         l_int32          ccbaStepChainsToPixCoords()
- *         l_int32          ccbaGenerateSPGlobalLocs()
+ *         int32_t          ccbaGenerateGlobalLocs()
+ *         int32_t          ccbaGenerateStepChains()
+ *         int32_t          ccbaStepChainsToPixCoords()
+ *         int32_t          ccbaGenerateSPGlobalLocs()
  *
  *     Conversion to single path
- *         l_int32          ccbaGenerateSinglePath()
+ *         int32_t          ccbaGenerateSinglePath()
  *         static PTA      *getCutPathForHole()
  *
  *     Border and full image rendering
@@ -72,13 +72,13 @@
  *         PIX             *ccbaDisplayImage2()
  *
  *     Serialize for I/O
- *         l_int32          ccbaWrite()
- *         l_int32          ccbaWriteStream()
- *         l_int32          ccbaRead()
- *         l_int32          ccbaReadStream()
+ *         int32_t          ccbaWrite()
+ *         int32_t          ccbaWriteStream()
+ *         int32_t          ccbaRead()
+ *         int32_t          ccbaReadStream()
  *
  *     SVG output
- *         l_int32          ccbaWriteSVG()
+ *         int32_t          ccbaWriteSVG()
  *         char            *ccbaWriteSVGString()
  *
  *
@@ -256,11 +256,11 @@
 #include "pix_internal.h"
 #include "ccbord_internal.h"
 
-static const l_int32  INITIAL_PTR_ARRAYSIZE = 20;    /* n'import quoi */
+static const int32_t  INITIAL_PTR_ARRAYSIZE = 20;    /* n'import quoi */
 
     /* In ccbaGenerateSinglePath(): don't save holes
      * in c.c. with ridiculously many small holes   */
-static const l_int32  NMAX_HOLES = 150;
+static const int32_t  NMAX_HOLES = 150;
 
     /*  Tables used to trace the border.
      *   - The 8 pixel positions of neighbors Q are labeled clockwise
@@ -275,30 +275,30 @@ static const l_int32  NMAX_HOLES = 150;
      *     the time that a new P has been chosen to be in index offset
      *     position 'pos' relative to the previous P.   The relation
      *     between P and Q is always 4-connected.  */
-static const l_int32   xpostab[] = {-1, -1, 0, 1, 1, 1, 0, -1};
-static const l_int32   ypostab[] = {0, -1, -1, -1, 0, 1, 1, 1};
-static const l_int32   qpostab[] = {6, 6, 0, 0, 2, 2, 4, 4};
+static const int32_t   xpostab[] = {-1, -1, 0, 1, 1, 1, 0, -1};
+static const int32_t   ypostab[] = {0, -1, -1, -1, 0, 1, 1, 1};
+static const int32_t   qpostab[] = {6, 6, 0, 0, 2, 2, 4, 4};
 
     /* Static functions */
-static CCBORDA *ccbaCreate(PIX *pixs, l_int32 n);
+static CCBORDA *ccbaCreate(PIX *pixs, int32_t n);
 static CCBORD *ccbCreate(PIX *pixs);
 static void ccbDestroy(CCBORD **pccb);
 static l_ok ccbaAddCcb(CCBORDA *ccba, CCBORD  *ccb);
-static l_int32 ccbaExtendArray(CCBORDA *ccba);
-static l_int32 ccbaGetCount(CCBORDA *ccba);
-static CCBORD *ccbaGetCcb(CCBORDA *ccba, l_int32 index);
+static int32_t ccbaExtendArray(CCBORDA *ccba);
+static int32_t ccbaGetCount(CCBORDA *ccba);
+static CCBORD *ccbaGetCcb(CCBORDA *ccba, int32_t index);
 static CCBORD *pixGetCCBorders(PIX *pixs, BOX *box);
 static PTA *pixGetOuterBorderPta(PIX *pixs, BOX *box);
 static l_ok pixGetHoleBorder(CCBORD *ccb, PIX *pixs, BOX *box,
-                             l_int32 xs, l_int32 ys);
-static l_int32 findNextBorderPixel(l_int32 w, l_int32 h, l_uint32 *data,
-                                   l_int32 wpl, l_int32 px, l_int32 py,
-                                   l_int32 *pqpos, l_int32 *pnpx,
-                                   l_int32 *pnpy);
-static void locateOutsideSeedPixel(l_int32 fpx, l_int32 fpy, l_int32 spx,
-                                   l_int32 spy, l_int32 *pxs, l_int32 *pys);
-static PTA *getCutPathForHole(PIX *pix, PTA *pta, BOX *boxinner, l_int32 *pdir,
-                              l_int32 *plen);
+                             int32_t xs, int32_t ys);
+static int32_t findNextBorderPixel(int32_t w, int32_t h, uint32_t *data,
+                                   int32_t wpl, int32_t px, int32_t py,
+                                   int32_t *pqpos, int32_t *pnpx,
+                                   int32_t *pnpy);
+static void locateOutsideSeedPixel(int32_t fpx, int32_t fpy, int32_t spx,
+                                   int32_t spy, int32_t *pxs, int32_t *pys);
+static PTA *getCutPathForHole(PIX *pix, PTA *pta, BOX *boxinner, int32_t *pdir,
+                              int32_t *plen);
 
 #ifndef  NO_CONSOLE_IO
 #define  DEBUG_PRINT   0
@@ -317,7 +317,7 @@ static PTA *getCutPathForHole(PIX *pix, PTA *pta, BOX *boxinner, l_int32 *pdir,
  */
 static CCBORDA *
 ccbaCreate(PIX     *pixs,
-           l_int32  n)
+           int32_t  n)
 {
 CCBORDA  *ccba;
 
@@ -349,7 +349,7 @@ CCBORDA  *ccba;
 void
 ccbaDestroy(CCBORDA  **pccba)
 {
-l_int32   i;
+int32_t   i;
 CCBORDA  *ccba;
 
     if (pccba == NULL) {
@@ -456,7 +456,7 @@ static l_ok
 ccbaAddCcb(CCBORDA  *ccba,
            CCBORD   *ccb)
 {
-l_int32  n;
+int32_t  n;
 
     if (!ccba)
         return ERROR_INT("ccba not defined", __func__, 1);
@@ -480,7 +480,7 @@ l_int32  n;
  * \param[in]    ccba
  * \return  0 if OK; 1 on error
  */
-static l_int32
+static int32_t
 ccbaExtendArray(CCBORDA  *ccba)
 {
     if (!ccba)
@@ -506,7 +506,7 @@ ccbaExtendArray(CCBORDA  *ccba)
  * \param[in]    ccba
  * \return  count, with 0 on error
  */
-static l_int32
+static int32_t
 ccbaGetCount(CCBORDA  *ccba)
 {
 
@@ -531,7 +531,7 @@ ccbaGetCount(CCBORDA  *ccba)
  */
 static CCBORD *
 ccbaGetCcb(CCBORDA  *ccba,
-           l_int32   index)
+           int32_t   index)
 {
 CCBORD  *ccb;
 
@@ -559,7 +559,7 @@ CCBORD  *ccb;
 CCBORDA *
 pixGetAllCCBorders(PIX  *pixs)
 {
-l_int32   n, i;
+int32_t   n, i;
 BOX      *box;
 BOXA     *boxa;
 CCBORDA  *ccba;
@@ -644,9 +644,9 @@ static CCBORD *
 pixGetCCBorders(PIX      *pixs,
                 BOX      *box)
 {
-l_int32   allzero, i, x, xh, w, nh;
-l_int32   xs, ys;   /* starting hole border pixel, relative in pixs */
-l_uint32  val;
+int32_t   allzero, i, x, xh, w, nh;
+int32_t   xs, ys;   /* starting hole border pixel, relative in pixs */
+uint32_t  val;
 BOX      *boxt, *boxe;
 BOXA     *boxa;
 CCBORD   *ccb;
@@ -752,7 +752,7 @@ PIXA     *pixa;
 PTAA *
 pixGetOuterBordersPtaa(PIX  *pixs)
 {
-l_int32  i, n;
+int32_t  i, n;
 BOX     *box;
 BOXA    *boxa;
 PIX     *pix;
@@ -811,7 +811,7 @@ static PTA *
 pixGetOuterBorderPta(PIX  *pixs,
                      BOX  *box)
 {
-l_int32  allzero, x, y;
+int32_t  allzero, x, y;
 BOX     *boxt;
 CCBORD  *ccb;
 PTA     *ptaloc, *ptad;
@@ -883,10 +883,10 @@ pixGetOuterBorder(CCBORD   *ccb,
                   PIX      *pixs,
                   BOX      *box)
 {
-l_int32    fpx, fpy, spx, spy, qpos;
-l_int32    px, py, npx, npy;
-l_int32    w, h, wpl;
-l_uint32  *data;
+int32_t    fpx, fpy, spx, spy, qpos;
+int32_t    px, py, npx, npy;
+int32_t    w, h, wpl;
+uint32_t  *data;
 PTA       *pta;
 PIX       *pixb;  /* with 1 pixel border */
 
@@ -968,13 +968,13 @@ static l_ok
 pixGetHoleBorder(CCBORD   *ccb,
                  PIX      *pixs,
                  BOX      *box,
-                 l_int32   xs,
-                 l_int32   ys)
+                 int32_t   xs,
+                 int32_t   ys)
 {
-l_int32    fpx, fpy, spx, spy, qpos;
-l_int32    px, py, npx, npy;
-l_int32    w, h, wpl;
-l_uint32  *data;
+int32_t    fpx, fpy, spx, spy, qpos;
+int32_t    px, py, npx, npy;
+int32_t    w, h, wpl;
+uint32_t  *data;
 PTA       *pta;
 
     if (!ccb)
@@ -1044,19 +1044,19 @@ PTA       *pta;
  *          parameters.  All calling functions should check them.
  * </pre>
  */
-static l_int32
-findNextBorderPixel(l_int32    w,
-                    l_int32    h,
-                    l_uint32  *data,
-                    l_int32    wpl,
-                    l_int32    px,
-                    l_int32    py,
-                    l_int32   *pqpos,
-                    l_int32   *pnpx,
-                    l_int32   *pnpy)
+static int32_t
+findNextBorderPixel(int32_t    w,
+                    int32_t    h,
+                    uint32_t  *data,
+                    int32_t    wpl,
+                    int32_t    px,
+                    int32_t    py,
+                    int32_t   *pqpos,
+                    int32_t   *pnpx,
+                    int32_t   *pnpy)
 {
-l_int32    qpos, i, pos, npx, npy, val;
-l_uint32  *line;
+int32_t    qpos, i, pos, npx, npy, val;
+uint32_t  *line;
 
     qpos = *pqpos;
     for (i = 1; i < 8; i++) {
@@ -1098,14 +1098,14 @@ l_uint32  *line;
  * </pre>
  */
 static void
-locateOutsideSeedPixel(l_int32   fpx,
-                       l_int32   fpy,
-                       l_int32   spx,
-                       l_int32   spy,
-                       l_int32  *pxs,
-                       l_int32  *pys)
+locateOutsideSeedPixel(int32_t   fpx,
+                       int32_t   fpy,
+                       int32_t   spx,
+                       int32_t   spy,
+                       int32_t  *pxs,
+                       int32_t  *pys)
 {
-l_int32  dx, dy;
+int32_t  dx, dy;
 
     dx = spx - fpx;
     dy = spy - fpy;
@@ -1148,7 +1148,7 @@ l_int32  dx, dy;
 l_ok
 ccbaGenerateGlobalLocs(CCBORDA  *ccba)
 {
-l_int32  ncc, nb, n, i, j, k, xul, yul, x, y;
+int32_t  ncc, nb, n, i, j, k, xul, yul, x, y;
 CCBORD  *ccb;
 PTAA    *ptaal, *ptaag;
 PTA     *ptal, *ptag;
@@ -1218,9 +1218,9 @@ PTA     *ptal, *ptag;
 l_ok
 ccbaGenerateStepChains(CCBORDA  *ccba)
 {
-l_int32  ncc, nb, n, i, j, k;
-l_int32  px, py, cx, cy, stepdir;
-l_int32  dirtab[][3] = {{1, 2, 3}, {0, -1, 4}, {7, 6, 5}};
+int32_t  ncc, nb, n, i, j, k;
+int32_t  px, py, cx, cy, stepdir;
+int32_t  dirtab[][3] = {{1, 2, 3}, {0, -1, 4}, {7, 6, 5}};
 CCBORD  *ccb;
 NUMA    *na;
 NUMAA   *naa;   /* step chain code; to be made */
@@ -1290,10 +1290,10 @@ PTAA    *ptaal;  /* local chain code */
  */
 l_ok
 ccbaStepChainsToPixCoords(CCBORDA  *ccba,
-                          l_int32   coordtype)
+                          int32_t   coordtype)
 {
-l_int32  ncc, nb, n, i, j, k;
-l_int32  xul, yul, xstart, ystart, x, y, stepdir;
+int32_t  ncc, nb, n, i, j, k;
+int32_t  xul, yul, xstart, ystart, x, y, stepdir;
 BOXA    *boxa;
 CCBORD  *ccb;
 NUMA    *na;
@@ -1399,10 +1399,10 @@ PTA     *ptas, *ptan;
  */
 l_ok
 ccbaGenerateSPGlobalLocs(CCBORDA  *ccba,
-                         l_int32   ptsflag)
+                         int32_t   ptsflag)
 {
-l_int32  ncc, npt, i, j, xul, yul, x, y, delx, dely;
-l_int32  xp, yp, delxp, delyp;   /* prev point and increments */
+int32_t  ncc, npt, i, j, xul, yul, x, y, delx, dely;
+int32_t  xp, yp, delxp, delyp;   /* prev point and increments */
 CCBORD  *ccb;
 PTA     *ptal, *ptag;
 
@@ -1519,8 +1519,8 @@ PTA     *ptal, *ptag;
 l_ok
 ccbaGenerateSinglePath(CCBORDA  *ccba)
 {
-l_int32   i, j, k, ncc, nb, ncut, npt, dir, len, state, lostholes;
-l_int32   x, y, xl, yl, xf, yf;
+int32_t   i, j, k, ncc, nb, ncut, npt, dir, len, state, lostholes;
+int32_t   x, y, xl, yl, xf, yf;
 BOX      *boxinner;
 BOXA     *boxa;
 CCBORD   *ccb;
@@ -1676,11 +1676,11 @@ static PTA *
 getCutPathForHole(PIX      *pix,
                   PTA      *pta,
                   BOX      *boxinner,
-                  l_int32  *pdir,
-                  l_int32  *plen)
+                  int32_t  *pdir,
+                  int32_t  *plen)
 {
-l_int32   w, h, nc, x, y, xl, yl, xmid, ymid;
-l_uint32  val;
+int32_t   w, h, nc, x, y, xl, yl, xmid, ymid;
+uint32_t  val;
 PTA      *ptac;
 
     if (!pix)
@@ -1817,7 +1817,7 @@ PTA      *ptac;
 PIX *
 ccbaDisplayBorder(CCBORDA  *ccba)
 {
-l_int32  ncc, nb, n, i, j, k, x, y;
+int32_t  ncc, nb, n, i, j, k, x, y;
 CCBORD  *ccb;
 PIX     *pixd;
 PTAA    *ptaa;
@@ -1869,7 +1869,7 @@ PTA     *pta;
 PIX *
 ccbaDisplaySPBorder(CCBORDA  *ccba)
 {
-l_int32  ncc, npt, i, j, x, y;
+int32_t  ncc, npt, i, j, x, y;
 CCBORD  *ccb;
 PIX     *pixd;
 PTA     *ptag;
@@ -1958,8 +1958,8 @@ PTA     *ptag;
 PIX *
 ccbaDisplayImage1(CCBORDA  *ccba)
 {
-l_int32  ncc, i, nb, n, j, k, x, y, xul, yul, xoff, yoff, w, h;
-l_int32  fpx, fpy, spx, spy, xs, ys;
+int32_t  ncc, i, nb, n, j, k, x, y, xul, yul, xoff, yoff, w, h;
+int32_t  fpx, fpy, spx, spy, xs, ys;
 BOX     *box;
 BOXA    *boxa;
 CCBORD  *ccb;
@@ -2087,8 +2087,8 @@ PTA     *pta;
 PIX *
 ccbaDisplayImage2(CCBORDA  *ccba)
 {
-l_int32  ncc, nb, n, i, j, k, x, y, xul, yul, w, h;
-l_int32  fpx, fpy, spx, spy, xs, ys;
+int32_t  ncc, nb, n, i, j, k, x, y, xul, yul, w, h;
+int32_t  fpx, fpy, spx, spy, xs, ys;
 BOXA    *boxa;
 CCBORD  *ccb;
 PIX     *pixd, *pixc, *pixs;
@@ -2234,11 +2234,11 @@ ccbaWriteStream(FILE     *fp,
                 CCBORDA  *ccba)
 {
 char        strbuf[256];
-l_uint8     bval;
-l_uint8    *datain, *dataout;
-l_int32     i, j, k, bx, by, bw, bh, val, startx, starty;
-l_int32     ncc, nb, n;
-l_uint32    w, h;
+uint8_t     bval;
+uint8_t    *datain, *dataout;
+int32_t     i, j, k, bx, by, bw, bh, val, startx, starty;
+int32_t     ncc, nb, n;
+uint32_t    w, h;
 size_t      inbytes, outbytes;
 L_BBUFFER  *bbuf;
 CCBORD     *ccb;
@@ -2260,11 +2260,11 @@ PTA        *pta;
 
     ncc = ccbaGetCount(ccba);
     snprintf(strbuf, sizeof(strbuf), "ccba: %7d cc\n", ncc);
-    bbufferRead(bbuf, (l_uint8 *)strbuf, 18);
+    bbufferRead(bbuf, (uint8_t *)strbuf, 18);
     w = pixGetWidth(ccba->pix);
     h = pixGetHeight(ccba->pix);
-    bbufferRead(bbuf, (l_uint8 *)&w, 4);  /* width */
-    bbufferRead(bbuf, (l_uint8 *)&h, 4);  /* height */
+    bbufferRead(bbuf, (uint8_t *)&w, 4);  /* width */
+    bbufferRead(bbuf, (uint8_t *)&h, 4);  /* height */
     for (i = 0; i < ncc; i++) {
         ccb = ccbaGetCcb(ccba, i);
         if (boxaGetBoxGeometry(ccb->boxa, 0, &bx, &by, &bw, &bh)) {
@@ -2272,39 +2272,39 @@ PTA        *pta;
             ccbDestroy(&ccb);
             return ERROR_INT("bounding box not found", __func__, 1);
         }
-        bbufferRead(bbuf, (l_uint8 *)&bx, 4);  /* ulx of c.c. */
-        bbufferRead(bbuf, (l_uint8 *)&by, 4);  /* uly of c.c. */
-        bbufferRead(bbuf, (l_uint8 *)&bw, 4);  /* w of c.c. */
-        bbufferRead(bbuf, (l_uint8 *)&bh, 4);  /* h of c.c. */
+        bbufferRead(bbuf, (uint8_t *)&bx, 4);  /* ulx of c.c. */
+        bbufferRead(bbuf, (uint8_t *)&by, 4);  /* uly of c.c. */
+        bbufferRead(bbuf, (uint8_t *)&bw, 4);  /* w of c.c. */
+        bbufferRead(bbuf, (uint8_t *)&bh, 4);  /* h of c.c. */
         if ((naa = ccb->step) == NULL) {
             ccbaGenerateStepChains(ccba);
             naa = ccb->step;
         }
         nb = numaaGetCount(naa);
-        bbufferRead(bbuf, (l_uint8 *)&nb, 4);  /* number of borders in c.c. */
+        bbufferRead(bbuf, (uint8_t *)&nb, 4);  /* number of borders in c.c. */
         pta = ccb->start;
         for (j = 0; j < nb; j++) {
             ptaGetIPt(pta, j, &startx, &starty);
-            bbufferRead(bbuf, (l_uint8 *)&startx, 4); /* starting x in border */
-            bbufferRead(bbuf, (l_uint8 *)&starty, 4); /* starting y in border */
+            bbufferRead(bbuf, (uint8_t *)&startx, 4); /* starting x in border */
+            bbufferRead(bbuf, (uint8_t *)&starty, 4); /* starting y in border */
             na = numaaGetNuma(naa, j, L_CLONE);
             n = numaGetCount(na);
             for (k = 0; k < n; k++) {
                 numaGetIValue(na, k, &val);
                 if (k % 2 == 0)
-                    bval = (l_uint8)val << 4;
+                    bval = (uint8_t)val << 4;
                 else
-                    bval |= (l_uint8)val;
+                    bval |= (uint8_t)val;
                 if (k % 2 == 1)
-                    bbufferRead(bbuf, (l_uint8 *)&bval, 1); /* 2 border steps */
+                    bbufferRead(bbuf, (uint8_t *)&bval, 1); /* 2 border steps */
             }
             if (n % 2 == 1) {
                 bval |= 0x8;
-                bbufferRead(bbuf, (l_uint8 *)&bval, 1); /* end with 0xz8,   */
+                bbufferRead(bbuf, (uint8_t *)&bval, 1); /* end with 0xz8,   */
                                              /* where z = {0..7} */
             } else {  /* n % 2 == 0 */
                 bval = 0x88;
-                bbufferRead(bbuf, (l_uint8 *)&bval, 1);   /* end with 0x88 */
+                bbufferRead(bbuf, (uint8_t *)&bval, 1);   /* end with 0x88 */
             }
             numaDestroy(&na);
         }
@@ -2377,12 +2377,12 @@ CCBORDA *
 ccbaReadStream(FILE  *fp)
 {
 char      strbuf[256];
-l_uint8   bval;
-l_uint8  *datain, *dataout;
-l_int32   i, j, startx, starty;
-l_int32   offset, nib1, nib2;
-l_int32   ncc, nb;
-l_uint32  width, height, w, h, xoff, yoff;
+uint8_t   bval;
+uint8_t  *datain, *dataout;
+int32_t   i, j, startx, starty;
+int32_t   offset, nib1, nib2;
+int32_t   ncc, nb;
+uint32_t  width, height, w, h, xoff, yoff;
 size_t    inbytes, outbytes;
 BOX      *box;
 CCBORD   *ccb;
@@ -2532,7 +2532,7 @@ char     line3[] = "<polygon style=\"stroke-width:1;stroke:black;\" points=\"";
 char     line4[] = "\" />";
 char     line5[] = "</svg>";
 char     space[] = " ";
-l_int32  i, j, ncc, npt, x, y;
+int32_t  i, j, ncc, npt, x, y;
 CCBORD  *ccb;
 PTA     *pta;
 SARRAY  *sa;

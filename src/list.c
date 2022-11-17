@@ -32,9 +32,9 @@
  *
  *           void      listDestroy()
  *           DLLIST   *listAddToHead()
- *           l_int32   listAddToTail()
- *           l_int32   listInsertBefore()
- *           l_int32   listInsertAfter()
+ *           int32_t   listAddToTail()
+ *           int32_t   listInsertBefore()
+ *           int32_t   listInsertAfter()
  *           void     *listRemoveElement()
  *           void     *listRemoveFromHead()
  *           void     *listRemoveFromTail()
@@ -43,8 +43,8 @@
  *
  *           DLLIST   *listFindElement()
  *           DLLIST   *listFindTail()
- *           l_int32   listGetCount()
- *           l_int32   listReverse()
+ *           int32_t   listGetCount()
+ *           int32_t   listReverse()
  *           DLLIST   *listJoin()
  *
  *      Lists are much harder to handle than arrays.  There is
@@ -691,10 +691,10 @@ DLLIST  *cell;
  * \param[in]    head     of list
  * \return  number of elements; 0 if no list or on error
  */
-l_int32
+int32_t
 listGetCount(DLLIST  *head)
 {
-l_int32  count;
+int32_t  count;
 DLLIST  *elem;
 
     if (!head)

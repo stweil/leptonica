@@ -41,9 +41,9 @@
 int main(int    argc,
          char **argv)
 {
-l_uint8      *data;
+uint8_t      *data;
 size_t        size;
-l_int32       i, ival, n;
+int32_t       i, ival, n;
 l_float32     f, val;
 GPLOT        *gplot;
 NUMA         *na1, *na2, *na3;

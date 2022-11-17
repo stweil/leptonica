@@ -44,10 +44,10 @@
     /* Original serialized pixa, that were used by autogentest1.c */
 static const char  *files[2] = { "fonts/chars-6.pa", "fonts/chars-10.pa" };
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32  i, same;
+int32_t  i, same;
 PIXA    *pixa;
 
     setLeptDebugOK(1);

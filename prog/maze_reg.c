@@ -38,15 +38,15 @@
 #include "allheaders.h"
 
 #define  NPATHS     6
-static const l_int32 x0[NPATHS] = {42, 73, 73, 42, 324, 471};
-static const l_int32 y0[NPATHS] = {117, 319, 319, 117, 170, 201};
-static const l_int32 x1[NPATHS] = {419, 419, 233, 326, 418, 128};
-static const l_int32 y1[NPATHS] = {383, 383, 112, 168, 371, 341};
+static const int32_t x0[NPATHS] = {42, 73, 73, 42, 324, 471};
+static const int32_t y0[NPATHS] = {117, 319, 319, 117, 170, 201};
+static const int32_t x1[NPATHS] = {419, 419, 233, 326, 418, 128};
+static const int32_t y1[NPATHS] = {383, 383, 112, 168, 371, 341};
 
 int main(int    argc,
          char **argv)
 {
-l_int32       i, w, h;
+int32_t       i, w, h;
 PIX          *pixm, *pixs, *pixg, *pixt, *pixd;
 PIXA         *pixa;
 PIXAA        *paa;

@@ -29,51 +29,51 @@
  * <pre>
  *
  *      Test for pix equality
- *           l_int32     pixEqual()
- *           l_int32     pixEqualWithAlpha()
- *           l_int32     pixEqualWithCmap()
- *           l_int32     cmapEqual()
- *           l_int32     pixUsesCmapColor()
+ *           int32_t     pixEqual()
+ *           int32_t     pixEqualWithAlpha()
+ *           int32_t     pixEqualWithCmap()
+ *           int32_t     cmapEqual()
+ *           int32_t     pixUsesCmapColor()
  *
  *      Binary correlation
- *           l_int32     pixCorrelationBinary()
+ *           int32_t     pixCorrelationBinary()
  *
  *      Difference of two images of same size
- *           l_int32     pixDisplayDiffBinary()
- *           l_int32     pixCompareBinary()
- *           l_int32     pixCompareGrayOrRGB()
- *           l_int32     pixCompareGray()
- *           l_int32     pixCompareRGB()
- *           l_int32     pixCompareTiled()
+ *           int32_t     pixDisplayDiffBinary()
+ *           int32_t     pixCompareBinary()
+ *           int32_t     pixCompareGrayOrRGB()
+ *           int32_t     pixCompareGray()
+ *           int32_t     pixCompareRGB()
+ *           int32_t     pixCompareTiled()
  *
  *      Other measures of the difference of two images of the same size
  *           NUMA       *pixCompareRankDifference()
- *           l_int32     pixTestForSimilarity()
- *           l_int32     pixGetDifferenceStats()
+ *           int32_t     pixTestForSimilarity()
+ *           int32_t     pixGetDifferenceStats()
  *           NUMA       *pixGetDifferenceHistogram()
- *           l_int32     pixGetPerceptualDiff()
- *           l_int32     pixGetPSNR()
+ *           int32_t     pixGetPerceptualDiff()
+ *           int32_t     pixGetPSNR()
  *
  *      Comparison of photo regions by histogram
- *           l_int32     pixaComparePhotoRegionsByHisto()  -- top-level
- *           l_int32     pixComparePhotoRegionsByHisto()  -- top-level for 2
- *           l_int32     pixGenPhotoHistos()
+ *           int32_t     pixaComparePhotoRegionsByHisto()  -- top-level
+ *           int32_t     pixComparePhotoRegionsByHisto()  -- top-level for 2
+ *           int32_t     pixGenPhotoHistos()
  *           PIX        *pixPadToCenterCentroid()
- *           l_int32     pixCentroid8()
- *           l_int32     pixDecideIfPhotoImage()
- *       static l_int32  findHistoGridDimensions()
- *           l_int32     compareTilesByHisto()
+ *           int32_t     pixCentroid8()
+ *           int32_t     pixDecideIfPhotoImage()
+ *       static int32_t  findHistoGridDimensions()
+ *           int32_t     compareTilesByHisto()
  *
- *           l_int32     pixCompareGrayByHisto()  -- top-level for 2
- *       static l_int32  pixCompareTilesByHisto()
- *           l_int32     pixCropAlignedToCentroid()
+ *           int32_t     pixCompareGrayByHisto()  -- top-level for 2
+ *       static int32_t  pixCompareTilesByHisto()
+ *           int32_t     pixCropAlignedToCentroid()
  *
- *           l_uint8    *l_compressGrayHistograms()
+ *           uint8_t    *l_compressGrayHistograms()
  *           NUMAA      *l_uncompressGrayHistograms()
  *
  *      Translated images at the same resolution
- *           l_int32     pixCompareWithTranslation()
- *           l_int32     pixBestCorrelation()
+ *           int32_t     pixCompareWithTranslation()
+ *           int32_t     pixBestCorrelation()
  *
  *  For comparing images using tiled histograms, essentially all the
  *  computation goes into deciding if a region of an image is a photo,
@@ -113,10 +113,10 @@
     /* Small enough to consider equal to 0.0, for plot output */
 static const l_float32  TINY = 0.00001;
 
-static l_ok findHistoGridDimensions(l_int32 n, l_int32 w, l_int32 h,
-                                    l_int32 *pnx, l_int32 *pny, l_int32 debug);
-static l_ok pixCompareTilesByHisto(PIX *pix1, PIX *pix2, l_int32 maxgray,
-                                   l_int32 factor, l_int32 n,
+static l_ok findHistoGridDimensions(int32_t n, int32_t w, int32_t h,
+                                    int32_t *pnx, int32_t *pny, int32_t debug);
+static l_ok pixCompareTilesByHisto(PIX *pix1, PIX *pix2, int32_t maxgray,
+                                   int32_t factor, int32_t n,
                                    l_float32 *pscore, PIXA *pixadebug);
 
 /*------------------------------------------------------------------*
@@ -155,7 +155,7 @@ static l_ok pixCompareTilesByHisto(PIX *pix1, PIX *pix2, l_int32 maxgray,
 l_ok
 pixEqual(PIX      *pix1,
          PIX      *pix2,
-         l_int32  *psame)
+         int32_t  *psame)
 {
     return pixEqualWithAlpha(pix1, pix2, 0, psame);
 }
@@ -181,14 +181,14 @@ pixEqual(PIX      *pix1,
 l_ok
 pixEqualWithAlpha(PIX      *pix1,
                   PIX      *pix2,
-                  l_int32   use_alpha,
-                  l_int32  *psame)
+                  int32_t   use_alpha,
+                  int32_t  *psame)
 {
-l_int32    w1, h1, d1, w2, h2, d2, wpl1, wpl2;
-l_int32    spp1, spp2, i, j, color, mismatch, opaque;
-l_int32    fullwords, linebits, endbits;
-l_uint32   endmask, wordmask;
-l_uint32  *data1, *data2, *line1, *line2;
+int32_t    w1, h1, d1, w2, h2, d2, wpl1, wpl2;
+int32_t    spp1, spp2, i, j, color, mismatch, opaque;
+int32_t    fullwords, linebits, endbits;
+uint32_t   endmask, wordmask;
+uint32_t  *data1, *data2, *line1, *line2;
 PIX       *pixs1, *pixs2, *pixt1, *pixt2, *pixalpha;
 PIXCMAP   *cmap1, *cmap2;
 
@@ -381,12 +381,12 @@ PIXCMAP   *cmap1, *cmap2;
 l_ok
 pixEqualWithCmap(PIX      *pix1,
                  PIX      *pix2,
-                 l_int32  *psame)
+                 int32_t  *psame)
 {
-l_int32    d, w, h, wpl1, wpl2, i, j, linebits, fullwords, endbits;
-l_int32    rval1, rval2, gval1, gval2, bval1, bval2, samecmaps;
-l_uint32   endmask, val1, val2;
-l_uint32  *data1, *data2, *line1, *line2;
+int32_t    d, w, h, wpl1, wpl2, i, j, linebits, fullwords, endbits;
+int32_t    rval1, rval2, gval1, gval2, bval1, bval2, samecmaps;
+uint32_t   endmask, val1, val2;
+uint32_t  *data1, *data2, *line1, *line2;
 PIXCMAP   *cmap1, *cmap2;
 
     if (!psame)
@@ -475,10 +475,10 @@ PIXCMAP   *cmap1, *cmap2;
 l_ok
 cmapEqual(PIXCMAP  *cmap1,
           PIXCMAP  *cmap2,
-          l_int32   ncomps,
-          l_int32  *psame)
+          int32_t   ncomps,
+          int32_t  *psame)
 {
-l_int32  n1, n2, i, rval1, rval2, gval1, gval2, bval1, bval2, aval1, aval2;
+int32_t  n1, n2, i, rval1, rval2, gval1, gval2, bval1, bval2, aval1, aval2;
 
     if (!psame)
         return ERROR_INT("&same not defined", __func__, 1);
@@ -530,9 +530,9 @@ l_int32  n1, n2, i, rval1, rval2, gval1, gval2, bval1, bval2, aval1, aval2;
  */
 l_ok
 pixUsesCmapColor(PIX      *pixs,
-                 l_int32  *pcolor)
+                 int32_t  *pcolor)
 {
-l_int32   n, i, rval, gval, bval, numpix;
+int32_t   n, i, rval, gval, bval, numpix;
 NUMA     *na;
 PIXCMAP  *cmap;
 
@@ -597,8 +597,8 @@ pixCorrelationBinary(PIX        *pix1,
                      PIX        *pix2,
                      l_float32  *pval)
 {
-l_int32   count1, count2, countn;
-l_int32  *tab8;
+int32_t   count1, count2, countn;
+int32_t  *tab8;
 PIX      *pixn;
 
     if (!pval)
@@ -652,7 +652,7 @@ PIX *
 pixDisplayDiffBinary(PIX  *pix1,
                      PIX  *pix2)
 {
-l_int32   w1, h1, d1, w2, h2, d2, minw, minh;
+int32_t   w1, h1, d1, w2, h2, d2, minw, minh;
 PIX      *pixt, *pixd;
 PIXCMAP  *cmap;
 
@@ -706,11 +706,11 @@ PIXCMAP  *cmap;
 l_ok
 pixCompareBinary(PIX        *pix1,
                  PIX        *pix2,
-                 l_int32     comptype,
+                 int32_t     comptype,
                  l_float32  *pfract,
                  PIX       **ppixdiff)
 {
-l_int32   w, h, count;
+int32_t   w, h, count;
 PIX      *pixt;
 
     if (ppixdiff) *ppixdiff = NULL;
@@ -784,14 +784,14 @@ PIX      *pixt;
 l_ok
 pixCompareGrayOrRGB(PIX        *pix1,
                     PIX        *pix2,
-                    l_int32     comptype,
-                    l_int32     plottype,
-                    l_int32    *psame,
+                    int32_t     comptype,
+                    int32_t     plottype,
+                    int32_t    *psame,
                     l_float32  *pdiff,
                     l_float32  *prmsdiff,
                     PIX       **ppixdiff)
 {
-l_int32  retval, d1, d2;
+int32_t  retval, d1, d2;
 PIX     *pixt1, *pixt2, *pixs1, *pixs2;
 
     if (psame) *psame = 0;
@@ -865,16 +865,16 @@ PIX     *pixt1, *pixt2, *pixs1, *pixs2;
 l_ok
 pixCompareGray(PIX        *pix1,
                PIX        *pix2,
-               l_int32     comptype,
-               l_int32     plottype,
-               l_int32    *psame,
+               int32_t     comptype,
+               int32_t     plottype,
+               int32_t    *psame,
                l_float32  *pdiff,
                l_float32  *prmsdiff,
                PIX       **ppixdiff)
 {
 char            buf[64];
-static l_int32  index = 0;
-l_int32         d1, d2, same, first, last;
+static int32_t  index = 0;
+int32_t         d1, d2, same, first, last;
 GPLOT          *gplot;
 NUMA           *na, *nac;
 PIX            *pixt;
@@ -972,16 +972,16 @@ PIX            *pixt;
 l_ok
 pixCompareRGB(PIX        *pix1,
               PIX        *pix2,
-              l_int32     comptype,
-              l_int32     plottype,
-              l_int32    *psame,
+              int32_t     comptype,
+              int32_t     plottype,
+              int32_t    *psame,
               l_float32  *pdiff,
               l_float32  *prmsdiff,
               PIX       **ppixdiff)
 {
 char            buf[64];
-static l_int32  index = 0;
-l_int32         rsame, gsame, bsame, same, first, rlast, glast, blast, last;
+static int32_t  index = 0;
+int32_t         rsame, gsame, bsame, same, first, rlast, glast, blast, last;
 l_float32       rdiff, gdiff, bdiff;
 GPLOT          *gplot;
 NUMA           *nar, *nag, *nab, *narc, *nagc, *nabc;
@@ -1126,12 +1126,12 @@ PIX            *pixr, *pixg, *pixb;
 l_ok
 pixCompareTiled(PIX     *pix1,
                 PIX     *pix2,
-                l_int32  sx,
-                l_int32  sy,
-                l_int32  type,
+                int32_t  sx,
+                int32_t  sy,
+                int32_t  type,
                 PIX    **ppixdiff)
 {
-l_int32    d1, d2, w, h;
+int32_t    d1, d2, w, h;
 PIX       *pixt, *pixr, *pixg, *pixb;
 PIX       *pixrdiff, *pixgdiff, *pixbdiff;
 PIXACC    *pixacc;
@@ -1218,9 +1218,9 @@ PIXACC    *pixacc;
 NUMA *
 pixCompareRankDifference(PIX     *pix1,
                          PIX     *pix2,
-                         l_int32  factor)
+                         int32_t  factor)
 {
-l_int32     i;
+int32_t     i;
 l_float32  *array1, *array2;
 NUMA       *nah, *nan, *nad;
 
@@ -1301,12 +1301,12 @@ NUMA       *nah, *nan, *nad;
 l_ok
 pixTestForSimilarity(PIX       *pix1,
                      PIX       *pix2,
-                     l_int32    factor,
-                     l_int32    mindiff,
+                     int32_t    factor,
+                     int32_t    mindiff,
                      l_float32  maxfract,
                      l_float32  maxave,
-                     l_int32   *psimilar,
-                     l_int32    details)
+                     int32_t   *psimilar,
+                     int32_t    details)
 {
 l_float32   fractdiff, avediff;
 
@@ -1378,13 +1378,13 @@ l_float32   fractdiff, avediff;
 l_ok
 pixGetDifferenceStats(PIX        *pix1,
                       PIX        *pix2,
-                      l_int32     factor,
-                      l_int32     mindiff,
+                      int32_t     factor,
+                      int32_t     mindiff,
                       l_float32  *pfractdiff,
                       l_float32  *pavediff,
-                      l_int32     details)
+                      int32_t     details)
 {
-l_int32     i, first, last, diff;
+int32_t     i, first, last, diff;
 l_float32   fract, ave;
 l_float32  *array;
 NUMA       *nah, *nan, *nac;
@@ -1478,13 +1478,13 @@ NUMA       *nah, *nan, *nac;
 NUMA *
 pixGetDifferenceHistogram(PIX     *pix1,
                           PIX     *pix2,
-                          l_int32  factor)
+                          int32_t  factor)
 {
-l_int32     w1, h1, d1, w2, h2, d2, w, h, wpl1, wpl2;
-l_int32     i, j, val, val1, val2;
-l_int32     rval1, rval2, gval1, gval2, bval1, bval2;
-l_int32     rdiff, gdiff, bdiff, maxdiff;
-l_uint32   *data1, *data2, *line1, *line2;
+int32_t     w1, h1, d1, w2, h2, d2, w, h, wpl1, wpl2;
+int32_t     i, j, val, val1, val2;
+int32_t     rval1, rval2, gval1, gval2, bval1, bval2;
+int32_t     rdiff, gdiff, bdiff, maxdiff;
+uint32_t   *data1, *data2, *line1, *line2;
 l_float32  *array;
 NUMA       *na;
 PIX        *pixt1, *pixt2;
@@ -1607,14 +1607,14 @@ PIX        *pixt1, *pixt2;
 l_ok
 pixGetPerceptualDiff(PIX        *pixs1,
                      PIX        *pixs2,
-                     l_int32     sampling,
-                     l_int32     dilation,
-                     l_int32     mindiff,
+                     int32_t     sampling,
+                     int32_t     dilation,
+                     int32_t     mindiff,
                      l_float32  *pfract,
                      PIX       **ppixdiff1,
                      PIX       **ppixdiff2)
 {
-l_int32  d1, d2, w, h, count;
+int32_t  d1, d2, w, h, count;
 PIX     *pix1, *pix2, *pix3, *pix4, *pix5, *pix6, *pix7, *pix8, *pix9;
 PIX     *pix10, *pix11;
 
@@ -1772,11 +1772,11 @@ PIX     *pix10, *pix11;
 l_ok
 pixGetPSNR(PIX        *pix1,
            PIX        *pix2,
-           l_int32     factor,
+           int32_t     factor,
            l_float32  *ppsnr)
 {
-l_int32    same, i, j, w, h, d, wpl1, wpl2, v1, v2, r1, g1, b1, r2, g2, b2;
-l_uint32  *data1, *data2, *line1, *line2;
+int32_t    same, i, j, w, h, d, wpl1, wpl2, v1, v2, r1, g1, b1, r2, g2, b2;
+uint32_t  *data1, *data2, *line1, *line2;
 l_float32  mse;  /* mean squared error */
 
     if (!ppsnr)
@@ -1896,16 +1896,16 @@ l_ok
 pixaComparePhotoRegionsByHisto(PIXA        *pixa,
                                l_float32    minratio,
                                l_float32    textthresh,
-                               l_int32      factor,
-                               l_int32      n,
+                               int32_t      factor,
+                               int32_t      n,
                                l_float32    simthresh,
                                NUMA       **pnai,
                                l_float32  **pscores,
                                PIX        **ppixd,
-                               l_int32      debug)
+                               int32_t      debug)
 {
 char       *text;
-l_int32     i, j, nim, w, h, w1, h1, w2, h2, ival, index, classid;
+int32_t     i, j, nim, w, h, w1, h1, w2, h2, ival, index, classid;
 l_float32   score;
 l_float32  *scores;
 NUMA       *nai, *naw, *nah;
@@ -2012,8 +2012,8 @@ PIX        *pix;
          * The array has been symmetrized, so images in the same
          * same similarity class also appear on the same column below. */
     if (pscores) {
-        l_int32    wpl, fact;
-        l_uint32  *line, *data;
+        int32_t    wpl, fact;
+        uint32_t  *line, *data;
         PIX       *pix2, *pix3;
         pix2 = pixCreate(nim, nim, 8);
         data = pixGetData(pix2);
@@ -2118,12 +2118,12 @@ pixComparePhotoRegionsByHisto(PIX        *pix1,
                               BOX        *box1,
                               BOX        *box2,
                               l_float32   minratio,
-                              l_int32     factor,
-                              l_int32     n,
+                              int32_t     factor,
+                              int32_t     n,
                               l_float32  *pscore,
-                              l_int32     debugflag)
+                              int32_t     debugflag)
 {
-l_int32    w1, h1, w2, h2, w1c, h1c, w2c, h2c, debugindex;
+int32_t    w1, h1, w2, h2, w1c, h1c, w2c, h2c, debugindex;
 l_float32  wratio, hratio;
 NUMAA     *naa1, *naa2;
 PIX       *pix3, *pix4;
@@ -2230,13 +2230,13 @@ PIXA      *pixa;
 l_ok
 pixGenPhotoHistos(PIX        *pixs,
                   BOX        *box,
-                  l_int32     factor,
+                  int32_t     factor,
                   l_float32   thresh,
-                  l_int32     n,
+                  int32_t     n,
                   NUMAA     **pnaa,
-                  l_int32    *pw,
-                  l_int32    *ph,
-                  l_int32     debugindex)
+                  int32_t    *pw,
+                  int32_t    *ph,
+                  int32_t     debugindex)
 {
 char    buf[64];
 NUMAA  *naa;
@@ -2340,11 +2340,11 @@ PIXA   *pixa;
  */
 PIX *
 pixPadToCenterCentroid(PIX     *pixs,
-                       l_int32  factor)
+                       int32_t  factor)
 
 {
 l_float32  cx, cy;
-l_int32    xs, ys, delx, dely, icx, icy, ws, hs, wd, hd;
+int32_t    xs, ys, delx, dely, icx, icy, ws, hs, wd, hd;
 PIX       *pix1, *pixd;
 
     if (!pixs)
@@ -2354,8 +2354,8 @@ PIX       *pix1, *pixd;
 
     pix1 = pixConvertTo8(pixs, FALSE);
     pixCentroid8(pix1, factor, &cx, &cy);
-    icx = (l_int32)(cx + 0.5);
-    icy = (l_int32)(cy + 0.5);
+    icx = (int32_t)(cx + 0.5);
+    icy = (int32_t)(cy + 0.5);
     pixGetDimensions(pix1, &ws, &hs, NULL);
     delx = ws - 2 * icx;
     dely = hs - 2 * icy;
@@ -2392,13 +2392,13 @@ PIX       *pix1, *pixd;
  */
 l_ok
 pixCentroid8(PIX        *pixs,
-             l_int32     factor,
+             int32_t     factor,
              l_float32  *pcx,
              l_float32  *pcy)
 {
-l_int32    i, j, w, h, wpl, val;
+int32_t    i, j, w, h, wpl, val;
 l_float32  sumx, sumy, sumv;
-l_uint32  *data, *line;
+uint32_t  *data, *line;
 PIX       *pix1;
 
     if (pcx) *pcx = 0.0;
@@ -2476,14 +2476,14 @@ PIX       *pix1;
  */
 l_ok
 pixDecideIfPhotoImage(PIX       *pix,
-                      l_int32    factor,
+                      int32_t    factor,
                       l_float32  thresh,
-                      l_int32    n,
+                      int32_t    n,
                       NUMAA    **pnaa,
                       PIXA      *pixadebug)
 {
 char       buf[64];
-l_int32    i, w, h, nx, ny, ngrids, istext, isphoto;
+int32_t    i, w, h, nx, ny, ngrids, istext, isphoto;
 l_float32  maxval, sum1, sum2, ratio;
 L_BMF     *bmf;
 NUMA      *na1, *na2, *na3, *narv;
@@ -2618,14 +2618,14 @@ PIXA      *pixa1, *pixa2, *pixa3;
  * </pre>
  */
 static l_ok
-findHistoGridDimensions(l_int32   n,
-                        l_int32   w,
-                        l_int32   h,
-                        l_int32  *pnx,
-                        l_int32  *pny,
-                        l_int32   debug)
+findHistoGridDimensions(int32_t   n,
+                        int32_t   w,
+                        int32_t   h,
+                        int32_t  *pnx,
+                        int32_t  *pny,
+                        int32_t   debug)
 {
-l_int32    nx, ny, max;
+int32_t    nx, ny, max;
 l_float32  ratio;
 
     ratio = (l_float32)w / (l_float32)h;
@@ -2684,15 +2684,15 @@ l_ok
 compareTilesByHisto(NUMAA      *naa1,
                     NUMAA      *naa2,
                     l_float32   minratio,
-                    l_int32     w1,
-                    l_int32     h1,
-                    l_int32     w2,
-                    l_int32     h2,
+                    int32_t     w1,
+                    int32_t     h1,
+                    int32_t     w2,
+                    int32_t     h2,
                     l_float32  *pscore,
                     PIXA       *pixadebug)
 {
 char       buf1[128], buf2[128];
-l_int32    i, n;
+int32_t    i, n;
 l_float32  wratio, hratio, score, minscore, dist;
 L_BMF     *bmf;
 NUMA      *na1, *na2, *nadist, *nascore;
@@ -2862,13 +2862,13 @@ pixCompareGrayByHisto(PIX        *pix1,
                       BOX        *box1,
                       BOX        *box2,
                       l_float32   minratio,
-                      l_int32     maxgray,
-                      l_int32     factor,
-                      l_int32     n,
+                      int32_t     maxgray,
+                      int32_t     factor,
+                      int32_t     n,
                       l_float32  *pscore,
-                      l_int32     debugflag)
+                      int32_t     debugflag)
 {
-l_int32    w1, h1, w2, h2;
+int32_t    w1, h1, w2, h2;
 l_float32  wratio, hratio;
 BOX       *box3, *box4;
 PIX       *pix3, *pix4, *pix5, *pix6, *pix7, *pix8;
@@ -2984,14 +2984,14 @@ PIXA      *pixa;
 static l_ok
 pixCompareTilesByHisto(PIX        *pix1,
                        PIX        *pix2,
-                       l_int32     maxgray,
-                       l_int32     factor,
-                       l_int32     n,
+                       int32_t     maxgray,
+                       int32_t     factor,
+                       int32_t     n,
                        l_float32  *pscore,
                        PIXA       *pixadebug)
 {
 char       buf[64];
-l_int32    w, h, i, j, nx, ny, ngr;
+int32_t    w, h, i, j, nx, ny, ngr;
 l_float32  score, minscore, maxval1, maxval2, dist;
 L_BMF     *bmf;
 NUMA      *na1, *na2, *na3, *na4, *na5, *na6, *na7;
@@ -3049,7 +3049,7 @@ PIXA      *pixa1, *pixa2;
         if (pixadebug) {
             PIX     *pix5, *pix6, *pix7, *pix8, *pix9, *pix10;
             PIXA    *pixa3;
-            l_int32  w, h, wscale;
+            int32_t  w, h, wscale;
             pixa3 = pixaCreate(3);
             pixGetDimensions(pix3, &w, &h, NULL);
             wscale = (w > h) ? 700 : 400;
@@ -3112,13 +3112,13 @@ PIXA      *pixa1, *pixa2;
 l_ok
 pixCropAlignedToCentroid(PIX     *pix1,
                          PIX     *pix2,
-                         l_int32  factor,
+                         int32_t  factor,
                          BOX    **pbox1,
                          BOX    **pbox2)
 {
 l_float32  cx1, cy1, cx2, cy2;
-l_int32    w1, h1, w2, h2, icx1, icy1, icx2, icy2;
-l_int32    xm, xm1, xm2, xp, xp1, xp2, ym, ym1, ym2, yp, yp1, yp2;
+int32_t    w1, h1, w2, h2, icx1, icy1, icx2, icy2;
+int32_t    xm, xm1, xm2, xp, xp1, xp2, ym, ym1, ym2, yp, yp1, yp2;
 PIX       *pix3, *pix4;
 
     if (pbox1) *pbox1 = NULL;
@@ -3139,10 +3139,10 @@ PIX       *pix3, *pix4;
     pixDestroy(&pix3);
     pixDestroy(&pix4);
 
-    icx1 = (l_int32)(cx1 + 0.5);
-    icy1 = (l_int32)(cy1 + 0.5);
-    icx2 = (l_int32)(cx2 + 0.5);
-    icy2 = (l_int32)(cy2 + 0.5);
+    icx1 = (int32_t)(cx1 + 0.5);
+    icy1 = (int32_t)(cy1 + 0.5);
+    icx2 = (int32_t)(cx2 + 0.5);
+    icy2 = (int32_t)(cy2 + 0.5);
     xm = L_MIN(icx1, icx2);
     xm1 = icx1 - xm;
     xm2 = icx2 - xm;
@@ -3182,22 +3182,22 @@ PIX       *pix3, *pix4;
  *          details of these histograms.
  * </pre>
  */
-l_uint8 *
+uint8_t *
 l_compressGrayHistograms(NUMAA   *naa,
-                         l_int32  w,
-                         l_int32  h,
+                         int32_t  w,
+                         int32_t  h,
                          size_t  *psize)
 {
-l_uint8   *bytea;
-l_int32    i, j, n, nn, ival;
+uint8_t   *bytea;
+int32_t    i, j, n, nn, ival;
 l_float32  maxval;
 NUMA      *na1, *na2;
 
     if (!psize)
-        return (l_uint8 *)ERROR_PTR("&size not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("&size not defined", __func__, NULL);
     *psize = 0;
     if (!naa)
-        return (l_uint8 *)ERROR_PTR("naa not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("naa not defined", __func__, NULL);
     n = numaaGetCount(naa);
     for (i = 0; i < n; i++) {
         nn = numaaGetNumaCount(naa, i);
@@ -3207,8 +3207,8 @@ NUMA      *na1, *na2;
         }
     }
 
-    if ((bytea = (l_uint8 *)LEPT_CALLOC(8 + 256 * n, sizeof(l_uint8))) == NULL)
-        return (l_uint8 *)ERROR_PTR("bytea not made", __func__, NULL);
+    if ((bytea = (uint8_t *)LEPT_CALLOC(8 + 256 * n, sizeof(uint8_t))) == NULL)
+        return (uint8_t *)ERROR_PTR("bytea not made", __func__, NULL);
     *psize = 8 + 256 * n;
     l_setDataFourBytes(bytea, 0, w);
     l_setDataFourBytes(bytea, 1, h);
@@ -3249,12 +3249,12 @@ NUMA      *na1, *na2;
  * </pre>
  */
 NUMAA *
-l_uncompressGrayHistograms(l_uint8  *bytea,
+l_uncompressGrayHistograms(uint8_t  *bytea,
                            size_t    size,
-                           l_int32  *pw,
-                           l_int32  *ph)
+                           int32_t  *pw,
+                           int32_t  *ph)
 {
-l_int32  i, j, n;
+int32_t  i, j, n;
 NUMA    *na;
 NUMAA   *naa;
 
@@ -3318,16 +3318,16 @@ NUMAA   *naa;
 l_ok
 pixCompareWithTranslation(PIX        *pix1,
                           PIX        *pix2,
-                          l_int32     thresh,
-                          l_int32    *pdelx,
-                          l_int32    *pdely,
+                          int32_t     thresh,
+                          int32_t    *pdelx,
+                          int32_t    *pdely,
                           l_float32  *pscore,
-                          l_int32     debugflag)
+                          int32_t     debugflag)
 {
-l_uint8   *subtab;
-l_int32    i, level, area1, area2, delx, dely;
-l_int32    etransx, etransy, maxshift, dbint;
-l_int32   *stab, *ctab;
+uint8_t   *subtab;
+int32_t    i, level, area1, area2, delx, dely;
+int32_t    etransx, etransy, maxshift, dbint;
+int32_t   *stab, *ctab;
 l_float32  cx1, cx2, cy1, cy2, score;
 PIX       *pixb1, *pixb2, *pixt1, *pixt2, *pixt3, *pixt4;
 PIXA      *pixa1, *pixa2, *pixadb;
@@ -3470,19 +3470,19 @@ PIXA      *pixa1, *pixa2, *pixadb;
 l_ok
 pixBestCorrelation(PIX        *pix1,
                    PIX        *pix2,
-                   l_int32     area1,
-                   l_int32     area2,
-                   l_int32     etransx,
-                   l_int32     etransy,
-                   l_int32     maxshift,
-                   l_int32    *tab8,
-                   l_int32    *pdelx,
-                   l_int32    *pdely,
+                   int32_t     area1,
+                   int32_t     area2,
+                   int32_t     etransx,
+                   int32_t     etransy,
+                   int32_t     maxshift,
+                   int32_t    *tab8,
+                   int32_t    *pdelx,
+                   int32_t    *pdely,
                    l_float32  *pscore,
-                   l_int32     debugflag)
+                   int32_t     debugflag)
 {
-l_int32    shiftx, shifty, delx, dely;
-l_int32   *tab;
+int32_t    shiftx, shifty, delx, dely;
+int32_t   *tab;
 l_float32  maxscore, score;
 FPIX      *fpix;
 PIX       *pix3, *pix4;

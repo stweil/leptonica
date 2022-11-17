@@ -96,10 +96,10 @@ struct CCBord
 struct CCBorda
 {
     struct Pix          *pix;          /*!< input pix (may be null)          */
-    l_int32              w;            /*!< width of pix                     */
-    l_int32              h;            /*!< height of pix                    */
-    l_int32              n;            /*!< number of ccbord in ptr array    */
-    l_int32              nalloc;       /*!< number of ccbord ptrs allocated  */
+    int32_t              w;            /*!< width of pix                     */
+    int32_t              h;            /*!< height of pix                    */
+    int32_t              n;            /*!< number of ccbord in ptr array    */
+    int32_t              nalloc;       /*!< number of ccbord ptrs allocated  */
     struct CCBord      **ccb;          /*!< ccb ptr array                    */
 };
 

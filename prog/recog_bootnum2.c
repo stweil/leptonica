@@ -42,10 +42,10 @@
 
 static const char *removeset = "4,7,9,21";
 
-void ProcessDigits(l_int32 i);
+void ProcessDigits(int32_t i);
 void PixaDisplayNumbered(PIXA *pixa, const char *rootname);
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
     setLeptDebugOK(1);
@@ -55,11 +55,11 @@ l_int32 main(int    argc,
 }
 
 /* ----------------------------------------------------- */
-void ProcessDigits(l_int32  index)
+void ProcessDigits(int32_t  index)
 {
 char       rootname[8] = "digit5";
 char       buf[64];
-l_int32    i, nc, ns, same;
+int32_t    i, nc, ns, same;
 NUMA      *na1;
 PIX       *pix1, *pix2, *pix3, *pix4, *pix5, *pix6;
 PIXA      *pixa1, *pixa2, *pixa3;
@@ -158,7 +158,7 @@ void PixaDisplayNumbered(PIXA        *pixa,
                          const char  *basename)
 {
 char     buf[64];
-l_int32  fill, color, d;
+int32_t  fill, color, d;
 L_BMF   *bmf;
 PIX     *pix1;
 PIXA    *pixa1, *pixa2;

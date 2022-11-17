@@ -54,7 +54,7 @@ int main(int    argc,
          char **argv)
 {
 char      *dirin, *fileout, *fname, *fullname;
-l_int32    depth, width, background, i, nfiles;
+int32_t    depth, width, background, i, nfiles;
 l_float32  scale;
 SARRAY    *safiles;
 PIX       *pix, *pixt, *pixd;

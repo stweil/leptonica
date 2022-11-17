@@ -29,39 +29,39 @@
  * <pre>
  *
  *      Training on labeled data
- *         l_int32             recogTrainLabeled()
+ *         int32_t             recogTrainLabeled()
  *         PIX                *recogProcessLabeled()
- *         l_int32             recogAddSample()
+ *         int32_t             recogAddSample()
  *         PIX                *recogModifyTemplate()
- *         l_int32             recogAverageSamples()
- *         l_int32             pixaAccumulateSamples()
- *         l_int32             recogTrainingFinished()
- *         static l_int32      recogTemplatesAreOK()
+ *         int32_t             recogAverageSamples()
+ *         int32_t             pixaAccumulateSamples()
+ *         int32_t             recogTrainingFinished()
+ *         static int32_t      recogTemplatesAreOK()
  *         PIXA               *recogFilterPixaBySize()
  *         PIXAA              *recogSortPixaByClass()
- *         l_int32             recogRemoveOutliers1()
+ *         int32_t             recogRemoveOutliers1()
  *         PIXA               *pixaRemoveOutliers1()
- *         l_int32             recogRemoveOutliers2()
+ *         int32_t             recogRemoveOutliers2()
  *         PIXA               *pixaRemoveOutliers2()
  *
  *      Training on unlabeled data
  *         L_RECOG             recogTrainFromBoot()
  *
  *      Padding the digit training set
- *         l_int32             recogPadDigitTrainingSet()
- *         l_int32             recogIsPaddingNeeded()
+ *         int32_t             recogPadDigitTrainingSet()
+ *         int32_t             recogIsPaddingNeeded()
  *         static SARRAY      *recogAddMissingClassStrings()
  *         PIXA               *recogAddDigitPadTemplates()
- *         static l_int32      recogCharsetAvailable()
+ *         static int32_t      recogCharsetAvailable()
  *
  *      Making a boot digit recognizer
  *         L_RECOG            *recogMakeBootDigitRecog()
  *         PIXA               *recogMakeBootDigitTemplates()
  *
  *      Debugging
- *         l_int32             recogShowContent()
- *         l_int32             recogDebugAverages()
- *         l_int32             recogShowAverageTemplates()
+ *         int32_t             recogShowContent()
+ *         int32_t             recogDebugAverages()
+ *         int32_t             recogShowAverageTemplates()
  *         static PIX         *pixDisplayOutliers()
  *         PIX                *recogDisplayOutlier()
  *         PIX                *recogShowMatchesInRange()
@@ -167,26 +167,26 @@
 #include "pix_internal.h"
 
     /* Static functions */
-static l_int32 recogTemplatesAreOK(L_RECOG *recog, l_int32 minsize,
-                                   l_float32 minfract, l_int32 *pok);
+static int32_t recogTemplatesAreOK(L_RECOG *recog, int32_t minsize,
+                                   l_float32 minfract, int32_t *pok);
 static SARRAY *recogAddMissingClassStrings(L_RECOG  *recog);
-static l_int32 recogCharsetAvailable(l_int32 type);
+static int32_t recogCharsetAvailable(int32_t type);
 static PIX *pixDisplayOutliers(PIXA *pixas, NUMA *nas);
-static PIX *recogDisplayOutlier(L_RECOG *recog, l_int32 iclass, l_int32 jsamp,
-                                l_int32 maxclass, l_float32 maxscore);
+static PIX *recogDisplayOutlier(L_RECOG *recog, int32_t iclass, int32_t jsamp,
+                                int32_t maxclass, l_float32 maxscore);
 
     /* Default parameters that are used in recogTemplatesAreOK() and
      * in outlier removal functions, and that use template set size
      * to decide if the set of templates (before outliers are removed)
      * is valid.  Values are set to accept most sets of sample templates. */
-static const l_int32    DefaultMinSetSize = 1;  /* minimum number of
+static const int32_t    DefaultMinSetSize = 1;  /* minimum number of
                                        samples for a valid class */
 static const l_float32  DefaultMinSetFract = 0.4;  /* minimum fraction
                                of classes required for a valid recog */
 
     /* Defaults in pixaRemoveOutliers1() and pixaRemoveOutliers2() */
 static const l_float32  DefaultMinScore = 0.75; /* keep everything above */
-static const l_int32    DefaultMinTarget = 3;  /* to be kept if possible */
+static const int32_t    DefaultMinTarget = 3;  /* to be kept if possible */
 static const l_float32  LowerScoreThreshold = 0.5;  /* templates can be
                  * kept down to this score to if needed to retain the
                  * desired minimum number of templates */
@@ -218,9 +218,9 @@ recogTrainLabeled(L_RECOG  *recog,
                   PIX      *pixs,
                   BOX      *box,
                   char     *text,
-                  l_int32   debug)
+                  int32_t   debug)
 {
-l_int32  ret;
+int32_t  ret;
 PIX     *pix;
 
     if (!recog)
@@ -268,7 +268,7 @@ recogProcessLabeled(L_RECOG  *recog,
                     PIX     **ppix)
 {
 char    *textdata;
-l_int32  textinpix, textin, nsets;
+int32_t  textinpix, textin, nsets;
 NUMA    *na;
 PIX     *pix1, *pix2, *pix3, *pix4;
 
@@ -352,10 +352,10 @@ PIX     *pix1, *pix2, *pix3, *pix4;
 l_ok
 recogAddSample(L_RECOG  *recog,
                PIX      *pix,
-               l_int32   debug)
+               int32_t   debug)
 {
 char    *text;
-l_int32  npa, charint, index;
+int32_t  npa, charint, index;
 PIXA    *pixa1;
 PIXAA   *paa;
 
@@ -416,7 +416,7 @@ PIX *
 recogModifyTemplate(L_RECOG  *recog,
                     PIX      *pixs)
 {
-l_int32  w, h, empty;
+int32_t  w, h, empty;
 PIX     *pix1, *pix2;
 
     if (!recog)
@@ -479,11 +479,11 @@ PIX     *pix1, *pix2;
  *      (3) Set debug = 1 to view the resulting templates and their centroids.
  * </pre>
  */
-l_int32
+int32_t
 recogAverageSamples(L_RECOG  **precog,
-                    l_int32    debug)
+                    int32_t    debug)
 {
-l_int32    i, nsamp, size, area, bx, by, badclass;
+int32_t    i, nsamp, size, area, bx, by, badclass;
 l_float32  x, y, hratio;
 BOX       *box;
 PIXA      *pixa1;
@@ -655,15 +655,15 @@ L_RECOG   *recog;
  *          to precompute the pta.
  * </pre>
  */
-l_int32
+int32_t
 pixaAccumulateSamples(PIXA       *pixa,
                       PTA        *pta,
                       PIX       **ppixd,
                       l_float32  *px,
                       l_float32  *py)
 {
-l_int32    i, n, maxw, maxh, xdiff, ydiff;
-l_int32   *centtab, *sumtab;
+int32_t    i, n, maxw, maxh, xdiff, ydiff;
+int32_t   *centtab, *sumtab;
 l_float32  xc, yc, xave, yave;
 PIX       *pix1, *pix2, *pixsum;
 PTA       *ptac;
@@ -721,8 +721,8 @@ PTA       *ptac;
     for (i = 0; i < n; i++) {
         pix2 = pixaGetPix(pixa, i, L_CLONE);
         ptaGetPt(ptac, i, &xc, &yc);
-        xdiff = (l_int32)(xave - xc);
-        ydiff = (l_int32)(yave - yc);
+        xdiff = (int32_t)(xave - xc);
+        ydiff = (int32_t)(yave - yc);
         pixClearAll(pix1);
         pixRasterop(pix1, xdiff, ydiff, maxw, maxh, PIX_SRC,
                     pix2, 0, 0);
@@ -774,11 +774,11 @@ PTA       *ptac;
  */
 l_ok
 recogTrainingFinished(L_RECOG  **precog,
-                      l_int32    modifyflag,
-                      l_int32    minsize,
+                      int32_t    modifyflag,
+                      int32_t    minsize,
                       l_float32  minfract)
 {
-l_int32    ok, i, j, size, nc, ns, area;
+int32_t    ok, i, j, size, nc, ns, area;
 l_float32  xave, yave;
 PIX       *pix, *pixd;
 PIXA      *pixa;
@@ -895,13 +895,13 @@ L_RECOG   *recog;
  *          the recog to be usable; -1.0 uses the default
  * </pre>
  */
-static l_int32
+static int32_t
 recogTemplatesAreOK(L_RECOG   *recog,
-                    l_int32    minsize,
+                    int32_t    minsize,
                     l_float32  minfract,
-                    l_int32   *pok)
+                    int32_t   *pok)
 {
-l_int32    i, n, validsets, nt;
+int32_t    i, n, validsets, nt;
 l_float32  ratio;
 NUMA      *na;
 
@@ -957,12 +957,12 @@ NUMA      *na;
  */
 PIXA *
 recogFilterPixaBySize(PIXA      *pixas,
-                      l_int32    setsize,
-                      l_int32    maxkeep,
+                      int32_t    setsize,
+                      int32_t    maxkeep,
                       l_float32  max_ht_ratio,
                       NUMA     **pna)
 {
-l_int32    i, j, h90, hj, j1, j2, j90, n, nc;
+int32_t    i, j, h90, hj, j1, j2, j90, n, nc;
 l_float32  ratio;
 NUMA      *na;
 PIXA      *pixa1, *pixa2, *pixa3, *pixa4, *pixa5;
@@ -986,7 +986,7 @@ PIXAA     *paa;
         }
         pixa2 = pixaSort(pixa1, L_SORT_BY_HEIGHT, L_SORT_INCREASING, NULL,
                          L_COPY);
-        j90 = (l_int32)(0.9 * n);
+        j90 = (int32_t)(0.9 * n);
         pixaGetPixDimensions(pixa2, j90, NULL, &h90, NULL);
         pixa3 = pixaCreate(n);
         for (j = 0; j < n; j++) {
@@ -1026,7 +1026,7 @@ PIXAA     *paa;
  */
 PIXAA *
 recogSortPixaByClass(PIXA    *pixa,
-                     l_int32  setsize)
+                     int32_t  setsize)
 {
 PIXAA    *paa;
 L_RECOG  *recog;
@@ -1065,8 +1065,8 @@ L_RECOG  *recog;
 l_ok
 recogRemoveOutliers1(L_RECOG  **precog,
                      l_float32  minscore,
-                     l_int32    mintarget,
-                     l_int32    minsize,
+                     int32_t    mintarget,
+                     int32_t    minsize,
                      PIX      **ppixsave,
                      PIX      **ppixrem)
 {
@@ -1141,12 +1141,12 @@ L_RECOG  *recog;
 PIXA *
 pixaRemoveOutliers1(PIXA      *pixas,
                     l_float32  minscore,
-                    l_int32    mintarget,
-                    l_int32    minsize,
+                    int32_t    mintarget,
+                    int32_t    minsize,
                     PIX      **ppixsave,
                     PIX      **ppixrem)
 {
-l_int32    i, j, debug, n, area1, area2;
+int32_t    i, j, debug, n, area1, area2;
 l_float32  x1, y1, x2, y2, minfract, score, rankscore, threshscore;
 NUMA      *nasum, *narem, *nasave, *nascore;
 PIX       *pix1, *pix2;
@@ -1279,7 +1279,7 @@ L_RECOG   *recog;
 l_ok
 recogRemoveOutliers2(L_RECOG  **precog,
                      l_float32  minscore,
-                     l_int32    minsize,
+                     int32_t    minsize,
                      PIX      **ppixsave,
                      PIX      **ppixrem)
 {
@@ -1341,11 +1341,11 @@ L_RECOG  *recog;
 PIXA *
 pixaRemoveOutliers2(PIXA      *pixas,
                     l_float32  minscore,
-                    l_int32    minsize,
+                    int32_t    minsize,
                     PIX      **ppixsave,
                     PIX      **ppixrem)
 {
-l_int32    i, j, k, n, area1, area2, maxk, debug;
+int32_t    i, j, k, n, area1, area2, maxk, debug;
 l_float32  x1, y1, x2, y2, score, maxscore;
 NUMA      *nan, *nascore, *nasave;
 PIX       *pix1, *pix2, *pix3;
@@ -1465,11 +1465,11 @@ PIXA  *
 recogTrainFromBoot(L_RECOG   *recogboot,
                    PIXA      *pixas,
                    l_float32  minscore,
-                   l_int32    threshold,
-                   l_int32    debug)
+                   int32_t    threshold,
+                   int32_t    debug)
 {
 char      *text;
-l_int32    i, n, same, maxd, scaleh, linew;
+int32_t    i, n, same, maxd, scaleh, linew;
 l_float32  score;
 PIX       *pix1, *pix2, *pixdb;
 PIXA      *pixa1, *pixa2, *pixa3, *pixad;
@@ -1565,8 +1565,8 @@ PIXA      *pixa1, *pixa2, *pixa3, *pixad;
  */
 l_ok
 recogPadDigitTrainingSet(L_RECOG  **precog,
-                         l_int32    scaleh,
-                         l_int32    linew)
+                         int32_t    scaleh,
+                         int32_t    linew)
 {
 PIXA     *pixa;
 L_RECOG  *recog1, *recog2;
@@ -1619,12 +1619,12 @@ SARRAY   *sa;
  *          if no padding templates are needed.
  * </pre>
  */
-l_int32
+int32_t
 recogIsPaddingNeeded(L_RECOG  *recog,
                      SARRAY  **psa)
 {
 char      *str;
-l_int32    i, nt, min_nopad, nclass, allclasses;
+int32_t    i, nt, min_nopad, nclass, allclasses;
 l_float32  minval;
 NUMA      *naclass;
 SARRAY    *sa;
@@ -1681,7 +1681,7 @@ recogAddMissingClassStrings(L_RECOG  *recog)
 {
 char    *text;
 char     str[4];
-l_int32  i, nclass, index, ival;
+int32_t  i, nclass, index, ival;
 NUMA    *na;
 SARRAY  *sa;
 
@@ -1738,7 +1738,7 @@ recogAddDigitPadTemplates(L_RECOG  *recog,
                           SARRAY   *sa)
 {
 char    *str, *text;
-l_int32  i, j, n, nt;
+int32_t  i, j, n, nt;
 PIX     *pix;
 PIXA    *pixa1, *pixa2;
 
@@ -1782,10 +1782,10 @@ PIXA    *pixa1, *pixa2;
  * \param[in]    type     of charset for padding
  * \return  1 if available; 0 if not.
  */
-static l_int32
-recogCharsetAvailable(l_int32  type)
+static int32_t
+recogCharsetAvailable(int32_t  type)
 {
-l_int32  ret;
+int32_t  ret;
 
     switch (type)
     {
@@ -1842,11 +1842,11 @@ l_int32  ret;
  * </pre>
  */
 L_RECOG  *
-recogMakeBootDigitRecog(l_int32  nsamp,
-                        l_int32  scaleh,
-                        l_int32  linew,
-                        l_int32  maxyshift,
-                        l_int32  debug)
+recogMakeBootDigitRecog(int32_t  nsamp,
+                        int32_t  scaleh,
+                        int32_t  linew,
+                        int32_t  maxyshift,
+                        int32_t  debug)
 
 {
 PIXA     *pixa;
@@ -1879,8 +1879,8 @@ L_RECOG  *recog;
  * </pre>
  */
 PIXA  *
-recogMakeBootDigitTemplates(l_int32  nsamp,
-                            l_int32  debug)
+recogMakeBootDigitTemplates(int32_t  nsamp,
+                            int32_t  debug)
 {
 NUMA  *na1;
 PIX   *pix1, *pix2, *pix3;
@@ -1945,11 +1945,11 @@ PIXA  *pixa1, *pixa2, *pixa3;
 l_ok
 recogShowContent(FILE     *fp,
                  L_RECOG  *recog,
-                 l_int32   index,
-                 l_int32   display)
+                 int32_t   index,
+                 int32_t   display)
 {
 char     buf[128];
-l_int32  i, val, count;
+int32_t  i, val, count;
 PIX     *pix;
 NUMA    *na;
 
@@ -2025,9 +2025,9 @@ NUMA    *na;
  */
 l_ok
 recogDebugAverages(L_RECOG  **precog,
-                   l_int32    debug)
+                   int32_t    debug)
 {
-l_int32    i, j, n, np, index;
+int32_t    i, j, n, np, index;
 l_float32  score;
 PIX       *pix1, *pix2, *pix3;
 PIXA      *pixa, *pixat;
@@ -2099,10 +2099,10 @@ L_RECOG   *recog;
  *          both scaled and unscaled, with the centroid visible in red.
  * </pre>
  */
-l_int32
+int32_t
 recogShowAverageTemplates(L_RECOG  *recog)
 {
-l_int32    i, size;
+int32_t    i, size;
 l_float32  x, y;
 PIX       *pix1, *pix2, *pixr;
 PIXA      *pixat, *pixadb;
@@ -2130,7 +2130,7 @@ PIXA      *pixat, *pixadb;
             continue;
         pix2 = pixConvertTo32(pix1);
         ptaGetPt(recog->pta_u, i, &x, &y);
-        pixRasterop(pix2, (l_int32)(x - 0.5), (l_int32)(y - 0.5), 3, 3,
+        pixRasterop(pix2, (int32_t)(x - 0.5), (int32_t)(y - 0.5), 3, 3,
                     PIX_SRC, pixr, 0, 0);
         pixaAddPix(pixat, pix2, L_INSERT);
         pixDestroy(&pix1);
@@ -2147,7 +2147,7 @@ PIXA      *pixat, *pixadb;
             continue;
         pix2 = pixConvertTo32(pix1);
         ptaGetPt(recog->pta, i, &x, &y);
-        pixRasterop(pix2, (l_int32)(x - 0.5), (l_int32)(y - 0.5), 3, 3,
+        pixRasterop(pix2, (int32_t)(x - 0.5), (int32_t)(y - 0.5), 3, 3,
                     PIX_SRC, pixr, 0, 0);
         pixaAddPix(pixat, pix2, L_INSERT);
         pixDestroy(&pix1);
@@ -2181,7 +2181,7 @@ pixDisplayOutliers(PIXA  *pixas,
 {
 char      *text;
 char       buf[16];
-l_int32    i, n;
+int32_t    i, n;
 l_float32  fval;
 PIX       *pix1, *pix2;
 PIXA      *pixa1;
@@ -2231,9 +2231,9 @@ PIXA      *pixa1;
  */
 static PIX  *
 recogDisplayOutlier(L_RECOG   *recog,
-                    l_int32    iclass,
-                    l_int32    jsamp,
-                    l_int32    maxclass,
+                    int32_t    iclass,
+                    int32_t    jsamp,
+                    int32_t    maxclass,
                     l_float32  maxscore)
 {
 char   buf[64];
@@ -2287,9 +2287,9 @@ recogShowMatchesInRange(L_RECOG   *recog,
                         PIXA      *pixa,
                         l_float32  minscore,
                         l_float32  maxscore,
-                        l_int32    display)
+                        int32_t    display)
 {
-l_int32    i, n, index, depth;
+int32_t    i, n, index, depth;
 l_float32  score;
 NUMA      *nascore, *naindex;
 PIX       *pix1, *pix2;
@@ -2379,7 +2379,7 @@ recogShowMatch(L_RECOG   *recog,
                PIX       *pix1,
                PIX       *pix2,
                BOX       *box,
-               l_int32    index,
+               int32_t    index,
                l_float32  score)
 {
 char    buf[32];

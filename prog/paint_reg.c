@@ -46,8 +46,8 @@ static PIX * FakeReconstructByBand(L_REGPARAMS *rp, const char *fname);
 int main(int    argc,
          char **argv)
 {
-l_int32       index;
-l_uint32      val32;
+int32_t       index;
+uint32_t      val32;
 BOX          *box, *box1, *box2, *box3, *box4, *box5;
 BOXA         *boxa;
 L_KERNEL     *kel;
@@ -307,7 +307,7 @@ static PIX *
 ReconstructByValue(L_REGPARAMS  *rp,
                    const char   *fname)
 {
-l_int32   i, n, rval, gval, bval;
+int32_t   i, n, rval, gval, bval;
 PIX      *pixs, *pixm, *pixd;
 PIXCMAP  *cmap;
 
@@ -331,8 +331,8 @@ static PIX *
 FakeReconstructByBand(L_REGPARAMS  *rp,
                       const char   *fname)
 {
-l_int32   i, jlow, jup, n, nbands;
-l_int32   rval1, gval1, bval1, rval2, gval2, bval2, rval, gval, bval;
+int32_t   i, jlow, jup, n, nbands;
+int32_t   rval1, gval1, bval1, rval2, gval2, bval2, rval, gval, bval;
 PIX      *pixs, *pixm, *pixd;
 PIXCMAP  *cmaps, *cmapd;
 

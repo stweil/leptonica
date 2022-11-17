@@ -35,23 +35,23 @@
 #include <math.h>
 #include "allheaders.h"
 
-static void DisplayResult(PIXA *pixac, PIX **ppixd, l_int32 newline);
-static void DisplayCaptcha(PIXA *pixac, PIX *pixs, l_int32 nterms,
-                           l_uint32 seed, l_int32 newline);
+static void DisplayResult(PIXA *pixac, PIX **ppixd, int32_t newline);
+static void DisplayCaptcha(PIXA *pixac, PIX *pixs, int32_t nterms,
+                           uint32_t seed, int32_t newline);
 
-static const l_int32 size = 4;
+static const int32_t size = 4;
 static const l_float32 xmag[] = {3.0f, 4.0f, 5.0f, 7.0f};
 static const l_float32 ymag[] = {5.0f, 6.0f, 8.0f, 10.0f};
 static const l_float32 xfreq[] = {0.11f, 0.10f, 0.10f, 0.12f};
 static const l_float32 yfreq[] = {0.11f, 0.13f, 0.13f, 0.15f};
-static const l_int32 nx[] = {4, 3, 2, 1};
-static const l_int32 ny[] = {4, 3, 2, 1};
+static const int32_t nx[] = {4, 3, 2, 1};
+static const int32_t ny[] = {4, 3, 2, 1};
 
 
 int main(int    argc,
          char **argv)
 {
-l_int32       i, k, newline;
+int32_t       i, k, newline;
 PIX          *pixs, *pixt, *pixg, *pixd;
 PIXA         *pixac;
 L_REGPARAMS  *rp;
@@ -102,9 +102,9 @@ L_REGPARAMS  *rp;
 static void
 DisplayResult(PIXA    *pixac,
               PIX    **ppixd,
-              l_int32  newline)
+              int32_t  newline)
 {
-l_uint32  color;
+uint32_t  color;
 PIX      *pix1;
 
     color = 0;
@@ -121,11 +121,11 @@ PIX      *pix1;
 static void
 DisplayCaptcha(PIXA    *pixac,
               PIX      *pixs,
-              l_int32   nterms,
-              l_uint32  seed,
-              l_int32   newline)
+              int32_t   nterms,
+              uint32_t  seed,
+              int32_t   newline)
 {
-l_uint32  color;
+uint32_t  color;
 PIX      *pixd;
 
     color = 0;

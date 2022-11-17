@@ -66,8 +66,8 @@
     /*! Number array: an array of floats */
 struct Numa
 {
-    l_int32          nalloc;    /*!< size of allocated number array      */
-    l_int32          n;         /*!< number of numbers saved             */
+    int32_t          nalloc;    /*!< size of allocated number array      */
+    int32_t          n;         /*!< number of numbers saved             */
     l_atomic         refcount;  /*!< reference count (1 if no clones)    */
     l_float32        startx;    /*!< x value assigned to array[0]        */
     l_float32        delx;      /*!< change in x value as i --> i + 1    */
@@ -77,8 +77,8 @@ struct Numa
     /*! Array of number arrays */
 struct Numaa
 {
-    l_int32          nalloc;    /*!< size of allocated ptr array          */
-    l_int32          n;         /*!< number of Numa saved                 */
+    int32_t          nalloc;    /*!< size of allocated ptr array          */
+    int32_t          n;         /*!< number of Numa saved                 */
     struct Numa    **numa;      /*!< array of Numa                        */
 };
 
@@ -88,8 +88,8 @@ struct Numaa
     /*! Double number array: an array of doubles */
 struct L_Dna
 {
-    l_int32          nalloc;    /*!< size of allocated number array      */
-    l_int32          n;         /*!< number of numbers saved             */
+    int32_t          nalloc;    /*!< size of allocated number array      */
+    int32_t          n;         /*!< number of numbers saved             */
     l_atomic         refcount;  /*!< reference count (1 if no clones)    */
     l_float64        startx;    /*!< x value assigned to array[0]        */
     l_float64        delx;      /*!< change in x value as i --> i + 1    */
@@ -99,15 +99,15 @@ struct L_Dna
     /*! Array of double number arrays */
 struct L_Dnaa
 {
-    l_int32          nalloc;    /*!< size of allocated ptr array          */
-    l_int32          n;         /*!< number of L_Dna saved                */
+    int32_t          nalloc;    /*!< size of allocated ptr array          */
+    int32_t          n;         /*!< number of L_Dna saved                */
     struct L_Dna   **dna;       /*!< array of L_Dna                       */
 };
 
 struct L_DnaHash
 {
-    l_int32          nbuckets;
-    l_int32          initsize;   /*!< initial size of each dna that is made  */
+    int32_t          nbuckets;
+    int32_t          initsize;   /*!< initial size of each dna that is made  */
     struct L_Dna   **dna;        /*!< array of L_Dna                       */
 };
 
@@ -117,8 +117,8 @@ struct L_DnaHash
     /*! String array: an array of C strings */
 struct Sarray
 {
-    l_int32          nalloc;    /*!< size of allocated ptr array         */
-    l_int32          n;         /*!< number of strings allocated         */
+    int32_t          nalloc;    /*!< size of allocated ptr array         */
+    int32_t          n;         /*!< number of strings allocated         */
     l_atomic         refcount;  /*!< reference count (1 if no clones)    */
     char           **array;     /*!< string array                        */
 };
@@ -129,7 +129,7 @@ struct L_Bytea
     size_t           nalloc;    /*!< number of bytes allocated in data array  */
     size_t           size;      /*!< number of bytes presently used           */
     l_atomic         refcount;  /*!< reference count (1 if no clones)         */
-    l_uint8         *data;      /*!< data array                               */
+    uint8_t         *data;      /*!< data array                               */
 };
 
 #endif  /* LEPTONICA_ARRAY_INTERNAL_H */

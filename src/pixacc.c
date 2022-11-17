@@ -38,13 +38,13 @@
  *
  *      Pixacc accessors
  *           PIX      *pixaccGetPix()
- *           l_int32   pixaccGetOffset()
+ *           int32_t   pixaccGetOffset()
  *
  *      Pixacc accumulators
- *           l_int32   pixaccAdd()
- *           l_int32   pixaccSubtract()
- *           l_int32   pixaccMultConst()
- *           l_int32   pixaccMultConstAccumulate()
+ *           int32_t   pixaccAdd()
+ *           int32_t   pixaccSubtract()
+ *           int32_t   pixaccMultConst()
+ *           int32_t   pixaccMultConstAccumulate()
  *
  *  This is a simple interface for some of the pixel arithmetic operations
  *  in pixarith.c.  These are easy to code up, but not as fast as
@@ -90,9 +90,9 @@
  * </pre>
  */
 PIXACC *
-pixaccCreate(l_int32  w,
-             l_int32  h,
-             l_int32  negflag)
+pixaccCreate(int32_t  w,
+             int32_t  h,
+             int32_t  negflag)
 {
 PIXACC  *pixacc;
 
@@ -129,9 +129,9 @@ PIXACC  *pixacc;
  */
 PIXACC *
 pixaccCreateFromPix(PIX     *pix,
-                    l_int32  negflag)
+                    int32_t  negflag)
 {
-l_int32  w, h;
+int32_t  w, h;
 PIXACC  *pixacc;
 
     if (!pix)
@@ -186,7 +186,7 @@ PIXACC  *pixacc;
  */
 PIX *
 pixaccFinal(PIXACC  *pixacc,
-            l_int32  outdepth)
+            int32_t  outdepth)
 {
     if (!pixacc)
         return (PIX *)ERROR_PTR("pixacc not defined", __func__, NULL);
@@ -220,7 +220,7 @@ pixaccGetPix(PIXACC  *pixacc)
  * \param[in]    pixacc
  * \return  offset, or -1 on error
  */
-l_int32
+int32_t
 pixaccGetOffset(PIXACC  *pixacc)
 {
     if (!pixacc)
@@ -310,7 +310,7 @@ pixaccMultConstAccumulate(PIXACC    *pixacc,
                           PIX       *pix,
                           l_float32  factor)
 {
-l_int32  w, h, d, negflag;
+int32_t  w, h, d, negflag;
 PIX     *pixt;
 PIXACC  *pacct;
 

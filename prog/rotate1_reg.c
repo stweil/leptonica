@@ -46,16 +46,16 @@
 #define   EIGHT_BPP_CMAP_IMAGE2     "test24.jpg"
 #define   RGB_IMAGE                 "marge.jpg"
 
-static const l_int32    MODSIZE = 11;  /* set to 11 for display */
+static const int32_t    MODSIZE = 11;  /* set to 11 for display */
 
 static const l_float32  ANGLE1 = 3.14159265 / 12.;
 static const l_float32  ANGLE2 = 3.14159265 / 120.;
-static const l_int32    NTIMES = 24;
+static const int32_t    NTIMES = 24;
 
 static void RotateTest(PIX *pixs, l_float32 scale, L_REGPARAMS *rp);
 
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
 PIX          *pixs, *pixd;
@@ -115,7 +115,7 @@ RotateTest(PIX          *pixs,
            l_float32     scale,
            L_REGPARAMS  *rp)
 {
-l_int32   w, h, d, i, outformat;
+int32_t   w, h, d, i, outformat;
 PIX      *pixt, *pixd;
 PIXA     *pixa;
 

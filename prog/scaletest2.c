@@ -42,7 +42,7 @@ int main(int    argc,
          char **argv)
 {
 PIX     *pixs;
-l_int32  d;
+int32_t  d;
 
     if (argc != 2)
         return ERROR_INT(" Syntax:  scaletest2 filein", __func__, 1);
@@ -162,7 +162,7 @@ l_int32  d;
 #if 1
         /* Test a large range of scale-to-gray reductions */
     if (d == 1) {
-        l_int32    i;
+        int32_t    i;
         l_float32  scale;
         PIX       *pixd;
 
@@ -191,7 +191,7 @@ l_int32  d;
 #if 1
         /* Test the same range of scale-to-gray mipmap reductions */
     if (d == 1) {
-        l_int32    i;
+        int32_t    i;
         l_float32  scale;
         PIX       *pixd;
 
@@ -222,8 +222,8 @@ l_int32  d;
     if (d != 1) {
         PIX *pixt1, *pixt2, *pixt3, *pixt4, *pixt5, *pixt6, *pixt7;
         l_float32 SCALING = 0.27;
-        l_int32   SIZE = 7;
-        l_int32   smooth;
+        int32_t   SIZE = 7;
+        int32_t   smooth;
         l_float32 FRACT = 1.0;
 
         smooth = SIZE / 2;

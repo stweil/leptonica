@@ -45,8 +45,8 @@
 #include "allheaders.h"
 
     /* for pixDisplayHitMissSel() */
-static const l_uint32  HitColor = 0x33aa4400;
-static const l_uint32  MissColor = 0xaa44bb00;
+static const uint32_t  HitColor = 0x33aa4400;
+static const uint32_t  MissColor = 0xaa44bb00;
 
 int main(int    argc,
          char **argv)

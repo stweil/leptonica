@@ -37,14 +37,14 @@
 ---               This file is:  hmttemplate1.txt
 ---
 ---           We need to include these prototypes:
----    PIX *pixHMTDwa_*(PIX *pixd, PIX *pixs, l_int32 operation);
----    PIX *pixFHMTGen_*(PIX *pixd, PIX *pixs, l_int32 operation);
----    l_int32 fhmtgen_low_*(l_uint32 *datad, l_int32 w, l_int32 h,
----                          l_int32 wpld, l_uint32 *datas,
----                          l_int32  wpls, l_int32 index);
+---    PIX *pixHMTDwa_*(PIX *pixd, PIX *pixs, int32_t operation);
+---    PIX *pixFHMTGen_*(PIX *pixd, PIX *pixs, int32_t operation);
+---    int32_t fhmtgen_low_*(uint32_t *datad, int32_t w, int32_t h,
+---                          int32_t wpld, uint32_t *datas,
+---                          int32_t  wpls, int32_t index);
 ---
 ---             We need to input two static globals here:
----   static l_int32     NUM_SELS_GENERATED =  <some number>;
+---   static int32_t     NUM_SELS_GENERATED =  <some number>;
 ---   static char  SEL_NAMES[][80] =    {"<string1>", "<string2>", ...};
 
 /*!
@@ -115,8 +115,8 @@ PIX *
              PIX         *pixs,
              const char  *selname)
 {
-l_int32    i, index, found, w, h, wpls, wpld;
-l_uint32  *datad, *datas, *datat;
+int32_t    i, index, found, w, h, wpls, wpld;
+uint32_t  *datad, *datas, *datat;
 PIX       *pixt;
 
 --- PROCNAME("pixFHMTGen_*");

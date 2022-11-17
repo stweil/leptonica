@@ -45,7 +45,7 @@ int main(int    argc,
          char **argv)
 {
 char         *str;
-l_int32       i, j, same, ok, plottype;
+int32_t       i, j, same, ok, plottype;
 l_float32     sum, avediff, rmsdiff;
 L_KERNEL     *kel1, *kel2, *kel3, *kel4, *kelx, *kely;
 BOX          *box;

@@ -68,24 +68,24 @@
 #define   FILE_TRANS_CMAP_4BPP  "trans-4bpp-cmap.png"
 #define   FILE_TRANS_CMAP_8BPP  "trans-8bpp-cmap.png"
 
-static l_int32 test_mem_png(const char *fname);
-static l_int32 get_header_data(const char *filename);
-static l_int32 test_1bpp_trans(L_REGPARAMS *rp);
-static l_int32 test_1bpp_color(L_REGPARAMS *rp);
-static l_int32 test_1bpp_gray(L_REGPARAMS *rp);
-static l_int32 test_1bpp_bw1(L_REGPARAMS *rp);
-static l_int32 test_1bpp_bw2(L_REGPARAMS *rp);
-static l_int32 test_2bpp_cmap_trans(L_REGPARAMS  *rp);
-static l_int32 test_4bpp_cmap_trans(L_REGPARAMS  *rp);
-static l_int32 test_8bpp_cmap_trans(L_REGPARAMS  *rp);
-static l_int32 test_8bpp_trans(L_REGPARAMS  *rp);
+static int32_t test_mem_png(const char *fname);
+static int32_t get_header_data(const char *filename);
+static int32_t test_1bpp_trans(L_REGPARAMS *rp);
+static int32_t test_1bpp_color(L_REGPARAMS *rp);
+static int32_t test_1bpp_gray(L_REGPARAMS *rp);
+static int32_t test_1bpp_bw1(L_REGPARAMS *rp);
+static int32_t test_1bpp_bw2(L_REGPARAMS *rp);
+static int32_t test_2bpp_cmap_trans(L_REGPARAMS  *rp);
+static int32_t test_4bpp_cmap_trans(L_REGPARAMS  *rp);
+static int32_t test_8bpp_cmap_trans(L_REGPARAMS  *rp);
+static int32_t test_8bpp_trans(L_REGPARAMS  *rp);
 
 LEPT_DLL extern const char *ImageFileFormatExtensions[];
 
 int main(int    argc,
          char **argv)
 {
-l_int32       success, failure;
+int32_t       success, failure;
 L_REGPARAMS  *rp;
 
 #if !defined(HAVE_LIBPNG)
@@ -231,11 +231,11 @@ L_REGPARAMS  *rp;
 
 
     /* Returns 1 on error */
-static l_int32
+static int32_t
 test_mem_png(const char  *fname)
 {
-l_uint8  *data = NULL;
-l_int32   same;
+uint8_t  *data = NULL;
+int32_t   same;
 size_t    size = 0;
 PIX      *pixs;
 PIX      *pixd = NULL;
@@ -264,12 +264,12 @@ PIX      *pixd = NULL;
 }
 
     /* Retrieve header data from file and from array in memory */
-static l_int32
+static int32_t
 get_header_data(const char  *filename)
 {
-l_uint8  *data;
-l_int32   ret1, ret2, format1, format2;
-l_int32   w1, w2, h1, h2, d1, d2, bps1, bps2, spp1, spp2, iscmap1, iscmap2;
+uint8_t  *data;
+int32_t   ret1, ret2, format1, format2;
+int32_t   w1, w2, h1, h2, d1, d2, bps1, bps2, spp1, spp2, iscmap1, iscmap2;
 size_t    nbytes1, nbytes2;
 
         /* Read header from file */
@@ -315,10 +315,10 @@ size_t    nbytes1, nbytes2;
     return ret1 || ret2;
 }
 
-static l_int32
+static int32_t
 test_1bpp_trans(L_REGPARAMS  *rp)
 {
-l_int32   same, transp;
+int32_t   same, transp;
 FILE     *fp;
 PIX      *pix1, *pix2;
 PIXCMAP  *cmap;
@@ -350,10 +350,10 @@ PIXCMAP  *cmap;
     return same;
 }
 
-static l_int32
+static int32_t
 test_1bpp_color(L_REGPARAMS  *rp)
 {
-l_int32   same, transp;
+int32_t   same, transp;
 FILE     *fp;
 PIX      *pix1, *pix2;
 PIXCMAP  *cmap;
@@ -385,10 +385,10 @@ PIXCMAP  *cmap;
     return same;
 }
 
-static l_int32
+static int32_t
 test_1bpp_gray(L_REGPARAMS  *rp)
 {
-l_int32   same;
+int32_t   same;
 PIX      *pix1, *pix2;
 PIXCMAP  *cmap;
 
@@ -410,10 +410,10 @@ PIXCMAP  *cmap;
     return same;
 }
 
-static l_int32
+static int32_t
 test_1bpp_bw1(L_REGPARAMS  *rp)
 {
-l_int32   same;
+int32_t   same;
 PIX      *pix1, *pix2;
 PIXCMAP  *cmap;
 
@@ -435,10 +435,10 @@ PIXCMAP  *cmap;
     return same;
 }
 
-static l_int32
+static int32_t
 test_1bpp_bw2(L_REGPARAMS  *rp)
 {
-l_int32   same;
+int32_t   same;
 PIX      *pix1, *pix2;
 PIXCMAP  *cmap;
 
@@ -460,10 +460,10 @@ PIXCMAP  *cmap;
     return same;
 }
 
-static l_int32
+static int32_t
 test_2bpp_cmap_trans(L_REGPARAMS  *rp)
 {
-l_int32   w, h, same;
+int32_t   w, h, same;
 PIX      *pix1, *pix2;
 PIXCMAP  *cmap;
 
@@ -491,10 +491,10 @@ PIXCMAP  *cmap;
     return same;
 }
 
-static l_int32
+static int32_t
 test_4bpp_cmap_trans(L_REGPARAMS  *rp)
 {
-l_int32   w, h, same;
+int32_t   w, h, same;
 PIX      *pix1, *pix2;
 PIXCMAP  *cmap;
 
@@ -522,10 +522,10 @@ PIXCMAP  *cmap;
     return same;
 }
 
-static l_int32
+static int32_t
 test_8bpp_cmap_trans(L_REGPARAMS  *rp)
 {
-l_int32   w, h, same;
+int32_t   w, h, same;
 PIX      *pix1, *pix2;
 PIXCMAP  *cmap;
 
@@ -554,10 +554,10 @@ PIXCMAP  *cmap;
     return same;
 }
 
-static l_int32
+static int32_t
 test_8bpp_trans(L_REGPARAMS  *rp)
 {
-l_int32   same, transp;
+int32_t   same, transp;
 FILE     *fp;
 PIX      *pix1, *pix2, *pix3;
 PIXCMAP  *cmap;

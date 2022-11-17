@@ -47,22 +47,22 @@
  *          PIX       *pixBackgroundNormMorph()      8 and 32 bpp
  *
  *      Arrays of inverted background values for normalization (16 bpp)
- *          l_int32    pixBackgroundNormGrayArray()   8 bpp input
- *          l_int32    pixBackgroundNormRGBArrays()   32 bpp input
- *          l_int32    pixBackgroundNormGrayArrayMorph()   8 bpp input
- *          l_int32    pixBackgroundNormRGBArraysMorph()   32 bpp input
+ *          int32_t    pixBackgroundNormGrayArray()   8 bpp input
+ *          int32_t    pixBackgroundNormRGBArrays()   32 bpp input
+ *          int32_t    pixBackgroundNormGrayArrayMorph()   8 bpp input
+ *          int32_t    pixBackgroundNormRGBArraysMorph()   32 bpp input
  *
  *      Measurement of local background
- *          l_int32    pixGetBackgroundGrayMap()        8 bpp
- *          l_int32    pixGetBackgroundRGBMap()         32 bpp
- *          l_int32    pixGetBackgroundGrayMapMorph()   8 bpp
- *          l_int32    pixGetBackgroundRGBMapMorph()    32 bpp
- *          l_int32    pixFillMapHoles()
+ *          int32_t    pixGetBackgroundGrayMap()        8 bpp
+ *          int32_t    pixGetBackgroundRGBMap()         32 bpp
+ *          int32_t    pixGetBackgroundGrayMapMorph()   8 bpp
+ *          int32_t    pixGetBackgroundRGBMapMorph()    32 bpp
+ *          int32_t    pixFillMapHoles()
  *          PIX       *pixExtendByReplication()         8 bpp
- *          l_int32    pixSmoothConnectedRegions()      8 bpp
+ *          int32_t    pixSmoothConnectedRegions()      8 bpp
  *
  *      Measurement of local foreground
- *          l_int32    pixGetForegroundGrayMap()        8 bpp
+ *          int32_t    pixGetForegroundGrayMap()        8 bpp
  *
  *      Generate inverted background map for each component
  *          PIX       *pixGetInvBackgroundMap()   16 bpp
@@ -79,17 +79,17 @@
  *          PIX       *pixGlobalNormNoSatRGB()          32 bpp
  *
  *      Adaptive threshold spread normalization
- *          l_int32    pixThresholdSpreadNorm()         8 bpp
+ *          int32_t    pixThresholdSpreadNorm()         8 bpp
  *
  *      Adaptive background normalization (flexible adaptaption)
  *          PIX       *pixBackgroundNormFlex()          8 bpp
  *
  *      Adaptive contrast normalization
  *          PIX             *pixContrastNorm()          8 bpp
- *          static l_int32   pixMinMaxTiles()
- *          static l_int32   pixSetLowContrast()
+ *          static int32_t   pixMinMaxTiles()
+ *          static int32_t   pixSetLowContrast()
  *          static PIX      *pixLinearTRCTiled()
- *          static l_int32  *iaaGetLinearTRC()
+ *          static int32_t  *iaaGetLinearTRC()
  *
  *  Background normalization is done by generating a reduced map (or set
  *  of maps) representing the estimated background value of the
@@ -145,21 +145,21 @@
      *        shrinking the dynamic range
      *    (3) results should otherwise not be sensitive to these values
      */
-static const l_int32  DefaultTileWidth = 10;    /*!< default tile width    */
-static const l_int32  DefaultTileHeight = 15;   /*!< default tile height   */
-static const l_int32  DefaultFgThreshold = 60;  /*!< default fg threshold  */
-static const l_int32  DefaultMinCount = 40;     /*!< default minimum count */
-static const l_int32  DefaultBgVal = 200;       /*!< default bg value      */
-static const l_int32  DefaultXSmoothSize = 2;  /*!< default x smooth size */
-static const l_int32  DefaultYSmoothSize = 1;  /*!< default y smooth size */
+static const int32_t  DefaultTileWidth = 10;    /*!< default tile width    */
+static const int32_t  DefaultTileHeight = 15;   /*!< default tile height   */
+static const int32_t  DefaultFgThreshold = 60;  /*!< default fg threshold  */
+static const int32_t  DefaultMinCount = 40;     /*!< default minimum count */
+static const int32_t  DefaultBgVal = 200;       /*!< default bg value      */
+static const int32_t  DefaultXSmoothSize = 2;  /*!< default x smooth size */
+static const int32_t  DefaultYSmoothSize = 1;  /*!< default y smooth size */
 
-static l_int32 pixMinMaxTiles(PIX *pixs, l_int32 sx, l_int32 sy,
-                              l_int32 mindiff, l_int32 smoothx, l_int32 smoothy,
+static int32_t pixMinMaxTiles(PIX *pixs, int32_t sx, int32_t sy,
+                              int32_t mindiff, int32_t smoothx, int32_t smoothy,
                               PIX **ppixmin, PIX **ppixmax);
-static l_int32 pixSetLowContrast(PIX *pixs1, PIX *pixs2, l_int32 mindiff);
-static PIX *pixLinearTRCTiled(PIX *pixd, PIX *pixs, l_int32 sx, l_int32 sy,
+static int32_t pixSetLowContrast(PIX *pixs1, PIX *pixs2, int32_t mindiff);
+static PIX *pixLinearTRCTiled(PIX *pixd, PIX *pixs, int32_t sx, int32_t sy,
                               PIX *pixmin, PIX *pixmax);
-static l_int32 *iaaGetLinearTRC(l_int32 **iaa, l_int32 diff);
+static int32_t *iaaGetLinearTRC(int32_t **iaa, int32_t diff);
 
 #ifndef  NO_CONSOLE_IO
 #define  DEBUG_GLOBAL    0    /*!< set to 1 to debug pixGlobalNormNoSatRGB() */
@@ -197,10 +197,10 @@ pixCleanBackgroundToWhite(PIX       *pixs,
                           PIX       *pixim,
                           PIX       *pixg,
                           l_float32  gamma,
-                          l_int32    blackval,
-                          l_int32    whiteval)
+                          int32_t    blackval,
+                          int32_t    whiteval)
 {
-l_int32  d;
+int32_t  d;
 PIX     *pixd;
 
     if (!pixs)
@@ -320,15 +320,15 @@ PIX *
 pixBackgroundNorm(PIX     *pixs,
                   PIX     *pixim,
                   PIX     *pixg,
-                  l_int32  sx,
-                  l_int32  sy,
-                  l_int32  thresh,
-                  l_int32  mincount,
-                  l_int32  bgval,
-                  l_int32  smoothx,
-                  l_int32  smoothy)
+                  int32_t  sx,
+                  int32_t  sy,
+                  int32_t  thresh,
+                  int32_t  mincount,
+                  int32_t  bgval,
+                  int32_t  smoothx,
+                  int32_t  smoothy)
 {
-l_int32  d, allfg;
+int32_t  d, allfg;
 PIX     *pixm, *pixmi, *pixd;
 PIX     *pixmr, *pixmg, *pixmb, *pixmri, *pixmgi, *pixmbi;
 
@@ -454,11 +454,11 @@ PIX     *pixmr, *pixmg, *pixmb, *pixmri, *pixmgi, *pixmbi;
 PIX *
 pixBackgroundNormMorph(PIX     *pixs,
                        PIX     *pixim,
-                       l_int32  reduction,
-                       l_int32  size,
-                       l_int32  bgval)
+                       int32_t  reduction,
+                       int32_t  size,
+                       int32_t  bgval)
 {
-l_int32    d, allfg;
+int32_t    d, allfg;
 PIX       *pixm, *pixmi, *pixd;
 PIX       *pixmr, *pixmg, *pixmb, *pixmri, *pixmgi, *pixmbi;
 
@@ -563,16 +563,16 @@ PIX       *pixmr, *pixmg, *pixmb, *pixmri, *pixmgi, *pixmbi;
 l_ok
 pixBackgroundNormGrayArray(PIX     *pixs,
                            PIX     *pixim,
-                           l_int32  sx,
-                           l_int32  sy,
-                           l_int32  thresh,
-                           l_int32  mincount,
-                           l_int32  bgval,
-                           l_int32  smoothx,
-                           l_int32  smoothy,
+                           int32_t  sx,
+                           int32_t  sy,
+                           int32_t  thresh,
+                           int32_t  mincount,
+                           int32_t  bgval,
+                           int32_t  smoothx,
+                           int32_t  smoothy,
                            PIX    **ppixd)
 {
-l_int32  allfg;
+int32_t  allfg;
 PIX     *pixm;
 
     if (!ppixd)
@@ -639,18 +639,18 @@ l_ok
 pixBackgroundNormRGBArrays(PIX     *pixs,
                            PIX     *pixim,
                            PIX     *pixg,
-                           l_int32  sx,
-                           l_int32  sy,
-                           l_int32  thresh,
-                           l_int32  mincount,
-                           l_int32  bgval,
-                           l_int32  smoothx,
-                           l_int32  smoothy,
+                           int32_t  sx,
+                           int32_t  sy,
+                           int32_t  thresh,
+                           int32_t  mincount,
+                           int32_t  bgval,
+                           int32_t  smoothx,
+                           int32_t  smoothy,
                            PIX    **ppixr,
                            PIX    **ppixg,
                            PIX    **ppixb)
 {
-l_int32  allfg;
+int32_t  allfg;
 PIX     *pixmr, *pixmg, *pixmb;
 
     if (!ppixr || !ppixg || !ppixb)
@@ -719,12 +719,12 @@ PIX     *pixmr, *pixmg, *pixmb;
 l_ok
 pixBackgroundNormGrayArrayMorph(PIX     *pixs,
                                 PIX     *pixim,
-                                l_int32  reduction,
-                                l_int32  size,
-                                l_int32  bgval,
+                                int32_t  reduction,
+                                int32_t  size,
+                                int32_t  bgval,
                                 PIX    **ppixd)
 {
-l_int32  allfg;
+int32_t  allfg;
 PIX     *pixm;
 
     if (!ppixd)
@@ -782,14 +782,14 @@ PIX     *pixm;
 l_ok
 pixBackgroundNormRGBArraysMorph(PIX     *pixs,
                                 PIX     *pixim,
-                                l_int32  reduction,
-                                l_int32  size,
-                                l_int32  bgval,
+                                int32_t  reduction,
+                                int32_t  size,
+                                int32_t  bgval,
                                 PIX    **ppixr,
                                 PIX    **ppixg,
                                 PIX    **ppixb)
 {
-l_int32  allfg;
+int32_t  allfg;
 PIX     *pixmr, *pixmg, *pixmb;
 
     if (!ppixr || !ppixg || !ppixb)
@@ -857,17 +857,17 @@ PIX     *pixmr, *pixmg, *pixmb;
 l_ok
 pixGetBackgroundGrayMap(PIX     *pixs,
                         PIX     *pixim,
-                        l_int32  sx,
-                        l_int32  sy,
-                        l_int32  thresh,
-                        l_int32  mincount,
+                        int32_t  sx,
+                        int32_t  sy,
+                        int32_t  thresh,
+                        int32_t  mincount,
                         PIX    **ppixd)
 {
-l_int32    w, h, wd, hd, wim, him, wpls, wplim, wpld, wplf;
-l_int32    xim, yim, delx, nx, ny, i, j, k, m;
-l_int32    count, sum, val8;
-l_int32    empty, fgpixels;
-l_uint32  *datas, *dataim, *datad, *dataf, *lines, *lineim, *lined, *linef;
+int32_t    w, h, wd, hd, wim, him, wpls, wplim, wpld, wplf;
+int32_t    xim, yim, delx, nx, ny, i, j, k, m;
+int32_t    count, sum, val8;
+int32_t    empty, fgpixels;
+uint32_t  *datas, *dataim, *datad, *dataf, *lines, *lineim, *lined, *linef;
 l_float32  scalex, scaley;
 PIX       *pixd, *piximi, *pixb, *pixf, *pixims;
 
@@ -1038,20 +1038,20 @@ l_ok
 pixGetBackgroundRGBMap(PIX     *pixs,
                        PIX     *pixim,
                        PIX     *pixg,
-                       l_int32  sx,
-                       l_int32  sy,
-                       l_int32  thresh,
-                       l_int32  mincount,
+                       int32_t  sx,
+                       int32_t  sy,
+                       int32_t  thresh,
+                       int32_t  mincount,
                        PIX    **ppixmr,
                        PIX    **ppixmg,
                        PIX    **ppixmb)
 {
-l_int32    w, h, wm, hm, wim, him, wpls, wplim, wplf;
-l_int32    xim, yim, delx, nx, ny, i, j, k, m;
-l_int32    count, rsum, gsum, bsum, rval, gval, bval;
-l_int32    empty, fgpixels;
-l_uint32   pixel;
-l_uint32  *datas, *dataim, *dataf, *lines, *lineim, *linef;
+int32_t    w, h, wm, hm, wim, him, wpls, wplim, wplf;
+int32_t    xim, yim, delx, nx, ny, i, j, k, m;
+int32_t    count, rsum, gsum, bsum, rval, gval, bval;
+int32_t    empty, fgpixels;
+uint32_t   pixel;
+uint32_t  *datas, *dataim, *dataf, *lines, *lineim, *linef;
 l_float32  scalex, scaley;
 PIX       *piximi, *pixgc, *pixb, *pixf, *pixims;
 PIX       *pixmr, *pixmg, *pixmb;
@@ -1220,11 +1220,11 @@ PIX       *pixmr, *pixmg, *pixmb;
 l_ok
 pixGetBackgroundGrayMapMorph(PIX     *pixs,
                              PIX     *pixim,
-                             l_int32  reduction,
-                             l_int32  size,
+                             int32_t  reduction,
+                             int32_t  size,
                              PIX    **ppixm)
 {
-l_int32    nx, ny, empty, fgpixels;
+int32_t    nx, ny, empty, fgpixels;
 l_float32  scale;
 PIX       *pixm, *pix1, *pix2, *pix3, *pixims;
 
@@ -1309,13 +1309,13 @@ PIX       *pixm, *pix1, *pix2, *pix3, *pixims;
 l_ok
 pixGetBackgroundRGBMapMorph(PIX     *pixs,
                             PIX     *pixim,
-                            l_int32  reduction,
-                            l_int32  size,
+                            int32_t  reduction,
+                            int32_t  size,
                             PIX    **ppixmr,
                             PIX    **ppixmg,
                             PIX    **ppixmb)
 {
-l_int32    nx, ny, empty, fgpixels;
+int32_t    nx, ny, empty, fgpixels;
 l_float32  scale;
 PIX       *pixm, *pixmr, *pixmg, *pixmb, *pix1, *pix2, *pix3, *pixims;
 
@@ -1460,12 +1460,12 @@ PIX       *pixm, *pixmr, *pixmg, *pixmb, *pix1, *pix2, *pix3, *pixims;
  */
 l_ok
 pixFillMapHoles(PIX     *pix,
-                l_int32  nx,
-                l_int32  ny,
-                l_int32  filltype)
+                int32_t  nx,
+                int32_t  ny,
+                int32_t  filltype)
 {
-l_int32   w, h, y, nmiss, goodcol, i, j, found, ival, valtest;
-l_uint32  val, lastval;
+int32_t   w, h, y, nmiss, goodcol, i, j, found, ival, valtest;
+uint32_t  val, lastval;
 NUMA     *na;  /* indicates if there is any data in the column */
 
     if (!pix || pixGetDepth(pix) != 8)
@@ -1560,11 +1560,11 @@ NUMA     *na;  /* indicates if there is any data in the column */
  */
 PIX *
 pixExtendByReplication(PIX     *pixs,
-                       l_int32  addw,
-                       l_int32  addh)
+                       int32_t  addw,
+                       int32_t  addh)
 {
-l_int32   w, h, i, j;
-l_uint32  val;
+int32_t   w, h, i, j;
+uint32_t  val;
 PIX      *pixd;
 
     if (!pixs || pixGetDepth(pixs) != 8)
@@ -1622,9 +1622,9 @@ PIX      *pixd;
 l_ok
 pixSmoothConnectedRegions(PIX     *pixs,
                           PIX     *pixm,
-                          l_int32  factor)
+                          int32_t  factor)
 {
-l_int32    empty, i, n, x, y;
+int32_t    empty, i, n, x, y;
 l_float32  aveval;
 BOXA      *boxa;
 PIX       *pixmc;
@@ -1655,7 +1655,7 @@ PIXA      *pixa;
         }
         boxaGetBoxGeometry(boxa, i, &x, &y, NULL, NULL);
         pixGetAverageMasked(pixs, pixmc, x, y, factor, L_MEAN_ABSVAL, &aveval);
-        pixPaintThroughMask(pixs, pixmc, x, y, (l_int32)aveval);
+        pixPaintThroughMask(pixs, pixmc, x, y, (int32_t)aveval);
         pixDestroy(&pixmc);
     }
 
@@ -1709,13 +1709,13 @@ PIXA      *pixa;
 l_ok
 pixGetForegroundGrayMap(PIX     *pixs,
                         PIX     *pixim,
-                        l_int32  sx,
-                        l_int32  sy,
-                        l_int32  thresh,
+                        int32_t  sx,
+                        int32_t  sy,
+                        int32_t  thresh,
                         PIX    **ppixd)
 {
-l_int32  w, h, d, wd, hd;
-l_int32  empty, fgpixels;
+int32_t  w, h, d, wd, hd;
+int32_t  empty, fgpixels;
 PIX     *pixd, *piximi, *pixim2, *pixims, *pixs2, *pixb, *pixt1, *pixt2, *pixt3;
 
     if (!ppixd)
@@ -1818,13 +1818,13 @@ PIX     *pixd, *piximi, *pixim2, *pixims, *pixs2, *pixb, *pixt1, *pixt2, *pixt3;
  */
 PIX *
 pixGetInvBackgroundMap(PIX     *pixs,
-                       l_int32  bgval,
-                       l_int32  smoothx,
-                       l_int32  smoothy)
+                       int32_t  bgval,
+                       int32_t  smoothx,
+                       int32_t  smoothy)
 {
-l_int32    w, h, wplsm, wpld, i, j;
-l_int32    val, val16;
-l_uint32  *datasm, *datad, *linesm, *lined;
+int32_t    w, h, wplsm, wpld, i, j;
+int32_t    val, val16;
+uint32_t  *datasm, *datad, *linesm, *lined;
 PIX       *pixsm, *pixd;
 
     if (!pixs || pixGetDepth(pixs) != 8)
@@ -1880,13 +1880,13 @@ PIX       *pixsm, *pixd;
 PIX *
 pixApplyInvBackgroundGrayMap(PIX     *pixs,
                              PIX     *pixm,
-                             l_int32  sx,
-                             l_int32  sy)
+                             int32_t  sx,
+                             int32_t  sy)
 {
-l_int32    w, h, wm, hm, wpls, wpld, i, j, k, m, xoff, yoff;
-l_int32    vals, vald;
-l_uint32   val16;
-l_uint32  *datas, *datad, *lines, *lined, *flines, *flined;
+int32_t    w, h, wm, hm, wpls, wpld, i, j, k, m, xoff, yoff;
+int32_t    vals, vald;
+uint32_t   val16;
+uint32_t  *datas, *datad, *lines, *lined, *flines, *flined;
 PIX       *pixd;
 
     if (!pixs || pixGetDepth(pixs) != 8)
@@ -1946,14 +1946,14 @@ pixApplyInvBackgroundRGBMap(PIX     *pixs,
                             PIX     *pixmr,
                             PIX     *pixmg,
                             PIX     *pixmb,
-                            l_int32  sx,
-                            l_int32  sy)
+                            int32_t  sx,
+                            int32_t  sy)
 {
-l_int32    w, h, wm, hm, wpls, wpld, i, j, k, m, xoff, yoff;
-l_int32    rvald, gvald, bvald;
-l_uint32   vals;
-l_uint32   rval16, gval16, bval16;
-l_uint32  *datas, *datad, *lines, *lined, *flines, *flined;
+int32_t    w, h, wm, hm, wpls, wpld, i, j, k, m, xoff, yoff;
+int32_t    rvald, gvald, bvald;
+uint32_t   vals;
+uint32_t   rval16, gval16, bval16;
+uint32_t  *datas, *datad, *lines, *lined, *flines, *flined;
 PIX       *pixd;
 
     if (!pixs)
@@ -2040,11 +2040,11 @@ PIX       *pixd;
 PIX *
 pixApplyVariableGrayMap(PIX     *pixs,
                         PIX     *pixg,
-                        l_int32  target)
+                        int32_t  target)
 {
-l_int32    i, j, w, h, d, wpls, wplg, wpld, vals, valg, vald;
-l_uint8   *lut;
-l_uint32  *datas, *datag, *datad, *lines, *lineg, *lined;
+int32_t    i, j, w, h, d, wpls, wplg, wpld, vals, valg, vald;
+uint8_t   *lut;
+uint32_t  *datas, *datag, *datad, *lines, *lineg, *lined;
 l_float32  fval;
 PIX       *pixd;
 
@@ -2067,11 +2067,11 @@ PIX       *pixd;
          * 4x faster when using the LUT.  C'est la vie.  */
     lut = NULL;
     if (w * h > 100000) {  /* more pixels than 2^16 */
-        lut = (l_uint8 *)LEPT_CALLOC(0x10000, sizeof(l_uint8));
+        lut = (uint8_t *)LEPT_CALLOC(0x10000, sizeof(uint8_t));
         for (i = 0; i < 256; i++) {
             for (j = 0; j < 256; j++) {
                 fval = (l_float32)(i * target) / (j + 0.5);
-                lut[(i << 8) + j] = L_MIN(255, (l_int32)(fval + 0.5));
+                lut[(i << 8) + j] = L_MIN(255, (int32_t)(fval + 0.5));
             }
         }
     }
@@ -2104,7 +2104,7 @@ PIX       *pixd;
                 vals = GET_DATA_BYTE(lines, j);
                 valg = GET_DATA_BYTE(lineg, j);
                 fval = (l_float32)(vals * target) / (valg + 0.5);
-                vald = L_MIN(255, (l_int32)(fval + 0.5));
+                vald = L_MIN(255, (int32_t)(fval + 0.5));
                 SET_DATA_BYTE(lined, j, vald);
             }
         }
@@ -2155,14 +2155,14 @@ PIX       *pixd;
 PIX *
 pixGlobalNormRGB(PIX     *pixd,
                  PIX     *pixs,
-                 l_int32  rval,
-                 l_int32  gval,
-                 l_int32  bval,
-                 l_int32  mapval)
+                 int32_t  rval,
+                 int32_t  gval,
+                 int32_t  bval,
+                 int32_t  mapval)
 {
-l_int32    w, h, d, i, j, ncolors, rv, gv, bv, wpl;
-l_int32   *rarray, *garray, *barray;
-l_uint32  *data, *line;
+int32_t    w, h, d, i, j, ncolors, rv, gv, bv, wpl;
+int32_t   *rarray, *garray, *barray;
+uint32_t  *data, *line;
 NUMA      *nar, *nag, *nab;
 PIXCMAP   *cmap;
 
@@ -2262,13 +2262,13 @@ cleanup_arrays:
 PIX *
 pixGlobalNormNoSatRGB(PIX       *pixd,
                       PIX       *pixs,
-                      l_int32    rval,
-                      l_int32    gval,
-                      l_int32    bval,
-                      l_int32    factor,
+                      int32_t    rval,
+                      int32_t    gval,
+                      int32_t    bval,
+                      int32_t    factor,
                       l_float32  rank)
 {
-l_int32    mapval;
+int32_t    mapval;
 l_float32  rankrval, rankgval, rankbval;
 l_float32  rfract, gfract, bfract, maxfract;
 
@@ -2307,7 +2307,7 @@ l_float32  rfract, gfract, bfract, maxfract;
                 rfract, gfract, bfract);
 #endif  /* DEBUG_GLOBAL */
 
-    mapval = (l_int32)(255. / maxfract);
+    mapval = (int32_t)(255. / maxfract);
     pixd = pixGlobalNormRGB(pixd, pixs, rval, gval, bval, mapval);
     return pixd;
 }
@@ -2361,14 +2361,14 @@ l_float32  rfract, gfract, bfract, maxfract;
  */
 l_ok
 pixThresholdSpreadNorm(PIX       *pixs,
-                       l_int32    filtertype,
-                       l_int32    edgethresh,
-                       l_int32    smoothx,
-                       l_int32    smoothy,
+                       int32_t    filtertype,
+                       int32_t    edgethresh,
+                       int32_t    smoothx,
+                       int32_t    smoothy,
                        l_float32  gamma,
-                       l_int32    minval,
-                       l_int32    maxval,
-                       l_int32    targetthresh,
+                       int32_t    minval,
+                       int32_t    maxval,
+                       int32_t    targetthresh,
                        PIX      **ppixth,
                        PIX      **ppixb,
                        PIX      **ppixd)
@@ -2465,11 +2465,11 @@ PIX  *pixe, *pixet, *pixsd, *pixg1, *pixg2, *pixth;
  */
 PIX *
 pixBackgroundNormFlex(PIX     *pixs,
-                      l_int32  sx,
-                      l_int32  sy,
-                      l_int32  smoothx,
-                      l_int32  smoothy,
-                      l_int32  delta)
+                      int32_t  sx,
+                      int32_t  sy,
+                      int32_t  smoothx,
+                      int32_t  smoothy,
+                      int32_t  delta)
 {
 l_float32  scalex, scaley;
 PIX       *pixt, *pixsd, *pixmin, *pixbg, *pixbgi, *pixd;
@@ -2559,11 +2559,11 @@ PIX       *pixt, *pixsd, *pixmin, *pixbg, *pixbgi, *pixd;
 PIX *
 pixContrastNorm(PIX       *pixd,
                 PIX       *pixs,
-                l_int32    sx,
-                l_int32    sy,
-                l_int32    mindiff,
-                l_int32    smoothx,
-                l_int32    smoothy)
+                int32_t    sx,
+                int32_t    sy,
+                int32_t    mindiff,
+                int32_t    smoothx,
+                int32_t    smoothy)
 {
 PIX  *pixmin, *pixmax;
 
@@ -2616,15 +2616,15 @@ PIX  *pixmin, *pixmax;
  */
 static l_ok
 pixMinMaxTiles(PIX     *pixs,
-               l_int32  sx,
-               l_int32  sy,
-               l_int32  mindiff,
-               l_int32  smoothx,
-               l_int32  smoothy,
+               int32_t  sx,
+               int32_t  sy,
+               int32_t  mindiff,
+               int32_t  smoothx,
+               int32_t  smoothy,
                PIX    **ppixmin,
                PIX    **ppixmax)
 {
-l_int32  w, h;
+int32_t  w, h;
 PIX     *pixmin1, *pixmax1, *pixmin2, *pixmax2;
 
     if (ppixmin) *ppixmin = NULL;
@@ -2706,10 +2706,10 @@ PIX     *pixmin1, *pixmax1, *pixmin2, *pixmax2;
 static l_ok
 pixSetLowContrast(PIX     *pixs1,
                   PIX     *pixs2,
-                  l_int32  mindiff)
+                  int32_t  mindiff)
 {
-l_int32    i, j, w, h, d, wpl, val1, val2, found;
-l_uint32  *data1, *data2, *line1, *line2;
+int32_t    i, j, w, h, d, wpl, val1, val2, found;
+uint32_t  *data1, *data2, *line1, *line2;
 
     if (!pixs1 || !pixs2)
         return ERROR_INT("pixs1 and pixs2 not both defined", __func__, 1);
@@ -2787,16 +2787,16 @@ l_uint32  *data1, *data2, *line1, *line2;
 static PIX *
 pixLinearTRCTiled(PIX       *pixd,
                   PIX       *pixs,
-                  l_int32    sx,
-                  l_int32    sy,
+                  int32_t    sx,
+                  int32_t    sy,
                   PIX       *pixmin,
                   PIX       *pixmax)
 {
-l_int32    i, j, k, m, w, h, wt, ht, wpl, wplt, xoff, yoff;
-l_int32    minval, maxval, val, sval;
-l_int32   *ia;
-l_int32  **iaa;
-l_uint32  *data, *datamin, *datamax, *line, *tline, *linemin, *linemax;
+int32_t    i, j, k, m, w, h, wt, ht, wpl, wplt, xoff, yoff;
+int32_t    minval, maxval, val, sval;
+int32_t   *ia;
+int32_t  **iaa;
+uint32_t  *data, *datamin, *datamax, *line, *tline, *linemin, *linemax;
 
     if (!pixs || pixGetDepth(pixs) != 8)
         return (PIX *)ERROR_PTR("pixs undefined or not 8 bpp", __func__, pixd);
@@ -2809,7 +2809,7 @@ l_uint32  *data, *datamin, *datamax, *line, *tline, *linemin, *linemax;
     if (sx < 5 || sy < 5)
         return (PIX *)ERROR_PTR("sx and/or sy less than 5", __func__, pixd);
 
-    iaa = (l_int32 **)LEPT_CALLOC(256, sizeof(l_int32 *));
+    iaa = (int32_t **)LEPT_CALLOC(256, sizeof(int32_t *));
     if ((pixd = pixCopy(pixd, pixs)) == NULL) {
         LEPT_FREE(iaa);
         return (PIX *)ERROR_PTR("pixd not made", __func__, NULL);
@@ -2862,27 +2862,27 @@ l_uint32  *data, *datamin, *datamax, *line, *tline, *linemin, *linemax;
 /*!
  * \brief   iaaGetLinearTRC()
  *
- * \param[in]    iaa     bare array of ptrs to l_int32
+ * \param[in]    iaa     bare array of ptrs to int32_t
  * \param[in]    diff    between min and max pixel values that are
  *                       to be mapped to 0 and 255
  * \return  ia LUT with input (val - minval) and output a
  *                  value between 0 and 255)
  */
-static l_int32 *
-iaaGetLinearTRC(l_int32  **iaa,
-                l_int32    diff)
+static int32_t *
+iaaGetLinearTRC(int32_t  **iaa,
+                int32_t    diff)
 {
-l_int32    i;
-l_int32   *ia;
+int32_t    i;
+int32_t   *ia;
 l_float32  factor;
 
     if (!iaa)
-        return (l_int32 *)ERROR_PTR("iaa not defined", __func__, NULL);
+        return (int32_t *)ERROR_PTR("iaa not defined", __func__, NULL);
 
     if (iaa[diff] != NULL)  /* already have it */
        return iaa[diff];
 
-    ia = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
+    ia = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
     iaa[diff] = ia;
     if (diff == 0) {  /* shouldn't happen */
         for (i = 0; i < 256; i++)
@@ -2891,7 +2891,7 @@ l_float32  factor;
     else {
         factor = 255. / (l_float32)diff;
         for (i = 0; i < diff + 1; i++)
-            ia[i] = (l_int32)(factor * i + 0.5);
+            ia[i] = (int32_t)(factor * i + 0.5);
         for (i = diff + 1; i < 256; i++)
             ia[i] = 255;
     }

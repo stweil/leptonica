@@ -50,8 +50,8 @@
 int main(int    argc,
          char **argv)
 {
-l_int32    w, h, ystart, yend, y, ymax, ymid, i, window, sum1, sum2, rankx;
-l_uint32   uval;
+int32_t    w, h, ystart, yend, y, ymax, ymid, i, window, sum1, sum2, rankx;
+uint32_t   uval;
 l_float32  ave, rankval, maxvar, variance, norm, conf, angle, radangle;
 NUMA      *na1;
 PIX       *pix1, *pix2, *pix3, *pix4, *pix5, *pix6, *pix7;
@@ -102,7 +102,7 @@ PIXA      *pixa;
         /* Choose a very light rank value; close to white, which
          * corresponds to a column in pix6 near the right side. */
     rankval = 0.98;
-    rankx = (l_int32)(w * rankval);
+    rankx = (int32_t)(w * rankval);
 
         /* Investigate variance in a small window (vertical, size = 5)
          * of the pixels in that column.  These are the %rankval

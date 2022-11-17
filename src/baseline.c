@@ -35,7 +35,7 @@
  *           PIX      *pixDeskewLocal()
  *
  *      Determine local skew
- *           l_int32   pixGetLocalSkewTransform()
+ *           int32_t   pixGetLocalSkewTransform()
  *           NUMA     *pixGetLocalSkewAngles()
  *
  *  We have two apparently different functions here:
@@ -55,16 +55,16 @@
 #include "allheaders.h"
 
     /* Min to travel after finding max before abandoning peak */
-static const l_int32  MinDistInPeak = 35;
+static const int32_t  MinDistInPeak = 35;
 
     /* Thresholds for peaks and zeros, relative to the max peak */
-static const l_int32  PeakThresholdRatio = 20;
-static const l_int32  ZeroThresholdRatio = 100;
+static const int32_t  PeakThresholdRatio = 20;
+static const int32_t  ZeroThresholdRatio = 100;
 
     /* Default values for determining local skew */
-static const l_int32  DefaultSlices = 10;
-static const l_int32  DefaultSweepReduction = 2;
-static const l_int32  DefaultBsReduction = 1;
+static const int32_t  DefaultSlices = 10;
+static const int32_t  DefaultSweepReduction = 2;
+static const int32_t  DefaultBsReduction = 1;
 static const l_float32  DefaultSweepRange = 5.;   /* degrees */
 static const l_float32  DefaultSweepDelta = 1.;   /* degrees */
 static const l_float32  DefaultMinbsDelta = 0.01;   /* degrees */
@@ -118,10 +118,10 @@ pixFindBaselines(PIX   *pixs,
                  PTA  **ppta,
                  PIXA  *pixadb)
 {
-l_int32    h, i, j, nbox, val1, val2, ndiff, bx, by, bw, bh;
-l_int32    imaxloc, peakthresh, zerothresh, inpeak;
-l_int32    mintosearch, max, maxloc, nloc, locval;
-l_int32   *array;
+int32_t    h, i, j, nbox, val1, val2, ndiff, bx, by, bw, bh;
+int32_t    imaxloc, peakthresh, zerothresh, inpeak;
+int32_t    mintosearch, max, maxloc, nloc, locval;
+int32_t   *array;
 l_float32  maxval;
 BOXA      *boxa1, *boxa2, *boxa3;
 GPLOT     *gplot;
@@ -169,9 +169,9 @@ PTA       *pta;
     numaDestroy(&nadiff);
 
         /* Use this to begin locating a new peak: */
-    peakthresh = (l_int32)maxval / PeakThresholdRatio;
+    peakthresh = (int32_t)maxval / PeakThresholdRatio;
         /* Use this to begin a region between peaks: */
-    zerothresh = (l_int32)maxval / ZeroThresholdRatio;
+    zerothresh = (int32_t)maxval / ZeroThresholdRatio;
 
     naloc = numaCreate(0);
     naval = numaCreate(0);
@@ -259,7 +259,7 @@ PTA       *pta;
     boxaDestroy(&boxa3);
 
     if (pixadb && pta) {  /* display baselines */
-        l_int32  npts, x1, y1, x2, y2;
+        int32_t  npts, x1, y1, x2, y2;
         pix1 = pixConvertTo32(pixs);
         npts = ptaGetCount(pta);
         for (i = 0; i < npts; i += 2) {
@@ -320,14 +320,14 @@ PTA       *pta;
  */
 PIX *
 pixDeskewLocal(PIX       *pixs,
-               l_int32    nslices,
-               l_int32    redsweep,
-               l_int32    redsearch,
+               int32_t    nslices,
+               int32_t    redsweep,
+               int32_t    redsearch,
                l_float32  sweeprange,
                l_float32  sweepdelta,
                l_float32  minbsdelta)
 {
-l_int32    ret;
+int32_t    ret;
 PIX       *pixd;
 PTA       *ptas, *ptad;
 
@@ -387,16 +387,16 @@ PTA       *ptas, *ptad;
  */
 l_ok
 pixGetLocalSkewTransform(PIX       *pixs,
-                         l_int32    nslices,
-                         l_int32    redsweep,
-                         l_int32    redsearch,
+                         int32_t    nslices,
+                         int32_t    redsweep,
+                         int32_t    redsearch,
                          l_float32  sweeprange,
                          l_float32  sweepdelta,
                          l_float32  minbsdelta,
                          PTA      **pptas,
                          PTA      **pptad)
 {
-l_int32    w, h, i;
+int32_t    w, h, i;
 l_float32  deg2rad, angr, angd, dely;
 NUMA      *naskew;
 PTA       *ptas, *ptad;
@@ -506,17 +506,17 @@ PTA       *ptas, *ptad;
  */
 NUMA *
 pixGetLocalSkewAngles(PIX        *pixs,
-                      l_int32     nslices,
-                      l_int32     redsweep,
-                      l_int32     redsearch,
+                      int32_t     nslices,
+                      int32_t     redsweep,
+                      int32_t     redsearch,
                       l_float32   sweeprange,
                       l_float32   sweepdelta,
                       l_float32   minbsdelta,
                       l_float32  *pa,
                       l_float32  *pb,
-                      l_int32     debug)
+                      int32_t     debug)
 {
-l_int32    w, h, hs, i, ystart, yend, ovlap, npts;
+int32_t    w, h, hs, i, ystart, yend, ovlap, npts;
 l_float32  angle, conf, ycenter, a, b;
 BOX       *box;
 GPLOT     *gplot;
@@ -541,7 +541,7 @@ PTA       *pta;
 
     pixGetDimensions(pixs, &w, &h, NULL);
     hs = h / nslices;
-    ovlap = (l_int32)(OverlapFraction * hs);
+    ovlap = (int32_t)(OverlapFraction * hs);
     pta = ptaCreate(nslices);
     for (i = 0; i < nslices; i++) {
         ystart = L_MAX(0, hs * i - ovlap);

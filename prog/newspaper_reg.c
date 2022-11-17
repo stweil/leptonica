@@ -42,7 +42,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32       w, h;
+int32_t       w, h;
 BOXA         *boxa;
 PIX          *pixs, *pixt, *pix1, *pix2, *pix3, *pix4, *pix5;
 PIX          *pix6, *pix7, *pix8, *pix9, *pix10, *pix11;

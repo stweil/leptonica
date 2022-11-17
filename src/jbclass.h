@@ -47,26 +47,26 @@
 struct JbClasser
 {
     struct Sarray   *safiles;      /*!< input page image file names          */
-    l_int32          method;       /*!< JB_RANKHAUS, JB_CORRELATION          */
-    l_int32          components;   /*!< JB_CONN_COMPS, JB_CHARACTERS or      */
+    int32_t          method;       /*!< JB_RANKHAUS, JB_CORRELATION          */
+    int32_t          components;   /*!< JB_CONN_COMPS, JB_CHARACTERS or      */
                                    /*!< JB_WORDS                             */
-    l_int32          maxwidth;     /*!< max component width allowed          */
-    l_int32          maxheight;    /*!< max component height allowed         */
-    l_int32          npages;       /*!< number of pages already processed    */
-    l_int32          baseindex;    /*!< number components already processed  */
+    int32_t          maxwidth;     /*!< max component width allowed          */
+    int32_t          maxheight;    /*!< max component height allowed         */
+    int32_t          npages;       /*!< number of pages already processed    */
+    int32_t          baseindex;    /*!< number components already processed  */
                                    /*!< on fully processed pages             */
     struct Numa     *nacomps;      /*!< number of components on each page    */
-    l_int32          sizehaus;     /*!< size of square struct elem for haus  */
+    int32_t          sizehaus;     /*!< size of square struct elem for haus  */
     l_float32        rankhaus;     /*!< rank val of haus match, each way     */
     l_float32        thresh;       /*!< thresh value for correlation score   */
     l_float32        weightfactor; /*!< corrects thresh value for heaver     */
                                    /*!< components; use 0 for no correction  */
     struct Numa     *naarea;       /*!< w * h of each template, without      */
                                    /*!< extra border pixels                  */
-    l_int32          w;            /*!< max width of original src images     */
-    l_int32          h;            /*!< max height of original src images    */
-    l_int32          nclass;       /*!< current number of classes            */
-    l_int32          keep_pixaa;   /*!< If zero, pixaa isn't filled          */
+    int32_t          w;            /*!< max width of original src images     */
+    int32_t          h;            /*!< max height of original src images    */
+    int32_t          nclass;       /*!< current number of classes            */
+    int32_t          keep_pixaa;   /*!< If zero, pixaa isn't filled          */
     struct Pixaa    *pixaa;        /*!< instances for each class; unbordered */
     struct Pixa     *pixat;        /*!< templates for each class; bordered   */
                                    /*!< and not dilated                      */
@@ -104,12 +104,12 @@ typedef struct JbClasser  JBCLASSER;
 struct JbData
 {
     struct Pix      *pix;        /*!< template composite for all classes    */
-    l_int32          npages;     /*!< number of pages                       */
-    l_int32          w;          /*!< max width of original page images     */
-    l_int32          h;          /*!< max height of original page images    */
-    l_int32          nclass;     /*!< number of classes                     */
-    l_int32          latticew;   /*!< lattice width for template composite  */
-    l_int32          latticeh;   /*!< lattice height for template composite */
+    int32_t          npages;     /*!< number of pages                       */
+    int32_t          w;          /*!< max width of original page images     */
+    int32_t          h;          /*!< max height of original page images    */
+    int32_t          nclass;     /*!< number of classes                     */
+    int32_t          latticew;   /*!< lattice width for template composite  */
+    int32_t          latticeh;   /*!< lattice height for template composite */
     struct Numa     *naclass;    /*!< array of class ids for each component */
     struct Numa     *napage;     /*!< array of page nums for each component */
     struct Pta      *ptaul;      /*!< array of UL corners at which the      */

@@ -45,22 +45,22 @@
  *           BOXAA           *boxaSort2dByIndex()
  *
  *      Boxa statistics
- *           l_int32          boxaGetRankVals()
- *           l_int32          boxaGetMedianVals()
- *           l_int32          boxaGetAverageSize()
+ *           int32_t          boxaGetRankVals()
+ *           int32_t          boxaGetMedianVals()
+ *           int32_t          boxaGetAverageSize()
  *
  *      Boxa array extraction
- *           l_int32          boxaExtractAsNuma()
- *           l_int32          boxaExtractAsPta()
+ *           int32_t          boxaExtractAsNuma()
+ *           int32_t          boxaExtractAsPta()
  *           PTA             *boxaExtractCorners()
  *
  *      Other Boxaa functions
- *           l_int32          boxaaGetExtent()
+ *           int32_t          boxaaGetExtent()
  *           BOXA            *boxaaFlattenToBoxa()
  *           BOXA            *boxaaFlattenAligned()
  *           BOXAA           *boxaEncapsulateAligned()
  *           BOXAA           *boxaaTranspose()
- *           l_int32          boxaaAlignBox()
+ *           int32_t          boxaaAlignBox()
  * </pre>
  */
 
@@ -75,7 +75,7 @@
     /* For more than this number of c.c. in a binarized image of
      * semi-perimeter (w + h) about 5000 or less, the O(n) binsort
      * is faster than the O(nlogn) shellsort.  */
-static const l_int32   MinCompsForBinSort = 200;
+static const int32_t   MinCompsForBinSort = 200;
 
 /*---------------------------------------------------------------------*
  *      Boxa/Box transform (shift, scale) and orthogonal rotation      *
@@ -101,12 +101,12 @@ static const l_int32   MinCompsForBinSort = 200;
  */
 BOXA *
 boxaTransform(BOXA      *boxas,
-              l_int32    shiftx,
-              l_int32    shifty,
+              int32_t    shiftx,
+              int32_t    shifty,
               l_float32  scalex,
               l_float32  scaley)
 {
-l_int32  i, n;
+int32_t  i, n;
 BOX     *boxs, *boxd;
 BOXA    *boxad;
 
@@ -149,8 +149,8 @@ BOXA    *boxad;
  */
 BOX *
 boxTransform(BOX       *box,
-             l_int32    shiftx,
-             l_int32    shifty,
+             int32_t    shiftx,
+             int32_t    shifty,
              l_float32  scalex,
              l_float32  scaley)
 {
@@ -159,10 +159,10 @@ boxTransform(BOX       *box,
     if (box->w <= 0 || box->h <= 0)
         return boxCreate(0, 0, 0, 0);
     else
-        return boxCreate((l_int32)(L_MAX(0, scalex * (box->x + shiftx) + 0.5)),
-                         (l_int32)(L_MAX(0, scaley * (box->y + shifty) + 0.5)),
-                         (l_int32)(L_MAX(1.0, scalex * box->w + 0.5)),
-                         (l_int32)(L_MAX(1.0, scaley * box->h + 0.5)));
+        return boxCreate((int32_t)(L_MAX(0, scalex * (box->x + shiftx) + 0.5)),
+                         (int32_t)(L_MAX(0, scaley * (box->y + shifty) + 0.5)),
+                         (int32_t)(L_MAX(1.0, scalex * box->w + 0.5)),
+                         (int32_t)(L_MAX(1.0, scaley * box->h + 0.5)));
 }
 
 
@@ -201,16 +201,16 @@ boxTransform(BOX       *box,
  */
 BOXA *
 boxaTransformOrdered(BOXA      *boxas,
-                     l_int32    shiftx,
-                     l_int32    shifty,
+                     int32_t    shiftx,
+                     int32_t    shifty,
                      l_float32  scalex,
                      l_float32  scaley,
-                     l_int32    xcen,
-                     l_int32    ycen,
+                     int32_t    xcen,
+                     int32_t    ycen,
                      l_float32  angle,
-                     l_int32    order)
+                     int32_t    order)
 {
-l_int32  i, n;
+int32_t  i, n;
 BOX     *boxs, *boxd;
 BOXA    *boxad;
 
@@ -289,17 +289,17 @@ BOXA    *boxad;
  */
 BOX *
 boxTransformOrdered(BOX       *boxs,
-                    l_int32    shiftx,
-                    l_int32    shifty,
+                    int32_t    shiftx,
+                    int32_t    shifty,
                     l_float32  scalex,
                     l_float32  scaley,
-                    l_int32    xcen,
-                    l_int32    ycen,
+                    int32_t    xcen,
+                    int32_t    ycen,
                     l_float32  angle,
-                    l_int32    order)
+                    int32_t    order)
 {
-l_int32    bx, by, bw, bh, tx, ty, tw, th;
-l_int32    xcent, ycent;  /* transformed center of rotation due to scaling */
+int32_t    bx, by, bw, bh, tx, ty, tw, th;
+int32_t    xcent, ycent;  /* transformed center of rotation due to scaling */
 l_float32  sina, cosa, xdif, ydif, rx, ry, rw, rh;
 BOX       *boxd;
 
@@ -318,12 +318,12 @@ BOX       *boxd;
     }
 
     if (order == L_TR_SC_RO) {
-        tx = (l_int32)(scalex * (bx + shiftx) + 0.5);
-        ty = (l_int32)(scaley * (by + shifty) + 0.5);
-        tw = (l_int32)(L_MAX(1.0, scalex * bw + 0.5));
-        th = (l_int32)(L_MAX(1.0, scaley * bh + 0.5));
-        xcent = (l_int32)(scalex * xcen + 0.5);
-        ycent = (l_int32)(scaley * ycen + 0.5);
+        tx = (int32_t)(scalex * (bx + shiftx) + 0.5);
+        ty = (int32_t)(scaley * (by + shifty) + 0.5);
+        tw = (int32_t)(L_MAX(1.0, scalex * bw + 0.5));
+        th = (int32_t)(L_MAX(1.0, scaley * bh + 0.5));
+        xcent = (int32_t)(scalex * xcen + 0.5);
+        ycent = (int32_t)(scaley * ycen + 0.5);
         if (angle == 0.0) {
             boxd = boxCreate(tx, ty, tw, th);
         } else {
@@ -333,16 +333,16 @@ BOX       *boxd;
             rh = L_ABS(th * cosa) + L_ABS(tw * sina);
             rx = xcent + xdif * cosa - ydif * sina - 0.5 * rw;
             ry = ycent + ydif * cosa + xdif * sina - 0.5 * rh;
-            boxd = boxCreate((l_int32)rx, (l_int32)ry, (l_int32)rw,
-                             (l_int32)rh);
+            boxd = boxCreate((int32_t)rx, (int32_t)ry, (int32_t)rw,
+                             (int32_t)rh);
         }
     } else if (order == L_SC_TR_RO) {
-        tx = (l_int32)(scalex * bx + shiftx + 0.5);
-        ty = (l_int32)(scaley * by + shifty + 0.5);
-        tw = (l_int32)(L_MAX(1.0, scalex * bw + 0.5));
-        th = (l_int32)(L_MAX(1.0, scaley * bh + 0.5));
-        xcent = (l_int32)(scalex * xcen + 0.5);
-        ycent = (l_int32)(scaley * ycen + 0.5);
+        tx = (int32_t)(scalex * bx + shiftx + 0.5);
+        ty = (int32_t)(scaley * by + shifty + 0.5);
+        tw = (int32_t)(L_MAX(1.0, scalex * bw + 0.5));
+        th = (int32_t)(L_MAX(1.0, scaley * bh + 0.5));
+        xcent = (int32_t)(scalex * xcen + 0.5);
+        ycent = (int32_t)(scaley * ycen + 0.5);
         if (angle == 0.0) {
             boxd = boxCreate(tx, ty, tw, th);
         } else {
@@ -352,8 +352,8 @@ BOX       *boxd;
             rh = L_ABS(th * cosa) + L_ABS(tw * sina);
             rx = xcent + xdif * cosa - ydif * sina - 0.5 * rw;
             ry = ycent + ydif * cosa + xdif * sina - 0.5 * rh;
-            boxd = boxCreate((l_int32)rx, (l_int32)ry, (l_int32)rw,
-                             (l_int32)rh);
+            boxd = boxCreate((int32_t)rx, (int32_t)ry, (int32_t)rw,
+                             (int32_t)rh);
         }
     } else if (order == L_RO_TR_SC) {
         if (angle == 0.0) {
@@ -369,10 +369,10 @@ BOX       *boxd;
             rx = xcen + xdif * cosa - ydif * sina - 0.5 * rw;
             ry = ycen + ydif * cosa + xdif * sina - 0.5 * rh;
         }
-        tx = (l_int32)(scalex * (rx + shiftx) + 0.5);
-        ty = (l_int32)(scaley * (ry + shifty) + 0.5);
-        tw = (l_int32)(L_MAX(1.0, scalex * rw + 0.5));
-        th = (l_int32)(L_MAX(1.0, scaley * rh + 0.5));
+        tx = (int32_t)(scalex * (rx + shiftx) + 0.5);
+        ty = (int32_t)(scaley * (ry + shifty) + 0.5);
+        tw = (int32_t)(L_MAX(1.0, scalex * rw + 0.5));
+        th = (int32_t)(L_MAX(1.0, scaley * rh + 0.5));
         boxd = boxCreate(tx, ty, tw, th);
     } else if (order == L_RO_SC_TR) {
         if (angle == 0.0) {
@@ -388,10 +388,10 @@ BOX       *boxd;
             rx = xcen + xdif * cosa - ydif * sina - 0.5 * rw;
             ry = ycen + ydif * cosa + xdif * sina - 0.5 * rh;
         }
-        tx = (l_int32)(scalex * rx + shiftx + 0.5);
-        ty = (l_int32)(scaley * ry + shifty + 0.5);
-        tw = (l_int32)(L_MAX(1.0, scalex * rw + 0.5));
-        th = (l_int32)(L_MAX(1.0, scaley * rh + 0.5));
+        tx = (int32_t)(scalex * rx + shiftx + 0.5);
+        ty = (int32_t)(scaley * ry + shifty + 0.5);
+        tw = (int32_t)(L_MAX(1.0, scalex * rw + 0.5));
+        th = (int32_t)(L_MAX(1.0, scaley * rh + 0.5));
         boxd = boxCreate(tx, ty, tw, th);
     } else if (order == L_TR_RO_SC) {
         tx = bx + shiftx;
@@ -409,18 +409,18 @@ BOX       *boxd;
             rx = xcen + xdif * cosa - ydif * sina - 0.5 * rw;
             ry = ycen + ydif * cosa + xdif * sina - 0.5 * rh;
         }
-        tx = (l_int32)(scalex * rx + 0.5);
-        ty = (l_int32)(scaley * ry + 0.5);
-        tw = (l_int32)(L_MAX(1.0, scalex * rw + 0.5));
-        th = (l_int32)(L_MAX(1.0, scaley * rh + 0.5));
+        tx = (int32_t)(scalex * rx + 0.5);
+        ty = (int32_t)(scaley * ry + 0.5);
+        tw = (int32_t)(L_MAX(1.0, scalex * rw + 0.5));
+        th = (int32_t)(L_MAX(1.0, scaley * rh + 0.5));
         boxd = boxCreate(tx, ty, tw, th);
     } else {  /* order == L_SC_RO_TR) */
-        tx = (l_int32)(scalex * bx + 0.5);
-        ty = (l_int32)(scaley * by + 0.5);
-        tw = (l_int32)(L_MAX(1.0, scalex * bw + 0.5));
-        th = (l_int32)(L_MAX(1.0, scaley * bh + 0.5));
-        xcent = (l_int32)(scalex * xcen + 0.5);
-        ycent = (l_int32)(scaley * ycen + 0.5);
+        tx = (int32_t)(scalex * bx + 0.5);
+        ty = (int32_t)(scaley * by + 0.5);
+        tw = (int32_t)(L_MAX(1.0, scalex * bw + 0.5));
+        th = (int32_t)(L_MAX(1.0, scaley * bh + 0.5));
+        xcent = (int32_t)(scalex * xcen + 0.5);
+        ycent = (int32_t)(scaley * ycen + 0.5);
         if (angle == 0.0) {
             rx = tx;
             ry = ty;
@@ -434,10 +434,10 @@ BOX       *boxd;
             rx = xcent + xdif * cosa - ydif * sina - 0.5 * rw;
             ry = ycent + ydif * cosa + xdif * sina - 0.5 * rh;
         }
-        tx = (l_int32)(rx + shiftx + 0.5);
-        ty = (l_int32)(ry + shifty + 0.5);
-        tw = (l_int32)(rw + 0.5);
-        th = (l_int32)(rh + 0.5);
+        tx = (int32_t)(rx + shiftx + 0.5);
+        ty = (int32_t)(ry + shifty + 0.5);
+        tw = (int32_t)(rw + 0.5);
+        th = (int32_t)(rh + 0.5);
         boxd = boxCreate(tx, ty, tw, th);
     }
 
@@ -461,11 +461,11 @@ BOX       *boxd;
  */
 BOXA *
 boxaRotateOrth(BOXA    *boxas,
-               l_int32  w,
-               l_int32  h,
-               l_int32  rotation)
+               int32_t  w,
+               int32_t  h,
+               int32_t  rotation)
 {
-l_int32  i, n;
+int32_t  i, n;
 BOX     *boxs, *boxd;
 BOXA    *boxad;
 
@@ -511,11 +511,11 @@ BOXA    *boxad;
  */
 BOX *
 boxRotateOrth(BOX     *box,
-              l_int32  w,
-              l_int32  h,
-              l_int32  rotation)
+              int32_t  w,
+              int32_t  h,
+              int32_t  rotation)
 {
-l_int32  bx, by, bw, bh, xdist, ydist;
+int32_t  bx, by, bw, bh, xdist, ydist;
 
     if (!box)
         return (BOX *)ERROR_PTR("box not defined", __func__, NULL);
@@ -565,9 +565,9 @@ l_int32  bx, by, bw, bh, xdist, ydist;
 BOXA *
 boxaShiftWithPta(BOXA    *boxas,
                  PTA     *pta,
-                 l_int32  dir)
+                 int32_t  dir)
 {
-l_int32  i, n, x, y, full;
+int32_t  i, n, x, y, full;
 BOX     *box1, *box2;
 BOXA    *boxad;
 
@@ -622,11 +622,11 @@ BOXA    *boxad;
  */
 BOXA *
 boxaSort(BOXA    *boxas,
-         l_int32  sorttype,
-         l_int32  sortorder,
+         int32_t  sorttype,
+         int32_t  sortorder,
          NUMA   **pnaindex)
 {
-l_int32    i, n, x, y, w, h, size;
+int32_t    i, n, x, y, w, h, size;
 BOXA      *boxad;
 NUMA      *na, *naindex;
 
@@ -744,11 +744,11 @@ NUMA      *na, *naindex;
  */
 BOXA *
 boxaBinSort(BOXA    *boxas,
-            l_int32  sorttype,
-            l_int32  sortorder,
+            int32_t  sorttype,
+            int32_t  sortorder,
             NUMA   **pnaindex)
 {
-l_int32  i, n, x, y, w, h;
+int32_t  i, n, x, y, w, h;
 BOXA    *boxad;
 NUMA    *na, *naindex;
 
@@ -821,7 +821,7 @@ BOXA *
 boxaSortByIndex(BOXA  *boxas,
                 NUMA  *naindex)
 {
-l_int32  i, n, index;
+int32_t  i, n, index;
 BOX     *box;
 BOXA    *boxad;
 
@@ -895,11 +895,11 @@ BOXA    *boxad;
 BOXAA *
 boxaSort2d(BOXA    *boxas,
            NUMAA  **pnaad,
-           l_int32  delta1,
-           l_int32  delta2,
-           l_int32  minh1)
+           int32_t  delta1,
+           int32_t  delta2,
+           int32_t  minh1)
 {
-l_int32  i, index, h, nt, ne, n, m, ival;
+int32_t  i, index, h, nt, ne, n, m, ival;
 BOX     *box;
 BOXA    *boxa, *boxae, *boxan, *boxa1, *boxa2, *boxa3, *boxav, *boxavs;
 BOXAA   *baa, *baa1, *baad;
@@ -1081,7 +1081,7 @@ BOXAA *
 boxaSort2dByIndex(BOXA   *boxas,
                   NUMAA  *naa)
 {
-l_int32  ntot, boxtot, i, j, n, nn, index;
+int32_t  ntot, boxtot, i, j, n, nn, index;
 BOX     *box;
 BOXA    *boxa;
 BOXAA   *baa;
@@ -1152,9 +1152,9 @@ boxaExtractAsNuma(BOXA    *boxa,
                   NUMA   **pnab,
                   NUMA   **pnaw,
                   NUMA   **pnah,
-                  l_int32  keepinvalid)
+                  int32_t  keepinvalid)
 {
-l_int32  i, n, left, top, right, bot, w, h;
+int32_t  i, n, left, top, right, bot, w, h;
 
     if (!pnal && !pnat && !pnar && !pnab && !pnaw && !pnah)
         return ERROR_INT("no output requested", __func__, 1);
@@ -1231,9 +1231,9 @@ boxaExtractAsPta(BOXA    *boxa,
                  PTA    **pptab,
                  PTA    **pptaw,
                  PTA    **pptah,
-                 l_int32  keepinvalid)
+                 int32_t  keepinvalid)
 {
-l_int32  i, n, left, top, right, bot, w, h;
+int32_t  i, n, left, top, right, bot, w, h;
 
     if (!pptal && !pptar && !pptat && !pptab && !pptaw && !pptah)
         return ERROR_INT("no output requested", __func__, 1);
@@ -1293,9 +1293,9 @@ l_int32  i, n, left, top, right, bot, w, h;
  */
 PTA *
 boxaExtractCorners(BOXA    *boxa,
-                   l_int32  loc)
+                   int32_t  loc)
 {
-l_int32  i, n, left, top, right, bot, w, h;
+int32_t  i, n, left, top, right, bot, w, h;
 PTA     *pta;
 
     if (!boxa)
@@ -1371,12 +1371,12 @@ PTA     *pta;
 l_ok
 boxaGetRankVals(BOXA      *boxa,
                 l_float32  fract,
-                l_int32   *px,
-                l_int32   *py,
-                l_int32   *pr,
-                l_int32   *pb,
-                l_int32   *pw,
-                l_int32   *ph)
+                int32_t   *px,
+                int32_t   *py,
+                int32_t   *pr,
+                int32_t   *pb,
+                int32_t   *pw,
+                int32_t   *ph)
 {
 l_float32  xval, yval, rval, bval, wval, hval;
 NUMA      *nax, *nay, *nar, *nab, *naw, *nah;
@@ -1399,27 +1399,27 @@ NUMA      *nax, *nay, *nar, *nab, *naw, *nah;
 
     if (px) {
         numaGetRankValue(nax, 1.0 - fract, NULL, 1, &xval);
-        *px = (l_int32)xval;
+        *px = (int32_t)xval;
     }
     if (py) {
         numaGetRankValue(nay, 1.0 - fract, NULL, 1, &yval);
-        *py = (l_int32)yval;
+        *py = (int32_t)yval;
     }
     if (pr) {
         numaGetRankValue(nar, fract, NULL, 1, &rval);
-        *pr = (l_int32)rval;
+        *pr = (int32_t)rval;
     }
     if (pb) {
         numaGetRankValue(nab, fract, NULL, 1, &bval);
-        *pb = (l_int32)bval;
+        *pb = (int32_t)bval;
     }
     if (pw) {
         numaGetRankValue(naw, fract, NULL, 1, &wval);
-        *pw = (l_int32)wval;
+        *pw = (int32_t)wval;
     }
     if (ph) {
         numaGetRankValue(nah, fract, NULL, 1, &hval);
-        *ph = (l_int32)hval;
+        *ph = (int32_t)hval;
     }
     numaDestroy(&nax);
     numaDestroy(&nay);
@@ -1450,12 +1450,12 @@ NUMA      *nax, *nay, *nar, *nab, *naw, *nah;
  */
 l_ok
 boxaGetMedianVals(BOXA     *boxa,
-                  l_int32  *px,
-                  l_int32  *py,
-                  l_int32  *pr,
-                  l_int32  *pb,
-                  l_int32  *pw,
-                  l_int32  *ph)
+                  int32_t  *px,
+                  int32_t  *py,
+                  int32_t  *pr,
+                  int32_t  *pb,
+                  int32_t  *pw,
+                  int32_t  *ph)
 {
     if (!boxa)
         return ERROR_INT("boxa not defined", __func__, 1);
@@ -1479,7 +1479,7 @@ boxaGetAverageSize(BOXA       *boxa,
                    l_float32  *pw,
                    l_float32  *ph)
 {
-l_int32    i, n, bw, bh;
+int32_t    i, n, bw, bh;
 l_float32  sumw, sumh;
 
     if (pw) *pw = 0.0;
@@ -1529,12 +1529,12 @@ l_float32  sumw, sumh;
  */
 l_ok
 boxaaGetExtent(BOXAA    *baa,
-               l_int32  *pw,
-               l_int32  *ph,
+               int32_t  *pw,
+               int32_t  *ph,
                BOX     **pbox,
                BOXA    **pboxa)
 {
-l_int32  i, n, x, y, w, h, xmax, ymax, xmin, ymin, found;
+int32_t  i, n, x, y, w, h, xmax, ymax, xmin, ymin, found;
 BOX     *box1;
 BOXA    *boxa, *boxa1;
 
@@ -1608,9 +1608,9 @@ BOXA    *boxa, *boxa1;
 BOXA *
 boxaaFlattenToBoxa(BOXAA   *baa,
                    NUMA   **pnaindex,
-                   l_int32  copyflag)
+                   int32_t  copyflag)
 {
-l_int32  i, j, m, n;
+int32_t  i, j, m, n;
 BOXA    *boxa, *boxat;
 BOX     *box;
 NUMA    *naindex;
@@ -1671,11 +1671,11 @@ NUMA    *naindex;
  */
 BOXA *
 boxaaFlattenAligned(BOXAA   *baa,
-                    l_int32  num,
+                    int32_t  num,
                     BOX     *fillerbox,
-                    l_int32  copyflag)
+                    int32_t  copyflag)
 {
-l_int32  i, j, m, n, mval, nshort;
+int32_t  i, j, m, n, mval, nshort;
 BOXA    *boxat, *boxad;
 BOX     *box;
 
@@ -1727,10 +1727,10 @@ BOX     *box;
  */
 BOXAA *
 boxaEncapsulateAligned(BOXA    *boxa,
-                       l_int32  num,
-                       l_int32  copyflag)
+                       int32_t  num,
+                       int32_t  copyflag)
 {
-l_int32  i, j, n, nbaa, index;
+int32_t  i, j, n, nbaa, index;
 BOX     *box;
 BOXA    *boxat;
 BOXAA   *baa;
@@ -1780,7 +1780,7 @@ BOXAA   *baa;
 BOXAA *
 boxaaTranspose(BOXAA  *baas)
 {
-l_int32   i, j, ny, nb, nbox;
+int32_t   i, j, ny, nb, nbox;
 BOX      *box;
 BOXA     *boxa;
 BOXAA    *baad;
@@ -1837,10 +1837,10 @@ BOXAA    *baad;
 l_ok
 boxaaAlignBox(BOXAA    *baa,
               BOX      *box,
-              l_int32   delta,
-              l_int32  *pindex)
+              int32_t   delta,
+              int32_t  *pindex)
 {
-l_int32  i, n, m, y, yt, h, ht, ovlp, maxovlp, maxindex;
+int32_t  i, n, m, y, yt, h, ht, ovlp, maxovlp, maxindex;
 BOX     *boxt;
 BOXA    *boxa;
 

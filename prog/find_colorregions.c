@@ -49,10 +49,10 @@
 #include "allheaders.h"
 
     /* Implementation is in this file */
-static l_int32
-pixFindColorRegionsLight(PIX *pixs, PIX *pixm, l_int32 factor,
-                    l_int32 darkthresh, l_int32 lightthresh, l_int32 mindiff,
-                    l_int32 colordiff, l_float32 *pcolorfract,
+static int32_t
+pixFindColorRegionsLight(PIX *pixs, PIX *pixm, int32_t factor,
+                    int32_t darkthresh, int32_t lightthresh, int32_t mindiff,
+                    int32_t colordiff, l_float32 *pcolorfract,
                     PIX **pcolormask1, PIX **pcolormask2, PIXA *pixadb);
 
 int main(int    argc,
@@ -174,20 +174,20 @@ PIXA      *pixadb;
  *          This is done here in debug mode.
  * </pre>
  */
-static l_int32
+static int32_t
 pixFindColorRegionsLight(PIX        *pixs,
                          PIX        *pixm,
-                         l_int32     factor,
-                         l_int32     darkthresh,
-                         l_int32     lightthresh,
-                         l_int32     mindiff,
-                         l_int32     colordiff,
+                         int32_t     factor,
+                         int32_t     darkthresh,
+                         int32_t     lightthresh,
+                         int32_t     mindiff,
+                         int32_t     colordiff,
                          l_float32  *pcolorfract,
                          PIX       **pcolormask1,
                          PIX       **pcolormask2,
                          PIXA       *pixadb)
 {
-l_int32    lightbg, w, h, count;
+int32_t    lightbg, w, h, count;
 l_float32  ratio, val95;
 BOXA      *boxa1, *boxa2;
 NUMA      *nah;
@@ -248,7 +248,7 @@ PIX       *pix1, *pix2, *pix3, *pix4, *pix5, *pixm1, *pixm2, *pixm3;
         pixaAddPix(pixadb, pix4, L_INSERT);
         pixDestroy(&pix3);
     }
-    lightbg = (l_int32)val95 >= lightthresh;
+    lightbg = (int32_t)val95 >= lightthresh;
     numaDestroy(&nah);
     if (!lightbg) {
         pixDestroy(&pix1);

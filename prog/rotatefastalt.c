@@ -48,12 +48,12 @@
 
 static const l_float32  VERY_SMALL_ANGLE = 0.001;  /* radians; ~0.06 degrees */
 
-static PIX *pixRotateAMColorFast2(PIX *pixs, l_float32 angle, l_uint8 grayval);
+static PIX *pixRotateAMColorFast2(PIX *pixs, l_float32 angle, uint8_t grayval);
 static PIX *pixShiftRGB258(PIX  *pixs);
-static void rotateAMColorFastLow2(l_uint32  *datad, l_int32  w, l_int32  h,
-                                  l_int32  wpld, l_uint32  *datas,
-                                  l_int32  wpls, l_float32  angle,
-                                  l_uint8  grayval);
+static void rotateAMColorFastLow2(uint32_t  *datad, int32_t  w, int32_t  h,
+                                  int32_t  wpld, uint32_t  *datas,
+                                  int32_t  wpls, l_float32  angle,
+                                  uint8_t  grayval);
 
 int main(int    argc,
          char **argv)
@@ -108,10 +108,10 @@ PIX       *pixs, *pixd;
 PIX *
 pixRotateAMColorFast2(PIX       *pixs,
                       l_float32  angle,
-                      l_uint8    grayval)
+                      uint8_t    grayval)
 {
-l_int32    w, h, wpls, wpld;
-l_uint32  *datas, *datad;
+int32_t    w, h, wpls, wpld;
+uint32_t  *datas, *datad;
 PIX       *pixshft, *pixd;
 
     if (!pixs)
@@ -148,9 +148,9 @@ PIX       *pixshft, *pixd;
 PIX *
 pixShiftRGB258(PIX  *pixs)
 {
-l_int32    w, h, wpls, wpld, i, j;
-l_uint32   word;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    w, h, wpls, wpld, i, j;
+uint32_t   word;
+uint32_t  *datas, *datad, *lines, *lined;
 PIX       *pixd;
 
     if (!pixs)
@@ -190,19 +190,19 @@ PIX       *pixd;
  *  *** Warning: explicit assumption about RGB component ordering ***
  */
 void
-rotateAMColorFastLow2(l_uint32  *datad,
-                      l_int32    w,
-                      l_int32    h,
-                      l_int32    wpld,
-                      l_uint32  *datas,
-                      l_int32    wpls,
+rotateAMColorFastLow2(uint32_t  *datad,
+                      int32_t    w,
+                      int32_t    h,
+                      int32_t    wpld,
+                      uint32_t  *datas,
+                      int32_t    wpls,
                       l_float32  angle,
-                      l_uint8    grayval)
+                      uint8_t    grayval)
 {
-l_int32    i, j, xcen, ycen, wm2, hm2;
-l_int32    xdif, ydif, xpm, ypm, xp, yp, xf, yf;
-l_uint32   edgeval, word;
-l_uint32  *pword, *lines, *lined;
+int32_t    i, j, xcen, ycen, wm2, hm2;
+int32_t    xdif, ydif, xpm, ypm, xp, yp, xf, yf;
+uint32_t   edgeval, word;
+uint32_t  *pword, *lines, *lined;
 l_float32  sina, cosa;
 
     xcen = w / 2;
@@ -218,8 +218,8 @@ l_float32  sina, cosa;
         lined = datad + i * wpld;
         for (j = 0; j < w; j++) {
             xdif = xcen - j;
-            xpm = (l_int32)(-xdif * cosa - ydif * sina + 0.5);
-            ypm = (l_int32)(-ydif * cosa + xdif * sina + 0.5);
+            xpm = (int32_t)(-xdif * cosa - ydif * sina + 0.5);
+            ypm = (int32_t)(-ydif * cosa + xdif * sina + 0.5);
             xp = xcen + (xpm >> 2);
             yp = ycen + (ypm >> 2);
             xf = xpm & 0x03;

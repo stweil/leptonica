@@ -46,13 +46,13 @@
  *           void            lstackDestroy()
  *
  *      Accessors
- *           l_int32         lstackAdd()
+ *           int32_t         lstackAdd()
  *           void           *lstackRemove()
- *           static l_int32  lstackExtendArray()
- *           l_int32         lstackGetCount()
+ *           static int32_t  lstackExtendArray()
+ *           int32_t         lstackGetCount()
  *
  *      Text description
- *           l_int32         lstackPrint()
+ *           int32_t         lstackPrint()
  * </pre>
  */
 
@@ -63,11 +63,11 @@
 #include "allheaders.h"
 
     /* Bounds on initial array size */
-static const l_uint32  MaxPtrArraySize = 100000;
-static const l_int32 InitialPtrArraySize = 20;      /*!< n'importe quoi */
+static const uint32_t  MaxPtrArraySize = 100000;
+static const int32_t InitialPtrArraySize = 20;      /*!< n'importe quoi */
 
     /* Static function */
-static l_int32 lstackExtendArray(L_STACK *lstack);
+static int32_t lstackExtendArray(L_STACK *lstack);
 
 /*---------------------------------------------------------------------*
  *                          Create/Destroy                             *
@@ -79,7 +79,7 @@ static l_int32 lstackExtendArray(L_STACK *lstack);
  * \return  lstack, or NULL on error
  */
 L_STACK *
-lstackCreate(l_int32  n)
+lstackCreate(int32_t  n)
 {
 L_STACK  *lstack;
 
@@ -120,7 +120,7 @@ L_STACK  *lstack;
  */
 void
 lstackDestroy(L_STACK  **plstack,
-              l_int32    freeflag)
+              int32_t    freeflag)
 {
 void     *item;
 L_STACK  *lstack;
@@ -216,7 +216,7 @@ void  *item;
  * \param[in]    lstack
  * \return  0 if OK; 1 on error
  */
-static l_int32
+static int32_t
 lstackExtendArray(L_STACK  *lstack)
 {
     if (!lstack)
@@ -238,7 +238,7 @@ lstackExtendArray(L_STACK  *lstack)
  * \param[in]    lstack
  * \return  count, or 0 on error
  */
-l_int32
+int32_t
 lstackGetCount(L_STACK  *lstack)
 {
     if (!lstack)
@@ -263,7 +263,7 @@ l_ok
 lstackPrint(FILE     *fp,
             L_STACK  *lstack)
 {
-l_int32  i;
+int32_t  i;
 
     if (!fp)
         return ERROR_INT("stream not defined", __func__, 1);

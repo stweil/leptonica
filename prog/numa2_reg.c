@@ -43,16 +43,16 @@
 #define   DO_ALL     0
 
 /* Tiny helper */
-void SaveColorSquare(PIXA *pixa, l_uint32  rgbval);
+void SaveColorSquare(PIXA *pixa, uint32_t  rgbval);
 
 
 int main(int    argc,
          char **argv)
 {
-l_int32      i, j;
-l_int32      w, h, bw, bh, wpls, rval, gval, bval, same;
-l_uint32     pixel, avergb;
-l_uint32    *lines, *datas;
+int32_t      i, j;
+int32_t      w, h, bw, bh, wpls, rval, gval, bval, same;
+uint32_t     pixel, avergb;
+uint32_t    *lines, *datas;
 l_float32    sum1, sum2, ave1, ave2, ave3, ave4, diff1, diff2;
 l_float32    var1, var2, var3;
 BOX         *box1, *box2, *box3;
@@ -120,9 +120,9 @@ L_REGPARAMS  *rp;
     for (i = 0; i < 200; i++) {
         lines = datas + i * wpls;
         for (j = 0; j < 200; j++) {
-            rval = (l_int32)((255. * j) / w + (255. * i) / h);
-            gval = (l_int32)((255. * 2 * j) / w + (255. * 2 * i) / h) % 255;
-            bval = (l_int32)((255. * 4 * j) / w + (255. * 4 * i) / h) % 255;
+            rval = (int32_t)((255. * j) / w + (255. * i) / h);
+            gval = (int32_t)((255. * 2 * j) / w + (255. * 2 * i) / h) % 255;
+            bval = (int32_t)((255. * 4 * j) / w + (255. * 4 * i) / h) % 255;
             composeRGBPixel(rval, gval, bval, &pixel);
             lines[j] = pixel;
         }
@@ -483,7 +483,7 @@ L_REGPARAMS  *rp;
 
 
 void SaveColorSquare(PIXA     *pixa,
-                     l_uint32  rgbval) {
+                     uint32_t  rgbval) {
     PIX *pixc = pixMakeColorSquare(rgbval, 0, 1, L_ADD_BELOW, 0xff000000);
     pixaAddPix(pixa, pixc, L_INSERT);
 }

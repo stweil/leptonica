@@ -60,11 +60,11 @@
 /*! Selection */
 struct Sel
 {
-    l_int32       sy;        /*!< sel height                               */
-    l_int32       sx;        /*!< sel width                                */
-    l_int32       cy;        /*!< y location of sel origin                 */
-    l_int32       cx;        /*!< x location of sel origin                 */
-    l_int32     **data;      /*!< {0,1,2}; data[i][j] in [row][col] order  */
+    int32_t       sy;        /*!< sel height                               */
+    int32_t       sx;        /*!< sel width                                */
+    int32_t       cy;        /*!< y location of sel origin                 */
+    int32_t       cx;        /*!< x location of sel origin                 */
+    int32_t     **data;      /*!< {0,1,2}; data[i][j] in [row][col] order  */
     char         *name;      /*!< used to find sel by name                 */
 };
 typedef struct Sel SEL;
@@ -72,8 +72,8 @@ typedef struct Sel SEL;
 /*! Array of Sel */
 struct Sela
 {
-    l_int32          n;       /*!< number of sel actually stored           */
-    l_int32          nalloc;  /*!< size of allocated ptr array             */
+    int32_t          n;       /*!< number of sel actually stored           */
+    int32_t          nalloc;  /*!< size of allocated ptr array             */
     struct Sel     **sel;     /*!< sel ptr array                           */
 };
 typedef struct Sela SELA;
@@ -87,10 +87,10 @@ typedef struct Sela SELA;
 /*! Kernel */
 struct L_Kernel
 {
-    l_int32       sy;        /*!< kernel height                            */
-    l_int32       sx;        /*!< kernel width                             */
-    l_int32       cy;        /*!< y location of kernel origin              */
-    l_int32       cx;        /*!< x location of kernel origin              */
+    int32_t       sy;        /*!< kernel height                            */
+    int32_t       sx;        /*!< kernel width                             */
+    int32_t       cy;        /*!< y location of kernel origin              */
+    int32_t       cx;        /*!< x location of kernel origin              */
     l_float32   **data;      /*!< data[i][j] in [row][col] order           */
 };
 typedef struct L_Kernel  L_KERNEL;
@@ -219,7 +219,7 @@ enum {
 /*-------------------------------------------------------------------------*
  *    Standard size of border added around images for special processing   *
  *-------------------------------------------------------------------------*/
-static const l_int32  ADDED_BORDER = 32;   /*!< pixels, not bits */
+static const int32_t  ADDED_BORDER = 32;   /*!< pixels, not bits */
 
 
 #endif  /* LEPTONICA_MORPH_H */

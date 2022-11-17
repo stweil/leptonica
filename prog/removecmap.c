@@ -47,7 +47,7 @@ int main(int    argc,
          char **argv)
 {
 char     *filein, *fileout;
-l_int32   type, numcolors;
+int32_t   type, numcolors;
 PIX      *pixs, *pixd;
 PIXCMAP  *cmap;
 

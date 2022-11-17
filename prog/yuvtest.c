@@ -40,14 +40,14 @@
 
 #include "allheaders.h"
 
-void AddTransformsRGB(PIXA *pixa, L_BMF *bmf, l_int32 gval);
-void AddTransformsYUV(PIXA *pixa, L_BMF *bmf, l_int32 yval);
+void AddTransformsRGB(PIXA *pixa, L_BMF *bmf, int32_t gval);
+void AddTransformsYUV(PIXA *pixa, L_BMF *bmf, int32_t yval);
 
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32     i, rval, gval, bval, yval, uval, vval;
+int32_t     i, rval, gval, bval, yval, uval, vval;
 l_float32  *a[3], b[3];
 L_BMF      *bmf;
 PIX        *pixd;
@@ -149,11 +149,11 @@ PIXA       *pixa;
 void
 AddTransformsRGB(PIXA    *pixa,
                  L_BMF   *bmf,
-                 l_int32  gval)
+                 int32_t  gval)
 {
 char       textbuf[256];
-l_int32    i, j, wpls;
-l_uint32  *datas, *lines;
+int32_t    i, j, wpls;
+uint32_t  *datas, *lines;
 PIX       *pixs, *pixt1, *pixt2, *pixt3, *pixt4;
 PIXA      *pixat;
 
@@ -186,11 +186,11 @@ PIXA      *pixat;
 void
 AddTransformsYUV(PIXA    *pixa,
                  L_BMF   *bmf,
-                 l_int32  yval)
+                 int32_t  yval)
 {
 char       textbuf[256];
-l_int32    i, j, wpls;
-l_uint32  *datas, *lines;
+int32_t    i, j, wpls;
+uint32_t  *datas, *lines;
 PIX       *pixs, *pixt1, *pixt2, *pixt3, *pixt4;
 PIXA      *pixat;
 

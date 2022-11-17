@@ -33,24 +33,24 @@
  *          void            lheapDestroy()
  *
  *      Operations to add/remove to/from the heap
- *          l_int32         lheapAdd()
- *          static l_int32  lheapExtendArray()
+ *          int32_t         lheapAdd()
+ *          static int32_t  lheapExtendArray()
  *          void           *lheapRemove()
  *
  *      Other accessors
- *          l_int32         lheapGetCount()
+ *          int32_t         lheapGetCount()
  *          void           *lheapGetElement()
  *
  *      Heap sort
- *          l_int32         lheapSort()
- *          l_int32         lheapSortStrictOrder()
+ *          int32_t         lheapSort()
+ *          int32_t         lheapSortStrictOrder()
  *
  *      Low-level heap operations
- *          static l_int32  lheapSwapUp()
- *          static l_int32  lheapSwapDown()
+ *          static int32_t  lheapSwapUp()
+ *          static int32_t  lheapSwapDown()
  *
  *      Debug output
- *          l_int32         lheapPrint()
+ *          int32_t         lheapPrint()
  *
  *    The L_Heap is useful to implement a priority queue, that is sorted
  *    on a key in each element of the heap.  The heap is an array
@@ -85,16 +85,16 @@
 #include "allheaders.h"
 
     /* Bounds on initial array size */
-static const l_uint32  MaxPtrArraySize = 100000;
-static const l_int32 InitialPtrArraySize = 20;      /*!< n'importe quoi */
+static const uint32_t  MaxPtrArraySize = 100000;
+static const int32_t InitialPtrArraySize = 20;      /*!< n'importe quoi */
 
 #define SWAP_ITEMS(i, j)       { void *tempitem = lh->array[(i)]; \
                                  lh->array[(i)] = lh->array[(j)]; \
                                  lh->array[(j)] = tempitem; }
 
     /* Static functions */
-static l_int32 lheapExtendArray(L_HEAP *lh);
-static l_ok lheapSwapUp(L_HEAP *lh, l_int32 index);
+static int32_t lheapExtendArray(L_HEAP *lh);
+static l_ok lheapSwapUp(L_HEAP *lh, int32_t index);
 static l_ok lheapSwapDown(L_HEAP *lh);
 
 
@@ -109,8 +109,8 @@ static l_ok lheapSwapDown(L_HEAP *lh);
  * \return  lheap, or NULL on error
  */
 L_HEAP *
-lheapCreate(l_int32  n,
-            l_int32  direction)
+lheapCreate(int32_t  n,
+            int32_t  direction)
 {
 L_HEAP  *lh;
 
@@ -150,9 +150,9 @@ L_HEAP  *lh;
  */
 void
 lheapDestroy(L_HEAP  **plh,
-             l_int32   freeflag)
+             int32_t   freeflag)
 {
-l_int32  i;
+int32_t  i;
 L_HEAP  *lh;
 
     if (plh == NULL) {
@@ -216,7 +216,7 @@ lheapAdd(L_HEAP  *lh,
  * \param[in]    lh    heap
  * \return  0 if OK, 1 on error
  */
-static l_int32
+static int32_t
 lheapExtendArray(L_HEAP  *lh)
 {
     if (!lh)
@@ -269,7 +269,7 @@ void   *item;
  * \param[in]    lh    heap
  * \return  count, or 0 on error
  */
-l_int32
+int32_t
 lheapGetCount(L_HEAP  *lh)
 {
     if (!lh)
@@ -297,7 +297,7 @@ lheapGetCount(L_HEAP  *lh)
  */
 void *
 lheapGetElement(L_HEAP  *lh,
-                l_int32  index)
+                int32_t  index)
 {
     if (!lh)
         return ERROR_PTR("lh not defined", __func__, NULL);
@@ -326,7 +326,7 @@ lheapGetElement(L_HEAP  *lh,
 l_ok
 lheapSort(L_HEAP  *lh)
 {
-l_int32  i;
+int32_t  i;
 
   if (!lh)
       return ERROR_INT("lh not defined", __func__, 1);
@@ -358,7 +358,7 @@ l_int32  i;
 l_ok
 lheapSortStrictOrder(L_HEAP  *lh)
 {
-l_int32  i, index, size;
+int32_t  i, index, size;
 
   if (!lh)
       return ERROR_INT("lh not defined", __func__, 1);
@@ -404,10 +404,10 @@ l_int32  i, index, size;
  */
 static l_ok
 lheapSwapUp(L_HEAP  *lh,
-            l_int32  index)
+            int32_t  index)
 {
-l_int32    ip;  /* index to heap for parent; 1 larger than array index */
-l_int32    ic;  /* index into heap for child */
+int32_t    ip;  /* index to heap for parent; 1 larger than array index */
+int32_t    ic;  /* index into heap for child */
 l_float32  valp, valc;
 
   if (!lh)
@@ -469,8 +469,8 @@ l_float32  valp, valc;
 static l_ok
 lheapSwapDown(L_HEAP  *lh)
 {
-l_int32    ip;  /* index to heap for parent; 1 larger than array index */
-l_int32    icr, icl;  /* index into heap for left/right children */
+int32_t    ip;  /* index to heap for parent; 1 larger than array index */
+int32_t    icr, icl;  /* index into heap for left/right children */
 l_float32  valp, valcl, valcr;
 
   if (!lh)
@@ -549,7 +549,7 @@ l_ok
 lheapPrint(FILE    *fp,
            L_HEAP  *lh)
 {
-l_int32  i;
+int32_t  i;
 
     if (!fp)
         return ERROR_INT("stream not defined", __func__, 1);

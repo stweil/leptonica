@@ -43,10 +43,10 @@
 PIX *TestForRedColor(L_REGPARAMS *rp, const char *fname,
                      l_float32 gold_red, L_BMF *bmf);
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32       irval, igval, ibval;
+int32_t       irval, igval, ibval;
 l_float32     rval, gval, bval, fract, fgfract;
 L_BMF        *bmf;
 BOX          *box;
@@ -272,7 +272,7 @@ TestForRedColor(L_REGPARAMS  *rp,
 {
 char       text[64];
 PIX       *pix1, *pix2;
-l_int32    hasred;
+int32_t    hasred;
 l_float32  ratio;
 
     pix1 = pixRead(fname);

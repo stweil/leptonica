@@ -61,8 +61,8 @@ int main(int    argc,
          char **argv)
 {
 char         *text;
-l_int32       w, h, d, level, wpl, format, xres, yres;
-l_int32       bps, spp, res, iscmap;
+int32_t       w, h, d, level, wpl, format, xres, yres;
+int32_t       bps, spp, res, iscmap;
 size_t        size;
 FILE         *fp;
 PIX          *pixs, *pixg, *pix1, *pix2, *pix3, *pix4;

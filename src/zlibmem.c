@@ -30,8 +30,8 @@
  * <pre>
  *
  *      zlib operations in memory, using bbuffer
- *          l_uint8   *zlibCompress()
- *          l_uint8   *zlibUncompress()
+ *          uint8_t   *zlibCompress()
+ *          uint8_t   *zlibUncompress()
  *
  *
  *    This provides an example use of the byte buffer utility
@@ -59,8 +59,8 @@
 
 #include "zlib.h"
 
-static const l_int32  L_BUF_SIZE = 32768;
-static const l_int32  ZLIB_COMPRESSION_LEVEL = 6;
+static const int32_t  L_BUF_SIZE = 32768;
+static const int32_t  ZLIB_COMPRESSION_LEVEL = 6;
 
 #ifndef  NO_CONSOLE_IO
 #define  DEBUG     0
@@ -88,25 +88,25 @@ static const l_int32  ZLIB_COMPRESSION_LEVEL = 6;
  *          compressing L_BUF_SIZE bytes of input data at a time.
  * </pre>
  */
-l_uint8 *
-zlibCompress(const l_uint8  *datain,
+uint8_t *
+zlibCompress(const uint8_t  *datain,
              size_t          nin,
              size_t         *pnout)
 {
-l_uint8    *dataout;
-l_int32     status, success;
-l_int32     flush;
+uint8_t    *dataout;
+int32_t     status, success;
+int32_t     flush;
 size_t      nbytes;
-l_uint8    *bufferin, *bufferout;
+uint8_t    *bufferin, *bufferout;
 L_BBUFFER  *bbin, *bbout;
 z_stream    z;
 
     if (!datain)
-        return (l_uint8 *)ERROR_PTR("datain not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("datain not defined", __func__, NULL);
 
         /* Set up fixed size buffers used in z_stream */
-    bufferin = (l_uint8 *)LEPT_CALLOC(L_BUF_SIZE, sizeof(l_uint8));
-    bufferout = (l_uint8 *)LEPT_CALLOC(L_BUF_SIZE, sizeof(l_uint8));
+    bufferin = (uint8_t *)LEPT_CALLOC(L_BUF_SIZE, sizeof(uint8_t));
+    bufferout = (uint8_t *)LEPT_CALLOC(L_BUF_SIZE, sizeof(uint8_t));
 
         /* Set up bbuffers and load bbin with the data */
     bbin = bbufferCreate(datain, nin);
@@ -190,24 +190,24 @@ cleanup_arrays:
  *      (1) See zlibCompress().
  * </pre>
  */
-l_uint8 *
-zlibUncompress(const l_uint8  *datain,
+uint8_t *
+zlibUncompress(const uint8_t  *datain,
                size_t          nin,
                size_t         *pnout)
 {
-l_uint8    *dataout;
-l_uint8    *bufferin, *bufferout;
-l_int32     status, success;
+uint8_t    *dataout;
+uint8_t    *bufferin, *bufferout;
+int32_t     status, success;
 size_t      nbytes;
 L_BBUFFER  *bbin, *bbout;
 z_stream    z;
 
     if (!datain)
-        return (l_uint8 *)ERROR_PTR("datain not defined", __func__, NULL);
+        return (uint8_t *)ERROR_PTR("datain not defined", __func__, NULL);
 
         /* Set up fixed size buffers used in z_stream */
-    bufferin = (l_uint8 *)LEPT_CALLOC(L_BUF_SIZE, sizeof(l_uint8));
-    bufferout = (l_uint8 *)LEPT_CALLOC(L_BUF_SIZE, sizeof(l_uint8));
+    bufferin = (uint8_t *)LEPT_CALLOC(L_BUF_SIZE, sizeof(uint8_t));
+    bufferout = (uint8_t *)LEPT_CALLOC(L_BUF_SIZE, sizeof(uint8_t));
 
         /* Set up bbuffers and load bbin with the data */
     bbin = bbufferCreate(datain, nin);

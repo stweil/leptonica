@@ -53,7 +53,7 @@
 #include "allheaders.h"
 
     /* Default binarization threshold */
-static const l_int32  DefaultThreshold = 130;
+static const int32_t  DefaultThreshold = 130;
 
     /* Default half angle for searching */
 static const l_float32  DefaultSweepRange = 7.0;    /* degrees */
@@ -63,7 +63,7 @@ int main(int    argc,
          char **argv)
 {
 char      *filein, *fileout;
-l_int32    threshold, tryboth, format;
+int32_t    threshold, tryboth, format;
 l_float32  deg2rad, sweeprange, angle, conf;
 PIX       *pixs, *pix1, *pix2, *pixd;
 

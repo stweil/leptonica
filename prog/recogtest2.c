@@ -48,16 +48,16 @@ static char  trainset2[] = "recog/sets/train05.pa";  /* full set */
 
     /* Use scanned images or width-normalized lines */
 #if 1
-static const l_int32  linew = 0;  /* use scanned bitmaps */
+static const int32_t  linew = 0;  /* use scanned bitmaps */
 #else
-static const l_int32  linew = 5;  /* use generated lines */
+static const int32_t  linew = 5;  /* use generated lines */
 #endif
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
 char     *fname;
-l_int32   i;
+int32_t   i;
 BOXA     *boxa1;
 BOXAA    *baa;
 NUMAA    *naa;

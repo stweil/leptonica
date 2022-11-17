@@ -57,10 +57,10 @@ static const char *filetext = "# testnames\n"
                               "fonts/chars-6.pa\n"
                               "fonts/chars-10.pa";
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32     i;
+int32_t     i;
 L_STRCODE  *strc;
 
     setLeptDebugOK(1);

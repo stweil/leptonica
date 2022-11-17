@@ -1,6 +1,6 @@
 #include "leptfuzz.h"
 
-//static void MakePtas(l_int32 i, PTA **pptas, PTA **pptad);
+//static void MakePtas(int32_t i, PTA **pptas, PTA **pptad);
 
 extern "C" int
 LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) { 
@@ -39,15 +39,15 @@ LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
     dpixDestroy(&dpix_copy3);
 
     l_float64 l_f1;
-    l_int32 l_i1;
-    l_int32 l_i2;
+    int32_t l_i1;
+    int32_t l_i2;
     DPIX *dpix_copy4 = dpixCopy(dpix_payload);
     dpixGetMax(dpix_copy4, &l_f1, &l_i1, &l_i2);
     dpixDestroy(&dpix_copy4);
 
     l_float64 l_f2;
-    l_int32 l_i3;
-    l_int32 l_i4;
+    int32_t l_i3;
+    int32_t l_i4;
     DPIX *dpix_copy5 = dpixCopy(dpix_payload);
     dpixGetMin(dpix_copy5, &l_f2, &l_i3, &l_i4);
     dpixDestroy(&dpix_copy5);

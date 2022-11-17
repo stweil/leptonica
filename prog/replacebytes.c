@@ -54,7 +54,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32  start, nbytes;
+int32_t  start, nbytes;
 char    *filein, *fileout, *newstr;
 
     if (argc != 5 && argc != 6)
@@ -74,7 +74,7 @@ char    *filein, *fileout, *newstr;
     if (argc == 5) {
         return fileReplaceBytes(filein, start, nbytes, NULL, 0, fileout);
     } else {  /* argc == 6 */
-        return fileReplaceBytes(filein, start, nbytes, (l_uint8 *)newstr,
+        return fileReplaceBytes(filein, start, nbytes, (uint8_t *)newstr,
                                 strlen(newstr), fileout);
     }
 }

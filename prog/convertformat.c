@@ -72,7 +72,7 @@ int main(int    argc,
 {
 char        *filein, *fileout, *base, *ext;
 const char  *formatstr;
-l_int32      format, d, change;
+int32_t      format, d, change;
 PIX         *pixs;
 
     if (argc != 3 && argc != 4) {

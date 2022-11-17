@@ -33,19 +33,19 @@
  *          PIX        *pixReadStreamPng()
  *
  *    Reading png header
- *          l_int32     readHeaderPng()
- *          l_int32     freadHeaderPng()
- *          l_int32     readHeaderMemPng()
+ *          int32_t     readHeaderPng()
+ *          int32_t     freadHeaderPng()
+ *          int32_t     readHeaderMemPng()
  *
  *    Reading png metadata
- *          l_int32     fgetPngResolution()
- *          l_int32     isPngInterlaced()
- *          l_int32     fgetPngColormapInfo()
+ *          int32_t     fgetPngResolution()
+ *          int32_t     isPngInterlaced()
+ *          int32_t     fgetPngColormapInfo()
  *
  *    Writing png through stream
- *          l_int32     pixWritePng()  [ special top level ]
- *          l_int32     pixWriteStreamPng()
- *          l_int32     pixSetZlibCompression()
+ *          int32_t     pixWritePng()  [ special top level ]
+ *          int32_t     pixWriteStreamPng()
+ *          int32_t     pixSetZlibCompression()
  *
  *    Set flag for special read mode
  *          void        l_pngSetReadStrip16To8()
@@ -60,7 +60,7 @@
  *          PIX        *pixReadMemPng()
  *
  *    Writing png to memory
- *          l_int32     pixWriteMemPng()
+ *          int32_t     pixWriteMemPng()
  *
  *    Documentation: libpng.txt and example.c
  *
@@ -140,7 +140,7 @@
 /* ------------------ Set default for read option -------------------- */
     /* Strip 16 bpp --> 8 bpp on reading png; default is for stripping.
      * If you don't strip, you can't read the gray-alpha spp = 2 images. */
-static l_int32   var_PNG_STRIP_16_TO_8 = 1;
+static int32_t   var_PNG_STRIP_16_TO_8 = 1;
 
 #ifndef  NO_CONSOLE_IO
 #define  DEBUG_READ     0
@@ -187,11 +187,11 @@ static l_int32   var_PNG_STRIP_16_TO_8 = 1;
 PIX *
 pixReadStreamPng(FILE  *fp)
 {
-l_uint8      byte;
-l_int32      i, j, k, index, ncolors, rval, gval, bval, valid;
-l_int32      wpl, d, spp, cindex, bitval, bival, quadval, tRNS;
-l_uint32     png_transforms;
-l_uint32    *data, *line, *ppixel;
+uint8_t      byte;
+int32_t      i, j, k, index, ncolors, rval, gval, bval, valid;
+int32_t      wpl, d, spp, cindex, bitval, bival, quadval, tRNS;
+uint32_t     png_transforms;
+uint32_t    *data, *line, *ppixel;
 int          num_palette, num_text, num_trans;
 png_byte     bit_depth, color_type, channels;
 png_uint_32  w, h, rowbytes, xres, yres;
@@ -484,7 +484,7 @@ PIXCMAP     *cmap;
 #if  DEBUG_READ
     if (cmap) {
         for (i = 0; i < 16; i++) {
-            lept_stderr("[%d] = %d\n", i, ((l_uint8 *)(cmap->array))[i]);
+            lept_stderr("[%d] = %d\n", i, ((uint8_t *)(cmap->array))[i]);
         }
     }
 #endif  /* DEBUG_READ */
@@ -524,8 +524,8 @@ PIXCMAP     *cmap;
 
     xres = png_get_x_pixels_per_meter(png_ptr, info_ptr);
     yres = png_get_y_pixels_per_meter(png_ptr, info_ptr);
-    pixSetXRes(pix, (l_int32)((l_float32)xres / 39.37 + 0.5));  /* to ppi */
-    pixSetYRes(pix, (l_int32)((l_float32)yres / 39.37 + 0.5));  /* to ppi */
+    pixSetXRes(pix, (int32_t)((l_float32)xres / 39.37 + 0.5));  /* to ppi */
+    pixSetYRes(pix, (int32_t)((l_float32)yres / 39.37 + 0.5));  /* to ppi */
 
         /* Get the text if there is any */
     png_get_text(png_ptr, info_ptr, &text_ptr, &num_text);
@@ -572,13 +572,13 @@ PIXCMAP     *cmap;
  */
 l_ok
 readHeaderPng(const char *filename,
-              l_int32    *pw,
-              l_int32    *ph,
-              l_int32    *pbps,
-              l_int32    *pspp,
-              l_int32    *piscmap)
+              int32_t    *pw,
+              int32_t    *ph,
+              int32_t    *pbps,
+              int32_t    *pspp,
+              int32_t    *piscmap)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (pw) *pw = 0;
@@ -614,14 +614,14 @@ FILE    *fp;
  */
 l_ok
 freadHeaderPng(FILE     *fp,
-               l_int32  *pw,
-               l_int32  *ph,
-               l_int32  *pbps,
-               l_int32  *pspp,
-               l_int32  *piscmap)
+               int32_t  *pw,
+               int32_t  *ph,
+               int32_t  *pbps,
+               int32_t  *pspp,
+               int32_t  *piscmap)
 {
-l_int32  nbytes, ret;
-l_uint8  data[40];
+int32_t  nbytes, ret;
+uint8_t  data[40];
 
     if (pw) *pw = 0;
     if (ph) *ph = 0;
@@ -668,18 +668,18 @@ l_uint8  data[40];
  * </pre>
  */
 l_ok
-readHeaderMemPng(const l_uint8  *data,
+readHeaderMemPng(const uint8_t  *data,
                  size_t          size,
-                 l_int32        *pw,
-                 l_int32        *ph,
-                 l_int32        *pbps,
-                 l_int32        *pspp,
-                 l_int32        *piscmap)
+                 int32_t        *pw,
+                 int32_t        *ph,
+                 int32_t        *pbps,
+                 int32_t        *pspp,
+                 int32_t        *piscmap)
 {
-l_uint16   twobytes;
-l_uint16  *pshort;
-l_int32    colortype, w, h, bps, spp;
-l_uint32  *pword;
+uint16_t   twobytes;
+uint16_t  *pshort;
+int32_t    colortype, w, h, bps, spp;
+uint32_t  *pword;
 
     if (pw) *pw = 0;
     if (ph) *ph = 0;
@@ -697,8 +697,8 @@ l_uint32  *pword;
         data[6] != 26 || data[7] != 10)
         return ERROR_INT("not a valid png file", __func__, 1);
 
-    pword = (l_uint32 *)data;
-    pshort = (l_uint16 *)data;
+    pword = (uint32_t *)data;
+    pshort = (uint16_t *)data;
     w = convertOnLittleEnd32(pword[4]);
     h = convertOnLittleEnd32(pword[5]);
     if (w < 1 || h < 1)
@@ -759,10 +759,10 @@ l_uint32  *pword;
  *          the returned resolution values are 0 (designating 'unknown').
  *      (2) Side-effect: this rewinds the stream.
  */
-l_int32
+int32_t
 fgetPngResolution(FILE     *fp,
-                  l_int32  *pxres,
-                  l_int32  *pyres)
+                  int32_t  *pxres,
+                  int32_t  *pyres)
 {
 png_uint_32  xres, yres;
 png_structp  png_ptr;
@@ -798,8 +798,8 @@ png_infop    info_ptr;
 
     xres = png_get_x_pixels_per_meter(png_ptr, info_ptr);
     yres = png_get_y_pixels_per_meter(png_ptr, info_ptr);
-    *pxres = (l_int32)((l_float32)xres / 39.37 + 0.5);  /* to ppi */
-    *pyres = (l_int32)((l_float32)yres / 39.37 + 0.5);
+    *pxres = (int32_t)((l_float32)xres / 39.37 + 0.5);  /* to ppi */
+    *pyres = (int32_t)((l_float32)yres / 39.37 + 0.5);
 
     png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
     rewind(fp);
@@ -816,9 +816,9 @@ png_infop    info_ptr;
  */
 l_ok
 isPngInterlaced(const char *filename,
-                l_int32    *pinterlaced)
+                int32_t    *pinterlaced)
 {
-l_uint8  buf[32];
+uint8_t  buf[32];
 FILE    *fp;
 
     if (!pinterlaced)
@@ -859,9 +859,9 @@ FILE    *fp;
 l_ok
 fgetPngColormapInfo(FILE      *fp,
                     PIXCMAP  **pcmap,
-                    l_int32   *ptransparency)
+                    int32_t   *ptransparency)
 {
-l_int32      i, cindex, rval, gval, bval, num_palette, num_trans;
+int32_t      i, cindex, rval, gval, bval, num_palette, num_trans;
 png_byte     bit_depth, color_type;
 png_bytep    trans;
 png_colorp   palette;
@@ -1059,10 +1059,10 @@ pixWriteStreamPng(FILE      *fp,
                   l_float32  gamma)
 {
 char         commentstring[] = "Comment";
-l_int32      i, j, k, wpl, d, spp, compval, valid;
-l_int32      cmflag, opaque, max_trans, ncolors;
-l_int32     *rmap, *gmap, *bmap, *amap;
-l_uint32    *data, *ppixel;
+int32_t      i, j, k, wpl, d, spp, compval, valid;
+int32_t      cmflag, opaque, max_trans, ncolors;
+int32_t     *rmap, *gmap, *bmap, *amap;
+uint32_t    *data, *ppixel;
 png_byte     bit_depth, color_type;
 png_byte     alpha[256];
 png_uint_32  w, h;
@@ -1306,7 +1306,7 @@ char        *text;
  */
 l_ok
 pixSetZlibCompression(PIX     *pix,
-                      l_int32  compval)
+                      int32_t  compval)
 {
     if (!pix)
         return ERROR_INT("pix not defined", __func__, 1);
@@ -1330,7 +1330,7 @@ pixSetZlibCompression(PIX     *pix,
  * \return  void
  */
 void
-l_pngSetReadStrip16To8(l_int32  flag)
+l_pngSetReadStrip16To8(int32_t  flag)
 {
     var_PNG_STRIP_16_TO_8 = flag;
 }
@@ -1349,8 +1349,8 @@ l_pngSetReadStrip16To8(l_int32  flag)
 struct MemIOData
 {
     char*       m_Buffer;  /*!< pointer to this node's I/O content           */
-    l_int32     m_Count;   /*!< number of I/O content bytes read or written  */
-    l_int32     m_Size;    /*!< allocated size of m_buffer                   */
+    int32_t     m_Count;   /*!< number of I/O content bytes read or written  */
+    int32_t     m_Size;    /*!< allocated size of m_buffer                   */
     struct MemIOData  *m_Next;  /*!< pointer to the next node in the list;   */
                                 /*!< zero if this is the last node           */
     struct MemIOData  *m_Last;  /*!< pointer to the last node in the linked  */
@@ -1366,7 +1366,7 @@ static void memio_png_read_data(png_structp png_ptr, png_bytep outBytes,
                                 png_size_t byteCountToRead);
 static void memio_free(MEMIODATA* pthing);
 
-static const l_int32  MEMIO_BUFFER_SIZE = 8192;  /*! buffer alloc size */
+static const int32_t  MEMIO_BUFFER_SIZE = 8192;  /*! buffer alloc size */
 
 /*
  * \brief   memio_png_write_data()
@@ -1387,8 +1387,8 @@ memio_png_write_data(png_structp  png_ptr,
                      png_size_t   len)
 {
 MEMIODATA  *thing, *last;
-l_int32     written = 0;
-l_int32     remainingSpace, remainingToWrite;
+int32_t     written = 0;
+int32_t     remainingSpace, remainingToWrite;
 
     thing = (struct MemIOData*)png_get_io_ptr(png_ptr);
     last = (struct MemIOData*)thing->m_Last;
@@ -1449,8 +1449,8 @@ l_int32     remainingSpace, remainingToWrite;
 static void
 memio_png_flush(MEMIODATA  *pthing)
 {
-l_int32     amount = 0;
-l_int32     copied = 0;
+int32_t     amount = 0;
+int32_t     copied = 0;
 MEMIODATA  *buffer = 0;
 char       *data = 0;
 
@@ -1573,14 +1573,14 @@ MEMIODATA  *buffer, *old;
  * </pre>
  */
 PIX *
-pixReadMemPng(const l_uint8  *filedata,
+pixReadMemPng(const uint8_t  *filedata,
               size_t          filesize)
 {
-l_uint8      byte;
-l_int32      i, j, k, index, ncolors, rval, gval, bval, valid;
-l_int32      wpl, d, spp, cindex, bitval, bival, quadval, tRNS;
-l_uint32     png_transforms;
-l_uint32    *data, *line, *ppixel;
+uint8_t      byte;
+int32_t      i, j, k, index, ncolors, rval, gval, bval, valid;
+int32_t      wpl, d, spp, cindex, bitval, bival, quadval, tRNS;
+uint32_t     png_transforms;
+uint32_t    *data, *line, *ppixel;
 int          num_palette, num_text, num_trans;
 png_byte     bit_depth, color_type, channels;
 png_uint_32  w, h, rowbytes, xres, yres;
@@ -1881,7 +1881,7 @@ PIXCMAP     *cmap;
 #if  DEBUG_READ
     if (cmap) {
         for (i = 0; i < 16; i++) {
-            lept_stderr("[%d] = %d\n", i, ((l_uint8 *)(cmap->array))[i]);
+            lept_stderr("[%d] = %d\n", i, ((uint8_t *)(cmap->array))[i]);
         }
     }
 #endif  /* DEBUG_READ */
@@ -1920,8 +1920,8 @@ PIXCMAP     *cmap;
 
     xres = png_get_x_pixels_per_meter(png_ptr, info_ptr);
     yres = png_get_y_pixels_per_meter(png_ptr, info_ptr);
-    pixSetXRes(pix, (l_int32)((l_float32)xres / 39.37 + 0.5));  /* to ppi */
-    pixSetYRes(pix, (l_int32)((l_float32)yres / 39.37 + 0.5));  /* to ppi */
+    pixSetXRes(pix, (int32_t)((l_float32)xres / 39.37 + 0.5));  /* to ppi */
+    pixSetYRes(pix, (int32_t)((l_float32)yres / 39.37 + 0.5));  /* to ppi */
 
         /* Get the text if there is any */
     png_get_text(png_ptr, info_ptr, &text_ptr, &num_text);
@@ -1962,15 +1962,15 @@ PIXCMAP     *cmap;
  * </pre>
  */
 l_ok
-pixWriteMemPng(l_uint8  **pfiledata,
+pixWriteMemPng(uint8_t  **pfiledata,
                size_t    *pfilesize,
                PIX       *pix,
                l_float32  gamma)
 {
 char         commentstring[] = "Comment";
-l_int32      i, j, k, wpl, d, spp, cmflag, opaque, ncolors, compval, valid;
-l_int32     *rmap, *gmap, *bmap, *amap;
-l_uint32    *data, *ppixel;
+int32_t      i, j, k, wpl, d, spp, cmflag, opaque, ncolors, compval, valid;
+int32_t     *rmap, *gmap, *bmap, *amap;
+uint32_t    *data, *ppixel;
 png_byte     bit_depth, color_type;
 png_byte     alpha[256];
 png_uint_32  w, h, xres, yres;
@@ -2155,7 +2155,7 @@ MEMIODATA    state;
         pixDestroy(&pix1);
         png_destroy_write_struct(&png_ptr, &info_ptr);
         memio_png_flush(&state);
-        *pfiledata = (l_uint8 *)state.m_Buffer;
+        *pfiledata = (uint8_t *)state.m_Buffer;
         state.m_Buffer = 0;
         *pfilesize = state.m_Count;
         memio_free(&state);
@@ -2192,7 +2192,7 @@ MEMIODATA    state;
 
     png_destroy_write_struct(&png_ptr, &info_ptr);
     memio_png_flush(&state);
-    *pfiledata = (l_uint8 *)state.m_Buffer;
+    *pfiledata = (uint8_t *)state.m_Buffer;
     state.m_Buffer = 0;
     *pfilesize = state.m_Count;
     memio_free(&state);

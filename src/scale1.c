@@ -95,19 +95,19 @@
  *               static void       scaleGray4xLILineLow()
  *
  *         Grayscale and color scaling by closest pixel sampling
- *               static l_int32    scaleBySamplingLow()
+ *               static int32_t    scaleBySamplingLow()
  *
  *         Color and grayscale downsampling with (antialias) lowpass filter
- *               static l_int32    scaleSmoothLow()
+ *               static int32_t    scaleSmoothLow()
  *               static void       scaleRGBToGray2Low()
  *
  *         Color and grayscale downsampling with (antialias) area mapping
- *               static l_int32    scaleColorAreaMapLow()
- *               static l_int32    scaleGrayAreaMapLow()
- *               static l_int32    scaleAreaMapLow2()
+ *               static int32_t    scaleColorAreaMapLow()
+ *               static int32_t    scaleGrayAreaMapLow()
+ *               static int32_t    scaleAreaMapLow2()
  *
  *         Binary scaling by closest pixel sampling
- *               static l_int32    scaleBinaryLow()
+ *               static int32_t    scaleBinaryLow()
  * </pre>
  */
 
@@ -118,49 +118,49 @@
 #include <string.h>
 #include "allheaders.h"
 
-static void scaleColorLILow(l_uint32 *datad, l_int32 wd, l_int32 hd,
-                            l_int32 wpld, l_uint32 *datas, l_int32 ws,
-                            l_int32 hs, l_int32 wpls);
-static void scaleGrayLILow(l_uint32 *datad, l_int32 wd, l_int32 hd,
-                           l_int32 wpld, l_uint32 *datas, l_int32 ws,
-                           l_int32 hs, l_int32 wpls);
-static void scaleColor2xLILow(l_uint32 *datad, l_int32 wpld, l_uint32 *datas,
-                              l_int32 ws, l_int32 hs, l_int32 wpls);
-static void scaleColor2xLILineLow(l_uint32 *lined, l_int32 wpld,
-                                  l_uint32 *lines, l_int32 ws, l_int32 wpls,
-                                  l_int32 lastlineflag);
-static void scaleGray2xLILow(l_uint32 *datad, l_int32 wpld, l_uint32 *datas,
-                             l_int32 ws, l_int32 hs, l_int32 wpls);
-static void scaleGray2xLILineLow(l_uint32 *lined, l_int32 wpld,
-                                 l_uint32 *lines, l_int32 ws, l_int32 wpls,
-                                 l_int32 lastlineflag);
-static void scaleGray4xLILow(l_uint32 *datad, l_int32 wpld, l_uint32 *datas,
-                             l_int32 ws, l_int32 hs, l_int32 wpls);
-static void scaleGray4xLILineLow(l_uint32 *lined, l_int32 wpld,
-                                 l_uint32 *lines, l_int32 ws, l_int32 wpls,
-                                 l_int32 lastlineflag);
-static l_int32 scaleBySamplingLow(l_uint32 *datad, l_int32 wd, l_int32 hd,
-                                  l_int32 wpld, l_uint32 *datas, l_int32 ws,
-                                  l_int32 hs, l_int32 d, l_int32 wpls);
-static l_int32 scaleSmoothLow(l_uint32 *datad, l_int32 wd, l_int32 hd,
-                              l_int32 wpld, l_uint32 *datas, l_int32 ws,
-                              l_int32 hs, l_int32 d, l_int32 wpls,
-                              l_int32 size);
-static void scaleRGBToGray2Low(l_uint32 *datad, l_int32 wd, l_int32 hd,
-                               l_int32 wpld, l_uint32 *datas, l_int32 wpls,
+static void scaleColorLILow(uint32_t *datad, int32_t wd, int32_t hd,
+                            int32_t wpld, uint32_t *datas, int32_t ws,
+                            int32_t hs, int32_t wpls);
+static void scaleGrayLILow(uint32_t *datad, int32_t wd, int32_t hd,
+                           int32_t wpld, uint32_t *datas, int32_t ws,
+                           int32_t hs, int32_t wpls);
+static void scaleColor2xLILow(uint32_t *datad, int32_t wpld, uint32_t *datas,
+                              int32_t ws, int32_t hs, int32_t wpls);
+static void scaleColor2xLILineLow(uint32_t *lined, int32_t wpld,
+                                  uint32_t *lines, int32_t ws, int32_t wpls,
+                                  int32_t lastlineflag);
+static void scaleGray2xLILow(uint32_t *datad, int32_t wpld, uint32_t *datas,
+                             int32_t ws, int32_t hs, int32_t wpls);
+static void scaleGray2xLILineLow(uint32_t *lined, int32_t wpld,
+                                 uint32_t *lines, int32_t ws, int32_t wpls,
+                                 int32_t lastlineflag);
+static void scaleGray4xLILow(uint32_t *datad, int32_t wpld, uint32_t *datas,
+                             int32_t ws, int32_t hs, int32_t wpls);
+static void scaleGray4xLILineLow(uint32_t *lined, int32_t wpld,
+                                 uint32_t *lines, int32_t ws, int32_t wpls,
+                                 int32_t lastlineflag);
+static int32_t scaleBySamplingLow(uint32_t *datad, int32_t wd, int32_t hd,
+                                  int32_t wpld, uint32_t *datas, int32_t ws,
+                                  int32_t hs, int32_t d, int32_t wpls);
+static int32_t scaleSmoothLow(uint32_t *datad, int32_t wd, int32_t hd,
+                              int32_t wpld, uint32_t *datas, int32_t ws,
+                              int32_t hs, int32_t d, int32_t wpls,
+                              int32_t size);
+static void scaleRGBToGray2Low(uint32_t *datad, int32_t wd, int32_t hd,
+                               int32_t wpld, uint32_t *datas, int32_t wpls,
                                l_float32 rwt, l_float32 gwt, l_float32 bwt);
-static void scaleColorAreaMapLow(l_uint32 *datad, l_int32 wd, l_int32 hd,
-                                 l_int32 wpld, l_uint32 *datas, l_int32 ws,
-                                 l_int32 hs, l_int32 wpls);
-static void scaleGrayAreaMapLow(l_uint32 *datad, l_int32 wd, l_int32 hd,
-                                l_int32 wpld, l_uint32 *datas, l_int32 ws,
-                                l_int32 hs, l_int32 wpls);
-static void scaleAreaMapLow2(l_uint32 *datad, l_int32 wd, l_int32 hd,
-                             l_int32 wpld, l_uint32 *datas, l_int32 d,
-                             l_int32 wpls);
-static l_int32 scaleBinaryLow(l_uint32 *datad, l_int32 wd, l_int32 hd,
-                              l_int32 wpld, l_uint32 *datas, l_int32 ws,
-                              l_int32 hs, l_int32 wpls);
+static void scaleColorAreaMapLow(uint32_t *datad, int32_t wd, int32_t hd,
+                                 int32_t wpld, uint32_t *datas, int32_t ws,
+                                 int32_t hs, int32_t wpls);
+static void scaleGrayAreaMapLow(uint32_t *datad, int32_t wd, int32_t hd,
+                                int32_t wpld, uint32_t *datas, int32_t ws,
+                                int32_t hs, int32_t wpls);
+static void scaleAreaMapLow2(uint32_t *datad, int32_t wd, int32_t hd,
+                             int32_t wpld, uint32_t *datas, int32_t d,
+                             int32_t wpls);
+static int32_t scaleBinaryLow(uint32_t *datad, int32_t wd, int32_t hd,
+                              int32_t wpld, uint32_t *datas, int32_t ws,
+                              int32_t hs, int32_t wpls);
 
 #ifndef  NO_CONSOLE_IO
 #define  DEBUG_OVERFLOW   0
@@ -251,7 +251,7 @@ pixScale(PIX       *pixs,
          l_float32  scalex,
          l_float32  scaley)
 {
-l_int32    sharpwidth;
+int32_t    sharpwidth;
 l_float32  maxscale, sharpfract;
 
     if (!pixs)
@@ -276,10 +276,10 @@ l_float32  maxscale, sharpfract;
  */
 PIX *
 pixScaleToSizeRel(PIX     *pixs,
-                  l_int32  delw,
-                  l_int32  delh)
+                  int32_t  delw,
+                  int32_t  delh)
 {
-l_int32  w, h, wd, hd;
+int32_t  w, h, wd, hd;
 
     if (!pixs)
         return (PIX *)ERROR_PTR("pixs not defined", __func__, NULL);
@@ -317,10 +317,10 @@ l_int32  w, h, wd, hd;
  */
 PIX *
 pixScaleToSize(PIX     *pixs,
-               l_int32  wd,
-               l_int32  hd)
+               int32_t  wd,
+               int32_t  hd)
 {
-l_int32    w, h;
+int32_t    w, h;
 l_float32  scalex, scaley;
 
     if (!pixs)
@@ -359,7 +359,7 @@ pixScaleToResolution(PIX        *pixs,
                      l_float32   assumed,
                      l_float32  *pscalefact)
 {
-l_int32    xres;
+int32_t    xres;
 l_float32  factor;
 
     if (pscalefact) *pscalefact = 1.0;
@@ -416,9 +416,9 @@ pixScaleGeneral(PIX       *pixs,
                 l_float32  scalex,
                 l_float32  scaley,
                 l_float32  sharpfract,
-                l_int32    sharpwidth)
+                int32_t    sharpwidth)
 {
-l_int32    d;
+int32_t    d;
 l_float32  maxscale, minscale;
 PIX       *pix1, *pix2, *pixd;
 
@@ -507,7 +507,7 @@ pixScaleLI(PIX       *pixs,
            l_float32  scalex,
            l_float32  scaley)
 {
-l_int32    d;
+int32_t    d;
 l_float32  maxscale;
 PIX       *pixt, *pixd;
 
@@ -564,8 +564,8 @@ pixScaleColorLI(PIX      *pixs,
                l_float32  scalex,
                l_float32  scaley)
 {
-l_int32    ws, hs, wpls, wd, hd, wpld;
-l_uint32  *datas, *datad;
+int32_t    ws, hs, wpls, wd, hd, wpld;
+uint32_t  *datas, *datad;
 l_float32  maxscale;
 PIX       *pixd;
 
@@ -589,8 +589,8 @@ PIX       *pixd;
     pixGetDimensions(pixs, &ws, &hs, NULL);
     datas = pixGetData(pixs);
     wpls = pixGetWpl(pixs);
-    wd = (l_int32)(scalex * (l_float32)ws + 0.5);
-    hd = (l_int32)(scaley * (l_float32)hs + 0.5);
+    wd = (int32_t)(scalex * (l_float32)ws + 0.5);
+    hd = (int32_t)(scaley * (l_float32)hs + 0.5);
     if ((pixd = pixCreate(wd, hd, 32)) == NULL)
         return (PIX *)ERROR_PTR("pixd not made", __func__, NULL);
     pixCopyResolution(pixd, pixs);
@@ -624,8 +624,8 @@ PIX       *pixd;
 PIX *
 pixScaleColor2xLI(PIX  *pixs)
 {
-l_int32    ws, hs, wpls, wpld;
-l_uint32  *datas, *datad;
+int32_t    ws, hs, wpls, wpld;
+uint32_t  *datas, *datad;
 PIX       *pixd;
 
     if (!pixs || (pixGetDepth(pixs) != 32))
@@ -763,8 +763,8 @@ pixScaleGrayLI(PIX       *pixs,
                l_float32  scalex,
                l_float32  scaley)
 {
-l_int32    ws, hs, wpls, wd, hd, wpld;
-l_uint32  *datas, *datad;
+int32_t    ws, hs, wpls, wd, hd, wpld;
+uint32_t  *datas, *datad;
 l_float32  maxscale;
 PIX       *pixd;
 
@@ -789,8 +789,8 @@ PIX       *pixd;
     pixGetDimensions(pixs, &ws, &hs, NULL);
     datas = pixGetData(pixs);
     wpls = pixGetWpl(pixs);
-    wd = (l_int32)(scalex * (l_float32)ws + 0.5);
-    hd = (l_int32)(scaley * (l_float32)hs + 0.5);
+    wd = (int32_t)(scalex * (l_float32)ws + 0.5);
+    hd = (int32_t)(scaley * (l_float32)hs + 0.5);
     if ((pixd = pixCreate(wd, hd, 8)) == NULL)
         return (PIX *)ERROR_PTR("pixd not made", __func__, NULL);
     pixCopyText(pixd, pixs);
@@ -820,8 +820,8 @@ PIX       *pixd;
 PIX *
 pixScaleGray2xLI(PIX  *pixs)
 {
-l_int32    ws, hs, wpls, wpld;
-l_uint32  *datas, *datad;
+int32_t    ws, hs, wpls, wpld;
+uint32_t  *datas, *datad;
 PIX       *pixd;
 
     if (!pixs || pixGetDepth(pixs) != 8 || pixGetColormap(pixs))
@@ -859,8 +859,8 @@ PIX       *pixd;
 PIX *
 pixScaleGray4xLI(PIX  *pixs)
 {
-l_int32    ws, hs, wpls, wpld;
-l_uint32  *datas, *datad;
+int32_t    ws, hs, wpls, wpld;
+uint32_t  *datas, *datad;
 PIX       *pixd;
 
     if (!pixs || pixGetDepth(pixs) != 8 || pixGetColormap(pixs))
@@ -901,10 +901,10 @@ PIX       *pixd;
  */
 PIX *
 pixScaleGray2xLIThresh(PIX     *pixs,
-                       l_int32  thresh)
+                       int32_t  thresh)
 {
-l_int32    i, ws, hs, hsm, wd, hd, wpls, wplb, wpld;
-l_uint32  *datas, *datad, *lines, *lined, *lineb;
+int32_t    i, ws, hs, hsm, wd, hd, wpls, wplb, wpld;
+uint32_t  *datas, *datad, *lines, *lined, *lineb;
 PIX       *pixd;
 
     if (!pixs || pixGetDepth(pixs) != 8 || pixGetColormap(pixs))
@@ -923,7 +923,7 @@ PIX       *pixd;
 
         /* Make line buffer for 2 lines of virtual intermediate image */
     wplb = (wd + 3) / 4;
-    if ((lineb = (l_uint32 *)LEPT_CALLOC(2 * wplb, sizeof(l_uint32))) == NULL)
+    if ((lineb = (uint32_t *)LEPT_CALLOC(2 * wplb, sizeof(uint32_t))) == NULL)
         return (PIX *)ERROR_PTR("lineb not made", __func__, NULL);
 
         /* Make dest binary image */
@@ -979,12 +979,12 @@ PIX       *pixd;
 PIX *
 pixScaleGray2xLIDither(PIX  *pixs)
 {
-l_int32    i, ws, hs, hsm, wd, hd, wpls, wplb, wpld;
-l_uint32  *datas, *datad;
-l_uint32  *lined;
-l_uint32  *lineb = NULL;   /* 2 intermediate buffer lines */
-l_uint32  *linebp = NULL;  /* 1 intermediate buffer line */
-l_uint32  *bufs = NULL;    /* 2 source buffer lines */
+int32_t    i, ws, hs, hsm, wd, hd, wpls, wplb, wpld;
+uint32_t  *datas, *datad;
+uint32_t  *lined;
+uint32_t  *lineb = NULL;   /* 2 intermediate buffer lines */
+uint32_t  *linebp = NULL;  /* 1 intermediate buffer line */
+uint32_t  *bufs = NULL;    /* 2 source buffer lines */
 PIX       *pixd = NULL;
 
     if (!pixs || pixGetDepth(pixs) != 8 || pixGetColormap(pixs))
@@ -999,18 +999,18 @@ PIX       *pixd = NULL;
     wpls = pixGetWpl(pixs);
 
         /* Make line buffers for 2 lines of src image */
-    if ((bufs = (l_uint32 *)LEPT_CALLOC(2 * wpls, sizeof(l_uint32))) == NULL)
+    if ((bufs = (uint32_t *)LEPT_CALLOC(2 * wpls, sizeof(uint32_t))) == NULL)
         return (PIX *)ERROR_PTR("bufs not made", __func__, NULL);
 
         /* Make line buffer for 2 lines of virtual intermediate image */
     wplb = (wd + 3) / 4;
-    if ((lineb = (l_uint32 *)LEPT_CALLOC(2 * wplb, sizeof(l_uint32))) == NULL) {
+    if ((lineb = (uint32_t *)LEPT_CALLOC(2 * wplb, sizeof(uint32_t))) == NULL) {
         L_ERROR("lineb not made\n", __func__);
         goto cleanup;
     }
 
         /* Make line buffer for 1 line of virtual intermediate image */
-    if ((linebp = (l_uint32 *)LEPT_CALLOC(wplb, sizeof(l_uint32))) == NULL) {
+    if ((linebp = (uint32_t *)LEPT_CALLOC(wplb, sizeof(uint32_t))) == NULL) {
         L_ERROR("linebp not made\n", __func__);
         goto cleanup;
     }
@@ -1095,10 +1095,10 @@ cleanup:
  */
 PIX *
 pixScaleGray4xLIThresh(PIX     *pixs,
-                       l_int32  thresh)
+                       int32_t  thresh)
 {
-l_int32    i, j, ws, hs, hsm, wd, hd, wpls, wplb, wpld;
-l_uint32  *datas, *datad, *lines, *lined, *lineb;
+int32_t    i, j, ws, hs, hsm, wd, hd, wpls, wplb, wpld;
+uint32_t  *datas, *datad, *lines, *lined, *lineb;
 PIX       *pixd;
 
     if (!pixs || pixGetDepth(pixs) != 8 || pixGetColormap(pixs))
@@ -1117,7 +1117,7 @@ PIX       *pixd;
 
         /* Make line buffer for 4 lines of virtual intermediate image */
     wplb = (wd + 3) / 4;
-    if ((lineb = (l_uint32 *)LEPT_CALLOC(4 * wplb, sizeof(l_uint32))) == NULL)
+    if ((lineb = (uint32_t *)LEPT_CALLOC(4 * wplb, sizeof(uint32_t))) == NULL)
         return (PIX *)ERROR_PTR("lineb not made", __func__, NULL);
 
         /* Make dest binary image */
@@ -1182,12 +1182,12 @@ PIX       *pixd;
 PIX *
 pixScaleGray4xLIDither(PIX  *pixs)
 {
-l_int32    i, j, ws, hs, hsm, wd, hd, wpls, wplb, wpld;
-l_uint32  *datas, *datad;
-l_uint32  *lined;
-l_uint32  *lineb = NULL;   /* 4 intermediate buffer lines */
-l_uint32  *linebp = NULL;  /* 1 intermediate buffer line */
-l_uint32  *bufs = NULL;    /* 2 source buffer lines */
+int32_t    i, j, ws, hs, hsm, wd, hd, wpls, wplb, wpld;
+uint32_t  *datas, *datad;
+uint32_t  *lined;
+uint32_t  *lineb = NULL;   /* 4 intermediate buffer lines */
+uint32_t  *linebp = NULL;  /* 1 intermediate buffer line */
+uint32_t  *bufs = NULL;    /* 2 source buffer lines */
 PIX       *pixd = NULL;
 
     if (!pixs || pixGetDepth(pixs) != 8 || pixGetColormap(pixs))
@@ -1202,18 +1202,18 @@ PIX       *pixd = NULL;
     wpls = pixGetWpl(pixs);
 
         /* Make line buffers for 2 lines of src image */
-    if ((bufs = (l_uint32 *)LEPT_CALLOC(2 * wpls, sizeof(l_uint32))) == NULL)
+    if ((bufs = (uint32_t *)LEPT_CALLOC(2 * wpls, sizeof(uint32_t))) == NULL)
         return (PIX *)ERROR_PTR("bufs not made", __func__, NULL);
 
         /* Make line buffer for 4 lines of virtual intermediate image */
     wplb = (wd + 3) / 4;
-    if ((lineb = (l_uint32 *)LEPT_CALLOC(4 * wplb, sizeof(l_uint32))) == NULL) {
+    if ((lineb = (uint32_t *)LEPT_CALLOC(4 * wplb, sizeof(uint32_t))) == NULL) {
         L_ERROR("lineb not made\n", __func__);
         goto cleanup;
     }
 
         /* Make line buffer for 1 line of virtual intermediate image */
-    if ((linebp = (l_uint32 *)LEPT_CALLOC(wplb, sizeof(l_uint32))) == NULL) {
+    if ((linebp = (uint32_t *)LEPT_CALLOC(wplb, sizeof(uint32_t))) == NULL) {
         L_ERROR("linebp not made\n", __func__);
         goto cleanup;
     }
@@ -1307,8 +1307,8 @@ pixScaleBySampling(PIX       *pixs,
                    l_float32  scalex,
                    l_float32  scaley)
 {
-l_int32    ws, hs, d, wpls, wd, hd, wpld;
-l_uint32  *datas, *datad;
+int32_t    ws, hs, d, wpls, wd, hd, wpld;
+uint32_t  *datas, *datad;
 PIX       *pixd;
 
     if (!pixs)
@@ -1323,8 +1323,8 @@ PIX       *pixd;
     pixGetDimensions(pixs, &ws, &hs, NULL);
     datas = pixGetData(pixs);
     wpls = pixGetWpl(pixs);
-    wd = (l_int32)(scalex * (l_float32)ws + 0.5);
-    hd = (l_int32)(scaley * (l_float32)hs + 0.5);
+    wd = (int32_t)(scalex * (l_float32)ws + 0.5);
+    hd = (int32_t)(scaley * (l_float32)hs + 0.5);
     if ((pixd = pixCreate(wd, hd, d)) == NULL)
         return (PIX *)ERROR_PTR("pixd not made", __func__, NULL);
     pixCopyResolution(pixd, pixs);
@@ -1364,10 +1364,10 @@ PIX       *pixd;
  */
 PIX *
 pixScaleBySamplingToSize(PIX     *pixs,
-                         l_int32  wd,
-                         l_int32  hd)
+                         int32_t  wd,
+                         int32_t  hd)
 {
-l_int32    w, h;
+int32_t    w, h;
 l_float32  scalex, scaley;
 
     if (!pixs)
@@ -1406,7 +1406,7 @@ l_float32  scalex, scaley;
  */
 PIX *
 pixScaleByIntSampling(PIX     *pixs,
-                      l_int32  factor)
+                      int32_t  factor)
 {
 l_float32  scale;
 
@@ -1446,12 +1446,12 @@ l_float32  scale;
  */
 PIX *
 pixScaleRGBToGrayFast(PIX     *pixs,
-                      l_int32  factor,
-                      l_int32  color)
+                      int32_t  factor,
+                      int32_t  color)
 {
-l_int32    byteval, shift;
-l_int32    i, j, ws, hs, wd, hd, wpls, wpld;
-l_uint32  *datas, *words, *datad, *lined;
+int32_t    byteval, shift;
+int32_t    i, j, ws, hs, wd, hd, wpls, wpld;
+uint32_t  *datas, *words, *datad, *lined;
 l_float32  scale;
 PIX       *pixd;
 
@@ -1519,12 +1519,12 @@ PIX       *pixd;
  */
 PIX *
 pixScaleRGBToBinaryFast(PIX     *pixs,
-                        l_int32  factor,
-                        l_int32  thresh)
+                        int32_t  factor,
+                        int32_t  thresh)
 {
-l_int32    byteval;
-l_int32    i, j, ws, hs, wd, hd, wpls, wpld;
-l_uint32  *datas, *words, *datad, *lined;
+int32_t    byteval;
+int32_t    i, j, ws, hs, wd, hd, wpls, wpld;
+uint32_t  *datas, *words, *datad, *lined;
 l_float32  scale;
 PIX       *pixd;
 
@@ -1583,12 +1583,12 @@ PIX       *pixd;
  */
 PIX *
 pixScaleGrayToBinaryFast(PIX     *pixs,
-                         l_int32  factor,
-                         l_int32  thresh)
+                         int32_t  factor,
+                         int32_t  thresh)
 {
-l_int32    byteval;
-l_int32    i, j, ws, hs, wd, hd, wpls, wpld, sj;
-l_uint32  *datas, *datad, *lines, *lined;
+int32_t    byteval;
+int32_t    i, j, ws, hs, wd, hd, wpls, wpld, sj;
+uint32_t  *datas, *datad, *lines, *lined;
 l_float32  scale;
 PIX       *pixd;
 
@@ -1666,9 +1666,9 @@ pixScaleSmooth(PIX       *pix,
                l_float32  scalex,
                l_float32  scaley)
 {
-l_int32    ws, hs, d, wd, hd, wpls, wpld, isize;
-l_uint32   val;
-l_uint32  *datas, *datad;
+int32_t    ws, hs, d, wd, hd, wpls, wpld, isize;
+uint32_t   val;
+uint32_t  *datas, *datad;
 l_float32  minscale, size;
 PIX       *pixs, *pixd;
 
@@ -1692,7 +1692,7 @@ PIX       *pixs, *pixd;
          * Under no conditions use isize < 2  */
     minscale = L_MIN(scalex, scaley);
     size = 1.0 / minscale;   /* ideal filter full width */
-    isize = L_MIN(10000, L_MAX(2, (l_int32)(size + 0.5)));
+    isize = L_MIN(10000, L_MAX(2, (int32_t)(size + 0.5)));
 
     pixGetDimensions(pixs, &ws, &hs, NULL);
     if ((ws < isize) || (hs < isize)) {
@@ -1706,8 +1706,8 @@ PIX       *pixs, *pixd;
 
     datas = pixGetData(pixs);
     wpls = pixGetWpl(pixs);
-    wd = L_MAX(1, (l_int32)(scalex * (l_float32)ws + 0.5));
-    hd = L_MAX(1, (l_int32)(scaley * (l_float32)hs + 0.5));
+    wd = L_MAX(1, (int32_t)(scalex * (l_float32)ws + 0.5));
+    hd = L_MAX(1, (int32_t)(scaley * (l_float32)hs + 0.5));
     if ((pixd = pixCreate(wd, hd, d)) == NULL) {
         pixDestroy(&pixs);
         return (PIX *)ERROR_PTR("pixd not made", __func__, NULL);
@@ -1747,10 +1747,10 @@ PIX       *pixs, *pixd;
  */
 PIX *
 pixScaleSmoothToSize(PIX     *pixs,
-                     l_int32  wd,
-                     l_int32  hd)
+                     int32_t  wd,
+                     int32_t  hd)
 {
-l_int32    w, h;
+int32_t    w, h;
 l_float32  scalex, scaley;
 
     if (!pixs)
@@ -1787,8 +1787,8 @@ pixScaleRGBToGray2(PIX       *pixs,
                    l_float32  gwt,
                    l_float32  bwt)
 {
-l_int32    wd, hd, wpls, wpld;
-l_uint32  *datas, *datad;
+int32_t    wd, hd, wpls, wpld;
+uint32_t  *datas, *datad;
 PIX       *pixd;
 
     if (!pixs)
@@ -1865,8 +1865,8 @@ pixScaleAreaMap(PIX       *pix,
                 l_float32  scalex,
                 l_float32  scaley)
 {
-l_int32    ws, hs, d, wd, hd, wpls, wpld;
-l_uint32  *datas, *datad;
+int32_t    ws, hs, d, wd, hd, wpls, wpld;
+uint32_t  *datas, *datad;
 l_float32  maxscale, minscale;
 PIX       *pixs, *pixd, *pix1, *pix2, *pix3;
 
@@ -1944,8 +1944,8 @@ PIX       *pixs, *pixd, *pix1, *pix2, *pix3;
     pixGetDimensions(pixs, &ws, &hs, NULL);
     datas = pixGetData(pixs);
     wpls = pixGetWpl(pixs);
-    wd = (l_int32)(scalex * (l_float32)ws + 0.5);
-    hd = (l_int32)(scaley * (l_float32)hs + 0.5);
+    wd = (int32_t)(scalex * (l_float32)ws + 0.5);
+    hd = (int32_t)(scaley * (l_float32)hs + 0.5);
     if (wd < 1 || hd < 1) {
         pixDestroy(&pixs);
         return (PIX *)ERROR_PTR("pixd too small", __func__, NULL);
@@ -1994,8 +1994,8 @@ PIX       *pixs, *pixd, *pix1, *pix2, *pix3;
 PIX *
 pixScaleAreaMap2(PIX  *pix)
 {
-l_int32    wd, hd, d, wpls, wpld;
-l_uint32  *datas, *datad;
+int32_t    wd, hd, d, wpls, wpld;
+uint32_t  *datas, *datad;
 PIX       *pixs, *pixd;
 
     if (!pix)
@@ -2056,10 +2056,10 @@ PIX       *pixs, *pixd;
  */
 PIX *
 pixScaleAreaMapToSize(PIX     *pixs,
-                      l_int32  wd,
-                      l_int32  hd)
+                      int32_t  wd,
+                      int32_t  hd)
 {
-l_int32    w, h;
+int32_t    w, h;
 l_float32  scalex, scaley;
 
     if (!pixs)
@@ -2106,8 +2106,8 @@ pixScaleBinary(PIX       *pixs,
                l_float32  scalex,
                l_float32  scaley)
 {
-l_int32    ws, hs, wpls, wd, hd, wpld;
-l_uint32  *datas, *datad;
+int32_t    ws, hs, wpls, wd, hd, wpld;
+uint32_t  *datas, *datad;
 PIX       *pixd;
 
     if (!pixs)
@@ -2122,8 +2122,8 @@ PIX       *pixd;
     pixGetDimensions(pixs, &ws, &hs, NULL);
     datas = pixGetData(pixs);
     wpls = pixGetWpl(pixs);
-    wd = (l_int32)(scalex * (l_float32)ws + 0.5);
-    hd = (l_int32)(scaley * (l_float32)hs + 0.5);
+    wd = (int32_t)(scalex * (l_float32)ws + 0.5);
+    hd = (int32_t)(scaley * (l_float32)hs + 0.5);
     if ((pixd = pixCreate(wd, hd, 1)) == NULL)
         return (PIX *)ERROR_PTR("pixd not made", __func__, NULL);
     pixCopyColormap(pixd, pixs);
@@ -2158,22 +2158,22 @@ PIX       *pixd;
  * </pre>
  */
 static void
-scaleColorLILow(l_uint32  *datad,
-               l_int32    wd,
-               l_int32    hd,
-               l_int32    wpld,
-               l_uint32  *datas,
-               l_int32    ws,
-               l_int32    hs,
-               l_int32    wpls)
+scaleColorLILow(uint32_t  *datad,
+               int32_t    wd,
+               int32_t    hd,
+               int32_t    wpld,
+               uint32_t  *datas,
+               int32_t    ws,
+               int32_t    hs,
+               int32_t    wpls)
 {
-l_int32    i, j, wm2, hm2;
-l_int32    xpm, ypm;  /* location in src image, to 1/16 of a pixel */
-l_int32    xp, yp, xf, yf;  /* src pixel and pixel fraction coordinates */
-l_uint32   v00r, v01r, v10r, v11r, v00g, v01g, v10g, v11g;
-l_uint32   v00b, v01b, v10b, v11b, area00, area01, area10, area11;
-l_uint32   pixels1, pixels2, pixels3, pixels4, pixel;
-l_uint32  *lines, *lined;
+int32_t    i, j, wm2, hm2;
+int32_t    xpm, ypm;  /* location in src image, to 1/16 of a pixel */
+int32_t    xp, yp, xf, yf;  /* src pixel and pixel fraction coordinates */
+uint32_t   v00r, v01r, v10r, v11r, v00g, v01g, v10g, v11g;
+uint32_t   v00b, v01b, v10b, v11b, area00, area01, area10, area11;
+uint32_t   pixels1, pixels2, pixels3, pixels4, pixel;
+uint32_t  *lines, *lined;
 l_float32  scx, scy;
 
         /* (scx, scy) are scaling factors that are applied to the
@@ -2187,13 +2187,13 @@ l_float32  scx, scy;
 
         /* Iterate over the destination pixels */
     for (i = 0; i < hd; i++) {
-        ypm = (l_int32)(scy * (l_float32)i);
+        ypm = (int32_t)(scy * (l_float32)i);
         yp = ypm >> 4;
         yf = ypm & 0x0f;
         lined = datad + i * wpld;
         lines = datas + yp * wpls;
         for (j = 0; j < wd; j++) {
-            xpm = (l_int32)(scx * (l_float32)j);
+            xpm = (int32_t)(scx * (l_float32)j);
             xp = xpm >> 4;
             xf = xpm & 0x0f;
 
@@ -2263,21 +2263,21 @@ l_float32  scx, scy;
  * </pre>
  */
 static void
-scaleGrayLILow(l_uint32  *datad,
-               l_int32    wd,
-               l_int32    hd,
-               l_int32    wpld,
-               l_uint32  *datas,
-               l_int32    ws,
-               l_int32    hs,
-               l_int32    wpls)
+scaleGrayLILow(uint32_t  *datad,
+               int32_t    wd,
+               int32_t    hd,
+               int32_t    wpld,
+               uint32_t  *datas,
+               int32_t    ws,
+               int32_t    hs,
+               int32_t    wpls)
 {
-l_int32    i, j, wm2, hm2;
-l_int32    xpm, ypm;  /* location in src image, to 1/16 of a pixel */
-l_int32    xp, yp, xf, yf;  /* src pixel and pixel fraction coordinates */
-l_int32    v00, v01, v10, v11, v00_val, v01_val, v10_val, v11_val;
-l_uint8    val;
-l_uint32  *lines, *lined;
+int32_t    i, j, wm2, hm2;
+int32_t    xpm, ypm;  /* location in src image, to 1/16 of a pixel */
+int32_t    xp, yp, xf, yf;  /* src pixel and pixel fraction coordinates */
+int32_t    v00, v01, v10, v11, v00_val, v01_val, v10_val, v11_val;
+uint8_t    val;
+uint32_t  *lines, *lined;
 l_float32  scx, scy;
 
         /* (scx, scy) are scaling factors that are applied to the
@@ -2291,13 +2291,13 @@ l_float32  scx, scy;
 
         /* Iterate over the destination pixels */
     for (i = 0; i < hd; i++) {
-        ypm = (l_int32)(scy * (l_float32)i);
+        ypm = (int32_t)(scy * (l_float32)i);
         yp = ypm >> 4;
         yf = ypm & 0x0f;
         lined = datad + i * wpld;
         lines = datas + yp * wpls;
         for (j = 0; j < wd; j++) {
-            xpm = (l_int32)(scx * (l_float32)j);
+            xpm = (int32_t)(scx * (l_float32)j);
             xp = xpm >> 4;
             xf = xpm & 0x0f;
 
@@ -2329,7 +2329,7 @@ l_float32  scx, scy;
             v01 = (16 - xf) * yf * v01_val;
             v11 = xf * yf * v11_val;
 
-            val = (l_uint8)((v00 + v01 + v10 + v11 + 128) / 256);
+            val = (uint8_t)((v00 + v01 + v10 + v11 + 128) / 256);
             SET_DATA_BYTE(lined, j, val);
         }
     }
@@ -2380,15 +2380,15 @@ l_float32  scx, scy;
  * </pre>
  */
 static void
-scaleColor2xLILow(l_uint32  *datad,
-                  l_int32    wpld,
-                  l_uint32  *datas,
-                  l_int32    ws,
-                  l_int32    hs,
-                  l_int32    wpls)
+scaleColor2xLILow(uint32_t  *datad,
+                  int32_t    wpld,
+                  uint32_t  *datas,
+                  int32_t    ws,
+                  int32_t    hs,
+                  int32_t    wpls)
 {
-l_int32    i, hsm;
-l_uint32  *lines, *lined;
+int32_t    i, hsm;
+uint32_t  *lines, *lined;
 
     hsm = hs - 1;
 
@@ -2428,18 +2428,18 @@ l_uint32  *lines, *lined;
  * \return  void
  */
 static void
-scaleColor2xLILineLow(l_uint32  *lined,
-                      l_int32    wpld,
-                      l_uint32  *lines,
-                      l_int32    ws,
-                      l_int32    wpls,
-                      l_int32    lastlineflag)
+scaleColor2xLILineLow(uint32_t  *lined,
+                      int32_t    wpld,
+                      uint32_t  *lines,
+                      int32_t    ws,
+                      int32_t    wpls,
+                      int32_t    lastlineflag)
 {
-l_int32    j, jd, wsm;
-l_uint32   rval1, rval2, rval3, rval4, gval1, gval2, gval3, gval4;
-l_uint32   bval1, bval2, bval3, bval4;
-l_uint32   pixels1, pixels2, pixels3, pixels4, pixel;
-l_uint32  *linesp, *linedp;
+int32_t    j, jd, wsm;
+uint32_t   rval1, rval2, rval3, rval4, gval1, gval2, gval3, gval4;
+uint32_t   bval1, bval2, bval3, bval4;
+uint32_t   pixels1, pixels2, pixels3, pixels4, pixel;
+uint32_t  *linesp, *linedp;
 
     wsm = ws - 1;
 
@@ -2582,15 +2582,15 @@ l_uint32  *linesp, *linedp;
  * </pre>
  */
 static void
-scaleGray2xLILow(l_uint32  *datad,
-                 l_int32    wpld,
-                 l_uint32  *datas,
-                 l_int32    ws,
-                 l_int32    hs,
-                 l_int32    wpls)
+scaleGray2xLILow(uint32_t  *datad,
+                 int32_t    wpld,
+                 uint32_t  *datas,
+                 int32_t    ws,
+                 int32_t    hs,
+                 int32_t    wpls)
 {
-l_int32    i, hsm;
-l_uint32  *lines, *lined;
+int32_t    i, hsm;
+uint32_t  *lines, *lined;
 
     hsm = hs - 1;
 
@@ -2630,17 +2630,17 @@ l_uint32  *lines, *lined;
  * \return  void
  */
 static void
-scaleGray2xLILineLow(l_uint32  *lined,
-                     l_int32    wpld,
-                     l_uint32  *lines,
-                     l_int32    ws,
-                     l_int32    wpls,
-                     l_int32    lastlineflag)
+scaleGray2xLILineLow(uint32_t  *lined,
+                     int32_t    wpld,
+                     uint32_t  *lines,
+                     int32_t    ws,
+                     int32_t    wpls,
+                     int32_t    lastlineflag)
 {
-l_int32    j, jd, wsm, w;
-l_uint32   sval1, sval2, sval3, sval4;
-l_uint32  *linesp, *linedp;
-l_uint32   words, wordsp, wordd, worddp;
+int32_t    j, jd, wsm, w;
+uint32_t   sval1, sval2, sval3, sval4;
+uint32_t  *linesp, *linedp;
+uint32_t   words, wordsp, wordd, worddp;
 
     wsm = ws - 1;
 
@@ -2823,15 +2823,15 @@ l_uint32   words, wordsp, wordd, worddp;
  * </pre>
  */
 static void
-scaleGray4xLILow(l_uint32  *datad,
-                 l_int32    wpld,
-                 l_uint32  *datas,
-                 l_int32    ws,
-                 l_int32    hs,
-                 l_int32    wpls)
+scaleGray4xLILow(uint32_t  *datad,
+                 int32_t    wpld,
+                 uint32_t  *datas,
+                 int32_t    ws,
+                 int32_t    hs,
+                 int32_t    wpls)
 {
-l_int32    i, hsm;
-l_uint32  *lines, *lined;
+int32_t    i, hsm;
+uint32_t  *lines, *lined;
 
     hsm = hs - 1;
 
@@ -2869,16 +2869,16 @@ l_uint32  *lines, *lined;
  * \return  void
  */
 static void
-scaleGray4xLILineLow(l_uint32  *lined,
-                     l_int32    wpld,
-                     l_uint32  *lines,
-                     l_int32    ws,
-                     l_int32    wpls,
-                     l_int32    lastlineflag)
+scaleGray4xLILineLow(uint32_t  *lined,
+                     int32_t    wpld,
+                     uint32_t  *lines,
+                     int32_t    ws,
+                     int32_t    wpls,
+                     int32_t    lastlineflag)
 {
-l_int32    j, jd, wsm, wsm4;
-l_int32    s1, s2, s3, s4, s1t, s2t, s3t, s4t;
-l_uint32  *linesp, *linedp1, *linedp2, *linedp3;
+int32_t    j, jd, wsm, wsm4;
+int32_t    s1, s2, s3, s4, s1t, s2t, s3t, s4t;
+uint32_t  *linesp, *linedp1, *linedp2, *linedp3;
 
     wsm = ws - 1;
     wsm4 = 4 * wsm;
@@ -3002,22 +3002,22 @@ l_uint32  *linesp, *linedp1, *linedp2, *linedp3;
  *          RGB color, for 2, 4 or 8 bpp palette color images.
  * </pre>
  */
-static l_int32
-scaleBySamplingLow(l_uint32  *datad,
-                   l_int32    wd,
-                   l_int32    hd,
-                   l_int32    wpld,
-                   l_uint32  *datas,
-                   l_int32    ws,
-                   l_int32    hs,
-                   l_int32    d,
-                   l_int32    wpls)
+static int32_t
+scaleBySamplingLow(uint32_t  *datad,
+                   int32_t    wd,
+                   int32_t    hd,
+                   int32_t    wpld,
+                   uint32_t  *datas,
+                   int32_t    ws,
+                   int32_t    hs,
+                   int32_t    d,
+                   int32_t    wpls)
 {
-l_int32    i, j;
-l_int32    xs, prevxs, sval;
-l_int32   *srow, *scol;
-l_uint32   csval;
-l_uint32  *lines, *prevlines, *lined, *prevlined;
+int32_t    i, j;
+int32_t    xs, prevxs, sval;
+int32_t   *srow, *scol;
+uint32_t   csval;
+uint32_t  *lines, *prevlines, *lined, *prevlined;
 l_float32  wratio, hratio;
 
     if (d != 2 && d != 4 && d !=8 && d != 16 && d != 32)
@@ -3028,9 +3028,9 @@ l_float32  wratio, hratio;
 
         /* the source row corresponding to dest row i ==> srow[i]
          * the source col corresponding to dest col j ==> scol[j]  */
-    if ((srow = (l_int32 *)LEPT_CALLOC(hd, sizeof(l_int32))) == NULL)
+    if ((srow = (int32_t *)LEPT_CALLOC(hd, sizeof(int32_t))) == NULL)
         return ERROR_INT("srow not made", __func__, 1);
-    if ((scol = (l_int32 *)LEPT_CALLOC(wd, sizeof(l_int32))) == NULL) {
+    if ((scol = (int32_t *)LEPT_CALLOC(wd, sizeof(int32_t))) == NULL) {
         LEPT_FREE(srow);
         return ERROR_INT("scol not made", __func__, 1);
     }
@@ -3038,9 +3038,9 @@ l_float32  wratio, hratio;
     wratio = (l_float32)ws / (l_float32)wd;
     hratio = (l_float32)hs / (l_float32)hd;
     for (i = 0; i < hd; i++)
-        srow[i] = L_MIN((l_int32)(hratio * i + 0.5), hs - 1);
+        srow[i] = L_MIN((int32_t)(hratio * i + 0.5), hs - 1);
     for (j = 0; j < wd; j++)
-        scol[j] = L_MIN((l_int32)(wratio * j + 0.5), ws - 1);
+        scol[j] = L_MIN((int32_t)(wratio * j + 0.5), ws - 1);
 
     prevlines = NULL;
     for (i = 0; i < hd; i++) {
@@ -3133,23 +3133,23 @@ l_float32  wratio, hratio;
  *          nearest integer such that size is approximately equal to hs / hd.
  * </pre>
  */
-static l_int32
-scaleSmoothLow(l_uint32  *datad,
-               l_int32    wd,
-               l_int32    hd,
-               l_int32    wpld,
-               l_uint32  *datas,
-               l_int32    ws,
-               l_int32    hs,
-               l_int32    d,
-               l_int32    wpls,
-               l_int32    size)
+static int32_t
+scaleSmoothLow(uint32_t  *datad,
+               int32_t    wd,
+               int32_t    hd,
+               int32_t    wpld,
+               uint32_t  *datas,
+               int32_t    ws,
+               int32_t    hs,
+               int32_t    d,
+               int32_t    wpls,
+               int32_t    size)
 {
-l_int32    i, j, m, n, xstart;
-l_int32    val, rval, gval, bval;
-l_int32   *srow, *scol;
-l_uint32  *lines, *lined, *line, *ppixel;
-l_uint32   pixel;
+int32_t    i, j, m, n, xstart;
+int32_t    val, rval, gval, bval;
+int32_t   *srow, *scol;
+uint32_t  *lines, *lined, *line, *ppixel;
+uint32_t   pixel;
 l_float32  wratio, hratio, norm;
 
         /* Clear dest */
@@ -3160,9 +3160,9 @@ l_float32  wratio, hratio, norm;
            We store the UL corner location of the square of
            src pixels that correspond to dest pixel (j,i).
            The are labeled by the arrays srow[i] and scol[j]. */
-    if ((srow = (l_int32 *)LEPT_CALLOC(hd, sizeof(l_int32))) == NULL)
+    if ((srow = (int32_t *)LEPT_CALLOC(hd, sizeof(int32_t))) == NULL)
         return ERROR_INT("srow not made", __func__, 1);
-    if ((scol = (l_int32 *)LEPT_CALLOC(wd, sizeof(l_int32))) == NULL) {
+    if ((scol = (int32_t *)LEPT_CALLOC(wd, sizeof(int32_t))) == NULL) {
         LEPT_FREE(srow);
         return ERROR_INT("scol not made", __func__, 1);
     }
@@ -3171,9 +3171,9 @@ l_float32  wratio, hratio, norm;
     wratio = (l_float32)ws / (l_float32)wd;
     hratio = (l_float32)hs / (l_float32)hd;
     for (i = 0; i < hd; i++)
-        srow[i] = L_MIN((l_int32)(hratio * i), hs - size);
+        srow[i] = L_MIN((int32_t)(hratio * i), hs - size);
     for (j = 0; j < wd; j++)
-        scol[j] = L_MIN((l_int32)(wratio * j), ws - size);
+        scol[j] = L_MIN((int32_t)(wratio * j), ws - size);
 
         /* For each dest pixel, compute average */
     if (d == 8) {
@@ -3189,7 +3189,7 @@ l_float32  wratio, hratio, norm;
                         val += GET_DATA_BYTE(line, xstart + n);
                     }
                 }
-                val = (l_int32)((l_float32)val * norm);
+                val = (int32_t)((l_float32)val * norm);
                 SET_DATA_BYTE(lined, j, val);
             }
         }
@@ -3209,9 +3209,9 @@ l_float32  wratio, hratio, norm;
                         bval += (pixel >> L_BLUE_SHIFT) & 0xff;
                     }
                 }
-                rval = (l_int32)((l_float32)rval * norm);
-                gval = (l_int32)((l_float32)gval * norm);
-                bval = (l_int32)((l_float32)bval * norm);
+                rval = (int32_t)((l_float32)rval * norm);
+                gval = (int32_t)((l_float32)gval * norm);
+                bval = (int32_t)((l_float32)bval * norm);
                 composeRGBPixel(rval, gval, bval, lined + j);
             }
         }
@@ -3233,19 +3233,19 @@ l_float32  wratio, hratio, norm;
  * </pre>
  */
 static void
-scaleRGBToGray2Low(l_uint32  *datad,
-                   l_int32    wd,
-                   l_int32    hd,
-                   l_int32    wpld,
-                   l_uint32  *datas,
-                   l_int32    wpls,
+scaleRGBToGray2Low(uint32_t  *datad,
+                   int32_t    wd,
+                   int32_t    hd,
+                   int32_t    wpld,
+                   uint32_t  *datas,
+                   int32_t    wpls,
                    l_float32  rwt,
                    l_float32  gwt,
                    l_float32  bwt)
 {
-l_int32    i, j, val, rval, gval, bval;
-l_uint32  *lines, *lined;
-l_uint32   pixel;
+int32_t    i, j, val, rval, gval, bval;
+uint32_t  *lines, *lined;
+uint32_t   pixel;
 
     rwt *= 0.25;
     gwt *= 0.25;
@@ -3272,7 +3272,7 @@ l_uint32   pixel;
             gval += (pixel >> L_GREEN_SHIFT) & 0xff;
             bval += (pixel >> L_BLUE_SHIFT) & 0xff;
                 /* Generate the dest byte as a weighted sum of the averages */
-            val = (l_int32)(rwt * rval + gwt * gval + bwt * bval);
+            val = (int32_t)(rwt * rval + gwt * gval + bwt * bval);
             SET_DATA_BYTE(lined, j, val);
         }
     }
@@ -3298,31 +3298,31 @@ l_uint32   pixel;
  * </pre>
  */
 static void
-scaleColorAreaMapLow(l_uint32  *datad,
-                    l_int32    wd,
-                    l_int32    hd,
-                    l_int32    wpld,
-                    l_uint32  *datas,
-                    l_int32    ws,
-                    l_int32    hs,
-                    l_int32    wpls)
+scaleColorAreaMapLow(uint32_t  *datad,
+                    int32_t    wd,
+                    int32_t    hd,
+                    int32_t    wpld,
+                    uint32_t  *datas,
+                    int32_t    ws,
+                    int32_t    hs,
+                    int32_t    wpls)
 {
-l_int32    i, j, k, m, wm2, hm2;
-l_int32    area00, area10, area01, area11, areal, arear, areat, areab;
-l_int32    xu, yu;  /* UL corner in src image, to 1/16 of a pixel */
-l_int32    xl, yl;  /* LR corner in src image, to 1/16 of a pixel */
-l_int32    xup, yup, xuf, yuf;  /* UL src pixel: integer and fraction */
-l_int32    xlp, ylp, xlf, ylf;  /* LR src pixel: integer and fraction */
-l_int32    delx, dely, area;
-l_int32    v00r, v00g, v00b;  /* contrib. from UL src pixel */
-l_int32    v01r, v01g, v01b;  /* contrib. from LL src pixel */
-l_int32    v10r, v10g, v10b;  /* contrib from UR src pixel */
-l_int32    v11r, v11g, v11b;  /* contrib from LR src pixel */
-l_int32    vinr, ving, vinb;  /* contrib from all full interior src pixels */
-l_int32    vmidr, vmidg, vmidb;  /* contrib from side parts */
-l_int32    rval, gval, bval;
-l_uint32   pixel00, pixel10, pixel01, pixel11, pixel;
-l_uint32  *lines, *lined;
+int32_t    i, j, k, m, wm2, hm2;
+int32_t    area00, area10, area01, area11, areal, arear, areat, areab;
+int32_t    xu, yu;  /* UL corner in src image, to 1/16 of a pixel */
+int32_t    xl, yl;  /* LR corner in src image, to 1/16 of a pixel */
+int32_t    xup, yup, xuf, yuf;  /* UL src pixel: integer and fraction */
+int32_t    xlp, ylp, xlf, ylf;  /* LR src pixel: integer and fraction */
+int32_t    delx, dely, area;
+int32_t    v00r, v00g, v00b;  /* contrib. from UL src pixel */
+int32_t    v01r, v01g, v01b;  /* contrib. from LL src pixel */
+int32_t    v10r, v10g, v10b;  /* contrib from UR src pixel */
+int32_t    v11r, v11g, v11b;  /* contrib from LR src pixel */
+int32_t    vinr, ving, vinb;  /* contrib from all full interior src pixels */
+int32_t    vmidr, vmidg, vmidb;  /* contrib from side parts */
+int32_t    rval, gval, bval;
+uint32_t   pixel00, pixel10, pixel01, pixel11, pixel;
+uint32_t  *lines, *lined;
 l_float32  scx, scy;
 
         /* (scx, scy) are scaling factors that are applied to the
@@ -3336,8 +3336,8 @@ l_float32  scx, scy;
 
         /* Iterate over the destination pixels */
     for (i = 0; i < hd; i++) {
-        yu = (l_int32)(scy * i);
-        yl = (l_int32)(scy * (i + 1.0));
+        yu = (int32_t)(scy * i);
+        yl = (int32_t)(scy * (i + 1.0));
         yup = yu >> 4;
         yuf = yu & 0x0f;
         ylp = yl >> 4;
@@ -3346,8 +3346,8 @@ l_float32  scx, scy;
         lined = datad + i * wpld;
         lines = datas + yup * wpls;
         for (j = 0; j < wd; j++) {
-            xu = (l_int32)(scx * j);
-            xl = (l_int32)(scx * (j + 1.0));
+            xu = (int32_t)(scx * j);
+            xl = (int32_t)(scx * (j + 1.0));
             xup = xu >> 4;
             xuf = xu & 0x0f;
             xlp = xl >> 4;
@@ -3456,29 +3456,29 @@ l_float32  scx, scy;
  * </pre>
  */
 static void
-scaleGrayAreaMapLow(l_uint32  *datad,
-                    l_int32    wd,
-                    l_int32    hd,
-                    l_int32    wpld,
-                    l_uint32  *datas,
-                    l_int32    ws,
-                    l_int32    hs,
-                    l_int32    wpls)
+scaleGrayAreaMapLow(uint32_t  *datad,
+                    int32_t    wd,
+                    int32_t    hd,
+                    int32_t    wpld,
+                    uint32_t  *datas,
+                    int32_t    ws,
+                    int32_t    hs,
+                    int32_t    wpls)
 {
-l_int32    i, j, k, m, wm2, hm2;
-l_int32    xu, yu;  /* UL corner in src image, to 1/16 of a pixel */
-l_int32    xl, yl;  /* LR corner in src image, to 1/16 of a pixel */
-l_int32    xup, yup, xuf, yuf;  /* UL src pixel: integer and fraction */
-l_int32    xlp, ylp, xlf, ylf;  /* LR src pixel: integer and fraction */
-l_int32    delx, dely, area;
-l_int32    v00;  /* contrib. from UL src pixel */
-l_int32    v01;  /* contrib. from LL src pixel */
-l_int32    v10;  /* contrib from UR src pixel */
-l_int32    v11;  /* contrib from LR src pixel */
-l_int32    vin;  /* contrib from all full interior src pixels */
-l_int32    vmid;  /* contrib from side parts that are full in 1 direction */
-l_int32    val;
-l_uint32  *lines, *lined;
+int32_t    i, j, k, m, wm2, hm2;
+int32_t    xu, yu;  /* UL corner in src image, to 1/16 of a pixel */
+int32_t    xl, yl;  /* LR corner in src image, to 1/16 of a pixel */
+int32_t    xup, yup, xuf, yuf;  /* UL src pixel: integer and fraction */
+int32_t    xlp, ylp, xlf, ylf;  /* LR src pixel: integer and fraction */
+int32_t    delx, dely, area;
+int32_t    v00;  /* contrib. from UL src pixel */
+int32_t    v01;  /* contrib. from LL src pixel */
+int32_t    v10;  /* contrib from UR src pixel */
+int32_t    v11;  /* contrib from LR src pixel */
+int32_t    vin;  /* contrib from all full interior src pixels */
+int32_t    vmid;  /* contrib from side parts that are full in 1 direction */
+int32_t    val;
+uint32_t  *lines, *lined;
 l_float32  scx, scy;
 
         /* (scx, scy) are scaling factors that are applied to the
@@ -3492,8 +3492,8 @@ l_float32  scx, scy;
 
         /* Iterate over the destination pixels */
     for (i = 0; i < hd; i++) {
-        yu = (l_int32)(scy * i);
-        yl = (l_int32)(scy * (i + 1.0));
+        yu = (int32_t)(scy * i);
+        yl = (int32_t)(scy * (i + 1.0));
         yup = yu >> 4;
         yuf = yu & 0x0f;
         ylp = yl >> 4;
@@ -3502,8 +3502,8 @@ l_float32  scx, scy;
         lined = datad + i * wpld;
         lines = datas + yup * wpls;
         for (j = 0; j < wd; j++) {
-            xu = (l_int32)(scx * j);
-            xl = (l_int32)(scx * (j + 1.0));
+            xu = (int32_t)(scx * j);
+            xl = (int32_t)(scx * (j + 1.0));
             xup = xu >> 4;
             xuf = xu & 0x0f;
             xlp = xl >> 4;
@@ -3563,17 +3563,17 @@ l_float32  scx, scy;
  * </pre>
  */
 static void
-scaleAreaMapLow2(l_uint32  *datad,
-                 l_int32    wd,
-                 l_int32    hd,
-                 l_int32    wpld,
-                 l_uint32  *datas,
-                 l_int32    d,
-                 l_int32    wpls)
+scaleAreaMapLow2(uint32_t  *datad,
+                 int32_t    wd,
+                 int32_t    hd,
+                 int32_t    wpld,
+                 uint32_t  *datas,
+                 int32_t    d,
+                 int32_t    wpls)
 {
-l_int32    i, j, val, rval, gval, bval;
-l_uint32  *lines, *lined;
-l_uint32   pixel;
+int32_t    i, j, val, rval, gval, bval;
+uint32_t  *lines, *lined;
+uint32_t   pixel;
 
     if (d == 8) {
         for (i = 0; i < hd; i++) {
@@ -3634,20 +3634,20 @@ l_uint32   pixel;
  *          strict subsampling.
  * </pre>
  */
-static l_int32
-scaleBinaryLow(l_uint32  *datad,
-               l_int32    wd,
-               l_int32    hd,
-               l_int32    wpld,
-               l_uint32  *datas,
-               l_int32    ws,
-               l_int32    hs,
-               l_int32    wpls)
+static int32_t
+scaleBinaryLow(uint32_t  *datad,
+               int32_t    wd,
+               int32_t    hd,
+               int32_t    wpld,
+               uint32_t  *datas,
+               int32_t    ws,
+               int32_t    hs,
+               int32_t    wpls)
 {
-l_int32    i, j;
-l_int32    xs, prevxs, sval;
-l_int32   *srow, *scol;
-l_uint32  *lines, *prevlines, *lined, *prevlined;
+int32_t    i, j;
+int32_t    xs, prevxs, sval;
+int32_t   *srow, *scol;
+uint32_t  *lines, *prevlines, *lined, *prevlined;
 l_float32  wratio, hratio;
 
         /* Clear dest */
@@ -3655,9 +3655,9 @@ l_float32  wratio, hratio;
 
         /* The source row corresponding to dest row i ==> srow[i]
          * The source col corresponding to dest col j ==> scol[j]  */
-    if ((srow = (l_int32 *)LEPT_CALLOC(hd, sizeof(l_int32))) == NULL)
+    if ((srow = (int32_t *)LEPT_CALLOC(hd, sizeof(int32_t))) == NULL)
         return ERROR_INT("srow not made", __func__, 1);
-    if ((scol = (l_int32 *)LEPT_CALLOC(wd, sizeof(l_int32))) == NULL) {
+    if ((scol = (int32_t *)LEPT_CALLOC(wd, sizeof(int32_t))) == NULL) {
         LEPT_FREE(srow);
         return ERROR_INT("scol not made", __func__, 1);
     }
@@ -3665,9 +3665,9 @@ l_float32  wratio, hratio;
     wratio = (l_float32)ws / (l_float32)wd;
     hratio = (l_float32)hs / (l_float32)hd;
     for (i = 0; i < hd; i++)
-        srow[i] = L_MIN((l_int32)(hratio * i + 0.5), hs - 1);
+        srow[i] = L_MIN((int32_t)(hratio * i + 0.5), hs - 1);
     for (j = 0; j < wd; j++)
-        scol[j] = L_MIN((l_int32)(wratio * j + 0.5), ws - 1);
+        scol[j] = L_MIN((int32_t)(wratio * j + 0.5), ws - 1);
 
     prevlines = NULL;
     prevxs = -1;

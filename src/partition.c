@@ -34,10 +34,10 @@
  *      Helpers
  *          static PARTEL   *partelCreate()
  *          static void      partelDestroy()
- *          static l_int32   partelSetSize()
+ *          static int32_t   partelSetSize()
  *          static BOXA     *boxaGenerateSubboxes()
  *          static BOX      *boxaSelectPivotBox()
- *          static l_int32   boxaCheckIfOverlapIsSmall()
+ *          static int32_t   boxaCheckIfOverlapIsSmall()
  *          BOXA            *boxaPruneSortedOnOverlap()
  * </pre>
  */
@@ -58,15 +58,15 @@ typedef struct PartitionElement PARTEL;
 
 static PARTEL * partelCreate(BOX *box);
 static void partelDestroy(PARTEL **ppartel);
-static l_int32 partelSetSize(PARTEL *partel, l_int32 sortflag);
-static BOXA * boxaGenerateSubboxes(BOX *box, BOXA *boxa, l_int32 maxperim,
+static int32_t partelSetSize(PARTEL *partel, int32_t sortflag);
+static BOXA * boxaGenerateSubboxes(BOX *box, BOXA *boxa, int32_t maxperim,
                                    l_float32  fract);
-static BOX * boxaSelectPivotBox(BOX *box, BOXA *boxa, l_int32 maxperim,
+static BOX * boxaSelectPivotBox(BOX *box, BOXA *boxa, int32_t maxperim,
                                 l_float32 fract);
-static l_int32 boxCheckIfOverlapIsBig(BOX *box, BOXA *boxa,
+static int32_t boxCheckIfOverlapIsBig(BOX *box, BOXA *boxa,
                                       l_float32 maxoverlap);
 
-static const l_int32  DefaultMaxPops = 20000;
+static const int32_t  DefaultMaxPops = 20000;
 
 
 #ifndef  NO_CONSOLE_IO
@@ -191,14 +191,14 @@ static const l_int32  DefaultMaxPops = 20000;
 BOXA *
 boxaGetWhiteblocks(BOXA      *boxas,
                    BOX       *box,
-                   l_int32    sortflag,
-                   l_int32    maxboxes,
+                   int32_t    sortflag,
+                   int32_t    maxboxes,
                    l_float32  maxoverlap,
-                   l_int32    maxperim,
+                   int32_t    maxperim,
                    l_float32  fract,
-                   l_int32    maxpops)
+                   int32_t    maxpops)
 {
-l_int32  i, w, h, n, nsub, npush, npop;
+int32_t  i, w, h, n, nsub, npush, npop;
 BOX     *boxsub;
 BOXA    *boxa, *boxa4, *boxasub, *boxad;
 PARTEL  *partel;
@@ -357,11 +357,11 @@ PARTEL  *partel;
  *                          L_SORT_BY_PERIMETER, L_SORT_BY_AREA
  * \return  0 if OK, 1 on error
  */
-static l_int32
+static int32_t
 partelSetSize(PARTEL  *partel,
-              l_int32  sortflag)
+              int32_t  sortflag)
 {
-l_int32  w, h;
+int32_t  w, h;
 
     if (!partel)
         return ERROR_INT("partel not defined", __func__, 1);
@@ -401,10 +401,10 @@ l_int32  w, h;
 static BOXA *
 boxaGenerateSubboxes(BOX       *box,
                      BOXA      *boxa,
-                     l_int32    maxperim,
+                     int32_t    maxperim,
                      l_float32  fract)
 {
-l_int32  x, y, w, h, xp, yp, wp, hp;
+int32_t  x, y, w, h, xp, yp, wp, hp;
 BOX     *boxp;  /* pivot box */
 BOX     *boxsub;
 BOXA    *boxa4;
@@ -477,11 +477,11 @@ BOXA    *boxa4;
 static BOX *
 boxaSelectPivotBox(BOX       *box,
                    BOXA      *boxa,
-                   l_int32    maxperim,
+                   int32_t    maxperim,
                    l_float32  fract)
 {
-l_int32    i, n, bw, bh, w, h;
-l_int32    smallfound, minindex, perim, minsize;
+int32_t    i, n, bw, bh, w, h;
+int32_t    smallfound, minindex, perim, minsize;
 l_float32  delx, dely, mindist, threshdist, dist, x, y, cx, cy;
 BOX       *boxt;
 
@@ -552,12 +552,12 @@ BOX       *boxt;
  * \return      0 if box has small overlap with every box in boxa;
  *              1 otherwise or on error
  */
-static l_int32
+static int32_t
 boxCheckIfOverlapIsBig(BOX       *box,
                        BOXA      *boxa,
                        l_float32  maxoverlap)
 {
-l_int32    i, n, bigoverlap;
+int32_t    i, n, bigoverlap;
 l_float32  fract;
 BOX       *boxt;
 
@@ -609,7 +609,7 @@ BOXA *
 boxaPruneSortedOnOverlap(BOXA      *boxas,
                          l_float32  maxoverlap)
 {
-l_int32    i, j, n, remove;
+int32_t    i, j, n, remove;
 l_float32  fract;
 BOX       *box1, *box2;
 BOXA      *boxad;

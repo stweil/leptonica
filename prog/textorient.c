@@ -65,7 +65,7 @@ int main(int    argc,
 {
 char         buf[BUF_SIZE];
 const char  *filein, *fileout;
-l_int32      pixformat;
+int32_t      pixformat;
 l_float32    minupconf, minratio;
 PIX         *pixs, *pixd;
 

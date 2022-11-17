@@ -52,7 +52,7 @@ static const size_t  zlibsize[5] = {1047868, 215039, 195778, 189709, 180987};
 int main(int    argc,
          char **argv)
 {
-l_int32   w, h, bx, by, bw, bh, i, j;
+int32_t   w, h, bx, by, bw, bh, i, j;
 size_t    size;
 BOX      *box1, *box2;
 BOXA     *boxa1, *boxa2, *boxae, *boxao;

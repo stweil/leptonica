@@ -39,7 +39,7 @@
 int main(int    argc,
          char **argv)
 {
-l_uint32     *data;
+uint32_t     *data;
 PIX          *pix1, *pix2, *pix3, *pix4, *pix5;
 PIXA         *pixa;
 L_REGPARAMS  *rp;

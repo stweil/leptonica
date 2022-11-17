@@ -33,7 +33,7 @@
  *
  *      Dnahash accessor and modifier
  *          L_DNA       *l_dnaHashGetDna()
- *          l_int32      l_dnaHashAdd()
+ *          int32_t      l_dnaHashAdd()
  *
  *    (1) The DnaHash is an array of Dna.  It is a simple method used for
  *        fast lookup of templates in the jbig2 classifier (jbclass.c).
@@ -66,11 +66,11 @@
  * </pre>
  */
 L_DNAHASH *
-l_dnaHashCreate(l_int32  nbuckets,
-                l_int32  initsize)
+l_dnaHashCreate(int32_t  nbuckets,
+                int32_t  initsize)
 {
-l_int32     is_prime;
-l_uint32    newsize;
+int32_t     is_prime;
+uint32_t    newsize;
 L_DNAHASH  *dahash;
 
     if (nbuckets <= 0)
@@ -104,7 +104,7 @@ void
 l_dnaHashDestroy(L_DNAHASH **pdahash)
 {
 L_DNAHASH  *dahash;
-l_int32    i;
+int32_t    i;
 
     if (pdahash == NULL) {
         L_WARNING("ptr address is NULL!\n", __func__);
@@ -135,10 +135,10 @@ l_int32    i;
  */
 L_DNA *
 l_dnaHashGetDna(L_DNAHASH  *dahash,
-                l_uint64    key,
-                l_int32     copyflag)
+                uint64_t    key,
+                int32_t     copyflag)
 {
-l_int32  bucket;
+int32_t  bucket;
 L_DNA   *da;
 
     if (!dahash)
@@ -168,10 +168,10 @@ L_DNA   *da;
  */
 l_ok
 l_dnaHashAdd(L_DNAHASH  *dahash,
-             l_uint64    key,
+             uint64_t    key,
              l_float64   value)
 {
-l_int32  bucket;
+int32_t  bucket;
 L_DNA   *da;
 
     if (!dahash)

@@ -13,7 +13,7 @@ LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
 	PIX          *pixc, *pixd, *pix, *pixs;
 	PIX          *pix1, *pix2, *pix3, *pix4, *pix5, *pix6, *pix7;
 	BOXAA        *baa;
-	static const l_int32  WIDTH = 800;
+	static const int32_t  WIDTH = 800;
 
 	//boxaaDisplay()
 	pix1 = pixRead("../test8.jpg");

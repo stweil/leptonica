@@ -42,9 +42,9 @@
 int main(int    argc,
          char **argv)
 {
-l_int32       i, w, h, nbins, factor;
-l_int32       spike;
-l_uint32     *array, *marray;
+int32_t       i, w, h, nbins, factor;
+int32_t       spike;
+uint32_t     *array, *marray;
 NUMA         *na, *nabinval, *narank;
 PIX          *pixs, *pix1, *pix2;
 PIXA         *pixa;
@@ -61,7 +61,7 @@ L_REGPARAMS  *rp;
         /* Find the rank bin colors */
     pixs = pixRead("map1.jpg");
     pixGetDimensions(pixs, &w, &h, NULL);
-    factor = L_MAX(1, (l_int32)sqrt((l_float64)(w * h / 20000.0)));
+    factor = L_MAX(1, (int32_t)sqrt((l_float64)(w * h / 20000.0)));
     nbins = 10;
     pixa = pixaCreate(0);
     pixGetRankColorArray(pixs, nbins, L_SELECT_MIN, factor, &array, pixa, 6);
@@ -81,7 +81,7 @@ L_REGPARAMS  *rp;
 
         /* Modify the rank bin colors by mapping them such
          * that the lightest color is mapped to white */
-    marray = (l_uint32 *)lept_calloc(nbins, sizeof(l_uint32));
+    marray = (uint32_t *)lept_calloc(nbins, sizeof(uint32_t));
     for (i = 0; i < nbins; i++)
         pixelLinearMapToTargetColor(array[i], array[nbins - 1],
                                     0xffffff00, &marray[i]);

@@ -30,23 +30,23 @@
  *
  *      Stream interface
  *          PIX             *pixReadStreamPnm()
- *          l_int32          readHeaderPnm()
- *          l_int32          freadHeaderPnm()
- *          l_int32          pixWriteStreamPnm()
- *          l_int32          pixWriteStreamAsciiPnm()
- *          l_int32          pixWriteStreamPam()
+ *          int32_t          readHeaderPnm()
+ *          int32_t          freadHeaderPnm()
+ *          int32_t          pixWriteStreamPnm()
+ *          int32_t          pixWriteStreamAsciiPnm()
+ *          int32_t          pixWriteStreamPam()
  *
  *      Read/write to memory
  *          PIX             *pixReadMemPnm()
- *          l_int32          readHeaderMemPnm()
- *          l_int32          pixWriteMemPnm()
- *          l_int32          pixWriteMemPam()
+ *          int32_t          readHeaderMemPnm()
+ *          int32_t          pixWriteMemPnm()
+ *          int32_t          pixWriteMemPam()
  *
  *      Local helpers
- *          static l_int32   pnmReadNextAsciiValue();
- *          static l_int32   pnmReadNextNumber();
- *          static l_int32   pnmReadNextString();
- *          static l_int32   pnmSkipCommentLines();
+ *          static int32_t   pnmReadNextAsciiValue();
+ *          static int32_t   pnmReadNextNumber();
+ *          static int32_t   pnmReadNextString();
+ *          static int32_t   pnmSkipCommentLines();
  *
  *      These are here by popular demand, with the help of Mattias
  *      Kregert (mattias@kregert.se), who provided the first implementation.
@@ -127,14 +127,14 @@
 #if  USE_PNMIO   /* defined in environ.h */
 /* --------------------------------------------*/
 
-static l_int32 pnmReadNextAsciiValue(FILE  *fp, l_int32 *pval);
-static l_int32 pnmReadNextNumber(FILE *fp, l_int32 *pval);
-static l_int32 pnmReadNextString(FILE *fp, char *buff, l_int32 size);
-static l_int32 pnmSkipCommentLines(FILE  *fp);
+static int32_t pnmReadNextAsciiValue(FILE  *fp, int32_t *pval);
+static int32_t pnmReadNextNumber(FILE *fp, int32_t *pval);
+static int32_t pnmReadNextString(FILE *fp, char *buff, int32_t size);
+static int32_t pnmSkipCommentLines(FILE  *fp);
 
     /* a sanity check on the size read from file */
-static const l_int32  MAX_PNM_WIDTH = 100000;
-static const l_int32  MAX_PNM_HEIGHT = 100000;
+static const int32_t  MAX_PNM_WIDTH = 100000;
+static const int32_t  MAX_PNM_HEIGHT = 100000;
 
 
 /*--------------------------------------------------------------------*
@@ -149,12 +149,12 @@ static const l_int32  MAX_PNM_HEIGHT = 100000;
 PIX *
 pixReadStreamPnm(FILE  *fp)
 {
-l_uint8    val8, rval8, gval8, bval8, aval8, mask8;
-l_uint16   val16, rval16, gval16, bval16, aval16;
-l_int32    w, h, d, bps, spp, bpl, wpl, i, j, type;
-l_int32    val, rval, gval, bval;
-l_uint32   rgbval;
-l_uint32  *line, *data;
+uint8_t    val8, rval8, gval8, bval8, aval8, mask8;
+uint16_t   val16, rval16, gval16, bval16, aval16;
+int32_t    w, h, d, bps, spp, bpl, wpl, i, j, type;
+int32_t    val, rval, gval, bval;
+uint32_t   rgbval;
+uint32_t  *line, *data;
 PIX       *pix;
 
     if (!fp)
@@ -516,14 +516,14 @@ PIX       *pix;
  */
 l_ok
 readHeaderPnm(const char *filename,
-              l_int32    *pw,
-              l_int32    *ph,
-              l_int32    *pd,
-              l_int32    *ptype,
-              l_int32    *pbps,
-              l_int32    *pspp)
+              int32_t    *pw,
+              int32_t    *ph,
+              int32_t    *pd,
+              int32_t    *ptype,
+              int32_t    *pbps,
+              int32_t    *pspp)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (pw) *pw = 0;
@@ -557,17 +557,17 @@ FILE    *fp;
  */
 l_ok
 freadHeaderPnm(FILE     *fp,
-               l_int32  *pw,
-               l_int32  *ph,
-               l_int32  *pd,
-               l_int32  *ptype,
-               l_int32  *pbps,
-               l_int32  *pspp)
+               int32_t  *pw,
+               int32_t  *ph,
+               int32_t  *pd,
+               int32_t  *ptype,
+               int32_t  *pbps,
+               int32_t  *pspp)
 {
 char     tag[16], tupltype[32];
-l_int32  i, w, h, d, bps, spp, type;
-l_int32  maxval;
-l_int32  ch;
+int32_t  i, w, h, d, bps, spp, type;
+int32_t  maxval;
+int32_t  ch;
 
     if (pw) *pw = 0;
     if (ph) *ph = 0;
@@ -736,11 +736,11 @@ l_ok
 pixWriteStreamPnm(FILE  *fp,
                   PIX   *pix)
 {
-l_uint8    val8;
-l_uint8    pel[4];
-l_uint16   val16;
-l_int32    h, w, d, ds, i, j, wpls, bpl, filebpl, writeerror, maxval;
-l_uint32  *pword, *datas, *lines;
+uint8_t    val8;
+uint8_t    pel[4];
+uint16_t   val16;
+int32_t    h, w, d, ds, i, j, wpls, bpl, filebpl, writeerror, maxval;
+uint32_t  *pword, *datas, *lines;
 PIX       *pixs;
 
     if (!fp)
@@ -854,9 +854,9 @@ pixWriteStreamAsciiPnm(FILE  *fp,
                        PIX   *pix)
 {
 char       buffer[256];
-l_uint8    cval[3];
-l_int32    h, w, d, ds, i, j, k, maxval, count;
-l_uint32   val;
+uint8_t    cval[3];
+int32_t    h, w, d, ds, i, j, k, maxval, count;
+uint32_t   val;
 PIX       *pixs;
 
     if (!fp)
@@ -973,12 +973,12 @@ l_ok
 pixWriteStreamPam(FILE  *fp,
                   PIX   *pix)
 {
-l_uint8    val8;
-l_uint8    pel[8];
-l_uint16   val16;
-l_int32    h, w, d, ds, i, j;
-l_int32    wpls, spps, filebpl, writeerror, maxval;
-l_uint32  *pword, *datas, *lines;
+uint8_t    val8;
+uint8_t    pel[8];
+uint16_t   val16;
+int32_t    h, w, d, ds, i, j;
+int32_t    wpls, spps, filebpl, writeerror, maxval;
+uint32_t  *pword, *datas, *lines;
 PIX       *pixs;
 
     if (!fp)
@@ -1144,7 +1144,7 @@ PIX       *pixs;
  * </pre>
  */
 PIX *
-pixReadMemPnm(const l_uint8  *data,
+pixReadMemPnm(const uint8_t  *data,
               size_t          size)
 {
 FILE  *fp;
@@ -1175,16 +1175,16 @@ PIX   *pix;
  * \return  0 if OK, 1 on error
  */
 l_ok
-readHeaderMemPnm(const l_uint8  *data,
+readHeaderMemPnm(const uint8_t  *data,
                  size_t          size,
-                 l_int32        *pw,
-                 l_int32        *ph,
-                 l_int32        *pd,
-                 l_int32        *ptype,
-                 l_int32        *pbps,
-                 l_int32        *pspp)
+                 int32_t        *pw,
+                 int32_t        *ph,
+                 int32_t        *pd,
+                 int32_t        *ptype,
+                 int32_t        *pbps,
+                 int32_t        *pspp)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (!data)
@@ -1215,11 +1215,11 @@ FILE    *fp;
  * </pre>
  */
 l_ok
-pixWriteMemPnm(l_uint8  **pdata,
+pixWriteMemPnm(uint8_t  **pdata,
                size_t    *psize,
                PIX       *pix)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (pdata) *pdata = NULL;
@@ -1271,11 +1271,11 @@ FILE    *fp;
  * </pre>
  */
 l_ok
-pixWriteMemPam(l_uint8  **pdata,
+pixWriteMemPam(uint8_t  **pdata,
                size_t    *psize,
                PIX       *pix)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (pdata) *pdata = NULL;
@@ -1323,11 +1323,11 @@ FILE    *fp;
  *  Notes:
  *      (1) This reads the next sample value in ASCII from the file.
  */
-static l_int32
+static int32_t
 pnmReadNextAsciiValue(FILE     *fp,
-                      l_int32  *pval)
+                      int32_t  *pval)
 {
-l_int32   c, ignore;
+int32_t   c, ignore;
 
     if (!pval)
         return ERROR_INT("&val not defined", __func__, 1);
@@ -1359,12 +1359,12 @@ l_int32   c, ignore;
  *          the maxval in the header, which precedes the binary data.
  * </pre>
  */
-static l_int32
+static int32_t
 pnmReadNextNumber(FILE     *fp,
-                  l_int32  *pval)
+                  int32_t  *pval)
 {
 char      buf[8];
-l_int32   i, c, foundws;
+int32_t   i, c, foundws;
 
     if (!pval)
         return ERROR_INT("&val not defined", __func__, 1);
@@ -1415,12 +1415,12 @@ l_int32   i, c, foundws;
  *          format binary data.
  * </pre>
  */
-static l_int32
+static int32_t
 pnmReadNextString(FILE    *fp,
                   char    *buff,
-                  l_int32  size)
+                  int32_t  size)
 {
-l_int32   i, c;
+int32_t   i, c;
 char fmtString[6];  /* must contain "%9999s" [*] */
 
     if (!buff)
@@ -1460,10 +1460,10 @@ char fmtString[6];  /* must contain "%9999s" [*] */
  *      (3) The previous implementation used fseek(fp, -1L, SEEK_CUR)
  *          to back up one character, which doesn't work with stdin.
  */
-static l_int32
+static int32_t
 pnmSkipCommentLines(FILE  *fp)
 {
-l_int32  i;
+int32_t  i;
 char     c;
 
     if (!fp)

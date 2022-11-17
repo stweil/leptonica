@@ -4,7 +4,7 @@ extern "C" int
 LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 {
     if(size<3) return 0;
-    l_int32  rotation;
+    int32_t  rotation;
     l_float32 upconf1, leftconf1;
     PIX *pix1, *pix2;
 

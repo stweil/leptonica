@@ -37,12 +37,12 @@
 #include "allheaders.h"
 
 void PixTestEqual(L_REGPARAMS *rp, PIX *pixs1, PIX *pixs2, PIX *pixm,
-                  l_int32 set, l_int32 connectivity);
+                  int32_t set, int32_t connectivity);
 
 int main(int    argc,
          char **argv)
 {
-l_int32       i, j;
+int32_t       i, j;
 PIX          *pixm, *pixmi, *pixs1, *pixs1_8, *pix1;
 PIX          *pixs2, *pixs2_8, *pixs3, *pixs3_8;
 PIX          *pixb1, *pixb2, *pixb3, *pixmin, *pixd;
@@ -169,8 +169,8 @@ PixTestEqual(L_REGPARAMS  *rp,
              PIX          *pixs1,
              PIX          *pixs2,
              PIX          *pixm,
-             l_int32       set,
-             l_int32       connectivity)
+             int32_t       set,
+             int32_t       connectivity)
 {
 PIX  *pixc11, *pixc12, *pixc21, *pixc22, *pixmi;
 

@@ -64,12 +64,12 @@
 #include "allheaders.h"
 
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
 char      *text;
-l_int32    histo[10];
-l_int32    i, n, ival, same;
+int32_t    histo[10];
+int32_t    i, n, ival, same;
 PIX       *pix1, *pix2;
 PIXA      *pixa1, *pixa2, *pixa3, *pixa4;
 L_RECOG   *recog1, *recog2, *recog3;

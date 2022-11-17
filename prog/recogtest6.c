@@ -47,11 +47,11 @@
 static PIX *GetBigComponent(PIX *pixs);
 
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32   item, debug, i;
-l_int32   example[6] = {17, 20, 21, 22, 23, 24};  /* for decoding */
+int32_t   item, debug, i;
+int32_t   example[6] = {17, 20, 21, 22, 23, 24};  /* for decoding */
 BOXA     *boxa;
 NUMA     *nascore;
 PIX      *pix1, *pix2, *pix3, *pixdb;

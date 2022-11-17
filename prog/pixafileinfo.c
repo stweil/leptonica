@@ -42,7 +42,7 @@ int main(int    argc,
 {
 char     buf[64];
 char    *sn;
-l_int32  i, n;
+int32_t  i, n;
 PIX     *pix;
 PIXA    *pixa;
 PIXAC   *pac;

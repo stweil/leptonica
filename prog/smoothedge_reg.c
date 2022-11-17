@@ -36,17 +36,17 @@
 
 #include "allheaders.h"
 
-static l_int32 MIN_JUMP = 2;
-static l_int32 MIN_REVERSAL = 3;
+static int32_t MIN_JUMP = 2;
+static int32_t MIN_REVERSAL = 3;
 
-void PixAddEdgeData(PIXA *pixa, PIX *pixs, l_int32 side, l_int32 minjump,
-                    l_int32 minreversal);
+void PixAddEdgeData(PIXA *pixa, PIX *pixs, int32_t side, int32_t minjump,
+                    int32_t minreversal);
 
 
 int main(int    argc,
          char **argv)
 {
-l_int32  w;
+int32_t  w;
 PIX     *pixs, *pixt, *pixd;
 PIXA    *pixa;
 
@@ -80,9 +80,9 @@ PIXA    *pixa;
 
 void PixAddEdgeData(PIXA    *pixa,
                     PIX     *pixs,
-                    l_int32  side,
-                    l_int32  minjump,
-                    l_int32  minreversal)
+                    int32_t  side,
+                    int32_t  minjump,
+                    int32_t  minreversal)
 {
 l_float32  jpl, jspl, rpl;
 PIX       *pixt1, *pixt2;

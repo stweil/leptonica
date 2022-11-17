@@ -41,7 +41,7 @@ static const char *blenders[] =
 int main(int    argc,
          char **argv)
 {
-l_int32       i, w, h;
+int32_t       i, w, h;
 PIX          *pix0, *pix1, *pix2, *pix3, *pix4, *pix5;
 PIXA         *pixa;
 L_REGPARAMS  *rp;

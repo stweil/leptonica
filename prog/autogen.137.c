@@ -54,13 +54,13 @@
  * \return       data struct     e.g., pixa, in memory
  */
 void *
-l_autodecode_137(l_int32 index)
+l_autodecode_137(int32_t index)
 {
-l_uint8  *data1, *data2;
-l_int32   size1;
+uint8_t  *data1, *data2;
+int32_t   size1;
 size_t    size2;
 void     *result = NULL;
-l_int32   nfunc = 2;
+int32_t   nfunc = 2;
 
     PROCNAME("l_autodecode_137");
 

@@ -84,7 +84,7 @@ int main(int    argc,
 {
 char      *filein, *printer, *extra, *fname;
 char       buffer[512];
-l_int32    i, w, h, ret, index;
+int32_t    i, w, h, ret, index;
 l_float32  scale;
 FILE      *fp;
 PIX       *pixs, *pix1;
@@ -122,7 +122,7 @@ SARRAY    *sa;
     fname = genPathname("/tmp", "print_image.ps");
 #if USE_COMPRESSED
     index = 0;
-    pixWriteCompressedToPS(pix1, fname, (l_int32)(300. / scale), 3, &index);
+    pixWriteCompressedToPS(pix1, fname, (int32_t)(300. / scale), 3, &index);
 #else  /* uncompressed, level 1 */
     fp = lept_fopen(fname, "wb+");
     pixWriteStreamPS(fp, pix1, NULL, 300, scale);

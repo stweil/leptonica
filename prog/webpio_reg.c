@@ -47,8 +47,8 @@
 #include <math.h>
 
 void DoWebpTest1(L_REGPARAMS *rp, const char *fname);
-void DoWebpTest2(L_REGPARAMS *rp, const char *fname, l_int32 quality,
-                 l_int32 lossless, l_float32 expected, l_float32 delta);
+void DoWebpTest2(L_REGPARAMS *rp, const char *fname, int32_t quality,
+                 int32_t lossless, l_float32 expected, l_float32 delta);
 
 
 int main(int    argc,
@@ -120,8 +120,8 @@ PIX  *pixs, *pix1, *pix2;
 
 void DoWebpTest2(L_REGPARAMS  *rp,
                  const char   *fname,
-                 l_int32       quality,
-                 l_int32       lossless,
+                 int32_t       quality,
+                 int32_t       lossless,
                  l_float32     expected,
                  l_float32     delta)
 {

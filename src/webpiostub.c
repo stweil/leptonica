@@ -49,47 +49,47 @@ PIX * pixReadStreamWebP(FILE *fp)
 
 /* ----------------------------------------------------------------------*/
 
-PIX * pixReadMemWebP(const l_uint8 *filedata, size_t filesize)
+PIX * pixReadMemWebP(const uint8_t *filedata, size_t filesize)
 {
     return (PIX * )ERROR_PTR("function not present", __func__, NULL);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_ok readHeaderWebP(const char *filename, l_int32 *pw, l_int32 *ph,
-                       l_int32 *pspp)
+l_ok readHeaderWebP(const char *filename, int32_t *pw, int32_t *ph,
+                       int32_t *pspp)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_ok readHeaderMemWebP(const l_uint8 *data, size_t size,
-                          l_int32 *pw, l_int32 *ph, l_int32 *pspp)
+l_ok readHeaderMemWebP(const uint8_t *data, size_t size,
+                          int32_t *pw, int32_t *ph, int32_t *pspp)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_ok pixWriteWebP(const char *filename, PIX *pixs, l_int32 quality,
-                     l_int32 lossless)
+l_ok pixWriteWebP(const char *filename, PIX *pixs, int32_t quality,
+                     int32_t lossless)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_ok pixWriteStreamWebP(FILE *fp, PIX *pixs, l_int32 quality,
-                           l_int32 lossless)
+l_ok pixWriteStreamWebP(FILE *fp, PIX *pixs, int32_t quality,
+                           int32_t lossless)
 {
     return ERROR_INT("function not present", __func__, 1);
 }
 
 /* ----------------------------------------------------------------------*/
 
-l_ok pixWriteMemWebP(l_uint8 **pencdata, size_t *pencsize, PIX *pixs,
-                        l_int32 quality, l_int32 lossless)
+l_ok pixWriteMemWebP(uint8_t **pencdata, size_t *pencsize, PIX *pixs,
+                        int32_t quality, int32_t lossless)
 {
     return ERROR_INT("function not present", __func__, 1);
 }

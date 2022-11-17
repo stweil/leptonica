@@ -49,11 +49,11 @@ char  substr2[4] = "00";
 int main(int    argc,
          char **argv)
 {
-l_int32       i, loc, count;
+int32_t       i, loc, count;
 size_t        size1, size2;
 char         *str0, *str1, *str2, *str3, *str4, *str5, *str6;
 char          fname[128];
-l_uint8      *data1, *data2;
+uint8_t      *data1, *data2;
 L_DNA        *da;
 SARRAY       *sa1, *sa2, *sa3, *sa4, *sa5;
 L_REGPARAMS  *rp;
@@ -72,41 +72,41 @@ L_REGPARAMS  *rp;
     loc = 0;
     str1 = stringReplaceSubstr(strs, "his", "hers", &loc, NULL);
     regTestCompareValues(rp, 5, loc, 0.0);  /* 1 */
-    regTestCompareStrings(rp, (l_uint8 *)"Thers is a gooood test!", 23,
-                          (l_uint8 *)str1, strlen(str1));   /* 2 */
+    regTestCompareStrings(rp, (uint8_t *)"Thers is a gooood test!", 23,
+                          (uint8_t *)str1, strlen(str1));   /* 2 */
     lept_free(str1);
 
         /* Replacing all substrings */
     str1 = stringReplaceEachSubstr(strs, substr1, substr2, &count);
     regTestCompareValues(rp, 4, count, 0.0);  /* 3 */
-    regTestCompareStrings(rp, (l_uint8 *)"This is a g00000000d test!", 26,
-                          (l_uint8 *)str1, strlen(str1));   /* 4 */
+    regTestCompareStrings(rp, (uint8_t *)"This is a g00000000d test!", 26,
+                          (uint8_t *)str1, strlen(str1));   /* 4 */
     lept_free(str1);
 
     str1 = stringReplaceEachSubstr(strs, substr1, "", &count);
     regTestCompareValues(rp, 4, count, 0.0);  /* 5 */
-    regTestCompareStrings(rp, (l_uint8 *)"This is a gd test!", 18,
-                          (l_uint8 *)str1, strlen(str1));   /* 6 */
+    regTestCompareStrings(rp, (uint8_t *)"This is a gd test!", 18,
+                          (uint8_t *)str1, strlen(str1));   /* 6 */
     lept_free(str1);
 
         /* Finding all sequences */
     str1 = (char *)l_binaryRead("kernel_reg.c", &size1);
-    da = arrayFindEachSequence((l_uint8 *)str1, size1,
-                               (l_uint8 *)"Destroy", 7);
+    da = arrayFindEachSequence((uint8_t *)str1, size1,
+                               (uint8_t *)"Destroy", 7);
     regTestCompareValues(rp, 35, l_dnaGetCount(da), 0.0);  /* 7 */
     l_dnaDestroy(&da);
     lept_free(str1);
 
         /* Replacing all sequences */
     str1 = (char *)l_binaryRead("kernel_reg.c", &size1);
-    data1 = arrayReplaceEachSequence((l_uint8 *)str1, size1,
-                                     (l_uint8 *)"Destroy", 7,
-                                     (l_uint8 *)"####", 4, &size2, &count);
+    data1 = arrayReplaceEachSequence((uint8_t *)str1, size1,
+                                     (uint8_t *)"Destroy", 7,
+                                     (uint8_t *)"####", 4, &size2, &count);
     l_binaryWrite("/tmp/lept/string/string1.txt", "w", data1, size2);
     regTestCheckFile(rp, "/tmp/lept/string/string1.txt");  /* 8 */
     regTestCompareValues(rp, 35, count, 0.0);  /* 9 */
-    data2 = arrayReplaceEachSequence((l_uint8 *)str1, size1,
-                                     (l_uint8 *)"Destroy", 7,
+    data2 = arrayReplaceEachSequence((uint8_t *)str1, size1,
+                                     (uint8_t *)"Destroy", 7,
                                      NULL, 0, &size2, &count);
     l_binaryWrite("/tmp/lept/string/string2.txt", "w", data2, size2);
     regTestCheckFile(rp, "/tmp/lept/string/string2.txt");  /* 10 */
@@ -168,16 +168,16 @@ L_REGPARAMS  *rp;
          *   - replace 200 bytes by 10 bytes
          *   - remove the 10 bytes
          *   - recover the 200 bytes and insert back  */
-    fileReplaceBytes("kernel_reg.c", 100, 200, (l_uint8 *)"abcdefghij",
+    fileReplaceBytes("kernel_reg.c", 100, 200, (uint8_t *)"abcdefghij",
                      sizeof("abcdefghij"), "/tmp/lept/string/junk1.txt");
     str1 = (char *)l_binaryRead("kernel_reg.c", &size1);
     fileReplaceBytes("/tmp/lept/string/junk1.txt", 100, sizeof("abcdefghij"),
                      NULL, 0, "/tmp/lept/string/junk2.txt");
     str2 = stringCopySegment(str1, 100, 200);
-    fileReplaceBytes("/tmp/lept/string/junk2.txt", 100, 0, (l_uint8 *)str2,
+    fileReplaceBytes("/tmp/lept/string/junk2.txt", 100, 0, (uint8_t *)str2,
                      strlen(str2), "/tmp/lept/string/junk3.txt");
     str3 = (char *)l_binaryRead("/tmp/lept/string/junk3.txt", &size2);
-    regTestCompareStrings(rp, (l_uint8 *)str1, size1, (l_uint8 *)str3, size2);
+    regTestCompareStrings(rp, (uint8_t *)str1, size1, (uint8_t *)str3, size2);
                                                                 /* 22 */
     lept_free(str1);
     lept_free(str2);
@@ -194,8 +194,8 @@ L_REGPARAMS  *rp;
         stringJoinIP(&str2, str3);
         lept_free(str3);
     }
-    regTestCompareStrings(rp, (l_uint8 *)str1, size1,
-                          (l_uint8 *)str2, strlen(str2));  /* 23 */
+    regTestCompareStrings(rp, (uint8_t *)str1, size1,
+                          (uint8_t *)str2, strlen(str2));  /* 23 */
     lept_free(str1);
     lept_free(str2);
 
@@ -211,8 +211,8 @@ L_REGPARAMS  *rp;
         sarrayDestroy(&sa4);
     }
     sa5 = sarrayConcatUniformly(sa3, 6, 0);  /* same as sa2 ? */
-    sarrayWriteMem((l_uint8 **)&str3, &size1, sa2);
-    sarrayWriteMem((l_uint8 **)&str4, &size2, sa5);
+    sarrayWriteMem((uint8_t **)&str3, &size1, sa2);
+    sarrayWriteMem((uint8_t **)&str4, &size2, sa5);
     regTestWriteDataAndCheck(rp, str3, size1, ".sa");  /* 24 */
     regTestWriteDataAndCheck(rp, str4, size2, ".sa");  /* 25 */
     regTestCompareFiles(rp, 24, 25);  /* 26 */

@@ -29,9 +29,9 @@
  * <pre>
  *
  *    Writing animated WebP
- *          l_int32          pixaWriteWebPAnim()
- *          l_int32          pixaWriteStreamWebPAnim()
- *          l_int32          pixaWriteMemWebPAnim()
+ *          int32_t          pixaWriteWebPAnim()
+ *          int32_t          pixaWriteStreamWebPAnim()
+ *          int32_t          pixaWriteMemWebPAnim()
  * </pre>
  */
 
@@ -71,12 +71,12 @@
 l_ok
 pixaWriteWebPAnim(const char  *filename,
                   PIXA        *pixa,
-                  l_int32      loopcount,
-                  l_int32      duration,
-                  l_int32      quality,
-                  l_int32      lossless)
+                  int32_t      loopcount,
+                  int32_t      duration,
+                  int32_t      quality,
+                  int32_t      lossless)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (!filename)
@@ -116,12 +116,12 @@ FILE    *fp;
 l_ok
 pixaWriteStreamWebPAnim(FILE    *fp,
                         PIXA    *pixa,
-                        l_int32  loopcount,
-                        l_int32  duration,
-                        l_int32  quality,
-                        l_int32  lossless)
+                        int32_t  loopcount,
+                        int32_t  duration,
+                        int32_t  quality,
+                        int32_t  lossless)
 {
-l_uint8  *filedata;
+uint8_t  *filedata;
 size_t    filebytes, nbytes;
 
     if (!fp)
@@ -161,16 +161,16 @@ size_t    filebytes, nbytes;
  * </pre>
  */
 l_ok
-pixaWriteMemWebPAnim(l_uint8  **pencdata,
+pixaWriteMemWebPAnim(uint8_t  **pencdata,
                      size_t    *pencsize,
                      PIXA      *pixa,
-                     l_int32    loopcount,
-                     l_int32    duration,
-                     l_int32    quality,
-                     l_int32    lossless)
+                     int32_t    loopcount,
+                     int32_t    duration,
+                     int32_t    quality,
+                     int32_t    lossless)
 {
-l_int32                 i, n, same, w, h, wpl, ret;
-l_uint8                *data;
+int32_t                 i, n, same, w, h, wpl, ret;
+uint8_t                *data;
 PIX                    *pix1, *pix2;
 WebPAnimEncoder        *enc;
 WebPAnimEncoderOptions  enc_options;
@@ -209,7 +209,7 @@ WebPPicture             frame;
         pix2 = pixConvertTo32(pix1);
         pixSetComponentArbitrary(pix2, L_ALPHA_CHANNEL, 255);
         pixEndianByteSwap(pix2);
-        data = (l_uint8 *)pixGetData(pix2);
+        data = (uint8_t *)pixGetData(pix2);
         wpl = pixGetWpl(pix2);
         WebPPictureInit(&frame);
         frame.width = w;
@@ -255,7 +255,7 @@ WebPPicture             frame;
         }
     }
 
-    *pencdata = (l_uint8 *)webp_data.bytes;
+    *pencdata = (uint8_t *)webp_data.bytes;
     *pencsize = webp_data.size;
     L_INFO("data size = %zu\n", __func__, webp_data.size);
     return 0;

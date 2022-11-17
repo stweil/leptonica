@@ -45,7 +45,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32       i, nsels, same1, same2;
+int32_t       i, nsels, same1, same2;
 char         *selname;
 PIX          *pixs, *pixref, *pix1, *pix2, *pix3, *pix4;
 SEL          *sel;

@@ -44,7 +44,7 @@
 
 static void DoTestsOnImage(PIX *pixs, L_REGPARAMS *rp);
 
-static const l_int32  ncomps = 10;
+static const int32_t  ncomps = 10;
 
 int main(int    argc,
          char **argv)

@@ -112,7 +112,7 @@ RotateTest(PIX          *pixs,
            l_float32     scale,
            L_REGPARAMS  *rp)
 {
-l_int32   w, h, d, outformat;
+int32_t   w, h, d, outformat;
 PIX      *pix1, *pix2, *pix3, *pixd;
 PIXA     *pixa;
 

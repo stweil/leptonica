@@ -29,7 +29,7 @@
  * <pre>
  *
  *      Conversion to 1 bpp
- *          l_int32    convertFilesTo1bpp()
+ *          int32_t    convertFilesTo1bpp()
  *
  *  These are utility functions that will perform depth conversion
  *  on selected files, writing the results to a specified directory.
@@ -70,14 +70,14 @@
 l_ok
 convertFilesTo1bpp(const char  *dirin,
                    const char  *substr,
-                   l_int32      upscaling,
-                   l_int32      thresh,
-                   l_int32      firstpage,
-                   l_int32      npages,
+                   int32_t      upscaling,
+                   int32_t      thresh,
+                   int32_t      firstpage,
+                   int32_t      npages,
                    const char  *dirout,
-                   l_int32      outformat)
+                   int32_t      outformat)
 {
-l_int32  i, nfiles;
+int32_t  i, nfiles;
 char     buf[512];
 char    *fname, *tail, *basename;
 PIX     *pixs, *pixg1, *pixg2, *pixb;

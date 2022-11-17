@@ -33,8 +33,8 @@
  *           PIX          *pixReadMemBmp()
  *
  *      Write bmp
- *           l_int32       pixWriteStreamBmp()
- *           l_int32       pixWriteMemBmp()
+ *           int32_t       pixWriteStreamBmp()
+ *           int32_t       pixWriteMemBmp()
  *
  * </pre>
  */
@@ -59,10 +59,10 @@
 RGBA_QUAD   bwmap[2] = { {255,255,255,255}, {0,0,0,255} };
 
     /* Image dimension limits */
-static const l_int32  L_MAX_ALLOWED_WIDTH = 1000000;
-static const l_int32  L_MAX_ALLOWED_HEIGHT = 1000000;
-static const l_int64  L_MAX_ALLOWED_PIXELS = 400000000LL;
-static const l_int32  L_MAX_ALLOWED_RES = 10000000;  /* pixels/meter */
+static const int32_t  L_MAX_ALLOWED_WIDTH = 1000000;
+static const int32_t  L_MAX_ALLOWED_HEIGHT = 1000000;
+static const int64_t  L_MAX_ALLOWED_PIXELS = 400000000LL;
+static const int32_t  L_MAX_ALLOWED_RES = 10000000;  /* pixels/meter */
 
 #ifndef  NO_CONSOLE_IO
 #define  DEBUG     0
@@ -87,7 +87,7 @@ static const l_int32  L_MAX_ALLOWED_RES = 10000000;  /* pixels/meter */
 PIX *
 pixReadStreamBmp(FILE  *fp)
 {
-l_uint8  *data;
+uint8_t  *data;
 size_t    size;
 PIX      *pix;
 
@@ -129,17 +129,17 @@ PIX      *pix;
  * </pre>
  */
 PIX *
-pixReadMemBmp(const l_uint8  *cdata,
+pixReadMemBmp(const uint8_t  *cdata,
               size_t          size)
 {
-l_uint8    pel[4];
-l_uint8   *cmapBuf, *fdata, *data;
-l_int16    bftype, depth, d;
-l_int32    offset, ihbytes, width, height, height_neg, xres, yres;
-l_int32    compression, imagebytes, fdatabytes, cmapbytes, ncolors, maxcolors;
-l_int32    fdatabpl, extrabytes, pixWpl, pixBpl, i, j, k;
-l_uint32  *line, *pixdata, *pword;
-l_int64    npixels;
+uint8_t    pel[4];
+uint8_t   *cmapBuf, *fdata, *data;
+int16_t    bftype, depth, d;
+int32_t    offset, ihbytes, width, height, height_neg, xres, yres;
+int32_t    compression, imagebytes, fdatabytes, cmapbytes, ncolors, maxcolors;
+int32_t    fdatabpl, extrabytes, pixWpl, pixBpl, i, j, k;
+uint32_t  *line, *pixdata, *pword;
+int64_t    npixels;
 BMP_FH    *bmpfh;
 #if defined(__GNUC__)
 BMP_HEADER *bmph;
@@ -157,7 +157,7 @@ PIXCMAP   *cmap;
 
         /* Verify this is an uncompressed bmp */
     bmpfh = (BMP_FH *)cdata;
-    bftype = bmpfh->bfType[0] + ((l_int32)bmpfh->bfType[1] << 8);
+    bftype = bmpfh->bfType[0] + ((int32_t)bmpfh->bfType[1] << 8);
     if (bftype != BMP_ID)
         return (PIX *)ERROR_PTR("not bmf format", __func__, NULL);
 #if defined(__GNUC__)
@@ -172,13 +172,13 @@ PIXCMAP   *cmap;
 
         /* Find the offset from the beginning of the file to the image data */
     offset = bmpfh->bfOffBits[0];
-    offset += (l_int32)bmpfh->bfOffBits[1] << 8;
-    offset += (l_int32)bmpfh->bfOffBits[2] << 16;
-    offset += (l_uint32)bmpfh->bfOffBits[3] << 24;
+    offset += (int32_t)bmpfh->bfOffBits[1] << 8;
+    offset += (int32_t)bmpfh->bfOffBits[2] << 16;
+    offset += (uint32_t)bmpfh->bfOffBits[3] << 24;
 
         /* Read the remaining useful data in the infoheader.
          * Note that the first 4 bytes give the infoheader size. */
-    ihbytes = convertOnBigEnd32(*(l_uint32 *)(bmpih));
+    ihbytes = convertOnBigEnd32(*(uint32_t *)(bmpih));
     width = convertOnBigEnd32(bmpih->biWidth);
     height = convertOnBigEnd32(bmpih->biHeight);
     depth = convertOnBigEnd16(bmpih->biBitCount);
@@ -260,7 +260,7 @@ PIXCMAP   *cmap;
         /* Handle the colormap */
     cmapBuf = NULL;
     if (ncolors > 0) {
-        if ((cmapBuf = (l_uint8 *)LEPT_CALLOC(ncolors, sizeof(RGBA_QUAD)))
+        if ((cmapBuf = (uint8_t *)LEPT_CALLOC(ncolors, sizeof(RGBA_QUAD)))
                  == NULL)
             return (PIX *)ERROR_PTR("cmapBuf alloc fail", __func__, NULL );
 
@@ -276,8 +276,8 @@ PIXCMAP   *cmap;
         LEPT_FREE(cmapBuf);
         return (PIX *)ERROR_PTR( "pix not made", __func__, NULL);
     }
-    pixSetXRes(pix, (l_int32)((l_float32)xres / 39.37 + 0.5));  /* to ppi */
-    pixSetYRes(pix, (l_int32)((l_float32)yres / 39.37 + 0.5));  /* to ppi */
+    pixSetXRes(pix, (int32_t)((l_float32)xres / 39.37 + 0.5));  /* to ppi */
+    pixSetYRes(pix, (int32_t)((l_float32)yres / 39.37 + 0.5));  /* to ppi */
     pixSetInputFormat(pix, IFF_BMP);
     pixWpl = pixGetWpl(pix);
     pixBpl = 4 * pixWpl;
@@ -298,10 +298,10 @@ PIXCMAP   *cmap;
     }
 
         /* Acquire the image data.  Image origin for bmp is at lower right. */
-    fdata = (l_uint8 *)cdata + offset;  /* start of the bmp image data */
+    fdata = (uint8_t *)cdata + offset;  /* start of the bmp image data */
     pixdata = pixGetData(pix);
     if (depth != 24) {  /* typ. 1 or 8 bpp */
-        data = (l_uint8 *)pixdata + pixBpl * (height - 1);
+        data = (uint8_t *)pixdata + pixBpl * (height - 1);
         for (i = 0; i < height; i++) {
             memcpy(data, fdata, fdatabpl);
             fdata += fdatabpl;
@@ -337,9 +337,9 @@ PIXCMAP   *cmap;
              *
              *  Can we do a platform-independent assignment?
              *  Yes, set the bytes without using macros:
-             *      *((l_uint8 *)pword) = pel[2];           red
-             *      *((l_uint8 *)pword + 1) = pel[1];       green
-             *      *((l_uint8 *)pword + 2) = pel[0];       blue
+             *      *((uint8_t *)pword) = pel[2];           red
+             *      *((uint8_t *)pword + 1) = pel[1];       green
+             *      *((uint8_t *)pword + 2) = pel[0];       blue
              *  For little endians, before flipping, this looks again like:
              *          3  (R)     2  (G)        1  (B)        0
              *      |-----------|------------|-----------|-----------|
@@ -351,12 +351,12 @@ PIXCMAP   *cmap;
                 pword = line + j;
                 memcpy(&pel, fdata, 3);
                 fdata += 3;
-                *((l_uint8 *)pword + COLOR_RED) = pel[2];
-                *((l_uint8 *)pword + COLOR_GREEN) = pel[1];
-                *((l_uint8 *)pword + COLOR_BLUE) = pel[0];
+                *((uint8_t *)pword + COLOR_RED) = pel[2];
+                *((uint8_t *)pword + COLOR_GREEN) = pel[1];
+                *((uint8_t *)pword + COLOR_BLUE) = pel[0];
                     /* should not use alpha byte, but for buggy readers,
                      * set it to opaque  */
-                *((l_uint8 *)pword + L_ALPHA_CHANNEL) = 255;
+                *((uint8_t *)pword + L_ALPHA_CHANNEL) = 255;
             }
             if (extrabytes) {
                 for (k = 0; k < extrabytes; k++) {
@@ -404,7 +404,7 @@ l_ok
 pixWriteStreamBmp(FILE  *fp,
                   PIX   *pix)
 {
-l_uint8  *data;
+uint8_t  *data;
 size_t    size, nbytes;
 
     if (!fp)
@@ -444,19 +444,19 @@ size_t    size, nbytes;
  * </pre>
  */
 l_ok
-pixWriteMemBmp(l_uint8  **pfdata,
+pixWriteMemBmp(uint8_t  **pfdata,
                size_t    *pfsize,
                PIX       *pixs)
 {
-l_uint8     pel[4];
-l_uint8    *cta = NULL;     /* address of the bmp color table array */
-l_uint8    *fdata, *data, *fmdata;
-l_int32     cmaplen;      /* number of bytes in the bmp colormap */
-l_int32     ncolors, val, stepsize, w, h, d, fdepth, xres, yres, valid;
-l_int32     pixWpl, pixBpl, extrabytes, fBpl, fWpl, i, j, k;
-l_int32     heapcm;  /* extra copy of cta on the heap ? 1 : 0 */
-l_uint32    offbytes, fimagebytes;
-l_uint32   *line, *pword;
+uint8_t     pel[4];
+uint8_t    *cta = NULL;     /* address of the bmp color table array */
+uint8_t    *fdata, *data, *fmdata;
+int32_t     cmaplen;      /* number of bytes in the bmp colormap */
+int32_t     ncolors, val, stepsize, w, h, d, fdepth, xres, yres, valid;
+int32_t     pixWpl, pixBpl, extrabytes, fBpl, fWpl, i, j, k;
+int32_t     heapcm;  /* extra copy of cta on the heap ? 1 : 0 */
+uint32_t    offbytes, fimagebytes;
+uint32_t   *line, *pword;
 size_t      fsize;
 BMP_FH     *bmpfh;
 #if defined(__GNUC__)
@@ -499,8 +499,8 @@ RGBA_QUAD  *pquad;
     fdepth = (d == 32) ? 24 : d;
 
         /* Resolution is given in pixels/meter */
-    xres = (l_int32)(39.37 * (l_float32)pixGetXRes(pix) + 0.5);
-    yres = (l_int32)(39.37 * (l_float32)pixGetYRes(pix) + 0.5);
+    xres = (int32_t)(39.37 * (l_float32)pixGetXRes(pix) + 0.5);
+    yres = (int32_t)(39.37 * (l_float32)pixGetYRes(pix) + 0.5);
 
     pixWpl = pixGetWpl(pix);
     pixBpl = 4 * pixWpl;
@@ -520,17 +520,17 @@ RGBA_QUAD  *pquad;
     } else if ((cmap = pixGetColormap(pix))) {   /* existing colormap */
         ncolors = pixcmapGetCount(cmap);
         cmaplen = ncolors * sizeof(RGBA_QUAD);
-        cta = (l_uint8 *)cmap->array;
+        cta = (uint8_t *)cmap->array;
     } else {   /* no existing colormap; d <= 8; make a binary or gray one */
         if (d == 1) {
             cmaplen  = sizeof(bwmap);
             ncolors = 2;
-            cta = (l_uint8 *)bwmap;
+            cta = (uint8_t *)bwmap;
         } else {   /* d = 2,4,8; use a grayscale output colormap */
             ncolors = 1 << fdepth;
             cmaplen = ncolors * sizeof(RGBA_QUAD);
             heapcm = 1;
-            cta = (l_uint8 *)LEPT_CALLOC(cmaplen, 1);
+            cta = (uint8_t *)LEPT_CALLOC(cmaplen, 1);
             stepsize = 255 / (ncolors - 1);
             for (i = 0, val = 0, pquad = (RGBA_QUAD *)cta;
                  i < ncolors;
@@ -542,8 +542,8 @@ RGBA_QUAD  *pquad;
     }
 
 #if DEBUG
-    {l_uint8  *pcmptr;
-        pcmptr = (l_uint8 *)pixGetColormap(pix)->array;
+    {uint8_t  *pcmptr;
+        pcmptr = (uint8_t *)pixGetColormap(pix)->array;
         lept_stderr("Pix colormap[0] = %c%c%c%d\n",
                     pcmptr[0], pcmptr[1], pcmptr[2], pcmptr[3]);
         lept_stderr("Pix colormap[1] = %c%c%c%d\n",
@@ -553,22 +553,22 @@ RGBA_QUAD  *pquad;
 
     offbytes = BMP_FHBYTES + BMP_IHBYTES + cmaplen;
     fsize = offbytes + fimagebytes;
-    fdata = (l_uint8 *)LEPT_CALLOC(fsize, 1);
+    fdata = (uint8_t *)LEPT_CALLOC(fsize, 1);
     *pfdata = fdata;
     *pfsize = fsize;
 
         /* Write little-endian file header data */
     bmpfh = (BMP_FH *)fdata;
-    bmpfh->bfType[0] = (l_uint8)(BMP_ID >> 0);
-    bmpfh->bfType[1] = (l_uint8)(BMP_ID >> 8);
-    bmpfh->bfSize[0] = (l_uint8)(fsize >>  0);
-    bmpfh->bfSize[1] = (l_uint8)(fsize >>  8);
-    bmpfh->bfSize[2] = (l_uint8)(fsize >> 16);
-    bmpfh->bfSize[3] = (l_uint8)(fsize >> 24);
-    bmpfh->bfOffBits[0] = (l_uint8)(offbytes >>  0);
-    bmpfh->bfOffBits[1] = (l_uint8)(offbytes >>  8);
-    bmpfh->bfOffBits[2] = (l_uint8)(offbytes >> 16);
-    bmpfh->bfOffBits[3] = (l_uint8)(offbytes >> 24);
+    bmpfh->bfType[0] = (uint8_t)(BMP_ID >> 0);
+    bmpfh->bfType[1] = (uint8_t)(BMP_ID >> 8);
+    bmpfh->bfSize[0] = (uint8_t)(fsize >>  0);
+    bmpfh->bfSize[1] = (uint8_t)(fsize >>  8);
+    bmpfh->bfSize[2] = (uint8_t)(fsize >> 16);
+    bmpfh->bfSize[3] = (uint8_t)(fsize >> 24);
+    bmpfh->bfOffBits[0] = (uint8_t)(offbytes >>  0);
+    bmpfh->bfOffBits[1] = (uint8_t)(offbytes >>  8);
+    bmpfh->bfOffBits[2] = (uint8_t)(offbytes >> 16);
+    bmpfh->bfOffBits[3] = (uint8_t)(offbytes >> 24);
 
         /* Convert to little-endian and write the info header data */
 #if defined(__GNUC__)
@@ -595,7 +595,7 @@ RGBA_QUAD  *pquad;
 
         /* When you write a binary image with a colormap
          * that sets BLACK to 0, you must invert the data */
-    if (fdepth == 1 && cmap && ((l_uint8 *)(cmap->array))[0] == 0x0) {
+    if (fdepth == 1 && cmap && ((uint8_t *)(cmap->array))[0] == 0x0) {
         pixInvert(pix, pix);
     }
 
@@ -605,7 +605,7 @@ RGBA_QUAD  *pquad;
         /* Transfer the image data.  Image origin for bmp is at lower right. */
     fmdata = fdata + offbytes;
     if (fdepth != 24) {   /* typ 1 or 8 bpp */
-        data = (l_uint8 *)pixGetData(pix) + pixBpl * (h - 1);
+        data = (uint8_t *)pixGetData(pix) + pixBpl * (h - 1);
         for (i = 0; i < h; i++) {
             memcpy(fmdata, data, fBpl);
             data -= pixBpl;
@@ -625,9 +625,9 @@ RGBA_QUAD  *pquad;
         for (i = 0; i < h; i++) {
             for (j = 0; j < w; j++) {
                 pword = line + j;
-                pel[2] = *((l_uint8 *)pword + COLOR_RED);
-                pel[1] = *((l_uint8 *)pword + COLOR_GREEN);
-                pel[0] = *((l_uint8 *)pword + COLOR_BLUE);
+                pel[2] = *((uint8_t *)pword + COLOR_RED);
+                pel[1] = *((uint8_t *)pword + COLOR_GREEN);
+                pel[0] = *((uint8_t *)pword + COLOR_BLUE);
                 memcpy(fmdata, &pel, 3);
                 fmdata += 3;
             }

@@ -37,7 +37,7 @@
 #include "allheaders.h"
 
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
 L_DEWARP   *dew1, *dew2, *dew3;

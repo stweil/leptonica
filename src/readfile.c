@@ -37,23 +37,23 @@
  *           PIX       *pixReadStream()
  *
  *      Read header information from file
- *           l_int32    pixReadHeader()
+ *           int32_t    pixReadHeader()
  *
  *      Format finders
- *           l_int32    findFileFormat()
- *           l_int32    findFileFormatStream()
- *           l_int32    findFileFormatBuffer()
- *           l_int32    fileFormatIsTiff()
+ *           int32_t    findFileFormat()
+ *           int32_t    findFileFormatStream()
+ *           int32_t    findFileFormatBuffer()
+ *           int32_t    fileFormatIsTiff()
  *
  *      Read from memory
  *           PIX       *pixReadMem()
- *           l_int32    pixReadHeaderMem()
+ *           int32_t    pixReadHeaderMem()
  *
  *      Output image file information
  *           void       writeImageFileInfo()
  *
  *      Test function for I/O with different formats
- *           l_int32    ioFormatTest()
+ *           int32_t    ioFormatTest()
  *
  *  Supported file formats:
  *  (1) Reading is supported without any external libraries:
@@ -152,7 +152,7 @@ PIXA *
 pixaReadFilesSA(SARRAY  *sa)
 {
 char    *str;
-l_int32  i, n;
+int32_t  i, n;
 PIX     *pix;
 PIXA    *pixa;
 
@@ -222,7 +222,7 @@ PIX   *pix;
  */
 PIX *
 pixReadWithHint(const char  *filename,
-                l_int32      hint)
+                int32_t      hint)
 {
 FILE  *fp;
 PIX   *pix;
@@ -271,10 +271,10 @@ PIX   *pix;
  */
 PIX *
 pixReadIndexed(SARRAY  *sa,
-               l_int32  index)
+               int32_t  index)
 {
 char    *fname;
-l_int32  n;
+int32_t  n;
 PIX     *pix;
 
     if (!sa)
@@ -310,10 +310,10 @@ PIX     *pix;
  */
 PIX *
 pixReadStream(FILE    *fp,
-              l_int32  hint)
+              int32_t  hint)
 {
-l_int32   format, ret, valid;
-l_uint8  *comment;
+int32_t   format, ret, valid;
+uint8_t  *comment;
 PIX      *pix;
 PIXCMAP  *cmap;
 
@@ -432,15 +432,15 @@ PIXCMAP  *cmap;
  */
 l_ok
 pixReadHeader(const char  *filename,
-              l_int32     *pformat,
-              l_int32     *pw,
-              l_int32     *ph,
-              l_int32     *pbps,
-              l_int32     *pspp,
-              l_int32     *piscmap)
+              int32_t     *pformat,
+              int32_t     *pw,
+              int32_t     *ph,
+              int32_t     *pbps,
+              int32_t     *pspp,
+              int32_t     *piscmap)
 {
-l_int32  format, ret, w, h, d, bps, spp, iscmap;
-l_int32  type;  /* ignored */
+int32_t  format, ret, w, h, d, bps, spp, iscmap;
+int32_t  type;  /* ignored */
 FILE    *fp;
 PIX     *pix;
 
@@ -568,9 +568,9 @@ PIX     *pix;
  */
 l_ok
 findFileFormat(const char  *filename,
-               l_int32     *pformat)
+               int32_t     *pformat)
 {
-l_int32  ret;
+int32_t  ret;
 FILE    *fp;
 
     if (!pformat)
@@ -601,10 +601,10 @@ FILE    *fp;
  */
 l_ok
 findFileFormatStream(FILE     *fp,
-                     l_int32  *pformat)
+                     int32_t  *pformat)
 {
-l_uint8  firstbytes[13];
-l_int32  format;
+uint8_t  firstbytes[13];
+int32_t  format;
 
     if (!pformat)
         return ERROR_INT("&format not defined", __func__, 1);
@@ -650,10 +650,10 @@ l_int32  format;
  * </pre>
  */
 l_ok
-findFileFormatBuffer(const l_uint8  *buf,
-                     l_int32        *pformat)
+findFileFormatBuffer(const uint8_t  *buf,
+                     int32_t        *pformat)
 {
-l_uint16  twobytepw;
+uint16_t  twobytepw;
 
     if (!pformat)
         return ERROR_INT("&format not defined", __func__, 1);
@@ -776,10 +776,10 @@ l_uint16  twobytepw;
  * \param[in]    fp    file stream
  * \return  1 if file is tiff; 0 otherwise or on error
  */
-l_int32
+int32_t
 fileFormatIsTiff(FILE  *fp)
 {
-l_int32  format;
+int32_t  format;
 
     if (!fp)
         return ERROR_INT("stream not defined", __func__, 0);
@@ -819,10 +819,10 @@ l_int32  format;
  * </pre>
  */
 PIX *
-pixReadMem(const l_uint8  *data,
+pixReadMem(const uint8_t  *data,
            size_t          size)
 {
-l_int32   format, valid;
+int32_t   format, valid;
 PIX      *pix;
 PIXCMAP  *cmap;
 
@@ -947,17 +947,17 @@ PIXCMAP  *cmap;
  * </pre>
  */
 l_ok
-pixReadHeaderMem(const l_uint8  *data,
+pixReadHeaderMem(const uint8_t  *data,
                  size_t          size,
-                 l_int32        *pformat,
-                 l_int32        *pw,
-                 l_int32        *ph,
-                 l_int32        *pbps,
-                 l_int32        *pspp,
-                 l_int32        *piscmap)
+                 int32_t        *pformat,
+                 int32_t        *pw,
+                 int32_t        *ph,
+                 int32_t        *pbps,
+                 int32_t        *pspp,
+                 int32_t        *piscmap)
 {
-l_int32  format, ret, w, h, d, bps, spp, iscmap;
-l_int32  type;  /* not used */
+int32_t  format, ret, w, h, d, bps, spp, iscmap;
+int32_t  type;  /* not used */
 PIX     *pix;
 
     if (pw) *pw = 0;
@@ -1047,7 +1047,7 @@ PIX     *pix;
         return ERROR_INT("Pdf reading is not supported\n", __func__, 1);
 
     case IFF_SPIX:
-        ret = sreadHeaderSpix((l_uint32 *)data, size, &w, &h, &bps,
+        ret = sreadHeaderSpix((uint32_t *)data, size, &w, &h, &bps,
                                &spp, &iscmap);
         if (ret)
             return ERROR_INT( "pnm: no header info returned", __func__, 1);
@@ -1094,11 +1094,11 @@ extern const char *ImageFileFormatExtensions[];
 l_ok
 writeImageFileInfo(const char  *filename,
                    FILE        *fpout,
-                   l_int32      headeronly)
+                   int32_t      headeronly)
 {
 char     *text;
-l_int32   w, h, d, wpl, count, npages, color;
-l_int32   format, bps, spp, iscmap, xres, yres, transparency;
+int32_t   w, h, d, wpl, count, npages, color;
+int32_t   format, bps, spp, iscmap, xres, yres, transparency;
 FILE     *fpin;
 PIX      *pix, *pixt;
 PIXCMAP  *cmap;
@@ -1260,7 +1260,7 @@ PIXCMAP  *cmap;
 l_ok
 ioFormatTest(const char  *filename)
 {
-l_int32    w, h, d, depth, equal, problems;
+int32_t    w, h, d, depth, equal, problems;
 l_float32  diff;
 BOX       *box;
 PIX       *pixs, *pixc, *pix1, *pix2;

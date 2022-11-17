@@ -39,8 +39,8 @@
 int main(int    argc,
          char **argv)
 {
-l_uint8      *data;
-l_int32       i, same, w, h, width, success, nb;
+uint8_t      *data;
+int32_t       i, same, w, h, width, success, nb;
 size_t        size;
 l_float32     scalefact;
 BOXA         *boxa1, *boxa1e, *boxa1o, *boxa2, *boxa2e, *boxa2o;

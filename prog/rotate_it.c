@@ -56,7 +56,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32    icolor, itype, format, quads;
+int32_t    icolor, itype, format, quads;
 l_float32  angle, deg2rad, anglerad;
 char      *filein, *fileout, *type, *incolor;
 PIX       *pixs, *pixd;
@@ -82,7 +82,7 @@ PIX       *pixs, *pixd;
     if (format == IFF_UNKNOWN) format = IFF_PNG;
 
     if (angle == 90.0 || angle == 180.0 || angle == 270.0) {
-        quads = (l_int32)((angle + 0.5) / 90.0);
+        quads = (int32_t)((angle + 0.5) / 90.0);
         pixd = pixRotateOrth(pixs, quads);
         pixWrite(fileout, pixd, format);
         pixDestroy(&pixs);

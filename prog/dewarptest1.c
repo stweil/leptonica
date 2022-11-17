@@ -46,7 +46,7 @@
      * Set to 1 for linear LSF. */
 #define   LINEAR_FIT_ON_EDGES    0
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
 L_DEWARP   *dew1, *dew2;

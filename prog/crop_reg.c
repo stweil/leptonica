@@ -38,19 +38,19 @@
 
 #include "allheaders.h"
 
-static const l_int32  mindif = 60;
+static const int32_t  mindif = 60;
 
-static l_int32 GetLeftCut(NUMA *narl, NUMA *nart, NUMA *nait,
-                   l_int32 h, l_int32 *pleft);
-static l_int32 GetRightCut(NUMA *narl, NUMA *nart, NUMA *nait,
-                     l_int32 h, l_int32 *pright);
+static int32_t GetLeftCut(NUMA *narl, NUMA *nart, NUMA *nait,
+                   int32_t h, int32_t *pleft);
+static int32_t GetRightCut(NUMA *narl, NUMA *nart, NUMA *nait,
+                     int32_t h, int32_t *pright);
 
 const char *fnames[] = {"lyra.005.jpg", "lyra.036.jpg"};
 
 int main(int    argc,
          char **argv)
 {
-l_int32       i, pageno, w, h, left, right;
+int32_t       i, pageno, w, h, left, right;
 BOX          *box1, *box2;
 NUMA         *na1, *nar, *naro, *narl, *nart, *nai, *naio, *nait;
 PIX          *pixs, *pixr, *pixg, *pixgi, *pixd, *pix1, *pix2, *pix3, *pix4;
@@ -227,13 +227,13 @@ L_REGPARAMS  *rp;
  * Identify txt2 by (a) beginning of 1st lowpass interval from bottom
  *                  (b) last downward transition in reversals from bottom
  */
-static l_int32
+static int32_t
 GetLeftCut(NUMA *narl,
            NUMA *nart,
            NUMA *nait,
-           l_int32 w,
-           l_int32 *pleft) {
-l_int32  nrl, nrt, nit, start, end, sign, pap1, txt1, del;
+           int32_t w,
+           int32_t *pleft) {
+int32_t  nrl, nrt, nit, start, end, sign, pap1, txt1, del;
 
     nrl = numaGetCount(narl);
     nrt = numaGetCount(nart);
@@ -271,13 +271,13 @@ l_int32  nrl, nrt, nit, start, end, sign, pap1, txt1, del;
 }
 
 
-static l_int32
+static int32_t
 GetRightCut(NUMA *narl,
             NUMA *nart,
             NUMA *nait,
-            l_int32 w,
-            l_int32 *pright) {
-l_int32  nrt, ntrans, start, end, sign, txt2, pap2, found, trans;
+            int32_t w,
+            int32_t *pright) {
+int32_t  nrt, ntrans, start, end, sign, txt2, pap2, found, trans;
 
     nrt = numaGetCount(nart);
 

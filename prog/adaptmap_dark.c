@@ -60,12 +60,12 @@
 #include "string.h"
 #include "allheaders.h"
 
-void GenCleans(const char *fname, l_int32  *pindex, l_int32 thresh, L_BMF *bmf);
+void GenCleans(const char *fname, int32_t  *pindex, int32_t thresh, L_BMF *bmf);
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
-l_int32  index;
+int32_t  index;
 L_BMF   *bmf;
 PIXA    *pixa1, *pixa2, *pixa3, *pixa4;
 PIXAC   *pixac1, *pixac2, *pixac3;
@@ -147,11 +147,11 @@ PIXAC   *pixac1, *pixac2, *pixac3;
 
 void
 GenCleans(const char  *fname,
-          l_int32     *pindex,
-          l_int32      thresh,
+          int32_t     *pindex,
+          int32_t      thresh,
           L_BMF       *bmf)
 {
-l_int32  index, blackval, whiteval;
+int32_t  index, blackval, whiteval;
 char     buf[256];
 PIX     *pix1, *pix2, *pix3, *pix4, *pix5;
 

@@ -34,19 +34,19 @@
  *           PIX         *pixRunlengthTransform()
  *
  *     Find runs along horizontal and vertical lines
- *           l_int32      pixFindHorizontalRuns()
- *           l_int32      pixFindVerticalRuns()
+ *           int32_t      pixFindHorizontalRuns()
+ *           int32_t      pixFindVerticalRuns()
  *
  *     Find max runs along horizontal and vertical lines
- *           l_int32      pixFindMaxRuns()
- *           l_int32      pixFindMaxHorizontalRunOnLine()
- *           l_int32      pixFindMaxVerticalRunOnLine()
+ *           int32_t      pixFindMaxRuns()
+ *           int32_t      pixFindMaxHorizontalRunOnLine()
+ *           int32_t      pixFindMaxVerticalRunOnLine()
  *
  *     Compute runlength-to-membership transform on a line
- *           l_int32      runlengthMembershipOnLine()
+ *           int32_t      runlengthMembershipOnLine()
  *
  *     Make byte position LUT
- *           l_int32      makeMSBitLocTab()
+ *           int32_t      makeMSBitLocTab()
  *
  *  Here we're handling runs of either black or white pixels on 1 bpp
  *  images.  The directions of the runs in the stroke width transform
@@ -64,7 +64,7 @@
 #include <math.h>
 #include "allheaders.h"
 
-static PIX *pixFindMinRunsOrthogonal(PIX *pixs, l_float32 angle, l_int32 depth);
+static PIX *pixFindMinRunsOrthogonal(PIX *pixs, l_float32 angle, int32_t depth);
 
 /*-----------------------------------------------------------------------*
  *                   Label pixels by membership in runs                  *
@@ -100,9 +100,9 @@ static PIX *pixFindMinRunsOrthogonal(PIX *pixs, l_float32 angle, l_int32 depth);
  */
 PIX *
 pixStrokeWidthTransform(PIX     *pixs,
-                        l_int32  color,
-                        l_int32  depth,
-                        l_int32  nangles)
+                        int32_t  color,
+                        int32_t  depth,
+                        int32_t  nangles)
 {
 l_float32  angle, pi;
 PIX       *pixh, *pixv, *pixt, *pixg1, *pixg2, *pixg3, *pixg4;
@@ -196,9 +196,9 @@ PIX       *pixh, *pixv, *pixt, *pixg1, *pixg2, *pixg3, *pixg4;
 static PIX *
 pixFindMinRunsOrthogonal(PIX       *pixs,
                          l_float32  angle,
-                         l_int32    depth)
+                         int32_t    depth)
 {
-l_int32  w, h, diag, xoff, yoff;
+int32_t  w, h, diag, xoff, yoff;
 PIX     *pixb, *pixr, *pixh, *pixv, *pixg1, *pixg2, *pixd;
 BOX     *box;
 
@@ -208,7 +208,7 @@ BOX     *box;
         /* Rasterop into the center of a sufficiently large image
          * so we don't lose pixels for any rotation angle. */
     pixGetDimensions(pixs, &w, &h, NULL);
-    diag = (l_int32)(sqrt((l_float64)(w * w + h * h)) + 2.5);
+    diag = (int32_t)(sqrt((l_float64)(w * w + h * h)) + 2.5);
     xoff = (diag - w) / 2;
     yoff = (diag - h) / 2;
     pixb = pixCreate(diag, diag, 1);
@@ -259,13 +259,13 @@ BOX     *box;
  */
 PIX *
 pixRunlengthTransform(PIX     *pixs,
-                      l_int32  color,
-                      l_int32  direction,
-                      l_int32  depth)
+                      int32_t  color,
+                      int32_t  direction,
+                      int32_t  depth)
 {
-l_int32    i, j, w, h, wpld, bufsize, maxsize, n;
-l_int32   *start, *end, *buffer;
-l_uint32  *datad, *lined;
+int32_t    i, j, w, h, wpld, bufsize, maxsize, n;
+int32_t   *start, *end, *buffer;
+uint32_t  *datad, *lined;
 PIX       *pixt, *pixd;
 
     if (!pixs)
@@ -293,9 +293,9 @@ PIX       *pixt, *pixd;
     datad = pixGetData(pixd);
     wpld = pixGetWpl(pixd);
 
-    start = (l_int32 *)LEPT_CALLOC(maxsize, sizeof(l_int32));
-    end = (l_int32 *)LEPT_CALLOC(maxsize, sizeof(l_int32));
-    buffer = (l_int32 *)LEPT_CALLOC(bufsize, sizeof(l_int32));
+    start = (int32_t *)LEPT_CALLOC(maxsize, sizeof(int32_t));
+    end = (int32_t *)LEPT_CALLOC(maxsize, sizeof(int32_t));
+    buffer = (int32_t *)LEPT_CALLOC(bufsize, sizeof(int32_t));
 
         /* Use fg runs for evaluation */
     if (color == 0)
@@ -367,14 +367,14 @@ PIX       *pixt, *pixd;
  */
 l_ok
 pixFindHorizontalRuns(PIX      *pix,
-                      l_int32   y,
-                      l_int32  *xstart,
-                      l_int32  *xend,
-                      l_int32  *pn)
+                      int32_t   y,
+                      int32_t  *xstart,
+                      int32_t  *xend,
+                      int32_t  *pn)
 {
-l_int32    inrun;  /* boolean */
-l_int32    index, w, h, d, j, wpl, val;
-l_uint32  *line;
+int32_t    inrun;  /* boolean */
+int32_t    index, w, h, d, j, wpl, val;
+uint32_t  *line;
 
     if (!pn)
         return ERROR_INT("&n not defined", __func__, 1);
@@ -442,14 +442,14 @@ l_uint32  *line;
  */
 l_ok
 pixFindVerticalRuns(PIX      *pix,
-                    l_int32   x,
-                    l_int32  *ystart,
-                    l_int32  *yend,
-                    l_int32  *pn)
+                    int32_t   x,
+                    int32_t  *ystart,
+                    int32_t  *yend,
+                    int32_t  *pn)
 {
-l_int32    inrun;  /* boolean */
-l_int32    index, w, h, d, i, wpl, val;
-l_uint32  *data, *line;
+int32_t    inrun;  /* boolean */
+int32_t    index, w, h, d, i, wpl, val;
+uint32_t  *data, *line;
 
     if (!pn)
         return ERROR_INT("&n not defined", __func__, 1);
@@ -516,10 +516,10 @@ l_uint32  *data, *line;
  */
 NUMA *
 pixFindMaxRuns(PIX     *pix,
-               l_int32  direction,
+               int32_t  direction,
                NUMA   **pnastart)
 {
-l_int32  w, h, i, start, size;
+int32_t  w, h, i, start, size;
 NUMA    *nasize;
 
     if (pnastart) *pnastart = NULL;
@@ -567,13 +567,13 @@ NUMA    *nasize;
  */
 l_ok
 pixFindMaxHorizontalRunOnLine(PIX      *pix,
-                              l_int32   y,
-                              l_int32  *pxstart,
-                              l_int32  *psize)
+                              int32_t   y,
+                              int32_t  *pxstart,
+                              int32_t  *psize)
 {
-l_int32    inrun;  /* boolean */
-l_int32    w, h, j, wpl, val, maxstart, maxsize, length, start;
-l_uint32  *line;
+int32_t    inrun;  /* boolean */
+int32_t    w, h, j, wpl, val, maxstart, maxsize, length, start;
+uint32_t  *line;
 
     if (pxstart) *pxstart = 0;
     if (!psize)
@@ -639,13 +639,13 @@ l_uint32  *line;
  */
 l_ok
 pixFindMaxVerticalRunOnLine(PIX      *pix,
-                            l_int32   x,
-                            l_int32  *pystart,
-                            l_int32  *psize)
+                            int32_t   x,
+                            int32_t  *pystart,
+                            int32_t  *psize)
 {
-l_int32    inrun;  /* boolean */
-l_int32    w, h, i, wpl, val, maxstart, maxsize, length, start;
-l_uint32  *data, *line;
+int32_t    inrun;  /* boolean */
+int32_t    w, h, i, wpl, val, maxstart, maxsize, length, start;
+uint32_t  *data, *line;
 
     if (pystart) *pystart = 0;
     if (!psize)
@@ -717,14 +717,14 @@ l_uint32  *data, *line;
  * </pre>
  */
 l_ok
-runlengthMembershipOnLine(l_int32  *buffer,
-                          l_int32   size,
-                          l_int32   depth,
-                          l_int32  *start,
-                          l_int32  *end,
-                          l_int32   n)
+runlengthMembershipOnLine(int32_t  *buffer,
+                          int32_t   size,
+                          int32_t   depth,
+                          int32_t  *start,
+                          int32_t  *end,
+                          int32_t   n)
 {
-l_int32  i, j, first, last, diff, max;
+int32_t  i, j, first, last, diff, max;
 
     if (!buffer)
         return ERROR_INT("buffer not defined", __func__, 1);
@@ -770,16 +770,16 @@ l_int32  i, j, first, last, diff, max;
  *          this returns 8.
  * </pre>
  */
-l_int32 *
-makeMSBitLocTab(l_int32  bitval)
+int32_t *
+makeMSBitLocTab(int32_t  bitval)
 {
-l_int32   i, j;
-l_int32  *tab;
-l_uint8   byte, mask;
+int32_t   i, j;
+int32_t  *tab;
+uint8_t   byte, mask;
 
-    tab = (l_int32 *)LEPT_CALLOC(256, sizeof(l_int32));
+    tab = (int32_t *)LEPT_CALLOC(256, sizeof(int32_t));
     for (i = 0; i < 256; i++) {
-        byte = (l_uint8)i;
+        byte = (uint8_t)i;
         if (bitval == 0)
             byte = ~byte;
         tab[i] = 8;

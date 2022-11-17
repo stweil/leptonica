@@ -73,7 +73,7 @@ int main(int    argc,
 {
 char        *filein, *fname, *printer;
 char         buf[512];
-l_int32      nx, ny, i, w, h, ws, hs, n, ignore, index;
+int32_t      nx, ny, i, w, h, ws, hs, n, ignore, index;
 l_float32    scale;
 FILE        *fp;
 PIX         *pixs, *pixt, *pixr;
@@ -123,7 +123,7 @@ SARRAY      *sa;
         sarrayAddString(sa, fname, L_INSERT);
 #if USE_COMPRESSED
         index = 0;
-        pixWriteCompressedToPS(pixt, fname, (l_int32)(300. / scale), 3, &index);
+        pixWriteCompressedToPS(pixt, fname, (int32_t)(300. / scale), 3, &index);
         index = 0;  /* write each out to a separate file */
 #else  /* uncompressed, level 1 */
         fp = lept_fopen(fname, "wb+");

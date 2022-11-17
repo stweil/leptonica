@@ -28,7 +28,7 @@
  *     Low-level fast hit-miss transform with auto-generated sels
  *
  *      Dispatcher:
- *             l_int32    fhmtgen_low_1()
+ *             int32_t    fhmtgen_low_1()
  *
  *      Static Low-level:
  *             void       fhmt_1_*()
@@ -36,16 +36,16 @@
 
 #include "allheaders.h"
 
-static void  fhmt_1_0(l_uint32 *, l_int32, l_int32, l_int32, l_uint32 *, l_int32);
-static void  fhmt_1_1(l_uint32 *, l_int32, l_int32, l_int32, l_uint32 *, l_int32);
-static void  fhmt_1_2(l_uint32 *, l_int32, l_int32, l_int32, l_uint32 *, l_int32);
-static void  fhmt_1_3(l_uint32 *, l_int32, l_int32, l_int32, l_uint32 *, l_int32);
-static void  fhmt_1_4(l_uint32 *, l_int32, l_int32, l_int32, l_uint32 *, l_int32);
-static void  fhmt_1_5(l_uint32 *, l_int32, l_int32, l_int32, l_uint32 *, l_int32);
-static void  fhmt_1_6(l_uint32 *, l_int32, l_int32, l_int32, l_uint32 *, l_int32);
-static void  fhmt_1_7(l_uint32 *, l_int32, l_int32, l_int32, l_uint32 *, l_int32);
-static void  fhmt_1_8(l_uint32 *, l_int32, l_int32, l_int32, l_uint32 *, l_int32);
-static void  fhmt_1_9(l_uint32 *, l_int32, l_int32, l_int32, l_uint32 *, l_int32);
+static void  fhmt_1_0(uint32_t *, int32_t, int32_t, int32_t, uint32_t *, int32_t);
+static void  fhmt_1_1(uint32_t *, int32_t, int32_t, int32_t, uint32_t *, int32_t);
+static void  fhmt_1_2(uint32_t *, int32_t, int32_t, int32_t, uint32_t *, int32_t);
+static void  fhmt_1_3(uint32_t *, int32_t, int32_t, int32_t, uint32_t *, int32_t);
+static void  fhmt_1_4(uint32_t *, int32_t, int32_t, int32_t, uint32_t *, int32_t);
+static void  fhmt_1_5(uint32_t *, int32_t, int32_t, int32_t, uint32_t *, int32_t);
+static void  fhmt_1_6(uint32_t *, int32_t, int32_t, int32_t, uint32_t *, int32_t);
+static void  fhmt_1_7(uint32_t *, int32_t, int32_t, int32_t, uint32_t *, int32_t);
+static void  fhmt_1_8(uint32_t *, int32_t, int32_t, int32_t, uint32_t *, int32_t);
+static void  fhmt_1_9(uint32_t *, int32_t, int32_t, int32_t, uint32_t *, int32_t);
 
 
 /*---------------------------------------------------------------------*
@@ -56,14 +56,14 @@ static void  fhmt_1_9(l_uint32 *, l_int32, l_int32, l_int32, l_uint32 *, l_int32
  *
  *       a dispatcher to appropriate low-level code
  */
-l_int32
-fhmtgen_low_1(l_uint32  *datad,
-              l_int32    w,
-              l_int32    h,
-              l_int32    wpld,
-              l_uint32  *datas,
-              l_int32    wpls,
-              l_int32    index)
+int32_t
+fhmtgen_low_1(uint32_t  *datad,
+              int32_t    w,
+              int32_t    h,
+              int32_t    wpld,
+              uint32_t  *datas,
+              int32_t    wpls,
+              int32_t    index)
 {
 
     switch (index)
@@ -116,18 +116,18 @@ fhmtgen_low_1(l_uint32  *datad,
  *        interior rectangle.
  */
 static void
-fhmt_1_0(l_uint32  *datad,
-         l_int32    w,
-         l_int32    h,
-         l_int32    wpld,
-         l_uint32  *datas,
-         l_int32    wpls)
+fhmt_1_0(uint32_t  *datad,
+         int32_t    w,
+         int32_t    h,
+         int32_t    wpld,
+         uint32_t  *datas,
+         int32_t    wpls)
 {
-l_int32    i;
-l_int32    j, pwpls;
-l_uint32  *sptr, *dptr;
+int32_t    i;
+int32_t    j, pwpls;
+uint32_t  *sptr, *dptr;
 
-    pwpls = (l_uint32)(w + 31) / 32;  /* proper wpl of src */
+    pwpls = (uint32_t)(w + 31) / 32;  /* proper wpl of src */
 
     for (i = 0; i < h; i++) {
         sptr = datas + i * wpls;
@@ -147,18 +147,18 @@ l_uint32  *sptr, *dptr;
 }
 
 static void
-fhmt_1_1(l_uint32  *datad,
-         l_int32    w,
-         l_int32    h,
-         l_int32    wpld,
-         l_uint32  *datas,
-         l_int32    wpls)
+fhmt_1_1(uint32_t  *datad,
+         int32_t    w,
+         int32_t    h,
+         int32_t    wpld,
+         uint32_t  *datas,
+         int32_t    wpls)
 {
-l_int32    i;
-l_int32    j, pwpls;
-l_uint32  *sptr, *dptr;
+int32_t    i;
+int32_t    j, pwpls;
+uint32_t  *sptr, *dptr;
 
-    pwpls = (l_uint32)(w + 31) / 32;  /* proper wpl of src */
+    pwpls = (uint32_t)(w + 31) / 32;  /* proper wpl of src */
 
     for (i = 0; i < h; i++) {
         sptr = datas + i * wpls;
@@ -175,18 +175,18 @@ l_uint32  *sptr, *dptr;
 }
 
 static void
-fhmt_1_2(l_uint32  *datad,
-         l_int32    w,
-         l_int32    h,
-         l_int32    wpld,
-         l_uint32  *datas,
-         l_int32    wpls)
+fhmt_1_2(uint32_t  *datad,
+         int32_t    w,
+         int32_t    h,
+         int32_t    wpld,
+         uint32_t  *datas,
+         int32_t    wpls)
 {
-l_int32    i;
-l_int32    j, pwpls;
-l_uint32  *sptr, *dptr;
+int32_t    i;
+int32_t    j, pwpls;
+uint32_t  *sptr, *dptr;
 
-    pwpls = (l_uint32)(w + 31) / 32;  /* proper wpl of src */
+    pwpls = (uint32_t)(w + 31) / 32;  /* proper wpl of src */
 
     for (i = 0; i < h; i++) {
         sptr = datas + i * wpls;
@@ -203,18 +203,18 @@ l_uint32  *sptr, *dptr;
 }
 
 static void
-fhmt_1_3(l_uint32  *datad,
-         l_int32    w,
-         l_int32    h,
-         l_int32    wpld,
-         l_uint32  *datas,
-         l_int32    wpls)
+fhmt_1_3(uint32_t  *datad,
+         int32_t    w,
+         int32_t    h,
+         int32_t    wpld,
+         uint32_t  *datas,
+         int32_t    wpls)
 {
-l_int32    i;
-l_int32    j, pwpls;
-l_uint32  *sptr, *dptr;
+int32_t    i;
+int32_t    j, pwpls;
+uint32_t  *sptr, *dptr;
 
-    pwpls = (l_uint32)(w + 31) / 32;  /* proper wpl of src */
+    pwpls = (uint32_t)(w + 31) / 32;  /* proper wpl of src */
 
     for (i = 0; i < h; i++) {
         sptr = datas + i * wpls;
@@ -231,18 +231,18 @@ l_uint32  *sptr, *dptr;
 }
 
 static void
-fhmt_1_4(l_uint32  *datad,
-         l_int32    w,
-         l_int32    h,
-         l_int32    wpld,
-         l_uint32  *datas,
-         l_int32    wpls)
+fhmt_1_4(uint32_t  *datad,
+         int32_t    w,
+         int32_t    h,
+         int32_t    wpld,
+         uint32_t  *datas,
+         int32_t    wpls)
 {
-l_int32    i;
-l_int32    j, pwpls;
-l_uint32  *sptr, *dptr;
+int32_t    i;
+int32_t    j, pwpls;
+uint32_t  *sptr, *dptr;
 
-    pwpls = (l_uint32)(w + 31) / 32;  /* proper wpl of src */
+    pwpls = (uint32_t)(w + 31) / 32;  /* proper wpl of src */
 
     for (i = 0; i < h; i++) {
         sptr = datas + i * wpls;
@@ -259,25 +259,25 @@ l_uint32  *sptr, *dptr;
 }
 
 static void
-fhmt_1_5(l_uint32  *datad,
-         l_int32    w,
-         l_int32    h,
-         l_int32    wpld,
-         l_uint32  *datas,
-         l_int32    wpls)
+fhmt_1_5(uint32_t  *datad,
+         int32_t    w,
+         int32_t    h,
+         int32_t    wpld,
+         uint32_t  *datas,
+         int32_t    wpls)
 {
-l_int32    i;
-l_int32    j, pwpls;
-l_uint32  *sptr, *dptr;
-l_int32             wpls2, wpls3, wpls4;
-l_int32             wpls5, wpls6;
+int32_t    i;
+int32_t    j, pwpls;
+uint32_t  *sptr, *dptr;
+int32_t             wpls2, wpls3, wpls4;
+int32_t             wpls5, wpls6;
 
     wpls2 = 2 * wpls;
     wpls3 = 3 * wpls;
     wpls4 = 4 * wpls;
     wpls5 = 5 * wpls;
     wpls6 = 6 * wpls;
-    pwpls = (l_uint32)(w + 31) / 32;  /* proper wpl of src */
+    pwpls = (uint32_t)(w + 31) / 32;  /* proper wpl of src */
 
     for (i = 0; i < h; i++) {
         sptr = datas + i * wpls;
@@ -296,20 +296,20 @@ l_int32             wpls5, wpls6;
 }
 
 static void
-fhmt_1_6(l_uint32  *datad,
-         l_int32    w,
-         l_int32    h,
-         l_int32    wpld,
-         l_uint32  *datas,
-         l_int32    wpls)
+fhmt_1_6(uint32_t  *datad,
+         int32_t    w,
+         int32_t    h,
+         int32_t    wpld,
+         uint32_t  *datas,
+         int32_t    wpls)
 {
-l_int32    i;
-l_int32    j, pwpls;
-l_uint32  *sptr, *dptr;
-l_int32             wpls2;
+int32_t    i;
+int32_t    j, pwpls;
+uint32_t  *sptr, *dptr;
+int32_t             wpls2;
 
     wpls2 = 2 * wpls;
-    pwpls = (l_uint32)(w + 31) / 32;  /* proper wpl of src */
+    pwpls = (uint32_t)(w + 31) / 32;  /* proper wpl of src */
 
     for (i = 0; i < h; i++) {
         sptr = datas + i * wpls;
@@ -333,20 +333,20 @@ l_int32             wpls2;
 }
 
 static void
-fhmt_1_7(l_uint32  *datad,
-         l_int32    w,
-         l_int32    h,
-         l_int32    wpld,
-         l_uint32  *datas,
-         l_int32    wpls)
+fhmt_1_7(uint32_t  *datad,
+         int32_t    w,
+         int32_t    h,
+         int32_t    wpld,
+         uint32_t  *datas,
+         int32_t    wpls)
 {
-l_int32    i;
-l_int32    j, pwpls;
-l_uint32  *sptr, *dptr;
-l_int32             wpls2;
+int32_t    i;
+int32_t    j, pwpls;
+uint32_t  *sptr, *dptr;
+int32_t             wpls2;
 
     wpls2 = 2 * wpls;
-    pwpls = (l_uint32)(w + 31) / 32;  /* proper wpl of src */
+    pwpls = (uint32_t)(w + 31) / 32;  /* proper wpl of src */
 
     for (i = 0; i < h; i++) {
         sptr = datas + i * wpls;
@@ -370,20 +370,20 @@ l_int32             wpls2;
 }
 
 static void
-fhmt_1_8(l_uint32  *datad,
-         l_int32    w,
-         l_int32    h,
-         l_int32    wpld,
-         l_uint32  *datas,
-         l_int32    wpls)
+fhmt_1_8(uint32_t  *datad,
+         int32_t    w,
+         int32_t    h,
+         int32_t    wpld,
+         uint32_t  *datas,
+         int32_t    wpls)
 {
-l_int32    i;
-l_int32    j, pwpls;
-l_uint32  *sptr, *dptr;
-l_int32             wpls2;
+int32_t    i;
+int32_t    j, pwpls;
+uint32_t  *sptr, *dptr;
+int32_t             wpls2;
 
     wpls2 = 2 * wpls;
-    pwpls = (l_uint32)(w + 31) / 32;  /* proper wpl of src */
+    pwpls = (uint32_t)(w + 31) / 32;  /* proper wpl of src */
 
     for (i = 0; i < h; i++) {
         sptr = datas + i * wpls;
@@ -407,20 +407,20 @@ l_int32             wpls2;
 }
 
 static void
-fhmt_1_9(l_uint32  *datad,
-         l_int32    w,
-         l_int32    h,
-         l_int32    wpld,
-         l_uint32  *datas,
-         l_int32    wpls)
+fhmt_1_9(uint32_t  *datad,
+         int32_t    w,
+         int32_t    h,
+         int32_t    wpld,
+         uint32_t  *datas,
+         int32_t    wpls)
 {
-l_int32    i;
-l_int32    j, pwpls;
-l_uint32  *sptr, *dptr;
-l_int32             wpls2;
+int32_t    i;
+int32_t    j, pwpls;
+uint32_t  *sptr, *dptr;
+int32_t             wpls2;
 
     wpls2 = 2 * wpls;
-    pwpls = (l_uint32)(w + 31) / 32;  /* proper wpl of src */
+    pwpls = (uint32_t)(w + 31) / 32;  /* proper wpl of src */
 
     for (i = 0; i < h; i++) {
         sptr = datas + i * wpls;

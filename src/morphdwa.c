@@ -45,7 +45,7 @@
  *         PIX     *pixErodeCompBrickExtendDwa()
  *         PIX     *pixOpenCompBrickExtendDwa()
  *         PIX     *pixCloseCompBrickExtendDwa()
- *         l_int32  getExtendedCompositeParameters()
+ *         int32_t  getExtendedCompositeParameters()
  *
  *    These are higher-level interfaces for dwa morphology with brick Sels.
  *    Because many morphological operations are performed using
@@ -177,10 +177,10 @@
 PIX *
 pixDilateBrickDwa(PIX     *pixd,
                   PIX     *pixs,
-                  l_int32  hsize,
-                  l_int32  vsize)
+                  int32_t  hsize,
+                  int32_t  vsize)
 {
-l_int32  found;
+int32_t  found;
 char    *selnameh, *selnamev;
 SELA    *sela;
 PIX     *pixt1, *pixt2, *pixt3;
@@ -277,10 +277,10 @@ PIX     *pixt1, *pixt2, *pixt3;
 PIX *
 pixErodeBrickDwa(PIX     *pixd,
                  PIX     *pixs,
-                 l_int32  hsize,
-                 l_int32  vsize)
+                 int32_t  hsize,
+                 int32_t  vsize)
 {
-l_int32  found;
+int32_t  found;
 char    *selnameh, *selnamev;
 SELA    *sela;
 PIX     *pixt1, *pixt2, *pixt3;
@@ -377,10 +377,10 @@ PIX     *pixt1, *pixt2, *pixt3;
 PIX *
 pixOpenBrickDwa(PIX     *pixd,
                 PIX     *pixs,
-                l_int32  hsize,
-                l_int32  vsize)
+                int32_t  hsize,
+                int32_t  vsize)
 {
-l_int32  found;
+int32_t  found;
 char    *selnameh, *selnamev;
 SELA    *sela;
 PIX     *pixt1, *pixt2, *pixt3;
@@ -482,10 +482,10 @@ PIX     *pixt1, *pixt2, *pixt3;
 PIX *
 pixCloseBrickDwa(PIX     *pixd,
                  PIX     *pixs,
-                 l_int32  hsize,
-                 l_int32  vsize)
+                 int32_t  hsize,
+                 int32_t  vsize)
 {
-l_int32  bordercolor, bordersize, found;
+int32_t  bordercolor, bordersize, found;
 char    *selnameh, *selnamev;
 SELA    *sela;
 PIX     *pixt1, *pixt2, *pixt3;
@@ -607,11 +607,11 @@ PIX     *pixt1, *pixt2, *pixt3;
 PIX *
 pixDilateCompBrickDwa(PIX     *pixd,
                       PIX     *pixs,
-                      l_int32  hsize,
-                      l_int32  vsize)
+                      int32_t  hsize,
+                      int32_t  vsize)
 {
 char    *selnameh1, *selnameh2, *selnamev1, *selnamev2;
-l_int32  hsize1, hsize2, vsize1, vsize2;
+int32_t  hsize1, hsize2, vsize1, vsize2;
 PIX     *pixt1, *pixt2, *pixt3;
 
     if (!pixs)
@@ -738,11 +738,11 @@ PIX     *pixt1, *pixt2, *pixt3;
 PIX *
 pixErodeCompBrickDwa(PIX     *pixd,
                      PIX     *pixs,
-                     l_int32  hsize,
-                     l_int32  vsize)
+                     int32_t  hsize,
+                     int32_t  vsize)
 {
 char    *selnameh1, *selnameh2, *selnamev1, *selnamev2;
-l_int32  hsize1, hsize2, vsize1, vsize2, bordercolor;
+int32_t  hsize1, hsize2, vsize1, vsize2, bordercolor;
 PIX     *pixt1, *pixt2, *pixt3;
 
     if (!pixs)
@@ -865,11 +865,11 @@ PIX     *pixt1, *pixt2, *pixt3;
 PIX *
 pixOpenCompBrickDwa(PIX     *pixd,
                     PIX     *pixs,
-                    l_int32  hsize,
-                    l_int32  vsize)
+                    int32_t  hsize,
+                    int32_t  vsize)
 {
 char    *selnameh1, *selnameh2, *selnamev1, *selnamev2;
-l_int32  hsize1, hsize2, vsize1, vsize2, bordercolor;
+int32_t  hsize1, hsize2, vsize1, vsize2, bordercolor;
 PIX     *pixt1, *pixt2, *pixt3;
 
     if (!pixs)
@@ -1030,11 +1030,11 @@ PIX     *pixt1, *pixt2, *pixt3;
 PIX *
 pixCloseCompBrickDwa(PIX     *pixd,
                      PIX     *pixs,
-                     l_int32  hsize,
-                     l_int32  vsize)
+                     int32_t  hsize,
+                     int32_t  vsize)
 {
 char    *selnameh1, *selnameh2, *selnamev1, *selnamev2;
-l_int32  hsize1, hsize2, vsize1, vsize2, setborder;
+int32_t  hsize1, hsize2, vsize1, vsize2, setborder;
 PIX     *pixt1, *pixt2, *pixt3;
 
     if (!pixs)
@@ -1178,10 +1178,10 @@ PIX     *pixt1, *pixt2, *pixt3;
 PIX *
 pixDilateCompBrickExtendDwa(PIX     *pixd,
                             PIX     *pixs,
-                            l_int32  hsize,
-                            l_int32  vsize)
+                            int32_t  hsize,
+                            int32_t  vsize)
 {
-l_int32  i, nops, nh, extrah, nv, extrav;
+int32_t  i, nops, nh, extrah, nv, extrav;
 PIX     *pixt1, *pixt2, *pixt3;
 
     if (!pixs)
@@ -1296,10 +1296,10 @@ PIX     *pixt1, *pixt2, *pixt3;
 PIX *
 pixErodeCompBrickExtendDwa(PIX     *pixd,
                            PIX     *pixs,
-                           l_int32  hsize,
-                           l_int32  vsize)
+                           int32_t  hsize,
+                           int32_t  vsize)
 {
-l_int32  i, nops, nh, extrah, nv, extrav;
+int32_t  i, nops, nh, extrah, nv, extrav;
 PIX     *pixt1, *pixt2, *pixt3;
 
     if (!pixs)
@@ -1417,8 +1417,8 @@ PIX     *pixt1, *pixt2, *pixt3;
 PIX *
 pixOpenCompBrickExtendDwa(PIX     *pixd,
                           PIX     *pixs,
-                          l_int32  hsize,
-                          l_int32  vsize)
+                          int32_t  hsize,
+                          int32_t  vsize)
 {
 PIX     *pixt;
 
@@ -1459,10 +1459,10 @@ PIX     *pixt;
 PIX *
 pixCloseCompBrickExtendDwa(PIX     *pixd,
                            PIX     *pixs,
-                           l_int32  hsize,
-                           l_int32  vsize)
+                           int32_t  hsize,
+                           int32_t  vsize)
 {
-l_int32  bordercolor, borderx, bordery;
+int32_t  bordercolor, borderx, bordery;
 PIX     *pixt1, *pixt2, *pixt3;
 
     if (!pixs)
@@ -1544,12 +1544,12 @@ PIX     *pixt1, *pixt2, *pixt3;
  * </pre>
  */
 l_ok
-getExtendedCompositeParameters(l_int32   size,
-                               l_int32  *pn,
-                               l_int32  *pextra,
-                               l_int32  *pactualsize)
+getExtendedCompositeParameters(int32_t   size,
+                               int32_t  *pn,
+                               int32_t  *pextra,
+                               int32_t  *pactualsize)
 {
-l_int32  n, extra, fact1, fact2;
+int32_t  n, extra, fact1, fact2;
 
     if (!pn || !pextra)
         return ERROR_INT("&n and &extra not both defined", __func__, 1);
@@ -1558,7 +1558,7 @@ l_int32  n, extra, fact1, fact2;
         n = 0;
         extra = L_MIN(1, size);
     } else {  /* size > 63 */
-        n = 1 + (l_int32)((size - 63) / 62);
+        n = 1 + (int32_t)((size - 63) / 62);
         extra = size - 63 - (n - 1) * 62 + 1;
     }
 

@@ -45,8 +45,8 @@
 int main(int    argc,
          char **argv)
 {
-l_uint8      *array1, *array2;
-l_int32       i, n1, n2, n3;
+uint8_t      *array1, *array2;
+int32_t       i, n1, n2, n3;
 size_t        size1, size2;
 FILE         *fp;
 BOXA         *boxa1, *boxa2;

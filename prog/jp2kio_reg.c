@@ -95,7 +95,7 @@ void DoJp2kTest1(L_REGPARAMS  *rp,
 {
 char     buf[64];
 char    *name;
-l_int32  w, h;
+int32_t  w, h;
 BOX     *box;
 PIX     *pix0, *pix1, *pix2, *pix3;
 
@@ -138,8 +138,8 @@ void DoJp2kTest2(L_REGPARAMS  *rp,
 {
 char      buf[256];
 char     *name;
-l_uint8  *data;
-l_int32   w, h;
+uint8_t  *data;
+int32_t   w, h;
 size_t    nbytes;
 BOX      *box;
 PIX      *pix0, *pix1, *pix2, *pix3;

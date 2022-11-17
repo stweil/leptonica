@@ -41,7 +41,7 @@
 int main(int    argc,
          char **argv)
 {
-l_int32       i, j;
+int32_t       i, j;
 PIX          *pixs, *pixt, *pixd;
 L_REGPARAMS  *rp;
 

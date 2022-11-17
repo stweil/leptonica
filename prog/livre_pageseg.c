@@ -52,13 +52,13 @@
 #define   DFLAG        0
 
 
-l_int32 DoPageSegmentation(PIX *pixs, l_int32 which);
+int32_t DoPageSegmentation(PIX *pixs, int32_t which);
 
 int main(int    argc,
          char **argv)
 {
 char    *filein;
-l_int32  i;
+int32_t  i;
 PIX     *pixs;   /* input image should be at least 300 ppi */
 
     if (argc != 2)
@@ -76,12 +76,12 @@ PIX     *pixs;   /* input image should be at least 300 ppi */
 }
 
 
-l_int32
+int32_t
 DoPageSegmentation(PIX     *pixs,   /* should be at least 300 ppi */
-                   l_int32  which)  /* 1, 2, 3, 4 */
+                   int32_t  which)  /* 1, 2, 3, 4 */
 {
 char      buf[256];
-l_int32   zero;
+int32_t   zero;
 BOXA     *boxatm, *boxahm;
 PIX      *pixr;   /* image reduced to 150 ppi */
 PIX      *pixhs;  /* image of halftone seed, 150 ppi */
@@ -102,10 +102,10 @@ PIX      *pix1, *pix2, *pix3;
 PIXA     *pixa;
 PIXCMAP  *cmap;
 PTAA     *ptaa;
-l_int32   ht_flag = 0;
-l_int32   ws_flag = 0;
-l_int32   text_flag = 0;
-l_int32   block_flag = 0;
+int32_t   ht_flag = 0;
+int32_t   ws_flag = 0;
+int32_t   text_flag = 0;
+int32_t   block_flag = 0;
 
     if (which == 1)
         ht_flag = 1;

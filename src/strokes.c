@@ -41,8 +41,8 @@
  *      template and character images to a fixed stroke width.
  *
  *      Stroke parameter measurement
- *            l_int32      pixFindStrokeLength()
- *            l_int32      pixFindStrokeWidth()
+ *            int32_t      pixFindStrokeLength()
+ *            int32_t      pixFindStrokeWidth()
  *            NUMA        *pixaFindStrokeWidth()
  *
  *      Stroke width regulation
@@ -77,11 +77,11 @@
  */
 l_ok
 pixFindStrokeLength(PIX      *pixs,
-                    l_int32  *tab8,
-                    l_int32  *plength)
+                    int32_t  *tab8,
+                    int32_t  *plength)
 {
-l_int32   n;
-l_int32  *tab;
+int32_t   n;
+int32_t  *tab;
 PIX      *pix1;
 
     if (!plength)
@@ -124,12 +124,12 @@ PIX      *pix1;
 l_ok
 pixFindStrokeWidth(PIX        *pixs,
                    l_float32   thresh,
-                   l_int32    *tab8,
+                   int32_t    *tab8,
                    l_float32  *pwidth,
                    NUMA      **pnahisto)
 {
-l_int32     i, n, count, length, first, last;
-l_int32    *tab;
+int32_t     i, n, count, length, first, last;
+int32_t    *tab;
 l_float32   width1, width2, ratio, extra;
 l_float32  *fa;
 NUMA       *na1, *na2;
@@ -207,11 +207,11 @@ PIX        *pix1;
 NUMA *
 pixaFindStrokeWidth(PIXA     *pixa,
                    l_float32  thresh,
-                   l_int32   *tab8,
-                   l_int32    debug)
+                   int32_t   *tab8,
+                   int32_t    debug)
 {
-l_int32    i, n, same, maxd;
-l_int32   *tab;
+int32_t    i, n, same, maxd;
+int32_t   *tab;
 l_float32  width;
 NUMA      *na;
 PIX       *pix;
@@ -252,7 +252,7 @@ PIXA *
 pixaModifyStrokeWidth(PIXA      *pixas,
                       l_float32  targetw)
 {
-l_int32    i, n, same, maxd;
+int32_t    i, n, same, maxd;
 l_float32  width;
 NUMA      *na;
 PIX       *pix1, *pix2;
@@ -296,7 +296,7 @@ pixModifyStrokeWidth(PIX       *pixs,
                      l_float32  targetw)
 {
 char     buf[32];
-l_int32  diff, size;
+int32_t  diff, size;
 
     if (!pixs || (pixGetDepth(pixs) != 1))
         return (PIX *)ERROR_PTR("pixs undefined or not 1 bpp", __func__, NULL);
@@ -337,11 +337,11 @@ l_int32  diff, size;
  */
 PIXA *
 pixaSetStrokeWidth(PIXA    *pixas,
-                   l_int32  width,
-                   l_int32  thinfirst,
-                   l_int32  connectivity)
+                   int32_t  width,
+                   int32_t  thinfirst,
+                   int32_t  connectivity)
 {
-l_int32  i, n, maxd, same;
+int32_t  i, n, maxd, same;
 PIX     *pix1, *pix2;
 PIXA    *pixad;
 
@@ -387,12 +387,12 @@ PIXA    *pixad;
  */
 PIX *
 pixSetStrokeWidth(PIX     *pixs,
-                  l_int32  width,
-                  l_int32  thinfirst,
-                  l_int32  connectivity)
+                  int32_t  width,
+                  int32_t  thinfirst,
+                  int32_t  connectivity)
 {
 char     buf[16];
-l_int32  border;
+int32_t  border;
 PIX     *pix1, *pix2, *pixd;
 
     if (!pixs || (pixGetDepth(pixs) != 1))

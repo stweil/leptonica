@@ -119,13 +119,13 @@
     /* Special version */
 PIX *pixConvertTo8Special(PIX *pix);
 
-l_int32 main(int    argc,
+int32_t main(int    argc,
              char **argv)
 {
 char     buf[256];
 char    *basedir, *fname, *tail, *basename, *imagedir, *title;
 char    *outfile, *firstpath;
-l_int32  thresh, res, rotation, darken, i, n, ret;
+int32_t  thresh, res, rotation, darken, i, n, ret;
 PIX     *pixs, *pix1, *pix2, *pix3, *pix4, *pix5;
 SARRAY  *sa;
 
@@ -289,7 +289,7 @@ SARRAY  *sa;
 PIX *
 pixConvertTo8Special(PIX  *pixs)
 {
-    l_int32 d = pixGetDepth(pixs);
+    int32_t d = pixGetDepth(pixs);
     if (d == 1) {
         return pixConvert1To8(NULL, pixs, 255, 0);
     } else if (d == 2) {

@@ -40,7 +40,7 @@ void DoWatershed(L_REGPARAMS *rp, PIX *pixs);
 int main(int    argc,
          char **argv)
 {
-l_int32       i, j;
+int32_t       i, j;
 l_float32     f;
 PIX          *pix1, *pix2;
 L_REGPARAMS  *rp;
@@ -56,12 +56,12 @@ L_REGPARAMS  *rp;
             f += 33.4 * cos(0.0712 * (l_float32)i);
             f += 18.6 * sin(0.0561 * (l_float32)j);
             f += 23.6 * cos(0.0327 * (l_float32)j);
-            pixSetPixel(pix1, j, i, (l_int32)f);
+            pixSetPixel(pix1, j, i, (int32_t)f);
             f = 128.0 + 26.3 * sin(0.0238 * (l_float32)i);
             f += 33.4 * cos(0.0312 * (l_float32)i);
             f += 18.6 * sin(0.0261 * (l_float32)j);
             f += 23.6 * cos(0.0207 * (l_float32)j);
-            pixSetPixel(pix2, j, i, (l_int32)f);
+            pixSetPixel(pix2, j, i, (int32_t)f);
         }
     }
     DoWatershed(rp, pix1);  /* 0 - 11 */
@@ -76,10 +76,10 @@ void
 DoWatershed(L_REGPARAMS  *rp,
             PIX          *pixs)
 {
-l_uint8   *data;
+uint8_t   *data;
 size_t     size;
-l_int32    w, h, empty;
-l_uint32   redval, greenval;
+int32_t    w, h, empty;
+uint32_t   redval, greenval;
 L_WSHED   *wshed;
 PIX       *pixc, *pix1, *pix2, *pix3, *pix4, *pix5, *pix6, *pix7, *pix8, *pix9;
 PIXA      *pixa;

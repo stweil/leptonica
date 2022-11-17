@@ -32,24 +32,24 @@
  *         BOXA             *recogDecode()
  *
  *      Generate decoding arrays
- *         static l_int32    recogPrepareForDecoding()
- *         static l_int32    recogMakeDecodingArray()
+ *         static int32_t    recogPrepareForDecoding()
+ *         static int32_t    recogMakeDecodingArray()
  *
  *      Dynamic programming for best path
- *         static l_int32    recogRunViterbi()
- *         static l_int32    recogRescoreDidResult()
+ *         static int32_t    recogRunViterbi()
+ *         static int32_t    recogRescoreDidResult()
  *         static PIX       *recogShowPath()
  *
  *      Create/destroy temporary DID data
- *         l_int32           recogCreateDid()
- *         l_int32           recogDestroyDid()
+ *         int32_t           recogCreateDid()
+ *         int32_t           recogDestroyDid()
  *
  *      Various helpers
- *         l_int32           recogDidExists()
+ *         int32_t           recogDidExists()
  *         L_RDID           *recogGetDid()
- *         static l_int32    recogGetWindowedArea()
- *         l_int32           recogSetChannelParams()
- *         static l_int32    recogTransferRchToDid()
+ *         static int32_t    recogGetWindowedArea()
+ *         int32_t           recogSetChannelParams()
+ *         static int32_t    recogTransferRchToDid()
  *
  *  See recogbasic.c for examples of training a recognizer, which is
  *  required before it can be used for document image decoding.
@@ -161,20 +161,20 @@
 #include <math.h>
 #include "allheaders.h"
 
-static l_int32 recogPrepareForDecoding(L_RECOG *recog, PIX *pixs,
-                                       l_int32 debug);
-static l_int32 recogMakeDecodingArray(L_RECOG *recog, l_int32 index,
-                                      l_int32 debug);
-static l_int32 recogRunViterbi(L_RECOG *recog, PIX **ppixdb);
-static l_int32 recogRescoreDidResult(L_RECOG *recog, PIX **ppixdb);
-static PIX *recogShowPath(L_RECOG *recog, l_int32 select);
-static l_int32 recogGetWindowedArea(L_RECOG *recog, l_int32 index,
-                                    l_int32 x, l_int32 *pdely, l_int32 *pwsum);
-static l_int32 recogTransferRchToDid(L_RECOG *recog, l_int32 x, l_int32 y);
+static int32_t recogPrepareForDecoding(L_RECOG *recog, PIX *pixs,
+                                       int32_t debug);
+static int32_t recogMakeDecodingArray(L_RECOG *recog, int32_t index,
+                                      int32_t debug);
+static int32_t recogRunViterbi(L_RECOG *recog, PIX **ppixdb);
+static int32_t recogRescoreDidResult(L_RECOG *recog, PIX **ppixdb);
+static PIX *recogShowPath(L_RECOG *recog, int32_t select);
+static int32_t recogGetWindowedArea(L_RECOG *recog, int32_t index,
+                                    int32_t x, int32_t *pdely, int32_t *pwsum);
+static int32_t recogTransferRchToDid(L_RECOG *recog, int32_t x, int32_t y);
 
     /* Parameters for modeling the decoding */
 static const l_float32  SetwidthFraction = 0.95;
-static const l_int32    MaxYShift = 1;
+static const int32_t    MaxYShift = 1;
 
     /* Channel parameters.  alpha[0] is the probability that a bg pixel
      * is OFF.  alpha[1] is the probability that level 1 fg is ON.
@@ -218,10 +218,10 @@ static const l_float32  DefaultAlpha4[] = {0.95f, 0.9f, 0.75f, 0.25f};
 BOXA  *
 recogDecode(L_RECOG  *recog,
             PIX      *pixs,
-            l_int32   nlevels,
+            int32_t   nlevels,
             PIX     **ppixdb)
 {
-l_int32  debug;
+int32_t  debug;
 PIX     *pix1;
 PIXA    *pixa;
 
@@ -289,12 +289,12 @@ PIXA    *pixa;
  *          as it is positioned on pixs) in the generated trellis.
  * </pre>
  */
-static l_int32
+static int32_t
 recogPrepareForDecoding(L_RECOG  *recog,
                         PIX      *pixs,
-                        l_int32   debug)
+                        int32_t   debug)
 {
-l_int32  i;
+int32_t  i;
 PIX     *pix1;
 L_RDID  *did;
 
@@ -348,14 +348,14 @@ L_RDID  *did;
  *          of the template as it is positioned on pixs.
  * </pre>
  */
-static l_int32
+static int32_t
 recogMakeDecodingArray(L_RECOG  *recog,
-                       l_int32   index,
-                       l_int32   debug)
+                       int32_t   index,
+                       int32_t   debug)
 {
-l_int32   i, j, w1, h1, w2, h2, nx, ycent2, count, maxcount, maxdely;
-l_int32   sum, moment, dely, shifty;
-l_int32  *counta, *delya, *ycent1, *arraysum, *arraymoment, *sumtab;
+int32_t   i, j, w1, h1, w2, h2, nx, ycent2, count, maxcount, maxdely;
+int32_t   sum, moment, dely, shifty;
+int32_t  *counta, *delya, *ycent1, *arraysum, *arraymoment, *sumtab;
 NUMA     *nasum, *namoment;
 PIX      *pix1, *pix2, *pix3;
 L_RDID   *did;
@@ -388,7 +388,7 @@ L_RDID   *did;
         /* Set up the array for ycent1.  This gives the y-centroid location
          * for a window of width w2, starting at location i. */
     nx = w1 - w2 + 1;  /* number of positions w2 can be placed in w1 */
-    ycent1 = (l_int32 *)LEPT_CALLOC(nx, sizeof(l_int32));
+    ycent1 = (int32_t *)LEPT_CALLOC(nx, sizeof(int32_t));
     arraysum = numaGetIArray(nasum);
     arraymoment = numaGetIArray(namoment);
     for (i = 0, sum = 0, moment = 0; i < w2; i++) {
@@ -412,7 +412,7 @@ L_RDID   *did;
          *  (3) AND pix1 with pix3. */
     pix3 = pixCreate(w2, h1, 1);
     for (i = 0; i < nx; i++) {
-        shifty = (l_int32)(ycent1[i] - ycent2 + 0.5);
+        shifty = (int32_t)(ycent1[i] - ycent2 + 0.5);
         maxcount = 0;
         maxdely = 0;
         for (j = -MaxYShift; j <= MaxYShift; j++) {
@@ -471,15 +471,15 @@ L_RDID   *did;
  *          for debugging in recogRescoreDidResult().
  * </pre>
  */
-static l_int32
+static int32_t
 recogRunViterbi(L_RECOG  *recog,
                 PIX     **ppixdb)
 {
-l_int32     i, w1, w2, h1, xnz, x, narray, minsetw;
-l_int32     first, templ, xloc, dely, counts, area1;
-l_int32     besttempl, spacetempl;
-l_int32    *setw, *didtempl;
-l_int32    *area2;  /* must be freed */
+int32_t     i, w1, w2, h1, xnz, x, narray, minsetw;
+int32_t     first, templ, xloc, dely, counts, area1;
+int32_t     besttempl, spacetempl;
+int32_t    *setw, *didtempl;
+int32_t    *area2;  /* must be freed */
 l_float32   prevscore, matchscore, maxscore, correl;
 l_float32  *didscore;
 BOX        *box;
@@ -608,11 +608,11 @@ L_RDID     *did;
  *          using the character segmentation determined by the Viterbi path.
  * </pre>
  */
-static l_int32
+static int32_t
 recogRescoreDidResult(L_RECOG  *recog,
                       PIX     **ppixdb)
 {
-l_int32    i, n, sample, x, dely, index;
+int32_t    i, n, sample, x, dely, index;
 char      *text;
 l_float32  score;
 BOX       *box1;
@@ -663,10 +663,10 @@ L_RDID    *did;
  */
 static PIX *
 recogShowPath(L_RECOG  *recog,
-              l_int32   select)
+              int32_t   select)
 {
 char       textstr[16];
-l_int32    i, j, n, index, xloc, dely;
+int32_t    i, j, n, index, xloc, dely;
 l_float32  score;
 L_BMF     *bmf;
 NUMA      *natempl_s, *nasample_s, *nascore_s, *naxloc_s, *nadely_s;
@@ -739,7 +739,7 @@ l_ok
 recogCreateDid(L_RECOG  *recog,
                PIX      *pixs)
 {
-l_int32  i;
+int32_t  i;
 PIX     *pix1;
 L_RDID  *did;
 
@@ -769,22 +769,22 @@ L_RDID  *did;
     did->nascore_r = numaCreate(5);
 
         /* Make the arrays */
-    did->setwidth = (l_int32 *)LEPT_CALLOC(did->narray, sizeof(l_int32));
-    did->counta = (l_int32 **)LEPT_CALLOC(did->narray, sizeof(l_int32 *));
-    did->delya = (l_int32 **)LEPT_CALLOC(did->narray, sizeof(l_int32 *));
+    did->setwidth = (int32_t *)LEPT_CALLOC(did->narray, sizeof(int32_t));
+    did->counta = (int32_t **)LEPT_CALLOC(did->narray, sizeof(int32_t *));
+    did->delya = (int32_t **)LEPT_CALLOC(did->narray, sizeof(int32_t *));
     did->beta = (l_float32 *)LEPT_CALLOC(5, sizeof(l_float32));
     did->gamma = (l_float32 *)LEPT_CALLOC(5, sizeof(l_float32));
     did->trellisscore = (l_float32 *)LEPT_CALLOC(did->size, sizeof(l_float32));
-    did->trellistempl = (l_int32 *)LEPT_CALLOC(did->size, sizeof(l_int32));
+    did->trellistempl = (int32_t *)LEPT_CALLOC(did->size, sizeof(int32_t));
     for (i = 0; i < did->narray; i++) {
-        did->counta[i] = (l_int32 *)LEPT_CALLOC(did->size, sizeof(l_int32));
-        did->delya[i] = (l_int32 *)LEPT_CALLOC(did->size, sizeof(l_int32));
+        did->counta[i] = (int32_t *)LEPT_CALLOC(did->size, sizeof(int32_t));
+        did->delya[i] = (int32_t *)LEPT_CALLOC(did->size, sizeof(int32_t));
     }
 
         /* Populate the setwidth array */
     for (i = 0; i < did->narray; i++) {
         pix1 = pixaGetPix(recog->pixa_u, i, L_CLONE);
-        did->setwidth[i] = (l_int32)(SetwidthFraction * pixGetWidth(pix1));
+        did->setwidth[i] = (int32_t)(SetwidthFraction * pixGetWidth(pix1));
         pixDestroy(&pix1);
     }
 
@@ -807,7 +807,7 @@ L_RDID  *did;
 l_ok
 recogDestroyDid(L_RECOG  *recog)
 {
-l_int32  i;
+int32_t  i;
 L_RDID  *did;
 
     if (!recog)
@@ -858,7 +858,7 @@ L_RDID  *did;
  * \param[in]    recog
  * \return  1 if recog->did exists; 0 if not or on error.
  */
-l_int32
+int32_t
 recogDidExists(L_RECOG  *recog)
 {
     if (!recog)
@@ -881,7 +881,7 @@ recogDidExists(L_RECOG  *recog)
 L_RDID *
 recogGetDid(L_RECOG  *recog)
 {
-l_int32  i;
+int32_t  i;
 L_RDID  *did;
 
     if (!recog)
@@ -921,14 +921,14 @@ L_RDID  *did;
  *          nasum_u[], and |1| is wsum returned from this function.
  * </pre>
  */
-static l_int32
+static int32_t
 recogGetWindowedArea(L_RECOG  *recog,
-                     l_int32   index,
-                     l_int32   x,
-                     l_int32  *pdely,
-                     l_int32  *pwsum)
+                     int32_t   index,
+                     int32_t   x,
+                     int32_t  *pdely,
+                     int32_t  *pwsum)
 {
-l_int32  w1, h1, w2, h2;
+int32_t  w1, h1, w2, h2;
 PIX     *pix1, *pix2, *pixt;
 L_RDID  *did;
 
@@ -985,9 +985,9 @@ L_RDID  *did;
  */
 l_ok
 recogSetChannelParams(L_RECOG  *recog,
-                      l_int32   nlevels)
+                      int32_t   nlevels)
 {
-l_int32           i;
+int32_t           i;
 const l_float32  *da;
 L_RDID           *did;
 
@@ -1027,10 +1027,10 @@ L_RDID           *did;
  *          to the rescored did arrays.
  * </pre>
  */
-static l_int32
+static int32_t
 recogTransferRchToDid(L_RECOG  *recog,
-                      l_int32   x,
-                      l_int32   y)
+                      int32_t   x,
+                      int32_t   y)
 {
 L_RDID  *did;
 L_RCH   *rch;

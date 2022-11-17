@@ -42,7 +42,7 @@
 extern "C" {
 #endif  /* __cplusplus */
 
-void *l_autodecode_137(l_int32 index);
+void *l_autodecode_137(int32_t index);
 
 #ifdef __cplusplus
 }

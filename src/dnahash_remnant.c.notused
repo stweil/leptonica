@@ -53,34 +53,34 @@
  *       ==================================================================
  *
  *      DnaHash: Accessors
- *          l_int32      l_dnaHashGetCount()
- *          l_int32      l_dnaHashGetTotalCount()
+ *          int32_t      l_dnaHashGetCount()
+ *          int32_t      l_dnaHashGetTotalCount()
  *
  *      Set operations on dna
  *          L_DNAHASH   *l_dnaHashCreateFromDna()
- *          l_int32      l_dnaRemoveDupsByHash()
- *          l_int32      l_dnaMakeHistoByHash()
+ *          int32_t      l_dnaRemoveDupsByHash()
+ *          int32_t      l_dnaMakeHistoByHash()
  *          L_DNA       *l_dnaIntersectionByHash()
- *          l_int32      l_dnaFindValByHash()
+ *          int32_t      l_dnaFindValByHash()
  *
  *      Set operations on pta
  *           PTA        *ptaUnionByHash()
- *           l_int32     ptaRemoveDupsByHash()
+ *           int32_t     ptaRemoveDupsByHash()
  *           PTA        *ptaIntersectionByHash();
- *           l_int32     ptaFindPtByHash()
+ *           int32_t     ptaFindPtByHash()
  *           L_DNAHASH  *l_dnaHashCreateFromPta()
  *
  *      Set operations on sarray
- *          l_int32     sarrayRemoveDupsByHash()
+ *          int32_t     sarrayRemoveDupsByHash()
  *          SARRAY     *sarrayIntersectionByHash()
- *          l_int32     sarrayFindStringByHash()
+ *          int32_t     sarrayFindStringByHash()
  *          L_DNAHASH  *l_dnaHashCreateFromSarray()
  *
  *    (1) The DnaHash is an array of Dna.  It can be used for fast
  *        storage and lookup for sets and maps.  If the set or map
  *        is on a Dna itself, the hash can be a simple casting from
- *        a double to a l_uint64. For a string or a (x,y) point, we
- *        use a hash to a l_uint64.  The result of the hash is
+ *        a double to a uint64_t. For a string or a (x,y) point, we
+ *        use a hash to a uint64_t.  The result of the hash is
  *        a "key", which is then used with the mod function to select
  *        which Dna array is to be used.
  *    (2) The number of arrays in a DnaHash is a prime number.
@@ -89,7 +89,7 @@
  *        will be about 20 when fully populated.  The number 20 was
  *        found empirically to be in a broad maximum of efficiency.
  *    (3) Note that the word "hash" is overloaded.  There are actually
- *        two hashing steps: the first hashes the object to a l_uint64,
+ *        two hashing steps: the first hashes the object to a uint64_t,
  *        called the "key", and the second uses the mod function to
  *        "hash" the "key" to the index of a particular Dna in the
  *        DnaHash array.
@@ -97,7 +97,7 @@
  *        into the dna array are expected (we might choose to have an average
  *        of 20 for each key).  This can be contrasted with using rbtree
  *        for sets and maps, where insertion and lookup are O(logN).
- *    (5) Hash functions that map points and strings to l_uint64 are
+ *    (5) Hash functions that map points and strings to uint64_t are
  *        given in utils1.c.
  *    (6) This is a very simple implementation, that expects that you
  *        know approximately (i.e., within a factor of 2 or 3) how many
@@ -121,7 +121,7 @@
  * \param[in]    dahash
  * \return  nbuckets allocated, or 0 on error
  */
-l_int32
+int32_t
 l_dnaHashGetCount(L_DNAHASH  *dahash)
 {
 
@@ -137,10 +137,10 @@ l_dnaHashGetCount(L_DNAHASH  *dahash)
  * \param[in]    dahash
  * \return  n number of numbers in all dna, or 0 on error
  */
-l_int32
+int32_t
 l_dnaHashGetTotalCount(L_DNAHASH  *dahash)
 {
-l_int32  i, n;
+int32_t  i, n;
 L_DNA   *da;
 
     if (!dahash)
@@ -174,9 +174,9 @@ L_DNA   *da;
 L_DNAHASH *
 l_dnaHashCreateFromDna(L_DNA  *da)
 {
-l_int32     i, n;
-l_uint32    nsize;
-l_uint64    key;
+int32_t     i, n;
+uint32_t    nsize;
+uint64_t    key;
 l_float64   val;
 L_DNAHASH  *dahash;
 
@@ -189,7 +189,7 @@ L_DNAHASH  *dahash;
     dahash = l_dnaHashCreate(nsize, 8);
     for (i = 0; i < n; i++) {
         l_dnaGetDValue(da, i, &val);
-        l_dnaHashAdd(dahash, (l_uint64)val, (l_float64)i);
+        l_dnaHashAdd(dahash, (uint64_t)val, (l_float64)i);
     }
 
     return dahash;
@@ -217,9 +217,9 @@ l_dnaRemoveDupsByHash(L_DNA       *das,
                       L_DNA      **pdad,
                       L_DNAHASH  **pdahash)
 {
-l_int32     i, n, index, items;
-l_uint32    nsize;
-l_uint64    key;
+int32_t     i, n, index, items;
+uint32_t    nsize;
+uint64_t    key;
 l_float64   val;
 L_DNA      *dad;
 L_DNAHASH  *dahash;
@@ -240,7 +240,7 @@ L_DNAHASH  *dahash;
         l_dnaGetDValue(das, i, &val);
         l_dnaFindValByHash(dad, dahash, val, &index);
         if (index < 0) {  /* not found */
-            l_dnaHashAdd(dahash, (l_uint64)val, (l_float64)items);
+            l_dnaHashAdd(dahash, (uint64_t)val, (l_float64)items);
             l_dnaAddNumber(dad, val);
             items++;
         }
@@ -292,9 +292,9 @@ l_dnaMakeHistoByHash(L_DNA       *das,
                      L_DNA      **pdav,
                      L_DNA      **pdac)
 {
-l_int32     i, n, nitems, index, count;
-l_uint32    nsize;
-l_uint64    key;
+int32_t     i, n, nitems, index, count;
+uint32_t    nsize;
+uint64_t    key;
 l_float64   val;
 L_DNA      *dac, *dav;
 L_DNAHASH  *dahash;
@@ -321,7 +321,7 @@ L_DNAHASH  *dahash;
             l_dnaGetIValue(dac, (l_float64)index, &count);
             l_dnaSetValue(dac, (l_float64)index, count + 1);
         } else {  /* not found */
-            l_dnaHashAdd(dahash, (l_uint64)val, (l_float64)nitems);
+            l_dnaHashAdd(dahash, (uint64_t)val, (l_float64)nitems);
             l_dnaAddNumber(dav, val);
             l_dnaAddNumber(dac, 1);
             nitems++;
@@ -357,9 +357,9 @@ L_DNA *
 l_dnaIntersectionByHash(L_DNA  *da1,
                         L_DNA  *da2)
 {
-l_int32     n1, n2, nsmall, nbuckets, i, index1, index2;
-l_uint32    nsize2;
-l_uint64    key;
+int32_t     n1, n2, nsmall, nbuckets, i, index1, index2;
+uint32_t    nsize2;
+uint64_t    key;
 l_float64   val;
 L_DNAHASH  *dahash1, *dahash2;
 L_DNA      *da_small, *da_big, *dad;
@@ -391,7 +391,7 @@ L_DNA      *da_small, *da_big, *dad;
             l_dnaFindValByHash(da_small, dahash2, val, &index2);
             if (index2 == -1) {  /* not found */
                 l_dnaAddNumber(dad, val);
-                l_dnaHashAdd(dahash2, (l_uint64)val, (l_float64)i);
+                l_dnaHashAdd(dahash2, (uint64_t)val, (l_float64)i);
             }
         }
     }
@@ -422,11 +422,11 @@ l_ok
 l_dnaFindValByHash(L_DNA      *da,
                    L_DNAHASH  *dahash,
                    l_float64   val,
-                   l_int32    *pindex)
+                   int32_t    *pindex)
 {
-l_int32    i, nbuckets, nvals, indexval;
+int32_t    i, nbuckets, nvals, indexval;
 l_float64  vali;
-l_uint64   key;
+uint64_t   key;
 L_DNA     *da1;
 
     if (!pindex)
@@ -438,7 +438,7 @@ L_DNA     *da1;
         return ERROR_INT("dahash not defined", __func__, 1);
 
     nbuckets = l_dnaHashGetCount(dahash);
-    da1 = l_dnaHashGetDna(dahash, (l_uint64)val, L_NOCOPY);
+    da1 = l_dnaHashGetDna(dahash, (uint64_t)val, L_NOCOPY);
     if (!da1) return 0;
 
         /* Run through da1, looking for this %val */
@@ -525,9 +525,9 @@ ptaRemoveDupsByHash(PTA         *ptas,
                     PTA        **pptad,
                     L_DNAHASH  **pdahash)
 {
-l_int32     i, n, index, items, x, y;
-l_uint32    nsize;
-l_uint64    key;
+int32_t     i, n, index, items, x, y;
+uint32_t    nsize;
+uint64_t    key;
 PTA        *ptad;
 L_DNAHASH  *dahash;
 
@@ -579,9 +579,9 @@ PTA *
 ptaIntersectionByHash(PTA  *pta1,
                       PTA  *pta2)
 {
-l_int32     n1, n2, nsmall, i, x, y, index1, index2;
-l_uint32    nsize2;
-l_uint64    key;
+int32_t     n1, n2, nsmall, i, x, y, index1, index2;
+uint32_t    nsize2;
+uint64_t    key;
 L_DNAHASH  *dahash1, *dahash2;
 PTA        *pta_small, *pta_big, *ptad;
 
@@ -649,12 +649,12 @@ PTA        *pta_small, *pta_big, *ptad;
 l_ok
 ptaFindPtByHash(PTA        *pta,
                 L_DNAHASH  *dahash,
-                l_int32     x,
-                l_int32     y,
-                l_int32    *pindex)
+                int32_t     x,
+                int32_t     y,
+                int32_t    *pindex)
 {
-l_int32   i, nvals, index, xi, yi;
-l_uint64  key;
+int32_t   i, nvals, index, xi, yi;
+uint64_t  key;
 L_DNA    *da;
 
     if (!pindex)
@@ -693,9 +693,9 @@ L_DNA    *da;
 L_DNAHASH *
 l_dnaHashCreateFromPta(PTA  *pta)
 {
-l_int32     i, n, x, y;
-l_uint32    nsize;
-l_uint64    key;
+int32_t     i, n, x, y;
+uint32_t    nsize;
+uint64_t    key;
 L_DNAHASH  *dahash;
 
     if (!pta)
@@ -753,9 +753,9 @@ sarrayRemoveDupsByHash(SARRAY      *sas,
                        L_DNAHASH  **pdahash)
 {
 char       *str;
-l_int32     i, n, index, items;
-l_uint32    nsize;
-l_uint64    key;
+int32_t     i, n, index, items;
+uint32_t    nsize;
+uint64_t    key;
 SARRAY     *sad;
 L_DNAHASH  *dahash;
 
@@ -807,9 +807,9 @@ sarrayIntersectionByHash(SARRAY  *sa1,
                          SARRAY  *sa2)
 {
 char       *str;
-l_int32     n1, n2, nsmall, i, index1, index2;
-l_uint32    nsize2;
-l_uint64    key;
+int32_t     n1, n2, nsmall, i, index1, index2;
+uint32_t    nsize2;
+uint64_t    key;
 L_DNAHASH  *dahash1, *dahash2;
 SARRAY     *sa_small, *sa_big, *sad;
 
@@ -878,11 +878,11 @@ l_ok
 sarrayFindStringByHash(SARRAY      *sa,
                        L_DNAHASH   *dahash,
                        const char  *str,
-                       l_int32     *pindex)
+                       int32_t     *pindex)
 {
 char     *stri;
-l_int32   i, nvals, index;
-l_uint64  key;
+int32_t   i, nvals, index;
+uint64_t  key;
 L_DNA    *da;
 
     if (!pindex)
@@ -922,9 +922,9 @@ L_DNAHASH *
 l_dnaHashCreateFromSarray(SARRAY  *sa)
 {
 char       *str;
-l_int32     i, n;
-l_uint32    nsize;
-l_uint64    key;
+int32_t     i, n;
+uint32_t    nsize;
+uint64_t    key;
 L_DNAHASH  *dahash;
 
         /* Build up dnaHash of indices, hashed by a 64-bit key that
