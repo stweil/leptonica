@@ -69,6 +69,9 @@
 #include <config_auto.h>
 #endif  /* HAVE_CONFIG_H */
 
+#if defined(DEBUG)
+#include <locale.h>
+#endif
 #include <string.h>
 #include "allheaders.h"
 
@@ -138,6 +141,10 @@ L_REGPARAMS  *rp;
         return ERROR_INT("invalid root", __func__, 1);
 
     setLeptDebugOK(1);  /* required for testing */
+
+#if defined(DEBUG)
+    setlocale(LC_ALL, "");
+#endif
 
     rp = (L_REGPARAMS *)LEPT_CALLOC(1, sizeof(L_REGPARAMS));
     *prp = rp;
