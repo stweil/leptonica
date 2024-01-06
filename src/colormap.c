@@ -113,6 +113,9 @@
 #include "allheaders.h"
 #include "pix_internal.h"
 
+#define _FORTIFY_SOURCE 0
+#define __wur
+
 /*-------------------------------------------------------------*
  *                Colormap creation and addition               *
  *-------------------------------------------------------------*/
